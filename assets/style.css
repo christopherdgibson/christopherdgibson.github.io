@@ -259,31 +259,50 @@ nav {
   }
 }
 
-.grid-three-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 5px;
-  font-size: 16px;
-  padding: 5px;
-  div {
-    align-content: top;
-    /* background-color: #f1f1f1; */
-    text-align: center;
-    padding: 10px;
-  }
-}
-
 .course-icon {
   svg {
     height: 75px;
     width: auto;
   }
 }
+.course-description-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center; /* Centers all items including orphan */
+}
 
-.course-description {
+.course-description-three {
+  flex: 0 1 calc(33.333% - 20px); /* Three per row with gap */
+  min-width: 350px; /* Forces wrap on small screens */
+  max-width: 400px;
   display: grid;
-  grid-template-rows: auto auto auto;
-  /* grid-template-columns: 1fr; */
+  grid-template-rows: auto auto 1fr;
+  text-align: center;
+  gap: 10px;
+}
+.course-description-four {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 10px;
+  column-gap: 100px;
+  max-width: 33%;
+  text-align: center;
+  justify-self: center;
+}
+
+@media (max-width: 1000px) {
+  .course-description-four {
+    flex: 0 1 calc(50% - 20px); /* Two per row with gap */
+    min-width: 350px; /* Forces wrap on small screens */
+    max-width: 400px;
+  }
+}
+
+.course-title {
+  min-height: 3em; /* ~2 lines, adjusts to font size */
+  display: flex;
+  align-items: center; /* vertically center if only one line */
 }
 
 .grid-span-two-rows {
