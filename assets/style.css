@@ -1,14 +1,24 @@
+@font-face {
+  font-family: "Avenir Light";
+  src: url("/assets/fonts/Avenir LT Std Light.otf");
+
+  font-family: "Avenir Heavy";
+  src: url("/assets/fonts/Avenir LT Std Heavy.otf");
+}
+
 body {
-  /* font-family: Arial, Helvetica, sans-serif; */
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", sans-serif;
+  font-family: "Avenir Light", Arial, Helvetica, sans-serif;
+  /* font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", sans-serif; */
   margin: 0;
+  font-size: 16px;
+  line-height: 1.95em;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 /* Style the header */
 .header {
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
   padding: 30px;
   text-align: left;
   font-size: 35px;
@@ -44,7 +54,7 @@ nav {
         position: relative;
         text-decoration: none;
         text-align: center;
-        font-family: arvo;
+        /* font-family: arvo; */
       }
     }
 
@@ -120,18 +130,27 @@ nav {
   padding-top: 50px;
 }
 
+.pageview-block {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
 .section-heading {
   font-size: 30px;
+  text-align: left !important;
 }
 
 .section-subheading {
   font-size: 1.25em;
-    max-width: 300px;
+  font-family: "Avenir Heavy", Arial, Helvetica, sans-serif;
+  max-width: 300px;
+  margin: auto;
 }
 
 .pdf-icon-link {
   height: 100px;
-  align-items: center; 
+  align-items: center;
 }
 
 .about-container {
@@ -177,8 +196,7 @@ nav {
 }
 
 /* Employment section */
-.employment-experience {
-  /* font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", sans-serif; */
+.employment-experience-grid {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 5px;
@@ -202,6 +220,72 @@ nav {
   font-size: 20px;
 }
 
+.teaching-experience-grid {
+  display: grid;
+  grid-template-columns: 20% 75%;
+  width: 70%;
+  gap: 5px;
+  font-size: 16px;
+  padding: 5px;
+  align-self: center;
+  div {
+    align-content: top;
+    /* background-color: #f1f1f1; */
+    text-align: left;
+    /* font-size: 20px; */
+    padding: 10px;
+  }
+}
+
+.teaching-philosophy {
+  grid-row: span 1;
+  font-size: 24px;
+}
+
+.grid-two-columns {
+  display: grid;
+  grid-template-columns: 33.3% 33.3%;
+  justify-content: center;
+  grid-auto-rows: minmax(100px, auto);
+  /* gap: 5px; */
+  grid-column-gap: 10%;
+  font-size: 16px;
+  padding: 5px;
+  div {
+    align-content: top;
+    /* background-color: #f1f1f1; */
+    text-align: center;
+    padding: 10px;
+  }
+}
+
+.grid-three-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
+  font-size: 16px;
+  padding: 5px;
+  div {
+    align-content: top;
+    /* background-color: #f1f1f1; */
+    text-align: center;
+    padding: 10px;
+  }
+}
+
+.course-icon {
+  svg {
+    height: 75px;
+    width: auto;
+  }
+}
+
+.course-description {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  /* grid-template-columns: 1fr; */
+}
+
 .grid-span-two-rows {
   grid-row: span 2;
   font-size: 16px;
@@ -209,6 +293,9 @@ nav {
 
 .grid-span-two-cols {
   grid-column: span 2;
+}
+.grid-span-three-cols {
+  grid-column: span 3;
 }
 
 .experience-title {
