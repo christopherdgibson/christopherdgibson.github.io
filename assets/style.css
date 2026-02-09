@@ -383,6 +383,7 @@ nav {
   /* min-width: 200px; */
   max-width: 300px;
   font-size: 1.25em;
+  row-gap: 20px;
   font-family: "Avenir Heavy", Arial, Helvetica, sans-serif;
 }
 
