@@ -63,51 +63,21 @@ body {
     font-family: "Avenir", Arial, Helvetica, sans-serif;
   }
 }
-/* 
-.side-image-container {
-  position: relative;
-  background-color: rgb(69, 69, 69);
-  width: 90%;
-  padding: 2vw 5vw 2vw 5vw;
-  margin: auto;
-}
-
-.side-image {
-  opacity: 1;
-  display: block;
-  width: 50%;
-  height: auto;
-  transition: 0.3s ease;
-  backface-visibility: hidden;
-}
-.side-image-text {
-  transition: 0.5s ease;
-  position: absolute;
-  top: 50%;
-  left: 56%;
-  transform: translate(0%, -50%);
-  -ms-transform: translate(0%, -50%);
-  div {
-    color: white;
-    font-size: 5vw;
-    font-family: "Avenir", Arial, Helvetica, sans-serif;
-  }
-} */
 
 .side-image-container {
   display: flex;
   align-items: center;
   gap: 2vw;
   background-color: rgb(69, 69, 69);
-  width: 90%;
-  padding: 2vw 5vw;
+  width: 96%;
+  padding: 2vw 2vw;
   margin: auto;
   max-width: 100%; /* Prevent overflow */
 }
 
 .side-image {
   flex: 1 1 0; /* Equal flex basis, can grow/shrink */
-  max-width: 50%; /* Caps at 50% of container */
+  max-width: 70%; /* Caps at 50% of container */
   height: auto;
   opacity: 1;
   transition: 0.3s ease;
@@ -115,24 +85,10 @@ body {
 
 .side-image-text {
   flex: 1 1 0; /* Equal flex basis, can grow/shrink */
-  margin-left: 15%;
+  margin-left: 2%;
   color: white;
   font-size: 5vw;
   font-family: "Avenir", Arial, Helvetica, sans-serif;
-}
-
-@media (max-width: 768px) {
-  .side-image-container {
-    flex-direction: column;
-  }
-
-  .side-image {
-    max-width: 100%;
-  }
-
-  .side-image-text {
-    font-size: 8vw;
-  }
 }
 
 nav {
@@ -423,7 +379,7 @@ nav {
 .research-title {
   display: grid;
   justify-items: center;
-  /* flex: 1 1 300px; Grows, shrinks, min 300px */
+  flex: 1 1 300px; /* Grows, shrinks, min 300px */
   /* min-width: 200px; */
   max-width: 300px;
   font-size: 1.25em;
@@ -450,6 +406,36 @@ nav {
     img {
       height: 75px;
     }
+  }
+
+  .side-image-container {
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    display: flex;
+    align-items: left;
+    flex-wrap: wrap;
+    background-color: white;
+    width: 100%;
+  }
+
+  .side-image {
+    max-width: 100%;
+    order: 2;
+    /* padding: 50px;
+    background-color: rgb(69, 69, 69); */
+  }
+
+  .side-image-text {
+    font-size: 6vw;
+    margin-left: 0;
+    padding: 50px;
+    background-color: rgb(69, 69, 69);
+    flex: 1 1 300px; /* Same flex basis */
+    display: flex;
+    /* color:black; */
+    order: 1;
+    justify-content:left;
   }
 }
 
