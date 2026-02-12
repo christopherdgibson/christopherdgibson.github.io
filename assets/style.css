@@ -98,11 +98,13 @@ nav {
   &.navigation-menu {
     margin: 0 auto;
     display: block;
-
     padding: 0;
     text-align: center;
     font-size: 16px;
     .checkbox {
+      display: none;
+    }
+    .dropdown-toggle {
       display: none;
     }
     ul {
@@ -116,29 +118,25 @@ nav {
         position: relative;
         text-decoration: none;
         text-align: center;
-        /* font-family: arvo; */
       }
     }
-
     /* Apply right-border only to last direct child */
     > ul {
       > li:last-child {
         border-right: 2px solid #3ca0e7;
       }
     }
-
     li a {
       color: black;
     }
-
     li a:hover {
       color: #3ca0e7;
     }
-
     li:hover {
       cursor: pointer;
     }
-
+    
+    /* Desktop dropdown - hide by default */
     ul li ul {
       visibility: hidden;
       opacity: 0;
@@ -148,7 +146,8 @@ nav {
       display: none;
       background: white;
     }
-
+    
+    /* Desktop dropdown - show on hover */
     ul li:hover > ul,
     ul li ul:hover {
       visibility: visible;
@@ -159,30 +158,31 @@ nav {
       padding-top: 20px;
       box-shadow: 0px 3px 5px -1px #ccc;
     }
-
+    
     ul li ul li {
       clear: both;
       width: 100%;
       text-align: left;
-      margin-bottom: 20px;
+      /* margin-bottom: 20px; */
       border-style: none;
     }
-
     ul li ul li a:hover {
       padding-left: 10px;
       border-left: 2px solid #3ca0e7;
       transition: all 0.3s ease;
     }
+    
+    /* Hide dropdown label on desktop */
+    .dropdown-label {
+      display: none;
+    }
   }
-
   a {
     text-decoration: none;
-
     &:hover {
       color: #3ca0e7;
     }
   }
-
   ul li ul li a {
     transition: all 0.5s ease;
   }
@@ -212,6 +212,22 @@ nav {
     position: relative;
     left: 0;
     width: 100%;
+    
+    /* Hide desktop link, show mobile label */
+    .has-dropdown > a.desktop-link {
+      display: none;
+    }
+    .dropdown-label {
+      display: block;
+      color: black;
+      cursor: pointer;
+      font-size: 20px;
+      width: 100%;
+      &:hover {
+        color: #3ca0e7;
+      }
+    }
+    
     ul {
       position: fixed;
       top: 180px;
@@ -224,68 +240,126 @@ nav {
       justify-content: center;
       align-items: center;
       transition: all 0.3s ease;
-
+      
       .menu-icon-item {
         position: absolute;
         top: -125px;
-        right: 100%; /* Position to the left of the menu */
+        right: 100%;
         margin-right: 20px;
-        border-bottom: none !important; /* No underline on icon */
+        border-bottom: none !important;
         border-left: none;
         width: auto;
         padding: 0;
       }
+      
       li {
         border-left: none;
         position: relative;
-        margin: 0; /* Remove vertical margin */
-        width: 20%; /* Control underline width */
-        padding: 20px; /* Vertical padding for spacing */
-        border-bottom: 2px solid #3ca0e7; /* Underline between items */
+        margin: 0;
+        width: 20%;
+        padding: 20px;
+        border-bottom: 2px solid #3ca0e7;
         background-color: transparent;
+        
         &:last-child {
-          border-bottom: none; /* Remove underline on last item */
+          border-bottom: none;
         }
-
-        a {
+        
+        > a {
           font-size: 20px;
           width: 100%;
           display: block;
         }
-        div {
-          display: none;
-          a {
-            display: none;
+        
+        /* Make sure the label is visible */
+        &.has-dropdown {
+          .dropdown-label {
+            display: block;
+            font-size: 20px;
           }
         }
       }
+      
+      /* Mobile dropdown styles */
+      li.has-dropdown {
+        ul.dropdown {
+          position: fixed;
+          top: 180px;
+          left: -100%;
+          width: 100%;
+          height: 50vh;
+          background-color: white;
+          visibility: hidden;
+          opacity: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          transition: all 0.3s ease;
+          padding: 0;
+          box-shadow: none;
+          z-index: 11;
+          
+          li {
+            border-bottom: 2px solid #3ca0e7;
+            padding: 20px;
+            width: 20%;
+            
+            &:last-child {
+              border-bottom: none;
+            }
+            
+            a {
+              font-size: 20px;
+              &:hover {
+                padding-left: 10px;
+                border-left: 2px solid #3ca0e7;
+              }
+            }
+          }
+        }
+      }
+      
+      /* Show dropdown when checkbox is checked */
+      li.has-dropdown .dropdown-toggle:checked ~ ul.dropdown {
+        left: 0;
+        visibility: visible;
+        opacity: 1;
+      }
     }
   }
+  
   #checkNav:checked ~ ul {
     right: 0;
     align-content: center;
-    z-index:10;
+    z-index: 10;
+    
     .menu-icon-item {
-      /* right: 0; Move icon to the right edge of the menu */
       margin-right: -80px;
       padding-left: 20px;
       transition: 0.3s ease;
     }
+    
     li {
       border-left: none;
       border-right: none;
       padding: 20px 0;
-      &:first-child {
-          padding:0; /* Remove underline on menu icon */
+      
+      /* &:first-child {
+        padding: 0;
+      } */
+      
+      &.has-dropdown {
+        .dropdown-label {
+          display: block;
         }
+      }
+      
       a {
         &:hover {
           padding-left: 10px;
           border-left: 2px solid #3ca0e7;
           transition: all 0.3s ease;
-          div {
-            display: none;
-          }
         }
       }
     }
