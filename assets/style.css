@@ -145,6 +145,10 @@ nav {
       left: 0;
       display: none;
       background: white;
+
+      li.dropdown-back {
+        display: none;
+      }
     }
 
     /* Desktop dropdown - show on hover */
@@ -321,6 +325,7 @@ nav {
           /* Inside the mobile media query, within li.has-dropdown ul.dropdown */
           li.dropdown-back {
             position: absolute;
+            display: block;
             top: 20px;
             left: 20px;
             border-bottom: none;
