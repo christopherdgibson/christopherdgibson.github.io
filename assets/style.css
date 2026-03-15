@@ -542,9 +542,6 @@ ul li ul li:last-child {
   padding: 20px;
   max-width: 1200px;
   margin: auto;
-  p {
-    padding-bottom: 20px;
-  }
 }
 
 .section-heading {
@@ -740,6 +737,10 @@ ul li ul li:last-child {
 .experience-description {
   flex: 1 1 300px;
   min-width: 500px;
+
+  div {
+          padding-top: 20px;
+      }
 }
 
 @media (max-width: 860px) {
