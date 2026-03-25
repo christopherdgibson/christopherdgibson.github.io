@@ -1,0 +1,203 @@
+<!-- HERO -->
+<section class="hero hero-projects hero-download-hub">
+  <p class="hero-eyebrow">Portfolio · C# / Avalonia / Selenium</p>
+  <h1 class="hero-title">Report Download Hub</h1>
+  <p class="hero-desc">
+    A cross-platform desktop application for automated, multi-source document
+    collection. Configure filters, select sources, and download matching reports
+    in one submission.
+  </p>
+  <div class="hero-actions">
+    <a href="#" class="btn btn-primary">Download Application →</a>
+    <a href="#" class="btn btn-ghost">GitHub Repository</a>
+  </div>
+  <div class="badges">
+    <span class="badge">C#</span>
+    <span class="badge">Avalonia UI</span>
+    <span class="badge">Selenium</span>
+    <span class="badge">.NET</span>
+    <span class="badge">Model Factory</span>
+    <span class="badge">Cross-Platform</span>
+  </div>
+
+  <div class="hero-screenshot">
+    <img src="/assets/images/avalonia-screenshot.png" />
+  </div>
+</section>
+
+<!-- CONTENT -->
+<main class="content">
+  <!-- Overview -->
+  <section class="section">
+    <p class="section-label">Overview</p>
+    <h2 class="section-title">
+      Automated document collection, across multiple sources
+    </h2>
+    <div class="divider"></div>
+    <p class="section-body">
+      The Report Download Hub aggregates publicly available documents from three
+      institutional sources simultaneously. Configure filters for each source
+      independently — document type, keyword, year or date range — check the
+      sources you want, and submit. Matching PDFs are downloaded directly to
+      your chosen directory, with options to skip existing files, append
+      timestamps, and maintain a versioned history folder.
+    </p>
+
+    <div class="pull-quote">
+      <p>
+        The user's machine is the server — no infrastructure, no authentication
+        handoff, no data leaving the local environment.
+      </p>
+    </div>
+  </section>
+
+  <!-- Sources -->
+  <section class="section">
+    <p class="section-label">Supported Sources</p>
+    <h2 class="section-title">Three sources, one submission</h2>
+    <div class="divider"></div>
+    <p class="section-body">
+      Each source is independently configurable and optional. Sources can be
+      combined freely — the output is the union of matching documents across all
+      selected sources. The architecture is extensible to additional sources,
+      including internal sites requiring authentication.
+    </p>
+    <div class="source-grid">
+      <div class="source-card eu">
+        <div class="source-flag">🇪🇺</div>
+        <div class="source-name">EU Open Data Portal</div>
+        <div class="source-desc">
+          Studies and publications from the official European Union data portal,
+          filterable by category, keyword, and year.
+        </div>
+        <span class="source-tag">data.europa.eu</span>
+      </div>
+      <div class="source-card nbb">
+        <div class="source-flag">🇧🇪</div>
+        <div class="source-name">National Bank of Belgium</div>
+        <div class="source-desc">
+          Research and working papers from the NBB, with keyword title search
+          not available in the native site filter.
+        </div>
+        <span class="source-tag">nbb.be</span>
+      </div>
+      <div class="source-card uk">
+        <div class="source-flag">🇬🇧</div>
+        <div class="source-name">UK Government</div>
+        <div class="source-desc">
+          Command Papers and Act Papers from the official UK government
+          publications portal, searchable by paper number and type.
+        </div>
+        <span class="source-tag">gov.uk</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">What's under the hood</h2>
+    <div class="divider"></div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🏭</div>
+        <div class="feature-title">Model factory architecture</div>
+        <div class="feature-body">
+          A factory pattern resolves the correct service model per source. Each
+          service inherits from a typed base —
+          <code>EUStudiesService : BaseService&lt;EUStudiesModel&gt;</code>
+          — with source-specific navigation and download logic as needed.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Element-driven automation</div>
+        <div class="feature-body">
+          No arbitrary delays. Selenium waits for specific DOM elements before
+          proceeding, keeping automation fast and reliable without hardcoded
+          timeouts.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <div class="feature-title">Smart download options</div>
+        <div class="feature-body">
+          Skip files that already exist, append download timestamps, and
+          optionally maintain a History folder with versioned copies.
+          Confirmation prompt if the batch exceeds a configurable threshold.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <div class="feature-title">Extended keyword search</div>
+        <div class="feature-body">
+          Title keyword filtering beyond what the native site search exposes —
+          applied as a post-retrieval filter across result sets from any source.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💻</div>
+        <div class="feature-title">Cross-platform desktop</div>
+        <div class="feature-body">
+          Built with Avalonia UI — runs on Windows, macOS, and Linux without
+          modification. The user's machine provides the browser and filesystem;
+          no server required.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔌</div>
+        <div class="feature-title">Extensible by design</div>
+        <div class="feature-body">
+          Adding a new source means implementing the base interface — existing
+          services and the download pipeline require no modification. Internal
+          sources requiring authentication are supported by the same pattern.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical decisions -->
+  <section class="section">
+    <p class="section-label">Technical decisions</p>
+    <h2 class="section-title">Why these choices</h2>
+    <div class="divider"></div>
+    <div class="tech-list">
+      <div class="tech-row">
+        <div class="tech-key">Avalonia UI</div>
+        <div class="tech-val">
+          Cross-platform desktop framework for .NET — runs on Windows, macOS,
+          and Linux without platform-specific code.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Selenium</div>
+        <div class="tech-val">
+          Full browser automation is required — JavaScript-heavy sites lose all
+          state on navigation, ruling out headless HTTP approaches.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Model factory</div>
+        <div class="tech-val">
+          Decouples source resolution from download logic. New sources are added
+          by implementing an interface, not by modifying existing code.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Desktop over web</div>
+        <div class="tech-val">
+          Browser automation requires a persistent process with filesystem
+          access — a desktop app distributes this to the user's own machine
+          cleanly.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Element waits</div>
+        <div class="tech-val">
+          Waiting for specific DOM elements rather than fixed delays makes
+          automation faster and more robust across varying network conditions.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

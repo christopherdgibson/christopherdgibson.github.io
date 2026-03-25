@@ -1,0 +1,163 @@
+<!-- HERO -->
+<section class="hero hero-projects">
+  <p class="hero-eyebrow">Portfolio · C# / Blazor WebAssembly</p>
+  <h1 class="hero-title">NYC <span>311</span> Service Request Dashboard</h1>
+  <p class="hero-desc">
+    An interactive dashboard for exploring New York City 311 data by borough,
+    precinct, and zip code — with live filtering and real-time chart updates.
+  </p>
+  <div class="hero-actions">
+    <a
+      target="_blank"
+      href="https://christopherdgibson.github.io/nyc-311-dashboard/"
+      class="btn btn-primary"
+      >View Live Dashboard →</a
+    >
+    <a
+      target="_blank"
+      href="https://github.com/christopherdgibson/nyc-311-dashboard"
+      class="btn btn-ghost"
+      >GitHub Repository</a
+    >
+  </div>
+  <div class="badges">
+    <span class="badge">Blazor WebAssembly</span>
+    <span class="badge">C#</span>
+    <span class="badge">ApexCharts</span>
+    <span class="badge">NYC Open Data API</span>
+    <span class="badge">html2pdf</span>
+    <span class="badge">GitHub Pages</span>
+  </div>
+  <div class="hero-screenshot">
+    <img src="/assets/images/nyc-dashboard-zip-codes-screenshot-small.png" />
+  </div>
+</section>
+
+<!-- CONTENT -->
+<main class="content">
+  <!-- What it does -->
+  <section class="section">
+    <p class="section-label">Overview</p>
+    <h2 class="section-title">Explore NYC 311 data, live</h2>
+    <div class="divider"></div>
+    <p class="section-body">
+      The dashboard pulls from the NYC Open Data API and lets you filter service
+      requests across all five boroughs, individual precincts, and zip codes.
+      Every selection — adding a borough, removing a zip code — propagates
+      instantly across all charts and tables on the page without a reload. The
+      colour palette draws from themes of the city itself: the primary blue of
+      the NYC flag, the accent yellow of the NYC 311 logo.
+    </p>
+
+    <div class="pull-quote">
+      <p>
+        Built to be shared freely — no server, no hosting costs, no maintenance.
+        Just a URL.
+      </p>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">What's under the hood</h2>
+    <div class="divider"></div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Live state updates</div>
+        <div class="feature-body">
+          Selections propagate immediately to all charts and tables. Tight state
+          dependency with no unnecessary re-renders.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏗️</div>
+        <div class="feature-title">Clean service architecture</div>
+        <div class="feature-body">
+          Pages interact only with RequestService, ChartService, and
+          LayoutService. JS interop is isolated to LayoutService alone.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <div class="feature-title">Fully custom components</div>
+        <div class="feature-body">
+          Every component is encapsulated with no knowledge of the rest of the
+          solution — sortable tables, expandable text, loading overlays,
+          slide-out sidebars.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">ApexCharts via typed interop</div>
+        <div class="feature-body">
+          Chart configuration is strongly typed in C# and passed to ApexCharts
+          through a JS interop layer, keeping rendering concerns cleanly
+          separated.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <div class="feature-title">Responsive at every width</div>
+        <div class="feature-body">
+          Charts and tables wrap to available space. Navbar collapses to a
+          slide-out overlay on mobile. Sidebar shifts content on desktop,
+          overlays on mobile.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <div class="feature-title">PDF export</div>
+        <div class="feature-body">
+          Full page export via html2pdf with custom CSS rules to prevent charts
+          and tables from being cut mid-element across page breaks.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical decisions -->
+  <section class="section">
+    <p class="section-label">Technical decisions</p>
+    <h2 class="section-title">Why these choices</h2>
+    <div class="divider"></div>
+    <div class="tech-list">
+      <div class="tech-row">
+        <div class="tech-key">Blazor WebAssembly</div>
+        <div class="tech-val">
+          Compiles to static files, enabling free hosting on GitHub Pages with
+          no server required.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">NYC Open Data API</div>
+        <div class="tech-val">
+          Publicly available, rich enough to make filtering and aggregation
+          genuinely interesting.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">ApexCharts</div>
+        <div class="tech-val">
+          Mature JS charting library integrated via a typed C# interop layer
+          rather than manual canvas rendering.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Service isolation</div>
+        <div class="tech-val">
+          JS interop lives in one place. Pages never touch the DOM directly.
+          Messaging and loading state flow through services.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">html2pdf</div>
+        <div class="tech-val">
+          Free, client-side PDF generation without server processing or
+          third-party services.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,210 @@
+<!-- HERO -->
+<section class="hero hero-projects hero-wp">
+  <p class="hero-eyebrow">Portfolio · React / WordPress / PHP</p>
+  <h1 class="hero-title">WordPress Plugins</h1>
+  <p class="hero-desc">
+    Two custom Gutenberg blocks built from scratch — a daily API display with
+    calendar navigation, and a structured content card block with expandable
+    detail panels.
+  </p>
+  <div class="hero-actions">
+    <a href="#" class="btn btn-primary">View Demo →</a>
+    <a href="#" class="btn btn-ghost">GitHub Repository</a>
+  </div>
+  <div class="badges">
+    <span class="badge">React</span>
+    <span class="badge">JavaScript</span>
+    <span class="badge">WordPress</span>
+    <span class="badge">Gutenberg</span>
+    <span class="badge">PHP</span>
+    <span class="badge">REST API</span>
+    <span class="badge">CORS Proxy</span>
+  </div>
+
+  <div class="hero-screenshot">
+    <img src="/assets/images/wp-plugins-screenshot.png" />
+  </div>
+</section>
+
+<!-- CONTENT -->
+<main class="content">
+  <!-- Overview -->
+  <section class="section">
+    <p class="section-label">Overview</p>
+    <h2 class="section-title">Custom Gutenberg blocks, built from scratch</h2>
+    <div class="divider"></div>
+    <p class="section-body">
+      Both plugins are built as custom WordPress Gutenberg blocks using React,
+      with no reliance on WordPress-specific block APIs — the editor and
+      frontend interfaces are written directly, giving full control over both
+      the authoring experience and the rendered output. The block editor layer
+      is designed for intermediate WordPress designers: click to add a card,
+      click to split it, click to add a description. No shortcodes, no custom
+      admin panels.
+    </p>
+
+    <div class="pull-quote">
+      <p>
+        Two interfaces per plugin — one for the designer building the page, one
+        for the visitor reading it. Both written from scratch.
+      </p>
+    </div>
+  </section>
+
+  <!-- The two plugins -->
+  <section class="section">
+    <p class="section-label">The Plugins</p>
+    <h2 class="section-title">Two blocks, two problems</h2>
+    <div class="divider"></div>
+    <div class="plugin-grid">
+      <div class="plugin-card">
+        <div class="plugin-card-eyebrow">Plugin 01</div>
+        <div class="plugin-card-title">DayBrief</div>
+        <div class="plugin-card-body">
+          A Gutenberg block that fetches and displays a daily fact or quote from
+          an external API, navigable by date via an integrated calendar. API
+          requests are routed through a WordPress PHP proxy to avoid CORS
+          restrictions, with a retry mechanism that handles timeouts and
+          malformed responses. The block normalises both JSON and raw HTML API
+          responses into a consistent display format.
+        </div>
+      </div>
+
+      <div class="plugin-card">
+        <div class="plugin-card-eyebrow">Plugin 02</div>
+        <div class="plugin-card-title">Agenda Block</div>
+        <div class="plugin-card-body">
+          A structured content card block for presenting items with expandable
+          detail — originally designed for weekly schedules but general enough
+          for any structured content. Cards can be split into sub-items
+          (morning/afternoon sessions, for example), each generating its own
+          description button automatically. On desktop the detail panel opens to
+          the right of the card list; on mobile it overlays. All layout logic is
+          custom.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">What's under the hood</h2>
+    <div class="divider"></div>
+
+    <p class="section-label section-label--flush">DayBrief</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <div class="feature-title">CORS proxy with retry</div>
+        <div class="feature-body">
+          API requests route through a PHP WordPress proxy when direct fetch
+          would be blocked. A retry function handles cURL timeouts and network
+          failures with configurable attempts and delay, failing gracefully
+          rather than silently.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <div class="feature-title">Calendar navigation</div>
+        <div class="feature-body">
+          DayBrief includes a date-picker calendar that updates the displayed
+          content on selection. Each date fetches its own API response, with the
+          result cached to avoid redundant requests on revisit.
+        </div>
+      </div>
+    </div>
+
+    <p class="section-label section-label--spaced">Agenda Block</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🃏</div>
+        <div class="feature-title">Dynamic sub-card generation</div>
+        <div class="feature-body">
+          Splitting a card in the Agenda Block automatically generates the
+          corresponding description buttons — no manual wiring required. The
+          number of sub-items per card is unconstrained.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <div class="feature-title">Responsive detail panel</div>
+        <div class="feature-body">
+          The expanded description panel sits to the right of the card list on
+          desktop and overlays on mobile — layout logic written entirely without
+          a CSS framework.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">✏️</div>
+        <div class="feature-title">Designed for designers</div>
+        <div class="feature-body">
+          The block editor interface exposes only what a WordPress designer
+          needs — text fields, add/split/remove controls — with no code
+          exposure. The save output is clean and preview-ready.
+        </div>
+      </div>
+
+      <!-- <div class="feature-card">
+            <div class="feature-icon">🔌</div>
+            <div class="feature-title">No WordPress API dependency</div>
+            <div class="feature-body">
+              Both plugins avoid WordPress-specific block data APIs in favour of
+              custom implementations — a deliberate choice that keeps the logic
+              portable and the behaviour fully understood.
+            </div>
+          </div> -->
+    </div>
+  </section>
+
+  <!-- Technical decisions -->
+  <section class="section">
+    <p class="section-label">Technical decisions</p>
+    <h2 class="section-title">Why these choices</h2>
+    <div class="divider"></div>
+    <div class="tech-list">
+      <div class="tech-row">
+        <div class="tech-key">React</div>
+        <div class="tech-val">
+          Gutenberg's native block development framework — used directly rather
+          than through abstraction layers to keep full control over block
+          behaviour.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">PHP proxy</div>
+        <div class="tech-val">
+          Server-side request routing through WordPress admin-ajax.php bypasses
+          browser CORS restrictions without requiring a separate backend
+          service.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">No WordPress APIs</div>
+        <div class="tech-val">
+          Custom implementations rather than WordPress block data store — the
+          logic is more explicit, fully owned, and not dependent on WordPress
+          API stability.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">XAMPP / Apache</div>
+        <div class="tech-val">
+          Local development environment with Apache server and MySQL — a full
+          WordPress stack running locally for development and testing.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Response normalisation</div>
+        <div class="tech-val">
+          DayBrief handles both JSON and raw HTML API responses, normalising
+          them into a consistent display format rather than assuming a fixed
+          structure.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
