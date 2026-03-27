@@ -92,8 +92,14 @@ function loadView(viewName) {
       body.innerHTML = html;
       title.innerHTML = viewName.charAt(0).toUpperCase() + viewName.slice(1);
       const checkNav = document.querySelector("#checkNav");
-      checkNav.checked = false;
-      checkNav.dispatchEvent(new Event('change'));
+      if (checkNav) {
+        checkNav.checked = false;
+        checkNav.dispatchEvent(new Event('change'));
+      }
+      const workDropdown = document.querySelector("#workDropdown");
+      if (workDropdown) {
+        workDropdown.checked = false;
+      }
       history.pushState({ view: viewName }, "", `/${viewName}`);
       const baseCallbacks = [() => initAnchorButtons()];
       const viewSpecific = viewCallbacks[viewName] ?? [];

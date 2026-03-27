@@ -15,10 +15,16 @@
   --grey-mid: #9aaab8;
   --text: #1c2b38;
   --white: #ffffff;
-  --radius: 6px;
-  --max: 900px;
   --wp-blue: #3858e9;
   --wp-grey: #1d2327;
+  --teaching-accent-color: #7bb8e8;
+  --eu-blue:    #004494;
+  --eu-yellow:  #ffcc00;
+  --be-yellow:  #FDDA24;
+  --nbb-blue:   #005fa3;
+  --uk-red:     #cf102d;
+  --radius: 6px;
+  --max: 900px;
   --experience-description-width: 500px;
   --background-radial-blue:
     radial-gradient(
@@ -90,11 +96,7 @@
       rgba(56, 88, 233, 0.05) 0%,
       transparent 50%
     );
-  --teaching-accent-color: #7bb8e8;
-  --eu-blue:    #003399;
-  --eu-yellow:  #ffcc00;
-  --nbb-blue:   #005fa3;
-  --uk-red:     #cf102d;
+
 }
 
 @font-face {
@@ -510,7 +512,7 @@ ul li ul li:last-child {
       li.has-dropdown {
         ul.dropdown {
           position: fixed;
-          top: 180px;
+          /* top: 180px; */
           left: -100%;
           width: 100%;
           height: 50vh;
@@ -633,7 +635,8 @@ ul li ul li:last-child {
   font-size: 1.25em;
   font-family: "Avenir Heavy", Arial, Helvetica, sans-serif;
   max-width: 300px;
-  margin: auto;
+  flex: 1 1 auto;
+  /* margin: auto; */
 }
 
 .pdf-icon-link {
@@ -780,6 +783,14 @@ ul li ul li:last-child {
   margin-bottom: 12px;
 }
 
+.feature-title-grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
 .feature-title {
   font-size: 0.875rem;
   font-weight: 500;
@@ -841,13 +852,20 @@ ul li ul li:last-child {
 
 .research-title {
   display: grid;
-  justify-items: center;
+  /* justify-items: center; */
   flex: 1 1 300px; /* Grows, shrinks, min 300px */
   /* min-width: 200px; */
-  max-width: 300px;
+  /* max-width: 300px; */
   font-size: 1.25em;
   row-gap: 20px;
   font-family: "Avenir Heavy", Arial, Helvetica, sans-serif;
+}
+
+.research-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 40px;
 }
 
 .experience-description {
@@ -881,7 +899,6 @@ ul li ul li:last-child {
     padding: 0;
     gap: 0;
     display: flex;
-    align-items: left;
     flex-wrap: wrap;
     background-color: white;
     width: 100%;
@@ -942,7 +959,6 @@ ul li ul li:last-child {
   padding: 5px;
   align-self: center;
   div {
-    align-content: top;
     /* background-color: #f1f1f1; */
     text-align: left;
     padding: 10px;
@@ -957,8 +973,10 @@ ul li ul li:last-child {
 
 .course-icon {
   svg {
+    display: flex;
     height: 75px;
     width: auto;
+    scale: 0.75;
   }
 }
 .course-description-container {
@@ -1462,6 +1480,8 @@ a:hover {
 }
 
 .source-card {
+  display: flex;
+  flex-direction: column;
   border-radius: var(--radius);
   padding: 24px 20px;
   border-top: 3px solid transparent;
@@ -1474,11 +1494,11 @@ a:hover {
 }
 
 .source-card.eu {
-  border-top-color: var(--eu-yellow);
+  border-top-color: var(--eu-blue);
 }
 
-.source-card.nbb {
-  border-top-color: var(--nbb-blue);
+.source-card.be {
+  border-top-color: var(--be-yellow);
 }
 
 .source-card.uk {
@@ -1501,6 +1521,7 @@ a:hover {
   font-size: 0.78rem;
   color: #6a7f8e;
   line-height: 1.6;
+  flex: 1 1 auto;
 }
 
 .source-tag {
@@ -1514,9 +1535,10 @@ a:hover {
   background: rgba(60, 160, 231, 0.08);
   color: var(--blue-accent);
   border: 1px solid rgba(60, 160, 231, 0.2);
+  width: fit-content;
 }
 
-.source-card.eu .source-tag {
+.source-card.be .source-tag {
   background: rgba(255, 204, 0, 0.1);
   color: #a07800;
   border-color: rgba(255, 204, 0, 0.3);
