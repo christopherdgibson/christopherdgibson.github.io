@@ -62,26 +62,6 @@ function fetchSection(viewPage, section, pageTitle) {
     .then((title.innerHTML = pageTitle));
 }
 
-function getCourseIcons() {
-  let courses = [
-    "macro",
-    "micro",
-    "financialMarkets",
-    "principles",
-    "intermediate",
-    "risk",
-    "grad",
-  ];
-  courses.forEach((course) => {
-    fetch(`assets/images/${course}.svg`)
-      .then((response) => response.text())
-      .then((svg) => {
-        document.getElementById(`${course}Icon`).innerHTML = svg;
-      })
-      .catch((error) => console.error("SVG load failed:", error));
-  });
-}
-
 function loadView(viewName) {
   fetch(`views/${viewName}.html`)
     .then((response) => {
@@ -101,7 +81,7 @@ function loadView(viewName) {
         workDropdown.checked = false;
       }
       history.pushState({ view: viewName }, "", `/${viewName}`);
-      const baseCallbacks = [() => initAnchorButtons()];
+      const baseCallbacks = [() => { initAnchorButtons(), initSvgIcons(), initFeatureCards() }];
       const viewSpecific = viewCallbacks[viewName] ?? [];
       const callbacks = [...baseCallbacks, ...viewSpecific];
     if (!callbacks) return;
@@ -131,8 +111,8 @@ function loadView(viewName) {
 }
 
 const viewCallbacks = {
-  teaching: [
-    () => getCourseIcons()],
+  // teaching: [
+  //   () => initSvgIcons()],
 };
 
 document.querySelector('.scroll-to-top-btn').addEventListener('click', function() {
@@ -214,5 +194,47 @@ function initHeaderSweep() {
                 char.classList.remove('swept');
             });
         }
+    });
+}
+
+function initSvgIcons() {
+    const icons = document.querySelectorAll('.course-icon');
+    if (!icons.length) return;
+    icons.forEach(icon => {
+      if (!icon.dataset.target) return;
+      fetch(`assets/images/${icon.dataset.target}.svg`)
+          .then(response => {
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('svg')) return null;
+            return response.text();
+          })
+          .then(svg => {
+              if (!svg) return;
+              icon.innerHTML = svg;
+          })
+          .catch(error => console.error("SVG load failed:", error));
+    });
+}
+
+function initFeatureCards() {
+    const overlay = document.querySelector('.card-overlay');
+    const cards = document.querySelectorAll('.feature-card');
+
+    if (!overlay || !cards.length)
+      {
+        return;
+      }
+
+    cards.forEach(card => {
+        card.addEventListener('click', function() {
+            this.classList.add('expanded');
+            overlay.classList.add('active');
+        });
+    });
+
+    overlay.addEventListener('click', function() {
+        document.querySelector('.feature-card.expanded')
+            ?.classList.remove('expanded');
+        this.classList.remove('active');
     });
 }
