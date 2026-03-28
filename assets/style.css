@@ -611,12 +611,6 @@ ul li ul li:last-child {
   }
 }
 
-.pageview-block {
-  padding: 20px;
-  max-width: 1200px;
-  margin: auto;
-}
-
 .section-heading {
   font-size: 30px;
   text-align: left !important;
@@ -826,13 +820,14 @@ ul li ul li:last-child {
         }
     }
 
-    .research-block .feature-card.expanded {
+    .research-block .feature-card.expanded,
+    .teaching-block .feature-card.expanded {
       max-width: unset;
       .research-title {
-        font-size: 1.75rem;
+        font-size: 1.25rem;
       }
       .feature-body {
-        font-size: 1.25rem;
+        font-size: 1rem;
       }
     }
 
@@ -1343,6 +1338,8 @@ a:hover {
 
 /* ── PAGE BODY ── */
 .page-body {
+  /* max-width: 1200px; 
+  margin: auto; from pageview-block if needed */
   background: white;
   /* padding: 48px 52px; */
   font-size: 0.9rem;
