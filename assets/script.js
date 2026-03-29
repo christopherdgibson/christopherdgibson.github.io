@@ -34,6 +34,18 @@ fetch(navHtml)
         loadView("teaching");
       });
     document
+      .querySelector("#btnWork")
+      .addEventListener("click", function (event) {
+        event.preventDefault();
+        loadView("work");
+      });
+    document
+      .querySelector("#btnWorkMobile")
+      .addEventListener("click", function (event) {
+        event.preventDefault();
+        loadView("work");
+      });
+    document
       .querySelector("#btnNYCDashboard")
       .addEventListener("click", function (event) {
         event.preventDefault();
@@ -45,7 +57,7 @@ fetch(navHtml)
         event.preventDefault();
         loadView("report-download-hub");
       });
-          document
+    document
       .querySelector("#btnWordPress")
       .addEventListener("click", function (event) {
         event.preventDefault();
@@ -62,6 +74,15 @@ function fetchSection(viewPage, section, pageTitle) {
     .then((title.innerHTML = pageTitle));
 }
 
+function addBtnListener(btnId, viewName) {
+      const el = document.querySelector(btnId);
+      if (!el) return;
+      el.addEventListener("click", function (event) {
+        event.preventDefault();
+        loadView(viewName);
+      });
+}
+
 function loadView(viewName) {
   fetch(`views/${viewName}.html`)
     .then((response) => {
@@ -70,7 +91,7 @@ function loadView(viewName) {
     })
     .then((html) => {
       body.innerHTML = html;
-      title.innerHTML = viewName.charAt(0).toUpperCase() + viewName.slice(1);
+      title.innerHTML = viewName.charAt(0).toUpperCase() + viewName.slice(1).replace(/-/g, " ");
       const checkNav = document.querySelector("#checkNav");
       if (checkNav) {
         checkNav.checked = false;
@@ -111,13 +132,23 @@ function loadView(viewName) {
 }
 
 const viewCallbacks = {
-  // teaching: [
-  //   () => initSvgIcons()],
+  work: [
+    () => addBtnListener("#btnWordPressWork", "wordpress-plugins"),
+    () => addBtnListener("#btnNYCDashboardWork", "nyc-dashboard"),
+    () => addBtnListener("#btnReportDownloadHubWork", "report-download-hub")
+  ]
 };
 
 document.querySelector('.scroll-to-top-btn').addEventListener('click', function() {
   scrollToTop();
 });
+
+document.querySelector('.header-link').addEventListener("click", function (event) {
+        event.preventDefault();
+        loadView("work");
+});
+
+
 
 function scrollToTop(behavior = "smooth") {
     window.scrollTo({ top: 0, behavior: behavior });
@@ -198,7 +229,7 @@ function initHeaderSweep() {
 }
 
 function initSvgIcons() {
-    const icons = document.querySelectorAll('.course-icon');
+    const icons = document.querySelectorAll('.svg-icon');
     if (!icons.length) return;
     icons.forEach(icon => {
       if (!icon.dataset.target) return;

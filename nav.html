@@ -2,33 +2,25 @@
   <input type="checkbox" class="checkbox" id="checkNav" />
   <ul>
     <li class="menu-icon-item">
-      <label for="checkNav" class="checkbtn">
-        <svg
-          width="28"
-          height="28"
-          xmlns="http://www.w3.org/2000/svg"
-          viewbox="0 0 448 512"
-        >
-          <path
-            fill="white"
-            d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"
-          />
-        </svg>
+      <label for="checkNav" class="checkbtn svg-icon" data-target="nav-icon">
       </label>
     </li>
     <li><a id="btnHome" href="#">Home</a></li>
     <li><a id="btnExperience" href="#">Experience</a></li>
     <li class="has-dropdown">
-      <a href="#" class="desktop-link">Work &dtrif;</a>
+      <a id="btnWork" href="#" class="desktop-link">Work &dtrif;</a>
       <input type="checkbox" class="dropdown-toggle" id="workDropdown" />
       <label for="workDropdown" class="dropdown-label">Work &dtrif;</label>
       <ul class="dropdown">
         <li class="dropdown-back">
           <label for="workDropdown" class="back-btn">&larr; Back</label>
         </li>
+        <li class="dropdown-header">
+          <a id="btnWorkMobile" href="#">Work</a>
+        </li>
         <li>
           <a id="btnNYCDashboard" href="#">NYC 311 Dashboard</a>
-          <span class="stack-label">&#9656; Blazor WebAssembly</span>
+          <span class="stack-label">&#9656; C# · Blazor WebAssembly</span>
         </li>
         <li>
           <a id="btnReportDownloadHub" href="#">Report Download Hub</a>
