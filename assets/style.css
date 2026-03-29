@@ -348,7 +348,7 @@ nav {
     }
 
     /* Hide dropdown label on desktop */
-    .dropdown-label {
+    .dropdown-label, .dropdown-header-mobile {
       display: none;
     }
   }
@@ -596,12 +596,14 @@ ul li ul li:last-child {
       }
     }
 
-      li.dropdown-header {
+      li.dropdown-header-mobile {
+        display: block;
         text-align: center;
-        border-bottom: none !important;
+        /* border-bottom: none !important; */
         padding: 10px 0 !important;
         a {
-          font-size: 30px;
+          font-size: 2rem;
+          font-weight: 500;
         }
       }
 
