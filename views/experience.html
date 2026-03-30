@@ -1,8 +1,22 @@
-<div class="hero hero-experience">
+<div class="view-nav" hidden
+  data-back-text="Back to Home"
+  data-back-view="home"
+  data-next-text="To Work"
+  data-next-view="work">
+</div>
+
+<!-- HERO -->
+<section class="hero hero-experience">
   <p class="hero-eyebrow">Background</p>
   <div class="accent-line"></div>
   <h1 class="hero-title">Experience</h1>
-  <span class="page-tag">CV · <button class="page-tag-btn" data-target="skills">Skills</button>  · <button class="page-tag-btn" data-target="history">History</button></span>
+  <span class="page-tag"
+    ><button class="page-tag-btn" data-target="skills">Skills</button> ·
+    <button class="page-tag-btn" data-target="history">History</button> ·
+    <button class="page-tag-btn" data-target="education">
+      Education
+    </button></span
+  >
   <p class="hero-desc">
     My background spans academia, government, international institutions, and
     the private sector — united by a consistent interest in rigorous analysis
@@ -10,7 +24,17 @@
     decisively toward software development, where I have found the most direct
     outlet for the kind of precise, architectural thinking I enjoy most.
   </p>
-</div>
+  <div class="hero-actions">
+    <a
+      target="_blank"
+      href="#"
+      class="btn btn-primary"
+      >View Curriculum Vitae</a
+    >
+  </div>
+</section>
+
+<!-- CONTENT -->
 <main class="content">
   <div class="page-body">
     <div class="pageview-block">
@@ -264,6 +288,43 @@
               >Federal Reserve Bank of Chicago</span
             >;
             <span>Chicago, IL, US</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="education" class="section">
+        <h2 class="section-title">Education</h2>
+        <div class="divider"></div>
+
+        <div class="education-container">
+          <div class="education-institution">
+            <span>Columbia University</span>; New York, NY, USA
+          </div>
+          <div class="education-description">
+            <div class="education-title">PhD in Economics</div>
+            <div class="education-year">2019</div>
+          </div>
+          <div class="education-description">
+            <div class="education-title">MPhil in Economics</div>
+            <div class="education-year">2015</div>
+          </div>
+          <div class="education-description">
+            <div class="education-title">MA in Economics</div>
+            <div class="education-year">2014</div>
+          </div>
+        </div>
+
+        <div class="education-container">
+          <div class="education-institution">
+            <span>Northwestern University</span>; Evanston, IL, USA
+          </div>
+          <div class="education-description">
+            <div class="education-title">BA in Economics</div>
+            <div class="education-year">2007</div>
+          </div>
+          <div class="education-description">
+            <div class="education-title">BA in Mathematics</div>
+            <div class="education-year">2007</div>
           </div>
         </div>
       </section>

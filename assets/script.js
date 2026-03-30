@@ -74,15 +74,6 @@ function fetchSection(viewPage, section, pageTitle) {
     .then((title.innerHTML = pageTitle));
 }
 
-function addBtnListener(btnId, viewName) {
-      const el = document.querySelector(btnId);
-      if (!el) return;
-      el.addEventListener("click", function (event) {
-        event.preventDefault();
-        loadView(viewName);
-      });
-}
-
 function loadView(viewName) {
   fetch(`views/${viewName}.html`)
     .then((response) => {
@@ -102,7 +93,7 @@ function loadView(viewName) {
         workDropdown.checked = false;
       }
       history.pushState({ view: viewName }, "", `/${viewName}`);
-      const baseCallbacks = [() => { initAnchorButtons(), initSvgIcons(), initFeatureCards() }];
+      const baseCallbacks = [() => { initAnchorButtons(), initSvgIcons(), initFeatureCards(),initFooterButtons() }];
       const viewSpecific = viewCallbacks[viewName] ?? [];
       const callbacks = [...baseCallbacks, ...viewSpecific];
     if (!callbacks) return;
@@ -129,6 +120,15 @@ function loadView(viewName) {
       console.error("Failed to load view:", error);
       loadView("home"); // show a "page not found" message?
     });
+}
+
+function addBtnListener(btnId, viewName) {
+      const el = document.querySelector(btnId);
+      if (!el) return;
+      el.addEventListener("click", function (event) {
+        event.preventDefault();
+        loadView(viewName);
+      });
 }
 
 const viewCallbacks = {
@@ -165,6 +165,54 @@ function initAnchorButtons() {
           window.scrollTo({ top, behavior: 'smooth' });
       });
   });
+}
+
+function initFooterButtons() {
+    const viewNav = document.querySelector('.view-nav');
+    let back = document.querySelector('#footer-back-btn');
+    let next = document.querySelector('#footer-next-btn');
+
+    // Clone to remove accumulated listeners
+    if (back) {
+        const backClone = back.cloneNode(true);
+        back.parentNode.replaceChild(backClone, back);
+        back = backClone;
+    }
+    if (next) {
+        const nextClone = next.cloneNode(true);
+        next.parentNode.replaceChild(nextClone, next);
+        next = nextClone;
+    }
+
+    if (!viewNav) {
+        if (back) back.innerHTML = "";
+        if (next) next.innerHTML = "";
+        return;
+    }
+
+    if (back && viewNav.dataset.backText) {
+        back.innerHTML = `&larr; ${viewNav.dataset.backText}`;
+        back.addEventListener('click', function(event) {
+            event.preventDefault();
+            loadView(viewNav.dataset.backView);
+        });
+    } else if (back) {
+        back.innerHTML = "";
+    }
+
+    if (next && viewNav.dataset.nextText) {
+        if (viewNav.dataset.nextLink) {
+          next.innerHTML = `<a href='${viewNav.dataset.nextLink}' target='_blank'> ${viewNav.dataset.nextText} &rarr; </a>`;
+        } else if (viewNav.dataset.nextView) {
+          next.innerHTML = `${viewNav.dataset.nextText} &rarr;`;
+          next.addEventListener('click', function(event) {
+            event.preventDefault();
+            loadView(viewNav.dataset.nextView);
+          });
+        }
+      } else if (next) {
+        next.innerHTML = "";
+      }
 }
 
 // Listen for back/forward button
