@@ -93,7 +93,7 @@ function loadView(viewName) {
         workDropdown.checked = false;
       }
       history.pushState({ view: viewName }, "", `/${viewName}`);
-      const baseCallbacks = [() => { initAnchorButtons(), initSvgIcons(), initFeatureCards(),initFooterButtons() }];
+      const baseCallbacks = [() => { initAnchorButtons(), initSvgIcons(), initFeatureCards(), initFooterButtons(), initScreenshots() }];
       const viewSpecific = viewCallbacks[viewName] ?? [];
       const callbacks = [...baseCallbacks, ...viewSpecific];
     if (!callbacks) return;
@@ -133,9 +133,9 @@ function addBtnListener(btnId, viewName) {
 
 const viewCallbacks = {
   work: [
-    () => addBtnListener("#btnWordPressWork", "wordpress-plugins"),
     () => addBtnListener("#btnNYCDashboardWork", "nyc-dashboard"),
-    () => addBtnListener("#btnReportDownloadHubWork", "report-download-hub")
+    () => addBtnListener("#btnReportDownloadHubWork", "report-download-hub"),
+    () => addBtnListener("#btnWordPressWork", "wordpress-plugins"),
   ]
 };
 
@@ -313,6 +313,25 @@ function initFeatureCards() {
 
     overlay.addEventListener('click', function() {
         document.querySelector('.feature-card.expanded')
+            ?.classList.remove('expanded');
+        this.classList.remove('active');
+    });
+}
+
+function initScreenshots() {
+    const overlay = document.querySelector('.screenshot-overlay');
+    const screenshots = document.querySelectorAll('.screenshot-wrapper');
+    if (!overlay || !screenshots.length) return;
+
+    screenshots.forEach(screenshot => {
+        screenshot.addEventListener('click', function() {
+            this.classList.add('expanded');
+            overlay.classList.add('active');
+        });
+    });
+
+    overlay.addEventListener('click', function() {
+        document.querySelector('.screenshot-wrapper.expanded')
             ?.classList.remove('expanded');
         this.classList.remove('active');
     });

@@ -1380,6 +1380,52 @@ a:hover {
   animation: fadeUp 0.7s ease 0.75s forwards;
 }
 
+.screenshot-wrapper {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.chevron {
+    width: auto;
+    height: 50%;
+    color: white;
+    background: var(--navy);
+    border-radius: var(--radius);
+    border: none;
+
+}
+
+.screenshot-wrapper.expanded {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 90vw;
+    max-width: 1200px;
+    animation: expandFromCard 0.3s ease forwards;
+}
+
+.screenshot-wrapper.expanded img {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-width: unset;
+}
+
+.screenshot-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+}
+
+.screenshot-overlay.active {
+    display: block;
+}
+
 /* accent line */
 .accent-line {
   width: 40px;
@@ -1575,10 +1621,10 @@ a:hover {
 
 /* Different colouring for badges on grey background */
 .badge-cards {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 3px 10px;
+  padding: 4px 12px;
   border-radius: 100px;
   border: 1px solid rgba(var(--blue-accent-rgb),0.25);
   color: var(--blue-accent);
