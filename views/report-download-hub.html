@@ -1,9 +1,11 @@
-<div class="view-nav" hidden
-    data-back-text="Back to Work"
-    data-back-view="work"
-    data-next-text="View GitHub"
-    data-next-link="https://github.com/christopherdgibson/report-download-hub">
-</div>
+<div
+  class="view-nav"
+  hidden
+  data-back-text="Back to Work"
+  data-back-view="work"
+  data-next-text="View GitHub"
+  data-next-link="https://github.com/christopherdgibson/report-download-hub"
+></div>
 
 <!-- HERO -->
 <section class="hero hero-project hero-download-hub">
@@ -32,9 +34,18 @@
     <span class="badge">Cross-Platform</span>
   </div>
 
-  <div class="screenshot-overlay"></div>
-  <div class="screenshot-wrapper">
-    <img class="hero-screenshot" src="/assets/images/avalonia-screenshot.png" />
+  <div
+    class="screenshot-wrapper"
+    data-images='["assets/images/avalonia-screenshot1.png", "assets/images/avalonia-screenshot2.png", "assets/images/avalonia-screenshot3.png"]'
+    data-current="0"
+  >
+    <button class="chevron chevron-left">&#8249;</button>
+    <img
+      class="hero-screenshot"
+      src="/assets/images/avalonia-screenshot1.png"
+      alt="Report Download Hub screenshot"
+    />
+    <button class="chevron chevron-right">&#8250;</button>
   </div>
 </section>
 
@@ -111,7 +122,7 @@
     <p class="section-label">Features</p>
     <h2 class="section-title">What's under the hood</h2>
     <div class="divider"></div>
-    <div class="card-overlay"></div>
+
     <div class="feature-grid">
       <div class="feature-card">
         <div class="feature-icon">🏭</div>
