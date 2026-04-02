@@ -859,8 +859,7 @@ ul li ul li:last-child {
         cursor: pointer;
     }
 
-    .feature-card.expanded,
-    .hamburger-card.expanded {
+    .feature-card.expanded {
         position: fixed;
         top: 50%;
         left: 50%;
@@ -872,7 +871,7 @@ ul li ul li:last-child {
         /* override grid sizing */
         margin: 0;
     }
-        feature-card.expanded .feature-icon {
+        .feature-card.expanded .feature-icon {
           font-size: 2rem;
          .feature-title, .feature-body {
           font-size: clamp(1rem, 4vw, 1.25rem);
@@ -2221,6 +2220,15 @@ footer {
 .hamburger-card.expanded {
     display:block;
     cursor: pointer;
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 85vw;
+    max-width: 500px;
+    border-left-color: var(--blue-accent);
+    margin: 0;
 }
 
 .hamburger-container {
