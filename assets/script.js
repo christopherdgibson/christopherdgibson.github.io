@@ -237,18 +237,24 @@ function initHeaderSweep() {
 
   document.getElementById("checkNav").addEventListener("change", function () {
     const nameChars = document.querySelectorAll(".name-char");
+    const bar = document.querySelector(".menu-icon-item .hamburger-bar");
     if (this.checked) {
       // sweep left on open — right to left delay
       nameChars.forEach((char, i) => {
         char.style.transitionDelay = `${(nameChars.length - 1 - i) * 40}ms`;
         char.classList.add("swept");
       });
+      // add open animation to hamburger
+      bar.classList.add("open");
     } else {
       // sweep right on close — left to right delay
       nameChars.forEach((char, i) => {
         char.style.transitionDelay = `${i * 40}ms`;
         char.classList.remove("swept");
       });
+
+      // add close animation to hamburger
+       bar.classList.remove("open");
     }
   });
 }
@@ -273,9 +279,7 @@ function sweepSpanBilateral(charSelector) {
 }
 
 function fetchIndexSvgIcons() {
-  const navIcon = document.querySelector(".checkbtn");
   const linkedInIcon = document.querySelector(".footer-social");
-  fetchSvgIcon(navIcon, "assets/images/nav-icon.svg");
   fetchSvgIcon(linkedInIcon, "assets/images/linkedin-icon.svg");
 }
 
