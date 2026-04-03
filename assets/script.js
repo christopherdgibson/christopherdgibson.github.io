@@ -152,7 +152,12 @@ const viewCallbacks = {
     () => initCarousel(),
     () => initHamburgerOverlay(),
     () => initHamburgerAnimation(),
-    () => initMiniSiteOverlay()
+    () => initMiniSiteOverlay(),
+    () => addBtnListener("#btnHomeCarousel", "home"),
+    () => addBtnListener("#btnExperienceCarousel", "experience"),
+    () => addBtnListener("#btnWorkCarousel", "work"),
+    () => addBtnListener("#btnResearchCarousel", "research"),
+    () => addBtnListener("#btnTeachingCarousel", "teaching"),
   ],
 };
 
