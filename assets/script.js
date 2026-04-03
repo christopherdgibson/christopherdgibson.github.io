@@ -1,87 +1,94 @@
 // Global variables in index.html for single query and reuse
 let body = document.querySelector("#body-placeholder");
+let bodyMini = document.querySelector("#mini-body-placeholder");
 let footer = document.querySelector("#footer-placeholder");
 let title = document.querySelector("#title-placeholder");
 
 /* ────────── Load navbar and menu events ────────── */
-let navMenu = document.querySelector("#nav-placeholder");
-fetch("nav.html")
-  .then((response) => response.text())
-  .then((data) => {
-    navMenu.innerHTML = data;
-    fetchIndexSvgIcons();
-    initHeaderSweep();
-    document
-      .querySelector("#btnHome")
-      .addEventListener("click", function (event) {
-        event.preventDefault();
-        loadView("home");
-      });
-    document
-      .querySelector("#btnExperience")
-      .addEventListener("click", function (event) {
-        event.preventDefault();
-        loadView("experience");
-      });
-    document
-      .querySelector("#btnResearch")
-      .addEventListener("click", function (event) {
-        event.preventDefault();
-        loadView("research");
-      });
-    document
-      .querySelector("#btnTeaching")
-      .addEventListener("click", function (event) {
-        event.preventDefault();
-        loadView("teaching");
-      });
-    document
-      .querySelector("#btnWork")
-      .addEventListener("click", function (event) {
-        event.preventDefault();
-        loadView("work");
-      });
-    document
-      .querySelector("#btnWorkMobile")
-      .addEventListener("click", function (event) {
-        event.preventDefault();
-        loadView("work");
-      });
-    document
-      .querySelector("#btnNYCDashboard")
-      .addEventListener("click", function (event) {
-        event.preventDefault();
-        loadView("nyc-dashboard");
-      });
-    document
-      .querySelector("#btnReportDownloadHub")
-      .addEventListener("click", function (event) {
-        event.preventDefault();
-        loadView("report-download-hub");
-      });
-    document
-      .querySelector("#btnWordPress")
-      .addEventListener("click", function (event) {
-        event.preventDefault();
-        loadView("wordpress-plugins");
-      });
-    document
-      .querySelector("#btnPersonalSite")
-      .addEventListener("click", function (event) {
-        event.preventDefault();
-        loadView("personal-site-page");
-      });
-  });
+// let navMenu = document.querySelector("#nav-placeholder");
+
+function initNavMenu(navElement, navHtml) {
+  const navMenu = document.querySelector(navElement);
+  fetch(navHtml)
+    .then((response) => response.text())
+    .then((data) => {
+      navMenu.innerHTML = data;
+      fetchIndexSvgIcons();
+      initHeaderSweep();
+      document
+        .querySelector("#btnHome")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          loadView("home");
+        });
+      document
+        .querySelector("#btnExperience")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          loadView("experience");
+        });
+      document
+        .querySelector("#btnResearch")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          loadView("research");
+        });
+      document
+        .querySelector("#btnTeaching")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          loadView("teaching");
+        });
+      document
+        .querySelector("#btnWork")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          loadView("work");
+        });
+      document
+        .querySelector("#btnWorkMobile")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          loadView("work");
+        });
+      document
+        .querySelector("#btnNYCDashboard")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          loadView("nyc-dashboard");
+        });
+      document
+        .querySelector("#btnReportDownloadHub")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          loadView("report-download-hub");
+        });
+      document
+        .querySelector("#btnWordPress")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          loadView("wordpress-plugins");
+        });
+      document
+        .querySelector("#btnPersonalSite")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          loadView("personal-site-page");
+        });
+    });
+  }
+
+  initNavMenu('#nav-placeholder', 'nav.html');
 
 /* ────────── SPA swapping logic ────────── */
-function loadView(viewName) {
+function loadView(viewName, bodyEl = body) {
   fetch(`views/${viewName}.html`)
     .then((response) => {
       if (!response.ok) throw new Error("View not found");
       return response.text();
     })
     .then((html) => {
-      body.innerHTML = html; // todo: check and throw error if not found? (e.g., if (!body) { throw new Error("Body placeholder not found");})
+      bodyEl.innerHTML = html; // todo: check and throw error if not found? (e.g., if (!body) { throw new Error("Body placeholder not found");})
       title.innerHTML =
         viewName.charAt(0).toUpperCase() + viewName.slice(1).replace(/-/g, " ");
       const checkNav = document.querySelector("#checkNav");
@@ -110,7 +117,7 @@ function loadView(viewName) {
       callbacks.forEach(cb => cb());
     })
     .then(() => {
-      const images = body.querySelectorAll("img");
+      const images = bodyEl.querySelectorAll("img");
       const imagePromises = Array.from(images)
         .filter((img) => !img.complete)
         .map(
@@ -139,11 +146,13 @@ const viewCallbacks = {
     () => addBtnListener("#btnReportDownloadHubWork", "report-download-hub"),
     () => addBtnListener("#btnWordPressWork", "wordpress-plugins"),
     () => addBtnListener("#btnPersonalSiteWork", "personal-site-page"),
+    () => sweepSpanBilateral(".name-char")
   ],
   "personal-site-page": [
     () => initCarousel(),
     () => initHamburgerOverlay(),
-    () => initHamburgerAnimation()
+    () => initHamburgerAnimation(),
+    () => initMiniSiteOverlay()
   ],
 };
 
@@ -244,6 +253,25 @@ function initHeaderSweep() {
   });
 }
 
+function sweepSpanBilateral(charSelector) {
+  const nameChars = document.querySelectorAll(charSelector);
+  const charCount = nameChars.length;
+
+  // sweep right to left with delay
+  nameChars.forEach((char, i) => {
+    char.style.transitionDelay = `${(charCount - 1 - i) * 40}ms`;
+    char.classList.add("swept");
+  });
+
+  // sweep left to right with delay
+  setTimeout(() => {
+    nameChars.forEach((char, i) => {
+      char.style.transitionDelay = `${i * 40}ms`;
+      char.classList.remove("swept");
+    });
+  }, (charCount + 4) * 40);
+}
+
 function fetchIndexSvgIcons() {
   const navIcon = document.querySelector(".checkbtn");
   const linkedInIcon = document.querySelector(".footer-social");
@@ -279,6 +307,68 @@ function initFeatureCards() {
   initOverlay(".card-overlay", ".feature-card");
 }
 
+function initOverlay(
+  overlaySelector,
+  itemSelector,
+  proxySelector = null,
+  expandedClass = "expanded",
+  activeClass = "active") {
+  const overlay = document.querySelector(overlaySelector);
+  const items = document.querySelectorAll(itemSelector);
+
+  if (!overlay || !items.length) {
+    return;
+  }
+
+  let proxy = null;
+  if (proxySelector) {
+    proxy = document.querySelector(proxySelector);
+    proxy.addEventListener("click", function(e) {
+      e.preventDefault();
+    })
+  }
+
+  items.forEach((item) => {
+    const itemEvent = proxy ?? item;
+    itemEvent.addEventListener("click", function () {
+      this.classList.add(`${expandedClass}`);
+      overlay.classList.add(`${activeClass}`);
+    });
+  });
+}
+
+function initMiniSiteOverlay() {
+  const overlay = document.querySelector(".screenshot-overlay");
+  const viewHomeBtn = document.querySelector("#viewHomePrimary");
+  // const miniSite = document.querySelector(".mini-site");
+  const miniSite = document.querySelector(".carousel-wrapper");
+
+  if (!overlay || !viewHomeBtn || !miniSite) {
+    viewHomeBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+    return;
+  }
+
+  viewHomeBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    closeAllOverlays([".card-overlay", ".screenshot-overlay"]); // in case other overlays are open
+    removeClasses('expanded'); // in case other cards are expanded
+    miniSite.classList.add("expanded");
+    overlay.classList.add("active");
+  });
+
+  //  initNavMenu('#mini-nav-placeholder', 'nav.html');
+   // loadView("home", bodyMini);
+    // document.querySelector("#btnHome")
+    //   .addEventListener("click", function (event) {
+    //     event.preventDefault();
+    //     loadView("home");
+    //   });
+}
+
 function initHamburgerOverlay() {
   const overlay = document.querySelector(".screenshot-overlay");
   const hamburger = document.querySelector(".hamburger-link");
@@ -297,72 +387,51 @@ function initHamburgerOverlay() {
   });
 }
 
-    function initHamburgerAnimation() {
-      const hamburger = document.querySelector(".hamburger-btn");
-      const hamburgerClick = document.querySelector('.hamburger-click');
-      const components = ["bottombun", "filling", "topbun", "condiments", "a-toothpick-or-something"];
-      const divText = ["That's interesting, it's looking more like a hamburger already! If you meant to close the overlay, please click outside of this card.",
-        "Are you expecting this to look even more like a hamburger? As explained above, it's just an icon.",
-        "Okay it has a bun so the hamburger looks complete. Feel free to click outside of the card to close the overlay; probably nothing more to see here.",
-        "If you're waiting for a toothpick or something you're probably expecting too much. Feel free to click outside of the card to close the overlay.",
-        "Thanks for your persistence. I hope you enjoy your hamburger!"
-      ];
-      let cycles = 0;
-      let current = 0;
-      const total = components.length;
-      const limit=7;
+function initHamburgerAnimation() {
+  const hamburger = document.querySelector(".hamburger-btn");
+  const hamburgerClick = document.querySelector('.hamburger-click');
+  const components = ["bottombun", "filling", "topbun", "condiments", "a-toothpick-or-something"];
+  const divText = ["That's interesting, it's looking more like a hamburger already! If you meant to close the overlay, please click outside of this card.",
+    "Are you expecting this to look even more like a hamburger? As explained above, it's just an icon.",
+    "Okay it has a bun so the hamburger looks complete. Feel free to click outside of the card to close the overlay; probably nothing more to see here.",
+    "If you're waiting for a toothpick or something you're probably expecting too much. Feel free to click outside of the card to close the overlay.",
+    "Thanks for your persistence. I hope you enjoy your hamburger!"
+  ];
+  let cycles = 0;
+  let current = 0;
+  const total = components.length;
+  const limit=7;
 
-      function addClickEvent(index) {
-        current = (index + total + 1) % (total + 1);
-        if (current == 0) {
-          cycles++;
-          hamburger.classList = "hamburger-btn";
-          if (cycles >= 2 && cycles <= 10 || cycles == limit) {
-            let text;
-            if (cycles != limit) {
-              if (cycles == 2) { text = "Did you notice that if you double-click the area quickly enough a highlighted hamburger pops up?"}
-              else if (cycles == 10) { text = "I may start with quotes of the day at this point..."}
-              else { text = cycles==3 ? "Aren't you full by now?" : "You've been at this for a while now.";}
-              hamburgerClick.innerHTML = text;
-            } else {
-              hamburgerClick.innerHTML = `At this point I would invite you to look into the code to read all the messages. Or keep clicking. If you are this thorough I\'m sure we would get along so feel free contact me by <a id="hamburgerEmail" href="mailto:cdg2131@columbia.edu">email!</a> This message intentionally broke the card height so you could see one more new thing. Was it worth doing this ${limit} times?`;
-              document.querySelector("#hamburgerEmail").addEventListener("click", function(e) {
-                e.stopPropagation();
-              });
-            }
-          } else {
-            hamburgerClick.innerHTML = "";
-          }
-          return;
+  function addClickEvent(index) {
+    current = (index + total + 1) % (total + 1);
+    if (current == 0) {
+      cycles++;
+      hamburger.classList = "hamburger-btn";
+      if (cycles >= 2 && cycles <= 10 || cycles == limit) {
+        let text;
+        if (cycles != limit) {
+          if (cycles == 2) { text = "Did you notice that if you double-click the area quickly enough a highlighted hamburger pops up?"}
+          else if (cycles == 10) { text = "I may start with quotes of the day at this point..."}
+          else { text = cycles==3 ? "Aren't you full by now?" : "You've been at this for a while now.";}
+          hamburgerClick.innerHTML = text;
+        } else {
+          hamburgerClick.innerHTML = `At this point I would invite you to look into the code to read all the messages. Or keep clicking. If you are this thorough I\'m sure we would get along so feel free contact me by <a id="hamburgerEmail" href="mailto:cdg2131@columbia.edu">email!</a> This message intentionally broke the card height so you could see one more new thing. Was it worth doing this ${limit} times?`;
+          document.querySelector("#hamburgerEmail").addEventListener("click", function(e) {
+            e.stopPropagation();
+          });
         }
-        hamburger.classList.add(components[current - 1]);
-        if (!divText[current-1]) return;
-        hamburgerClick.innerHTML = divText[current - 1];
+      } else {
+        hamburgerClick.innerHTML = "";
       }
-
-      document.querySelector('.hamburger-card').addEventListener("click", () => {
-        addClickEvent(current + 1);
-      });
+      return;
     }
-
-function initOverlay(
-  overlaySelector,
-  itemSelector,
-  expandedClass = "expanded",
-  activeClass = "active",
-) {
-  const overlay = document.querySelector(overlaySelector);
-  const items = document.querySelectorAll(itemSelector);
-
-  if (!overlay || !items.length) {
-    return;
+    hamburger.classList.add(components[current - 1]);
+    if (!divText[current-1]) return;
+    hamburgerClick.innerHTML = divText[current - 1];
   }
 
-  items.forEach((item) => {
-    item.addEventListener("click", function () {
-      this.classList.add(`${expandedClass}`);
-      overlay.classList.add(`${activeClass}`);
-    });
+  document.querySelector('.hamburger-card').addEventListener("click", () => {
+    addClickEvent(current + 1);
   });
 }
 

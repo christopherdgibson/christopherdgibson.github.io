@@ -1881,7 +1881,7 @@ footer {
 
 .card-wrapper:not(:hover) .mockup-letter,
 .carousel-wrapper:not(:hover) .mockup-letter  {
-  animation: letterSweepWhite 0.4s ease forwards;
+  animation: letterSweepWhite 0.4s ease backwards;
 }
 
 .mockup-site-nav {
@@ -2052,6 +2052,44 @@ footer {
   animation: fadeUp 0.7s ease 0.75s forwards;
 }
 
+.mini-site {
+  display: none;
+
+}
+
+.mini-site.expanded {
+  display: unset;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 95vw;
+  align-items: center;
+  max-height: unset;
+  max-width: 1200px;
+
+  /* .carousel-controls {
+    background: var(--background-radial-blue);
+  } */
+}
+
+.carousel-wrapper.expanded {
+    position: fixed;
+    top: 40%;
+    /* left: 50%;
+    transform: translate(-50%, -50%); */
+    z-index: 1000;
+    width: 95vw;
+    align-items: center;
+    max-height: unset;
+    max-width: 100%;
+
+    .carousel-controls {
+      background: var(--background-radial-blue);
+    }
+}
+
 .carousel-track-outer {
   overflow: hidden;
   border-radius: 10px 10px 0 0;
@@ -2215,6 +2253,9 @@ footer {
  .hamburger-link {
   cursor: pointer;
   color: var(--blue-accent);
+  &:hover {
+    text-shadow: 0 0 20px var(--teaching-accent-color);
+  }
 }
 
 .hamburger-card.expanded {
@@ -2317,7 +2358,8 @@ footer {
 }
 
 .hamburger-btn.filling .hamburger-wrapper:after {
-  background-color: #512314;
+  /* background-color: #512314; */
+  background-color: #834a54
 }
 
 .hamburger-btn.topbun .hamburger-wrapper:before {
@@ -2361,7 +2403,7 @@ footer {
 }
 
 .hamburger-icon {
-  font-size: 25px;
+  font-size: 30px;
   justify-self: center;
 }
 
@@ -2454,8 +2496,8 @@ footer {
 
 @keyframes moveUpThenDown {
   0%   { top: 0; }
-  50%  { top: -40px; }
-  100% { top: -31px; }
+  50%  { top: -45px; }
+  100% { top: -38px; }
 }
 
 @keyframes shakeWhileMovingUp {
