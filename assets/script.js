@@ -1,13 +1,12 @@
 // Global variables in index.html for single query and reuse
 let body = document.querySelector("#body-placeholder");
-let bodyMini = document.querySelector("#mini-body-placeholder");
 let footer = document.querySelector("#footer-placeholder");
 let title = document.querySelector("#title-placeholder");
 
 /* ────────── Load navbar and menu events ────────── */
 // let navMenu = document.querySelector("#nav-placeholder");
 
-function initNavMenu(navElement, navHtml) {
+function initNavMenu(navElement, bodyElement, navHtml) {
   const navMenu = document.querySelector(navElement);
   fetch(navHtml)
     .then((response) => response.text())
@@ -15,70 +14,27 @@ function initNavMenu(navElement, navHtml) {
       navMenu.innerHTML = data;
       fetchIndexSvgIcons();
       initHeaderSweep();
-      document
-        .querySelector("#btnHome")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-          loadView("home");
-        });
-      document
-        .querySelector("#btnExperience")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-          loadView("experience");
-        });
-      document
-        .querySelector("#btnResearch")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-          loadView("research");
-        });
-      document
-        .querySelector("#btnTeaching")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-          loadView("teaching");
-        });
-      document
-        .querySelector("#btnWork")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-          loadView("work");
-        });
-      document
-        .querySelector("#btnWorkMobile")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-          loadView("work");
-        });
-      document
-        .querySelector("#btnNYCDashboard")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-          loadView("nyc-dashboard");
-        });
-      document
-        .querySelector("#btnReportDownloadHub")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-          loadView("report-download-hub");
-        });
-      document
-        .querySelector("#btnWordPress")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-          loadView("wordpress-plugins");
-        });
-      document
-        .querySelector("#btnPersonalSite")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-          loadView("personal-site-page");
-        });
+      addNavClick("#btnHome", "home", bodyElement);
+      addNavClick("#btnExperience", "experience", bodyElement);
+      addNavClick("#btnWork", "work", bodyElement);
+      addNavClick("#btnWorkMobile", "work", bodyElement);
+      addNavClick("#btnResearch", "research", bodyElement);
+      addNavClick("#btnTeaching", "teaching", bodyElement);
+      addNavClick("#btnNYCDashboard", "nyc-dashboard", bodyElement);
+      addNavClick("#btnReportDownloadHub", "report-download-hub", bodyElement);
+      addNavClick("#btnWordPress", "wordpress-plugins", bodyElement);
+      addNavClick("#btnPersonalSite", "personal-site-page", bodyElement);
     });
   }
 
-  initNavMenu('#nav-placeholder', 'nav.html');
+  function addNavClick(selector, view, bodyElement) {
+    document.querySelector(selector).addEventListener("click", function(event) {
+      event.preventDefault();
+      loadView(view, bodyElement);
+    });
+  }
+
+  initNavMenu('#nav-placeholder', body, 'nav.html');
 
 /* ────────── SPA swapping logic ────────── */
 function loadView(viewName, bodyEl = body) {
