@@ -2592,7 +2592,8 @@ footer {
 
 @keyframes spinFadeOut {
 	0%   { opacity: 1; transform: rotate(0deg); }
-	100% { opacity: 0; transform: rotate(9000deg); }
+  30% { transform:  translateY(-10px); }
+	100% { opacity: 0; transform: translateY(-22.5px) rotate(9000deg); }
 }
 
 @keyframes slideInLeftWithShake {
