@@ -1,13 +1,13 @@
 // Global variables in index.html for single query and reuse
-let body = document.querySelector("#body-placeholder");
+// let body = document.querySelector("#body-placeholder");
 let footer = document.querySelector("#footer-placeholder");
 let title = document.querySelector("#title-placeholder");
 
 /* ────────── Load navbar and menu events ────────── */
 // let navMenu = document.querySelector("#nav-placeholder");
 
-function initNavMenu(navElement, bodyElement, navHtml) {
-  const navMenu = document.querySelector(navElement);
+function initNavMenu(navSelector, navHtml, bodyElement = document.querySelector("#body-placeholder")) {
+  const navMenu = document.querySelector(navSelector);
   fetch(navHtml)
     .then((response) => response.text())
     .then((data) => {
@@ -34,10 +34,10 @@ function initNavMenu(navElement, bodyElement, navHtml) {
     });
   }
 
-  initNavMenu('#nav-placeholder', body, 'nav.html');
+  initNavMenu('#nav-placeholder', 'nav.html');
 
 /* ────────── SPA swapping logic ────────── */
-function loadView(viewName, bodyEl = body) {
+function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")) {
   fetch(`views/${viewName}.html`)
     .then((response) => {
       if (!response.ok) throw new Error("View not found");
@@ -62,7 +62,7 @@ function loadView(viewName, bodyEl = body) {
           (initAnchorButtons(),
             initSvgIcons(),
             initFooterButtons(),
-            initCleanOverlays([".card-overlay", ".screenshot-overlay"]),
+            initCleanOverlays([".card-overlay", ".screenshot-overlay"]), // include base and mini-site overlays
             initFeatureCards(),
             initScreenshots());
         },
@@ -97,6 +97,10 @@ function loadView(viewName, bodyEl = body) {
 
 /* ────────── View Callbacks ────────── */
 const viewCallbacks = {
+    home: [
+    () => addBtnListener("#btnWorkHome", "work"),
+    () => addBtnListener("#btnExperienceHome", "experience"),
+  ],
   work: [
     () => addBtnListener("#btnNYCDashboardWork", "nyc-dashboard"),
     () => addBtnListener("#btnReportDownloadHubWork", "report-download-hub"),
@@ -134,7 +138,7 @@ function initAnchorButtons() {
       const target = document.getElementById(this.dataset.target);
       if (!target) return;
       // Account for fixed position header
-      const headerHeight = document.querySelector(".header").offsetHeight;
+      const headerHeight = document.querySelector("#header").offsetHeight;
       const top =
         target.getBoundingClientRect().top + window.scrollY - headerHeight - 16; // 16px padding
       window.scrollTo({ top, behavior: "smooth" });
@@ -142,7 +146,7 @@ function initAnchorButtons() {
   });
 }
 
-function initFooterButtons() {
+function initFooterButtons(bodyElement) {
   const viewNav = document.querySelector(".view-nav");
   let back = getCleanElement('#footer-back-btn');
   let next = getCleanElement('#footer-next-btn');
@@ -157,7 +161,7 @@ function initFooterButtons() {
     back.innerHTML = `&larr; ${viewNav.dataset.backText}`;
     back.addEventListener("click", function (event) {
       event.preventDefault();
-      loadView(viewNav.dataset.backView);
+      loadView(viewNav.dataset.backView, bodyElement);
     });
   } else if (back) {
     back.innerHTML = "";
@@ -170,7 +174,7 @@ function initFooterButtons() {
       next.innerHTML = `${viewNav.dataset.nextText} &rarr;`;
       next.addEventListener("click", function (event) {
         event.preventDefault();
-        loadView(viewNav.dataset.nextView);
+        loadView(viewNav.dataset.nextView, bodyElement);
       });
     }
   } else if (next) {
@@ -179,22 +183,7 @@ function initFooterButtons() {
 }
 
 function initHeaderSweep() {
-  const nameEl = document.querySelector("header h1 span");
-  const words = nameEl.textContent.split(" ");
-  let charIndex = 0;
-  nameEl.innerHTML = words
-    .map((word) => {
-      const wordHtml = word
-        .split("")
-        .map((char) => {
-          const span = `<span class="name-char" data-index="${charIndex}">${char}</span>`;
-          charIndex++;
-          return span;
-        })
-        .join("");
-      return `<span style="white-space: nowrap">${wordHtml}</span>`;
-    })
-    .join(" ");
+  splitStringIntoSpans("#headerLink span");
 
   document.getElementById("checkNav").addEventListener("change", function () {
     const nameChars = document.querySelectorAll(".name-char");
@@ -218,6 +207,26 @@ function initHeaderSweep() {
        bar.classList.remove("open");
     }
   });
+}
+
+function splitStringIntoSpans(elSelector) {
+  const nameEl = document.querySelector(elSelector);
+  if (!nameEl) return;
+  const words = nameEl.textContent.split(" ");
+  let charIndex = 0;
+  nameEl.innerHTML = words
+    .map((word) => {
+      const wordHtml = word
+        .split("")
+        .map((char) => {
+          const span = `<span class="name-char" data-index="${charIndex}">${char}</span>`;
+          charIndex++;
+          return span;
+        })
+        .join("");
+      return `<span style="white-space: nowrap">${wordHtml}</span>`;
+    })
+    .join(" ");
 }
 
 function sweepSpanBilateral(charSelector) {
@@ -269,7 +278,7 @@ function initSvgIcons() {
 }
 
 function initFeatureCards() {
-  initOverlay(".card-overlay", ".feature-card");
+  initOverlay("#cardOverlay", ".feature-card");
 }
 
 function initOverlay(
@@ -303,40 +312,59 @@ function initOverlay(
 }
 
 function initMiniSiteOverlay() {
-  const overlay = document.querySelector(".screenshot-overlay");
-  const viewHomeBtn = document.querySelector("#viewHomePrimary");
-  // const miniSite = document.querySelector(".mini-site");
-  const miniSite = document.querySelector(".carousel-wrapper");
+  let overlay = document.querySelector(".mini-site-overlay"); // do not need to initiate clean since closing refreshes index.html
+  let btnLiveMiniSite = document.querySelector(".btn-mini-site");
+  let miniSite = document.querySelector(".mini-site");
 
-  if (!overlay || !viewHomeBtn || !miniSite) {
-    viewHomeBtn.addEventListener("click", function (e) {
+  if (!overlay || !btnLiveMiniSite || !miniSite) {
+    btnLiveMiniSite.addEventListener("click", function (e) {
       e.preventDefault();
       e.stopPropagation();
     });
     return;
   }
 
-  viewHomeBtn.addEventListener("click", function (e) {
+  btnLiveMiniSite.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
-    closeAllOverlays([".card-overlay", ".screenshot-overlay"]); // in case other overlays are open
-    removeClasses('expanded'); // in case other cards are expanded
-    miniSite.classList.add("expanded");
-    overlay.classList.add("active");
-  });
+    closeOverlays([".card-overlay", ".screenshot-overlay"]); // in case other overlays are open (should I instead remove active or do I need an event assigned? initCleanOverlays() instead?)
+    removeClasses(['expanded', 'view-nav']); // in case other cards are expanded
+    document.querySelectorAll('[id]').forEach(el => { el.removeAttribute('id'); });
 
-  //  initNavMenu('#mini-nav-placeholder', 'nav.html');
-   // loadView("home", bodyMini);
-    // document.querySelector("#btnHome")
-    //   .addEventListener("click", function (event) {
-    //     event.preventDefault();
-    //     loadView("home");
-    //   });
+    miniSite.classList.add("expanded-mini-site");
+    overlay.classList.add("active");
+
+    fetch('index.html')
+      .then(response => response.text())
+      .then(data => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, 'text/html');
+        miniSite.innerHTML = doc.body.innerHTML;
+      })
+      .then(() => {
+        let bodyMini = document.querySelector('#body-placeholder');
+        // if (bodyMini && !document.querySelector('#nav-placeholder')) {
+        //   window.location.href = "index.html";
+        //   loadView('personal-site-page.html');
+        //   return;
+        // }
+        initNavMenu('#nav-placeholder', 'nav.html', bodyMini);
+        loadView("personal-site-page", bodyMini);
+        initScrollToTop(miniSite);
+        initHeaderLink();
+        const headerHeight = document.querySelector("#header").offsetHeight;
+        document.querySelector('#miniSiteTag').style.top = `calc(${headerHeight}px + 8px)`;
+        overlay.addEventListener("click", function () {
+          sessionStorage.setItem("redirect", "personal-site-page");
+          window.location.href = "/";
+        });
+      });
+  });
 }
 
 function initHamburgerOverlay() {
-  const overlay = document.querySelector(".screenshot-overlay");
-  const hamburger = document.querySelector(".hamburger-link");
+  const overlay = document.querySelector("#screenshotOverlay");
+  const hamburger = document.querySelector("#btnHamburgerCard");
 
   if (!overlay || !hamburger) {
     return;
@@ -345,9 +373,9 @@ function initHamburgerOverlay() {
   hamburger.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
-    closeAllOverlays([".card-overlay", ".screenshot-overlay"]); // in case other overlays are open
-    removeClasses('expanded'); // in case other cards are expanded
-    document.querySelector(".hamburger-card").classList.add("expanded");
+    closeOverlays(["#cardOverlay", "#screenshotOverlay"]); // in case other overlays are open; todo: can just removeClasses active?
+    removeClasses(['expanded']); // in case other cards are expanded
+    document.querySelector("#hamburgerCard").classList.add("expanded");
     overlay.classList.add("active");
   });
 }
@@ -401,7 +429,7 @@ function initHamburgerAnimation() {
 }
 
 function initScreenshots() {
-  const overlay = document.querySelector(".screenshot-overlay");
+  const overlay = document.querySelector("#screenshotOverlay");
   const wrappers = document.querySelectorAll(".screenshot-wrapper");
   if (!overlay || !wrappers.length) return;
 
@@ -465,64 +493,21 @@ function initCleanOverlays(overlaySelectors) {
   });
 }
 
-function closeAllOverlays(overlaySelectors) {
+function closeOverlays(overlaySelectors) {
   const overlays = document.querySelectorAll(overlaySelectors);
   overlays.forEach((overlay) => {
     overlay.addEventListener("click", function () {
-      removeClasses('active');
+      removeClasses(['active']);
     });
   });
 }
 
-function removeClasses(className) {
-  const elements = document.querySelectorAll(`.${className}`)
-  if (elements.length) {
-  elements.forEach(el => el.classList.remove(className));
-  }
-}
-
-function initScreenshotsNew() {
-  const overlay = document.querySelector(".screenshot-overlay");
-  const overlayImg = document.querySelector(".screenshot-overlay-img");
-  const chevronLeft = document.querySelector(".chevron-left");
-  const chevronRight = document.querySelector(".chevron-right");
-  const wrappers = document.querySelectorAll(".screenshot-wrapper");
-  if (!overlay || !wrappers.length) return;
-
-  let images = [];
-  let current = 0;
-
-  function showImage(index) {
-    current = (index + images.length) % images.length; // wraps around
-    overlayImg.src = images[current];
-    chevronLeft.style.visibility = images.length > 1 ? "visible" : "hidden";
-    chevronRight.style.visibility = images.length > 1 ? "visible" : "hidden";
-  }
-
-  wrappers.forEach((wrapper) => {
-    wrapper.addEventListener("click", function () {
-      images = JSON.parse(this.dataset.images);
-      current = parseInt(this.dataset.current ?? 0);
-      showImage(current);
-      this.classList.add("expanded");
-      //overlay.removeAttribute('hidden');
-      overlay.classList.add("active");
-    });
-  });
-
-  chevronLeft.addEventListener("click", function (e) {
-    e.stopPropagation();
-    showImage(current - 1);
-  });
-
-  chevronRight.addEventListener("click", function (e) {
-    e.stopPropagation();
-    showImage(current + 1);
-  });
-
-  overlay.addEventListener("click", function () {
-    //overlay.setAttribute('hidden', '');
-    this.classList.remove("active");
+function removeClasses(classNames) {
+  classNames.forEach(className => {
+    const elements = document.querySelectorAll(`.${className}`)
+    if (elements.length) {
+    elements.forEach(el => el.classList.remove(className));
+    }
   });
 }
 
@@ -540,8 +525,8 @@ function initCarousel() {
   let autoplay;
 
   function setActive(index) {
-    navItems.forEach((item, i) => item.classList.toggle("active", i === index));
-    dots.forEach((d, i) => d.classList.toggle("active", i === index));
+    navItems.forEach((item, i) => item.classList.toggle("activeCarousel", i === index));
+    dots.forEach((d, i) => d.classList.toggle("activeCarousel", i === index));
     track.style.transform = `translateX(-${index * 100}%)`;
   }
 
@@ -585,24 +570,10 @@ function initCarousel() {
   startInterval();
 }
 
-/* ────────── Base listeners ────────── */
-document
-  .querySelector(".scroll-to-top-btn")
-  .addEventListener("click", function () {
-    scrollToTop();
-  });
-
-document
-  .querySelector(".header-link")
-  .addEventListener("click", function (event) {
-    event.preventDefault();
-    loadView("work");
-  });
-
 /* ────────── Helper functions ────────── */
 
-function scrollToTop(behavior = "smooth") {
-  window.scrollTo({ top: 0, behavior: behavior });
+function scrollToTop(container = window, behavior = "smooth") {
+  container.scrollTo({ top: 0, behavior: behavior });
 }
 
 function getCleanElement(selector) {
@@ -627,7 +598,30 @@ function getCleanElements(selector) {
   return elClones;
 }
 
-/* ────────── Navigation handling with History API and graceful fallback ────────── */
+/* ────────── Initialise on start-up ────────── */
+
+/* ─── Index-page listeners ─── */
+function initScrollToTop(container = window) {
+  const btn = document.querySelector("#scrollToTop");
+  if (!btn) return;
+  btn.addEventListener("click", function () {
+    scrollToTop(container);
+  });
+}
+
+function initHeaderLink() {
+  const headerLink = document.querySelector("#headerLink");
+  if (!headerLink) return;
+  headerLink.addEventListener("click", function (event) {
+    event.preventDefault();
+    loadView("work"); //todo: do these apply to mini-site?
+  });
+}
+
+initScrollToTop();
+initHeaderLink();
+
+/* ─── Navigation handling with History API and graceful fallback ─── */
 
 // Listen for back/forward button
 window.addEventListener("popstate", (event) => {

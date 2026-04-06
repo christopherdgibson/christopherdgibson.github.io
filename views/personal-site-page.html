@@ -17,7 +17,7 @@
     layout decision is custom-coded.
   </p>
   <div class="hero-actions">
-    <a id="viewHomePrimary" href="#" class="btn btn-primary"
+    <a href="#" class="btn btn-primary btn-mini-site"
       >View Live Site →</a
     >
     <a class="btn btn-ghost" href="https://github.com/christopherdgibson/christopherdgibson.github.io" target="_blank">GitHub Repository</a>
@@ -58,7 +58,7 @@
           <span class="mockup-letter" style="animation-delay: 1360ms">n</span>
         </div>
         <div id="carouselNav" class="mockup-site-nav">
-          <span class="mockup-nav-item active">Home</span>
+          <span class="mockup-nav-item activeCarousel">Home</span>
           <span class="mockup-nav-item">Experience</span>
           <span class="mockup-nav-item">Work ▾</span>
           <span class="mockup-nav-item">Research</span>
@@ -144,7 +144,7 @@
     <div class="carousel-controls">
       <button class="carousel-btn" id="carouselPrev">&#8249;</button>
       <div class="carousel-dots" id="carouselDots">
-        <div class="carousel-dot active" data-index="0"></div>
+        <div class="carousel-dot activeCarousel" data-index="0"></div>
         <div class="carousel-dot" data-index="1"></div>
         <div class="carousel-dot" data-index="2"></div>
         <div class="carousel-dot" data-index="3"></div>
@@ -154,6 +154,8 @@
     </div>
   </div>
 </section>
+
+<section class="mini-site"></section>
 
 <!-- CONTENT -->
 <main class="content">
@@ -189,7 +191,7 @@
       <div class="feature-card">
         <div class="feature-icon">✦</div>
         <div class="feature-title">
-          <span class="tooltip-wrapper hamburger-link"
+          <span id="btnHamburgerCard" class="tooltip-wrapper hamburger-link"
             ><span class="tooltip"
               ><span class="tooltip-inner"
                 ><a id="hamburgerLink" href="#"
@@ -267,7 +269,7 @@
     </div>
   </section>
 
-  <div class="hamburger-card">
+  <div id="hamburgerCard" class="hamburger-card">
     <div class="feature-title">
       What is a hamburger? A hamburger is an icon that is widely recognised to
       represent an expandable menu. Since three horizontal lines comprise the

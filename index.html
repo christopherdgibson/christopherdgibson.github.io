@@ -17,9 +17,9 @@
       href="https://fonts.googleapis.com/css?family=Arvo&display=swap"
       rel="stylesheet"
     /> -->
-    <header class="header">
+    <header id="header" class="header">
       <h1>
-        <a class="header-link" href="#"
+        <a id="headerLink" class="header-link" href="#"
           ><span class="header-name">Christopher Gibson</span></a
         >
       </h1>
@@ -27,9 +27,11 @@
     </header>
 
     <article id="body-placeholder">Loading...</article>
-    <div class="screenshot-overlay"></div>
-    <div class="card-overlay"></div>
-    <button class="scroll-to-top-btn">
+    <div id="screenshotOverlay" class="screenshot-overlay"></div>
+    <div id="cardOverlay" class="card-overlay"></div>
+    <div id="miniSiteOverlay" class="mini-site-overlay"></div> <!-- // keep id if needed to identify when mini-site is active -->
+    <div id="miniSiteTag" class="mini-site-tag page-tag">you are viewing this site, within this site</div>
+    <button id="scrollToTop" class="scroll-to-top-btn">
       <svg
         width="30px"
         height="30px"
