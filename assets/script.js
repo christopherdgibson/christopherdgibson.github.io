@@ -27,14 +27,14 @@ function initNavMenu(navSelector, navHtml, bodyElement = document.querySelector(
     });
   }
 
-  function addNavClick(selector, view, bodyElement) {
-    document.querySelector(selector).addEventListener("click", function(event) {
-      event.preventDefault();
-      loadView(view, bodyElement);
-    });
-  }
+function addNavClick(selector, view, bodyElement) {
+  document.querySelector(selector).addEventListener("click", function(event) {
+    event.preventDefault();
+    loadView(view, bodyElement);
+  });
+}
 
-  initNavMenu('#nav-placeholder', 'nav.html');
+initNavMenu('#nav-placeholder', 'nav.html');
 
 /* ────────── SPA swapping logic ────────── */
 function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")) {
@@ -356,6 +356,12 @@ function initMiniSiteOverlay() {
     return;
   }
 
+  // Prevent further mini-site nesting
+  if (document.querySelector(".mini-site.expanded-mini-site")) {
+    initCardOverlay("#screenshotOverlay", "miniSiteLimitCard", "btnMiniSite");
+    return;
+  }
+
   btnLiveMiniSite.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -393,10 +399,10 @@ function initMiniSiteOverlay() {
       });
   });
 }
-function initCardOverlay(overlaySelector = "#screenshotOverlay", itemId = "hamburgerCard", btnId) {
-  btnId = btnId ?? `#btn${toPascalCase(itemId)}`;
+function initCardOverlay(overlaySelector, itemId, btnId) {
+  btnId = btnId ?? `btn${toPascalCase(itemId)}`;
   const overlay = document.querySelector(overlaySelector);
-  const btn = document.querySelector(btnId);
+  const btn = document.getElementById(btnId);
 
   if (!overlay || !btn) {
     return;
@@ -407,7 +413,7 @@ function initCardOverlay(overlaySelector = "#screenshotOverlay", itemId = "hambu
     e.stopPropagation();
     closeOverlays(["#cardOverlay", "#screenshotOverlay"]); // in case other overlays are open; todo: can just removeClasses active?
     removeClasses(['expanded']); // in case other cards are expanded
-    document.querySelector(`#${itemId}`).classList.add("expanded");
+    document.getElementById(itemId).classList.add("expanded");
     overlay.classList.add("active");
   });
 }
