@@ -57,14 +57,17 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
         workDropdown.checked = false;
       }
       history.pushState({ view: viewName }, "", `/${viewName}`);
+      const miniSite = document.querySelector('.mini-site.expanded-mini-site');
+      container = miniSite ?? window;
       const baseCallbacks = [
-        () => {
-          (initAnchorButtons(),
+        () => {(
+            initAnchorButtons(container),
             initSvgIcons(),
             initFooterButtons(),
             initCleanOverlays([".card-overlay", ".screenshot-overlay"]), // include base and mini-site overlays
             initFeatureCards(),
-            initScreenshots());
+            initScreenshots()
+          );
         },
       ];
       const viewSpecific = viewCallbacks[viewName] ?? [];
@@ -86,7 +89,7 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
       return Promise.all(imagePromises);
     })
     .then(() => {
-      scrollToTop();
+      scrollToTop(container);
     })
     .catch((error) => {
       // Fallback to home view or show error message
@@ -132,7 +135,7 @@ function addBtnListener(btnId, viewName) {
 
 /* ────────── Base Callbacks ────────── */
 
-function initAnchorButtons() {
+function initAnchorButtons(container = window, behavior = "smooth") {
   document.querySelectorAll(".page-tag-btn").forEach((btn) => {
     btn.addEventListener("click", function () {
       const target = document.getElementById(this.dataset.target);
@@ -141,7 +144,7 @@ function initAnchorButtons() {
       const headerHeight = document.querySelector("#header").offsetHeight;
       const top =
         target.getBoundingClientRect().top + window.scrollY - headerHeight - 16; // 16px padding
-      window.scrollTo({ top, behavior: "smooth" });
+      container.scrollTo({ top, behavior: behavior });
     });
   });
 }

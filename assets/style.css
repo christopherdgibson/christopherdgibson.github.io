@@ -1495,6 +1495,10 @@ footer {
     display: block;
 }
 
+body:has(.mini-site-overlay.active) {
+  overflow: hidden;
+}
+
 /* accent line */
 .accent-line {
   width: 40px;
@@ -2087,8 +2091,8 @@ footer {
   display: flex;
   position: relative;
   justify-content: center;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  /* overflow-x: hidden;
+  overflow-y: scroll; */
   height: 100%;
   width: 100%;
 }
@@ -2111,9 +2115,9 @@ footer {
 
   .navigation-menu {
     position: unset;
-    ul {
+    /* ul {
       position: absolute;
-    }
+    } */
   }
 
   .scroll-to-top-btn {
