@@ -105,14 +105,16 @@ const viewCallbacks = {
     () => addBtnListener("#btnExperienceHome", "experience"),
   ],
   work: [
+    () => initHoverSweep("#btnPersonalSiteWork .mockup-site-name span", "#btnPersonalSiteWork"),
+    () => sweepSpanBilateral(".name-char"),
     () => addBtnListener("#btnNYCDashboardWork", "nyc-dashboard"),
     () => addBtnListener("#btnReportDownloadHubWork", "report-download-hub"),
     () => addBtnListener("#btnWordPressWork", "wordpress-plugins"),
-    () => addBtnListener("#btnPersonalSiteWork", "personal-site-page"),
-    () => sweepSpanBilateral(".name-char")
+    () => addBtnListener("#btnPersonalSiteWork", "personal-site-page")
   ],
   "personal-site-page": [
     () => initCarousel(),
+    () => initHoverSweep("#carouselWrapper .mockup-site-name span", "#carouselWrapper"),
     () => initHamburgerOverlay(),
     () => initHamburgerAnimation(),
     () => initMiniSiteOverlay(),
@@ -185,31 +187,58 @@ function initFooterButtons(bodyElement) {
   }
 }
 
-function initHeaderSweep() {
-  splitStringIntoSpans("#headerLink span");
+function initHeaderSweep(textSelector = "#headerLink span", eventSelector = "#checkNav", event = "change") {
+  splitStringIntoSpans(textSelector);
 
-  document.getElementById("checkNav").addEventListener("change", function () {
-    const nameChars = document.querySelectorAll(".name-char");
+  document.querySelector(eventSelector).addEventListener(event, function () {
+    const nameChars = document.querySelectorAll(textSelector + ".name-char");
     const bar = document.querySelector(".menu-icon-item .hamburger-bar");
+    const charCount = nameChars.length;
     if (this.checked) {
-      // sweep left on open — right to left delay
-      nameChars.forEach((char, i) => {
-        char.style.transitionDelay = `${(nameChars.length - 1 - i) * 40}ms`;
-        char.classList.add("swept");
-      });
-      // add open animation to hamburger
+      // sweep left on open — right to left delay, open animate hamburger
+      sweepSpanLeft(nameChars, charCount);
       bar.classList.add("open");
     } else {
-      // sweep right on close — left to right delay
-      nameChars.forEach((char, i) => {
-        char.style.transitionDelay = `${i * 40}ms`;
-        char.classList.remove("swept");
-      });
-
-      // add close animation to hamburger
-       bar.classList.remove("open");
+      // sweep right on close — left to right delay, close animate hamburger
+        sweepSpanRight(nameChars);
+        bar.classList.remove("open");
+        // close work dropdown if open; todo: should this logic live elsewhere since it's not directly related to the header sweep?
+        const workDropwown = document.querySelector("#workDropdown");
+        if (workDropwown) {
+          workDropwown.checked = false;
+        }
     }
   });
+}
+
+function initHoverSweep(textSelector, eventSelector) {
+  splitStringIntoSpans(textSelector);
+  const nameChars = document.querySelectorAll(textSelector + ".name-char");
+  const charCount = nameChars.length;
+  let hoverTime;
+  if (!charCount) return;
+  document.querySelector(eventSelector).addEventListener("mouseenter", function () {
+    hoverTime = 0;
+    sweepSpanLeft(nameChars, charCount);
+  });
+  document.querySelector(eventSelector).addEventListener("mouseleave", function () {
+    setTimeout(() => {
+      sweepSpanRight(nameChars);
+    }, charCount * 40);
+  });
+}
+
+function sweepSpanBilateral(charSelector, charCount) {
+  const nameChars = document.querySelectorAll(charSelector);
+  charCount = charCount ?? nameChars.length;
+
+    // sweep right to left with delay
+  sweepSpanLeft(nameChars, charCount);
+
+  // sweep left to right with delay
+  setTimeout(() => {
+    sweepSpanRight(nameChars);
+  }, (charCount + 4) * 40);
 }
 
 function splitStringIntoSpans(elSelector) {
@@ -232,23 +261,19 @@ function splitStringIntoSpans(elSelector) {
     .join(" ");
 }
 
-function sweepSpanBilateral(charSelector) {
-  const nameChars = document.querySelectorAll(charSelector);
-  const charCount = nameChars.length;
-
-  // sweep right to left with delay
+function sweepSpanLeft(nameChars, charCount) {
+  charCount = charCount ?? nameChars.length;
   nameChars.forEach((char, i) => {
     char.style.transitionDelay = `${(charCount - 1 - i) * 40}ms`;
     char.classList.add("swept");
   });
+}
 
-  // sweep left to right with delay
-  setTimeout(() => {
-    nameChars.forEach((char, i) => {
-      char.style.transitionDelay = `${i * 40}ms`;
-      char.classList.remove("swept");
-    });
-  }, (charCount + 4) * 40);
+function sweepSpanRight(nameChars) {
+  nameChars.forEach((char, i) => {
+    char.style.transitionDelay = `${i * 40}ms`;
+    char.classList.remove("swept");
+  });
 }
 
 function fetchIndexSvgIcons() {

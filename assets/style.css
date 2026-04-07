@@ -1888,25 +1888,6 @@ body:has(.mini-site-overlay.active) {
   }
 }
 
-.mockup-letter {
-  display: inline-block;
-  color: white;
-  animation: letterSweep 0.4s ease forwards;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
-}
-
-/* sweep letters to blue on card hover */
-.card-wrapper:hover .mockup-letter,
-.carousel-wrapper:hover .mockup-letter {
-  animation: letterSweepBlue 0.4s ease forwards;
-}
-
-.card-wrapper:not(:hover) .mockup-letter,
-.carousel-wrapper:not(:hover) .mockup-letter  {
-  animation: letterSweepWhite 0.4s ease backwards;
-}
-
 .mockup-site-nav {
   display: flex;
   align-items: center;
@@ -2587,6 +2568,18 @@ body:has(.mini-site-overlay.active) {
   }
 }
 
+/* Hero animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Hamburger animations */
 
 @keyframes up-rotate {
@@ -2700,29 +2693,6 @@ body:has(.mini-site-overlay.active) {
   80%  { transform: translateX(-50%) rotateZ(3deg); }
   90%  { transform: translateX(-50%) rotateZ(-3deg); }
   100% { transform: translateX(-50%) rotateZ(0); }
-}
-
-/* Hero animations */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Mockup navbar sweep effect */
-@keyframes letterSweepBlue {
-  from { color: white; }
-  to   { color: var(--blue-accent); }
-}
-
-@keyframes letterSweepWhite {
-  from { color: var(--blue-accent); }
-  to   { color: white; }
 }
 
 @media (max-width: 640px) {
