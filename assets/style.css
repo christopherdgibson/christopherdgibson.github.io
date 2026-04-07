@@ -160,7 +160,6 @@ body {
 
 body:has(.home-container):not(:has(.mini-site)) {
   background: var(--background-radial-blue);
-
   footer {
     background: none;
   }
@@ -692,7 +691,7 @@ ul li ul li:last-child {
 
 .about-container {
   margin: 0px auto;
-  padding: 50px;
+  padding: 50px 0;
   justify-content: center;
   position: relative;
   display: flex;
@@ -713,7 +712,7 @@ ul li ul li:last-child {
   align-content: center;
   font-size: clamp(13px, 1.5vw, 16px);
   width: auto;
-  min-width: var(--about-size);
+  /* min-width: var(--about-size); */
   max-width: 500px;
   height: auto;
   min-height: var(--about-size);
@@ -1491,11 +1490,11 @@ footer {
 }
 
 .screenshot-overlay.active,
-.mini-site-overlay.active {
+.mini-site-overlay.active-mini-site {
     display: block;
 }
 
-body:has(.mini-site-overlay.active) {
+body:has(.mini-site-overlay.active-mini-site) {
   overflow: hidden;
 }
 
@@ -2063,6 +2062,7 @@ body:has(.mini-site-overlay.active) {
 .mini-site-tag {
   display: none;
   position: absolute;
+  cursor: pointer;
   top: calc(var(--header-height-mobile) + 75px);
   right: 8px;
   font-size: 10px;
@@ -2115,6 +2115,31 @@ body:has(.mini-site-overlay.active) {
 
   footer {
     background: none;
+  }
+}
+ 
+.modal-title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 0.75rem;
+  color: white;
+  line-height: 1.4;
+}
+.modal-body {
+  font-size: 1rem;
+  color: white;
+  margin: 0 0 1.25rem;
+  line-height: 1.6;
+}
+.modal-footer {
+  border-top: 0.5px solid rgba(var(--blue-accent-rgb),0.5);
+
+  p {
+    font-size: 0.8125rem;
+    padding-top: 1rem;
+    color: white;
+    margin: 0;
+    line-height: 1.5;
   }
 }
 
@@ -2276,7 +2301,7 @@ body:has(.mini-site-overlay.active) {
 }
 
 
-.hamburger-card {
+.modal-card {
   display: none;
   background: var(--background-radial-blue);
   border-radius: var(--radius);
@@ -2302,7 +2327,7 @@ body:has(.mini-site-overlay.active) {
   }
 }
 
-.hamburger-card.expanded {
+.modal-card.expanded {
   display:block;
   cursor: pointer;
   position:fixed;
@@ -2451,9 +2476,9 @@ body:has(.mini-site-overlay.active) {
   justify-self: center;
 }
 
-.feature-title.hamburger-click {
-  transition: opacity 0.2s;
+.hamburger-click {
   align-content: center;
+  transition: opacity 0.2s;
   color: var(--teaching-accent-color);
   a {
     color: white;
@@ -2466,6 +2491,7 @@ body:has(.mini-site-overlay.active) {
 
 .text-swap-container {
   display: grid;
+  padding-bottom: 1rem;
 }
 
 .text-swap-container > * {

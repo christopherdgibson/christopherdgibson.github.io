@@ -29,8 +29,30 @@
     <article id="body-placeholder">Loading...</article>
     <div id="screenshotOverlay" class="screenshot-overlay"></div>
     <div id="cardOverlay" class="card-overlay"></div>
-    <div id="miniSiteOverlay" class="mini-site-overlay"></div> <!-- // keep id if needed to identify when mini-site is active -->
-    <div id="miniSiteTag" class="mini-site-tag page-tag">you are viewing this site, within this site</div>
+    <div id="miniSiteOverlay" class="mini-site-overlay"></div>
+    <!-- // keep id if needed to identify when mini-site is active -->
+    <div id="btnMiniSiteCard" class="mini-site-tag page-tag">
+      You are viewing this site, within this site
+    </div>
+    <div id="miniSiteCard" class="modal-card">
+      <div class="page-tag">
+        <span>You are here</span>
+      </div>
+      <p class="modal-title">This is the site, running inside itself.</p>
+      <p class="modal-body">
+        No iframes. No screenshots. The same navigation, views, and overlays —
+        instantiated twice. This is only possible because the entire site is a
+        single page application: one HTML file, with views loaded dynamically
+        into a container.
+      </p>
+      <div class="modal-footer">
+        <p>
+          Layouts are scaled to fit. Some interactions behave differently at
+          this size.
+        </p>
+      </div>
+    </div>
+
     <button id="scrollToTop" class="scroll-to-top-btn">
       <svg
         width="30px"

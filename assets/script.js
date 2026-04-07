@@ -59,17 +59,6 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
       history.pushState({ view: viewName }, "", `/${viewName}`);
       const miniSite = document.querySelector('.mini-site.expanded-mini-site');
       container = miniSite ?? window;
-      const baseCallbacks = [
-        () => {(
-            initAnchorButtons(container),
-            initSvgIcons(),
-            initFooterButtons(),
-            initCleanOverlays([".card-overlay", ".screenshot-overlay"]), // include base and mini-site overlays
-            initFeatureCards(),
-            initScreenshots()
-          );
-        },
-      ];
       const viewSpecific = viewCallbacks[viewName] ?? [];
       const callbacks = [...baseCallbacks, ...viewSpecific];
       if (!callbacks) return;
@@ -98,7 +87,22 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
     });
 }
 
-/* ────────── View Callbacks ────────── */
+/* ────────── Callbacks ────────── */
+/* ─── Base Callbacks ─── */
+const baseCallbacks = [
+        () => {(
+            initAnchorButtons(container),
+            initSvgIcons(),
+            initFooterButtons(),
+            initCleanOverlays([".card-overlay", ".screenshot-overlay"]), // include base and mini-site overlays?
+            initCardOverlay("#screenshotOverlay", "miniSiteCard"),
+            initFeatureCards(),
+            initScreenshots()
+          );
+        },
+      ];
+
+/* ─── View Callbacks ─── */
 const viewCallbacks = {
     home: [
     () => addBtnListener("#btnWorkHome", "work"),
@@ -115,7 +119,7 @@ const viewCallbacks = {
   "personal-site-page": [
     () => initCarousel(),
     () => initHoverSweep("#carouselWrapper .mockup-site-name span", "#carouselWrapper"),
-    () => initHamburgerOverlay(),
+    () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),
     () => initMiniSiteOverlay(),
     () => addBtnListener("#btnHomeCarousel", "home"),
@@ -341,7 +345,7 @@ function initOverlay(
 
 function initMiniSiteOverlay() {
   let overlay = document.querySelector(".mini-site-overlay"); // do not need to initiate clean since closing refreshes index.html
-  let btnLiveMiniSite = document.querySelector(".btn-mini-site");
+  let btnLiveMiniSite = document.querySelector("#btnMiniSite");
   let miniSite = document.querySelector(".mini-site");
 
   if (!overlay || !btnLiveMiniSite || !miniSite) {
@@ -360,7 +364,7 @@ function initMiniSiteOverlay() {
     document.querySelectorAll('[id]').forEach(el => { el.removeAttribute('id'); });
 
     miniSite.classList.add("expanded-mini-site");
-    overlay.classList.add("active");
+    overlay.classList.add("active-mini-site");
 
     fetch('index.html')
       .then(response => response.text())
@@ -381,7 +385,7 @@ function initMiniSiteOverlay() {
         initScrollToTop(miniSite);
         initHeaderLink();
         const headerHeight = document.querySelector("#header").offsetHeight;
-        document.querySelector('#miniSiteTag').style.top = `calc(${headerHeight}px + 8px)`;
+        document.querySelector('#btnMiniSiteCard').style.top = `calc(${headerHeight}px + 8px)`;
         overlay.addEventListener("click", function () {
           sessionStorage.setItem("redirect", "personal-site-page");
           window.location.href = "/";
@@ -389,21 +393,21 @@ function initMiniSiteOverlay() {
       });
   });
 }
+function initCardOverlay(overlaySelector = "#screenshotOverlay", itemId = "hamburgerCard", btnId) {
+  btnId = btnId ?? `#btn${toPascalCase(itemId)}`;
+  const overlay = document.querySelector(overlaySelector);
+  const btn = document.querySelector(btnId);
 
-function initHamburgerOverlay() {
-  const overlay = document.querySelector("#screenshotOverlay");
-  const hamburger = document.querySelector("#btnHamburgerCard");
-
-  if (!overlay || !hamburger) {
+  if (!overlay || !btn) {
     return;
   }
 
-  hamburger.addEventListener("click", function (e) {
+  btn.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
     closeOverlays(["#cardOverlay", "#screenshotOverlay"]); // in case other overlays are open; todo: can just removeClasses active?
     removeClasses(['expanded']); // in case other cards are expanded
-    document.querySelector("#hamburgerCard").classList.add("expanded");
+    document.querySelector(`#${itemId}`).classList.add("expanded");
     overlay.classList.add("active");
   });
 }
@@ -451,7 +455,7 @@ function initHamburgerAnimation() {
     hamburgerClick.innerHTML = divText[current - 1];
   }
 
-  document.querySelector('.hamburger-card').addEventListener("click", () => {
+  document.querySelector('.modal-card').addEventListener("click", () => {
     addClickEvent(current + 1);
   });
 }
@@ -599,6 +603,10 @@ function initCarousel() {
 }
 
 /* ────────── Helper functions ────────── */
+
+function toPascalCase(input) {
+  return input.charAt(0).toUpperCase() + input.slice(1);
+}
 
 function scrollToTop(container = window, behavior = "smooth") {
   container.scrollTo({ top: 0, behavior: behavior });

@@ -17,7 +17,7 @@
     layout decision is custom-coded.
   </p>
   <div class="hero-actions">
-    <a href="#" class="btn btn-primary btn-mini-site"
+    <a id="btnMiniSite" href="#" class="btn btn-primary"
       >View Live Site →</a
     >
     <a class="btn btn-ghost" href="https://github.com/christopherdgibson/christopherdgibson.github.io" target="_blank">GitHub Repository</a>
@@ -252,30 +252,33 @@
     </div>
   </section>
 
-  <div id="hamburgerCard" class="hamburger-card">
-    <div class="feature-title">
-      What is a hamburger? A hamburger is an icon that is widely recognised to
-      represent an expandable menu. Since three horizontal lines comprise the
-      icon, it looks a bit like a hamburger.
-    </div>
-    <div class="text-swap-container">
-      <div class="feature-title hamburger-click"></div>
-      <div class="text-spacer">
-        Okay it has a bun so the hamburger looks complete. Feel free to click
-        outside of the card to close the overlay; probably nothing more to see
-        here.
+    <div id="hamburgerCard" class="modal-card">
+      <div class="page-tag">
+        <span>What is a hamburger?</span>
       </div>
-    </div>
-    <div class="hamburger-container">
-      <div class="hamburger-btn">
-        <div class="hamburger-wrapper">
-          <div class="hamburger-bar">
-            <div class="hamburger-icon">🍔</div>
+      <p class="modal-body">A hamburger is an icon that is widely recognised to
+      represent an expandable menu. Since three horizontal lines comprise the
+      icon, it looks a bit like a hamburger.</p>
+      <div class="text-swap-container">
+        <div class="hamburger-click"></div>
+        <div class="text-spacer">
+          Okay it has a bun so the hamburger looks complete. Feel free to click
+          outside of the card to close the overlay; probably nothing more to see
+          here.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="hamburger-container">
+          <div class="hamburger-btn">
+            <div class="hamburger-wrapper">
+              <div class="hamburger-bar">
+                <div class="hamburger-icon">🍔</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
   <!-- Technical decisions -->
   <section class="section">
