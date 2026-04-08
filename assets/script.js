@@ -364,7 +364,7 @@ function initMiniSiteOverlay() {
     closeOverlays([".card-overlay", ".screenshot-overlay"]); // in case other overlays are open (should I instead remove active or do I need an event assigned? initCleanOverlays() instead?)
     removeClasses(['expanded', 'view-nav']); // in case other cards are expanded
     document.querySelectorAll('[id]').forEach(el => { el.removeAttribute('id'); });
-
+    document.querySelector("header").style.display = "none";
     miniSite.classList.add("expanded-mini-site");
     overlay.classList.add("active-mini-site");
 

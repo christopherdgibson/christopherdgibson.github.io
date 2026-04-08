@@ -29,11 +29,18 @@
     <article id="body-placeholder">Loading...</article>
     <div id="screenshotOverlay" class="screenshot-overlay"></div>
     <div id="cardOverlay" class="card-overlay"></div>
-    <div id="miniSiteOverlay" class="mini-site-overlay"></div>
+    <div id="miniSiteOverlay" class="mini-site-overlay">
+      <div class="mini-site-close-container">
+        <div id="btnMiniSiteClose" class="mini-site-close-tag page-tag">
+          Close X
+        </div>
+      </div>
+    </div>
     <!-- // keep id if needed to identify when mini-site is active -->
     <div id="btnMiniSiteCard" class="mini-site-tag page-tag">
       You are viewing this site, within this site
     </div>
+
     <div id="miniSiteCard" class="modal-card">
       <div class="page-tag">
         <span>You are here</span>
@@ -51,9 +58,18 @@
           this size.
         </p>
       </div>
+      <!-- <div class="feature-title">
+        you are here
+      </div>
+        This is a live instance of the site you were just navigating — running inside itself, powered by the same single page architecture that makes this portfolio work.
+
+        No iframes. No screenshots. The navigation, the views, the overlays — all of it is the real thing, just instantiated twice. Layouts are scaled to fit.
+
+        Close this window to return.-->
     </div>
 
     <button id="scrollToTop" class="scroll-to-top-btn">
+      <!-- <a href="#" class="to-top">Back to top</a> -->
       <svg
         width="30px"
         height="30px"

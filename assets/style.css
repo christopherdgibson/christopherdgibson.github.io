@@ -20,6 +20,8 @@
   --uk-red:     #cf102d;
   --header-height-mobile: 70px;
   --header-nav-offset: 5px;
+  --mini-site-top: 3rem;
+  --mini-site-bottom: 3rem;
   --radius: 6px;
   --radius-hamburger: 4px;
   --max: 900px;
@@ -29,6 +31,7 @@
   --z-navbar-menu: 15;
   --z-navbar-submenu: 16;
   --z-mini-overlay: 20;
+  --z-btn-close-mini: 22;
   --z-overlay: 21;
   --z-pop-out: 25;
   --z-hamburger: 30;
@@ -462,6 +465,11 @@ ul li ul li:last-child {
     margin-right: 20px;
   }
 
+  .mini-site.expanded-mini-site .navigation-menu ul {
+    top: calc(var(--header-height-mobile) + var(--header-nav-offset) + var(--mini-site-top));
+    height: calc(100dvh - (var(--header-height-mobile) + var(--header-nav-offset) + var(--mini-site-top) + var(--mini-site-bottom)));
+  }
+
   .navigation-menu {
     position: relative;
     left: 0;
@@ -486,7 +494,7 @@ ul li ul li:last-child {
       top: calc(var(--header-height-mobile) + var(--header-nav-offset));
       right: -100%;
       width: 100%;
-      height: calc(100dvh - var(--header-height-mobile) - 5px);
+      height: calc(100dvh - (var(--header-height-mobile) + var(--header-nav-offset)));
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -1494,7 +1502,8 @@ footer {
     display: block;
 }
 
-body:has(.mini-site-overlay.active-mini-site) {
+body:has(.mini-site-overlay):has(.card-overlay.active),
+body:has(.mini-site-overlay):has(.screenshot-overlay.active) {
   overflow: hidden;
 }
 
@@ -2063,10 +2072,42 @@ body:has(.mini-site-overlay.active-mini-site) {
   display: none;
   position: absolute;
   cursor: pointer;
-  top: calc(var(--header-height-mobile) + 75px);
-  right: 8px;
+  right: 10px;
   font-size: 10px;
   animation: fadeIn 0.4s ease 2.5s both;
+}
+
+.mini-site-tag:hover {
+  background: rgba(var(--blue-accent-rgb), 0.18);
+  border: 1px solid rgba(var(--blue-accent-rgb), 0.4);
+}
+
+.mini-site-close-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: var(--mini-site-top);
+  display: flex;
+}
+
+.mini-site-close-tag {
+  --red-accent-rgb: 220, 80, 80;
+  --red-accent: rgb(var(--red-accent-rgb));
+  background: rgba(var(--red-accent-rgb), 0.12);
+  color: var(--red-accent);
+  border: 1px solid rgba(var(--red-accent-rgb), 0.5);
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  cursor: pointer;
+  font-size: 1rem;
+  z-index: var(--z-btn-close-mini);
+  animation: fadeIn 0.4s ease 2.5s both;
+}
+
+.mini-site-close-tag:hover {
+  background: rgba(var(--red-accent-rgb), 0.2);
+  border-color: rgba(var(--red-accent-rgb), 0.75);
 }
 
 .mini-site-wrapper {
@@ -2082,31 +2123,41 @@ body:has(.mini-site-overlay.active-mini-site) {
 .mini-site.expanded-mini-site {
   display: unset;
   position: fixed;
-  top: 0;
+  /* top: 0; */
+  width: 100vw;
+  height: calc(100vh - 6rem);
+  top: 3rem;
+  left: 0;
+  transform: none;
   /* top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); */
-  z-index: var(--z-pop-out);;
-  width: 95vw;
+  /* left: 50%; */
+  /* transform: translate(-50%, 0); */
+  z-index: var(--z-pop-out);
+  width: 100vw;
   align-items: center;
   max-height: 100%;
   max-width: 1200px;
   overflow-x: hidden;
   overflow-y: scroll;
   background: white;
-
   .navigation-menu {
     position: unset;
     /* ul {
       position: absolute;
     } */
   }
+ 
+  @media(min-width: 1200px) {
+      margin: 0 calc(50vw - 600px);
+  }
 
   .scroll-to-top-btn {
     margin: 0 20px 20px auto;
   }
 
-  .mini-site-tag {
+  .mini-site-tag, .mini-site-close-tag {
     display: block;
   }
 }
