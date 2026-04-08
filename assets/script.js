@@ -113,6 +113,12 @@ const viewCallbacks = {
     () => addBtnListener("#btnWordPressWork", "wordpress-plugins"),
     () => addBtnListener("#btnPersonalSiteWork", "personal-site-page")
   ],
+  "report-download-hub": [
+    () => initCardOverlay("#screenshotOverlay", "comingSoonCard", "btnReportDownloadHubExe")
+  ],
+  "wordpress-plugins": [
+    () => initCardOverlay("#screenshotOverlay", "comingSoonCard", "btnWordPressDemo")
+  ],
   "personal-site-page": [
     () => initCarousel(),
     () => initHoverSweep("#carouselWrapper .mockup-site-name span", "#carouselWrapper"),
@@ -143,8 +149,12 @@ function initAnchorButtons(container = window, behavior = "smooth") {
     btn.addEventListener("click", function () {
       const target = document.getElementById(this.dataset.target);
       if (!target) return;
+      let headerHeight = document.querySelector("#header").offsetHeight;
+      if (container != window) {
+        const containerRect = container.getBoundingClientRect();
+        headerHeight += containerRect.top; // account for container's position relative to viewport
+      }
       // Account for fixed position header and current height
-      const headerHeight = document.querySelector("#header").offsetHeight;
       const targetRect = target.getBoundingClientRect();
       container.scrollBy({top: targetRect.top - headerHeight - 16, left: 0, behavior: behavior});
     });
