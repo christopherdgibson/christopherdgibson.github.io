@@ -59,6 +59,18 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
       history.pushState({ view: viewName }, "", `/${viewName}`);
       const miniSite = document.querySelector('.mini-site.expanded-mini-site');
       container = miniSite ?? window;
+      const baseCallbacks = [
+        () => {(
+            initAnchorButtons(container),
+            initSvgIcons(),
+            initFooterButtons(),
+            initCleanOverlays([".card-overlay", ".screenshot-overlay"]), // include base and mini-site overlays?
+            initCardOverlay("#screenshotOverlay", "miniSiteCard"),
+            initFeatureCards(),
+            initScreenshots()
+          );
+        },
+      ];
       const viewSpecific = viewCallbacks[viewName] ?? [];
       const callbacks = [...baseCallbacks, ...viewSpecific];
       if (!callbacks) return;
@@ -86,21 +98,6 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
       loadView("home"); // todo: show a "page not found" message?
     });
 }
-
-/* ────────── Callbacks ────────── */
-/* ─── Base Callbacks ─── */
-const baseCallbacks = [
-        () => {(
-            initAnchorButtons(container),
-            initSvgIcons(),
-            initFooterButtons(),
-            initCleanOverlays([".card-overlay", ".screenshot-overlay"]), // include base and mini-site overlays?
-            initCardOverlay("#screenshotOverlay", "miniSiteCard"),
-            initFeatureCards(),
-            initScreenshots()
-          );
-        },
-      ];
 
 /* ─── View Callbacks ─── */
 const viewCallbacks = {
@@ -146,11 +143,10 @@ function initAnchorButtons(container = window, behavior = "smooth") {
     btn.addEventListener("click", function () {
       const target = document.getElementById(this.dataset.target);
       if (!target) return;
-      // Account for fixed position header
+      // Account for fixed position header and current height
       const headerHeight = document.querySelector("#header").offsetHeight;
-      const top =
-        target.getBoundingClientRect().top + window.scrollY - headerHeight - 16; // 16px padding
-      container.scrollTo({ top, behavior: behavior });
+      const targetRect = target.getBoundingClientRect();
+      container.scrollBy({top: targetRect.top - headerHeight - 16, left: 0, behavior: behavior});
     });
   });
 }
@@ -554,7 +550,7 @@ function removeClasses(classNames) {
 function initCarousel() {
   const track = getCleanElement("#carouselTrack");
   if (!track) return;
-  const dots = document.querySelectorAll(".carousel-dot"); // clean dot elements as well with getCleanElements()?
+  const dots = document.querySelectorAll("#carouselWrapper .carousel-dot"); // clean dot elements as well with getCleanElements()?
   const prev = getCleanElement("#carouselPrev");
   const next = getCleanElement("#carouselNext");
   const navItems = document.querySelectorAll("#carouselNav .mockup-nav-item");
