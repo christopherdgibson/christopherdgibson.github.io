@@ -1502,8 +1502,8 @@ footer {
     display: block;
 }
 
-body:has(.mini-site-overlay):has(.card-overlay.active),
-body:has(.mini-site-overlay):has(.screenshot-overlay.active) {
+body:has(.mini-site-overlay.active-mini-site):has(.card-overlay.active),
+body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   overflow: hidden;
 }
 

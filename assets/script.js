@@ -322,6 +322,7 @@ function initFeatureCards() {
 function initOverlay(
   overlaySelector,
   itemSelector,
+  minWidth = 768,
   proxySelector = null,
   expandedClass = "expanded",
   activeClass = "active") {
@@ -343,6 +344,7 @@ function initOverlay(
   items.forEach((item) => {
     const itemEvent = proxy ?? item;
     itemEvent.addEventListener("click", function () {
+      if (window.innerWidth > minWidth) return;
       this.classList.add(`${expandedClass}`);
       overlay.classList.add(`${activeClass}`);
     });
