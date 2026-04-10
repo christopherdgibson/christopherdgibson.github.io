@@ -17,7 +17,9 @@
     in one submission.
   </p>
   <div class="hero-actions">
-    <a id="btnReportDownloadHubExe" href="#" class="btn btn-primary">Download Application →</a>
+    <a id="btnReportDownloadHubExe" href="#" class="btn btn-primary"
+      >Download Application →</a
+    >
     <a
       target="_blank"
       href="https://github.com/christopherdgibson/report-download-hub"
@@ -48,6 +50,56 @@
     <button class="chevron chevron-right">&#8250;</button>
   </div>
 </section>
+
+<!-- Download modal -->
+<div id="reportDownloadHubExe" class="modal-card">
+  <div class="download-modal-title">Download Report Hub</div>
+  <div class="download-modal-subtitle">
+    Standalone desktop app — no installation required
+  </div>
+
+  <div class="download-modal-divider"></div>
+
+  <div class="download-modal-options">
+    <a href="/downloads/reporthub-win-x64.exe" class="download-option">
+      <span class="download-option-icon">🪟</span>
+      <div class="download-option-info">
+        <div class="download-option-platform">Windows</div>
+        <div class="download-option-detail">64-bit · Windows 10 and above</div>
+      </div>
+      <span class="download-option-badge">Recommended</span>
+    </a>
+
+    <a href="/downloads/reporthub-win-x86.exe" class="download-option">
+      <span class="download-option-icon">🪟</span>
+      <div class="download-option-info">
+        <div class="download-option-platform">Windows</div>
+        <div class="download-option-detail">32-bit · Legacy systems</div>
+      </div>
+    </a>
+
+    <a href="/downloads/reporthub-linux-x64" class="download-option">
+      <span class="download-option-icon">🐧</span>
+      <div class="download-option-info">
+        <div class="download-option-platform">Linux</div>
+        <div class="download-option-detail">x64 · Ubuntu, Debian, Fedora</div>
+      </div>
+    </a>
+
+    <a href="/downloads/reporthub-osx-x64" class="download-option">
+      <span class="download-option-icon">🍎</span>
+      <div class="download-option-info">
+        <div class="download-option-platform">macOS</div>
+        <div class="download-option-detail">Intel &amp; Apple Silicon</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="download-modal-note">
+    Windows builds are unsigned — you may need to click
+    <a href="#">"More info → Run anyway"</a> on the SmartScreen prompt.
+  </div>
+</div>
 
 <!-- CONTENT -->
 <main class="content">
