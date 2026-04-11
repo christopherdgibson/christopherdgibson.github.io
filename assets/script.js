@@ -114,17 +114,7 @@ const viewCallbacks = {
     () => addBtnListener("#btnPersonalSiteWork", "personal-site-page")
   ],
   "report-download-hub": [
-    () => initCardOverlay("#screenshotOverlay", "reportDownloadHubExe", "btnReportDownloadHubExe"),
-    () => document.querySelectorAll('#reportDownloadHubExe .download-option').forEach(option => {
-      option.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        closeOverlays(["#cardOverlay", "#screenshotOverlay"]); // in case other overlays are open; todo: can just removeClasses active?
-        removeClasses(['expanded']); // in case other cards are expanded
-        document.getElementById('comingSoonCard').classList.add("expanded");
-        document.getElementById('screenshotOverlay').classList.add("active");
-      });
-    })
+    () => initCardOverlay("#screenshotOverlay", "reportDownloadHubExe", "btnReportDownloadHubExe")
   ],
   "wordpress-plugins": [
     () => initCardOverlay("#screenshotOverlay", "comingSoonCard", "btnWordPressDemo")
