@@ -53,7 +53,10 @@
 
 <!-- Download modal -->
 <div id="reportDownloadHubExe" class="modal-card">
-  <div class="download-modal-title">Download Report Hub</div>
+  <div class="page-tag-close-container">
+    <div class="page-tag page-tag-close">✕ Close</div>
+  </div>
+  <div class="download-modal-title">Report Download Hub</div>
   <div class="download-modal-subtitle">
     Standalone desktop app — no installation required
   </div>
@@ -64,6 +67,7 @@
     <a
       href="/assets/downloads/ReportDownloadHub-win-x64.exe"
       class="download-option"
+      data-platform="Windows 64-bit"
     >
       <span class="download-option-icon">🪟</span>
       <div class="download-option-info">
@@ -76,6 +80,7 @@
     <a
       href="/assets/downloads/ReportDownloadHub-win-x86.exe"
       class="download-option"
+      data-platform="Windows 32-bit"
     >
       <span class="download-option-icon">🪟</span>
       <div class="download-option-info">
@@ -87,6 +92,7 @@
     <a
       href="/assets/downloads/ReportDownloadHub-linux-x64"
       class="download-option"
+      data-platform="Linux x86_64"
     >
       <span class="download-option-icon">🐧</span>
       <div class="download-option-info">
@@ -98,6 +104,7 @@
     <a
       href="/assets/downloads/ReportDownloadHub-osx-x64"
       class="download-option"
+      data-platform="macOS"
     >
       <span class="download-option-icon">🍎</span>
       <div class="download-option-info">
@@ -110,6 +117,38 @@
   <div class="download-modal-note">
     Windows builds are unsigned — you may need to click
     <a href="#">"More info → Run anyway"</a> on the SmartScreen prompt.
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div id="downloadConfirmModal" class="modal-card download-confirm-card">
+  <div class="page-tag-close-container">
+    <div id="btnDownloadConfirmClose" class="page-tag page-tag-close">
+      ✕ Close
+    </div>
+  </div>
+
+  <p class="modal-title">Report Download Hub</p>
+  <p class="modal-body">
+    You are downloading the
+    <span class="modal-highlight">Windows 64-bit</span>
+    build. This is a self-contained executable — no installation required.
+  </p>
+
+  <div class="modal-footer">
+    <div class="modal-footer-note">
+      Windows builds are unsigned. If prompted by SmartScreen, click "More info"
+      then "Run anyway".
+    </div>
+    <div class="modal-footer-actions">
+      <button id="btnDownloadCancel" class="btn-modal btn-modal-secondary">
+        Cancel
+      </button>
+      <a id="btnDownloadConfirm" class="btn-modal btn-modal-primary" href="#"
+        >Download</a
+      >
+    </div>
   </div>
 </div>
 

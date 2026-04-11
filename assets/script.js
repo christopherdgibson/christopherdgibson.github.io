@@ -114,7 +114,8 @@ const viewCallbacks = {
     () => addBtnListener("#btnPersonalSiteWork", "personal-site-page")
   ],
   "report-download-hub": [
-    () => initCardOverlay("#screenshotOverlay", "reportDownloadHubExe", "btnReportDownloadHubExe")
+    () => initCardOverlay("#screenshotOverlay", "reportDownloadHubExe", "btnReportDownloadHubExe"),
+    () => initDownloadModal()
   ],
   "wordpress-plugins": [
     () => initCardOverlay("#screenshotOverlay", "comingSoonCard", "btnWordPressDemo")
@@ -407,6 +408,7 @@ function initMiniSiteOverlay() {
       });
   });
 }
+
 function initCardOverlay(overlaySelector, itemId, btnId) {
   btnId = btnId ?? `btn${toPascalCase(itemId)}`;
   const overlay = document.querySelector(overlaySelector);
@@ -530,9 +532,12 @@ function initCleanOverlays(overlaySelectors) {
   const overlays = getCleanElements(overlaySelectors);
   overlays.forEach((overlay) => {
     overlay.addEventListener("click", function () {
-      const expanded = document.querySelectorAll(".expanded");
+      const expanded = document.querySelectorAll(".expanded, .hidden");
       if (expanded.length) {
-        expanded.forEach((el) => el.classList.remove("expanded"));
+        expanded.forEach((el) => {
+          el.classList.remove("expanded");
+          el.classList.remove("hidden");
+        });
       }
       this.classList.remove("active");
     });
@@ -555,6 +560,65 @@ function removeClasses(classNames) {
     elements.forEach(el => el.classList.remove(className));
     }
   });
+}
+
+// Download modal
+function initDownloadModal() {
+  let downloadBtn = document.getElementById('btnDownloadConfirm');
+  let downloadOptions = document.querySelectorAll('#reportDownloadHubExe .download-option');
+  let downloadModal = document.getElementById('reportDownloadHubExe');
+  let downloadConfirmModal = document.getElementById('downloadConfirmModal');
+  downloadOptions.forEach(downloadOption => {
+    downloadOption.addEventListener('click', (e) => {
+      e.preventDefault();
+      const pendingDownloadUrl = e.currentTarget.href;
+      document.querySelector('.modal-highlight').textContent = e.currentTarget.dataset.platform;
+      if (pendingDownloadUrl) {
+        downloadBtn.href = pendingDownloadUrl;
+      }
+      downloadModal.classList.add('hidden');
+      downloadConfirmModal.classList.remove('hidden');
+      downloadConfirmModal.classList.add('expanded');
+      // showModal('downloadConfirmModal');
+    });
+  });
+
+  document.getElementById('btnDownloadConfirm').addEventListener('click', () => {
+    showToast('Your download will begin shortly.');
+  });
+  
+  downloadConfirmModal.querySelectorAll('[id]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // showModal(btn.parentElement.id, false);
+      // showModal('reportDownloadHubExe');
+      downloadConfirmModal.classList.add('hidden');
+      downloadModal.classList.remove('hidden');
+    });
+  });
+
+  downloadModal.querySelector('.page-tag-close-container').addEventListener('click', function() {
+    downloadModal.classList.remove('expanded');
+    document.getElementById('screenshotOverlay').classList.remove('active');
+  });
+}
+
+function showModal(modalId, show = true) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    if (show) {
+    removeClasses(['expanded']);
+    modal.classList.add("expanded");
+    } else {
+    modal.classList.remove("expanded");
+    }
+  }
+}
+
+function showToast(message, duration = 3000) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('visible');
+  setTimeout(() => toast.classList.remove('visible'), duration);
 }
 
 // Carousel JS
