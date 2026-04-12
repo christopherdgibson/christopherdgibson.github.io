@@ -793,6 +793,10 @@ ul li ul li:last-child {
   margin-bottom: 16px;
 }
 
+.section-label-spaced {
+  margin-top: 40px;
+}
+
 .section-title {
   font-family: "DM Serif Display", serif;
   font-size: 1.9rem;
@@ -2014,6 +2018,16 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   background: rgba(207, 16, 45, 0.08);
   color: var(--uk-red);
   border-color: rgba(207, 16, 45, 0.2);
+}
+
+.sources-disclaimer {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 0.5px solid rgba(var(--blue-accent-rgb), 0.15);
+  font-size: 0.8rem;
+  color: var(--grey-mid);
+  line-height: 1.6;
+  max-width: 650px;
 }
 
 /* Tech table */
