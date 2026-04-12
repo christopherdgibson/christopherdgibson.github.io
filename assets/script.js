@@ -573,6 +573,7 @@ function initDownloadModal() {
       e.preventDefault();
       const pendingDownloadUrl = e.currentTarget.href;
       document.querySelector('.modal-highlight').textContent = e.currentTarget.dataset.platform;
+      document.querySelector('.modal-footer-note').textContent = e.currentTarget.dataset.note;
       if (pendingDownloadUrl) {
         downloadBtn.href = pendingDownloadUrl;
       }
