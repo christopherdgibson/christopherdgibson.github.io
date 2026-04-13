@@ -2551,6 +2551,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
 .download-option-default {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .download-option-platform {

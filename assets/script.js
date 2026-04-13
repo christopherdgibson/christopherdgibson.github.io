@@ -118,7 +118,8 @@ const viewCallbacks = {
     () => initDownloadModal()
   ],
   "wordpress-plugins": [
-    () => initCardOverlay("#screenshotOverlay", "comingSoonCard", "btnWordPressDemo")
+    () => initCardOverlay("#screenshotOverlay", "comingSoonCard", "btnWordPressDemo"),
+    () => initCardOverlay("#screenshotOverlay", "wpGithubModal", "btnWordPressGithub")
   ],
   "personal-site-page": [
     () => initCarousel(),
@@ -418,13 +419,29 @@ function initCardOverlay(overlaySelector, itemId, btnId) {
     return;
   }
 
+  const modal = document.getElementById(itemId);
   btn.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
     closeOverlays(["#cardOverlay", "#screenshotOverlay"]); // in case other overlays are open; todo: can just removeClasses active?
     removeClasses(['expanded']); // in case other cards are expanded
-    document.getElementById(itemId).classList.add("expanded");
+    modal.classList.add("expanded");
     overlay.classList.add("active");
+  });
+
+  closeModalAndOverlay(modal, overlay);
+}
+
+function closeModalAndOverlay(modal, overlay, closeSelector = '.page-tag-close') {
+  // const modal = document.querySelector(modalSelector);
+  const closeBtn = modal.querySelector(closeSelector);
+  if (!closeBtn) {
+    return;
+  }
+
+  closeBtn.addEventListener('click', function() {
+    modal.classList.remove('expanded');
+    overlay.classList.remove('active');
   });
 }
 
@@ -580,7 +597,6 @@ function initDownloadModal() {
       downloadModal.classList.add('hidden');
       downloadConfirmModal.classList.remove('hidden');
       downloadConfirmModal.classList.add('expanded');
-      // showModal('downloadConfirmModal');
     });
   });
 
@@ -590,17 +606,15 @@ function initDownloadModal() {
   
   downloadConfirmModal.querySelectorAll('[id]').forEach(btn => {
     btn.addEventListener('click', () => {
-      // showModal(btn.parentElement.id, false);
-      // showModal('reportDownloadHubExe');
       downloadConfirmModal.classList.add('hidden');
       downloadModal.classList.remove('hidden');
     });
   });
 
-  downloadModal.querySelector('.page-tag-close').addEventListener('click', function() {
-    downloadModal.classList.remove('expanded');
-    document.getElementById('screenshotOverlay').classList.remove('active');
-  });
+  // downloadModal.querySelector('.page-tag-close').addEventListener('click', function() {
+  //   downloadModal.classList.remove('expanded');
+  //   document.getElementById('screenshotOverlay').classList.remove('active');
+  // });
 }
 
 function showModal(modalId, show = true) {

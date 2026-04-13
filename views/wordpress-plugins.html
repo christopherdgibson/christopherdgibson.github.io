@@ -1,9 +1,11 @@
-<div class="view-nav" hidden
-    data-back-text="Back to Work"
-    data-back-view="work"
-    data-next-text="View Demo"
-    data-next-view="work">
-</div>
+<div
+  class="view-nav"
+  hidden
+  data-back-text="Back to Work"
+  data-back-view="work"
+  data-next-text="View Demo"
+  data-next-view="work"
+></div>
 
 <!-- HERO -->
 <section class="hero hero-project hero-wp">
@@ -16,7 +18,9 @@
   </p>
   <div class="hero-actions">
     <a id="btnWordPressDemo" href="#" class="btn btn-primary">View Demo →</a>
-    <a href="#" class="btn btn-ghost">GitHub Repository</a>
+    <a id="btnWordPressGithub" href="#" class="btn btn-ghost"
+      >GitHub Repository</a
+    >
   </div>
   <div class="badges">
     <span class="badge">React</span>
@@ -42,6 +46,58 @@
     <button class="chevron chevron-right">&#8250;</button>
   </div>
 </section>
+
+<!-- Github modal -->
+<div id="wpGithubModal" class="modal-card">
+  <div class="page-tag-close-container">
+    <div class="page-tag page-tag-close">✕ Close</div>
+  </div>
+  <div class="download-modal-title">WordPress Plugins</div>
+  <div class="download-modal-subtitle">
+    Designed from scratch — click to view the code on GitHub
+  </div>
+
+  <div class="download-modal-divider"></div>
+
+  <div class="download-modal-options">
+    <a
+      target="_blank"
+      href="https://github.com/christopherdgibson/wp-agenda-block"
+      class="download-option"
+      data-platform="Windows 64-bit"
+      data-note="Windows builds are unsigned. If prompted by SmartScreen, click 'More info' then 'Run anyway'."
+    >
+      <span class="download-option-icon">📋</span>
+      <div class="download-option-info">
+        <div class="download-option-platform">Agenda block</div>
+        <div class="download-option-detail">
+          A structured content card block with expandable detail panels
+        </div>
+      </div>
+    </a>
+
+    <a
+      target="_blank"
+      href="https://github.com/christopherdgibson/wp-daily-feed-block"
+      class="download-option"
+      data-platform="Windows 32-bit"
+      data-note="Windows builds are unsigned. If prompted by SmartScreen, click 'More info' then 'Run anyway'."
+    >
+      <span class="download-option-icon">📆</span>
+      <div class="download-option-info">
+        <div class="download-option-platform">Daily feed block</div>
+        <div class="download-option-detail">
+          A daily API display block with calendar navigation
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- <div class="download-modal-note">
+    Report availability is subject to third-party site stability and maintained
+    on a best-effort basis.
+  </div> -->
+</div>
 
 <!-- CONTENT -->
 <main class="content">
@@ -76,7 +132,7 @@
     <div class="plugin-grid">
       <div class="plugin-card">
         <div class="plugin-card-eyebrow">Plugin 01</div>
-        <div class="plugin-card-title">DayBrief</div>
+        <div class="plugin-card-title">Daily Feed</div>
         <div class="plugin-card-body">
           A Gutenberg block that fetches and displays a daily fact or quote from
           an external API, navigable by date via an integrated calendar. API
@@ -108,8 +164,8 @@
     <p class="section-label">Features</p>
     <h2 class="section-title">What's under the hood</h2>
     <div class="divider"></div>
-    
-    <p class="section-label">DayBrief</p>
+
+    <p class="section-label">Daily Feed</p>
     <div class="feature-grid">
       <div class="feature-card">
         <div class="feature-icon">🔄</div>
@@ -126,7 +182,7 @@
         <div class="feature-icon">📅</div>
         <div class="feature-title">Calendar navigation</div>
         <div class="feature-body">
-          DayBrief includes a date-picker calendar that updates the displayed
+          Daily Feed includes a date-picker calendar that updates the displayed
           content on selection. Each date fetches its own API response, with the
           result cached to avoid redundant requests on revisit.
         </div>
@@ -217,7 +273,7 @@
       <div class="tech-row">
         <div class="tech-key">Response normalisation</div>
         <div class="tech-val">
-          DayBrief handles both JSON and raw HTML API responses, normalising
+          Daily Feed handles both JSON and raw HTML API responses, normalising
           them into a consistent display format rather than assuming a fixed
           structure.
         </div>
