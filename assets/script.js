@@ -597,7 +597,7 @@ function initDownloadModal() {
     });
   });
 
-  downloadModal.querySelector('.page-tag-close-container').addEventListener('click', function() {
+  downloadModal.querySelector('.page-tag-close').addEventListener('click', function() {
     downloadModal.classList.remove('expanded');
     document.getElementById('screenshotOverlay').classList.remove('active');
   });

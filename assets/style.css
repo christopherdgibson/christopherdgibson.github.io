@@ -1606,9 +1606,6 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
     background: none;
     border: none;
     padding: 0;
-    background: none;
-    border: none;
-    padding: 0;
     cursor: pointer;
     font-size: 0.65rem;
     letter-spacing: 0.12em;
@@ -2351,7 +2348,6 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
 
 .modal-card {
   display: none;
-  cursor: pointer;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -2552,16 +2548,15 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   flex: 1;
 }
 
+.download-option-default {
+  display: flex;
+  justify-content: space-between;
+}
+
 .download-option-platform {
   font-size: 0.9rem;
   font-weight: 500;
   color: #ffffff;
-}
-
-.download-option-detail {
-  font-size: 0.75rem;
-  color: var(--grey-mid);
-  margin-top: 2px;
 }
 
 .download-option-badge {
@@ -2572,6 +2567,13 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   border: 1px solid rgba(var(--blue-accent-rgb), 0.3);
   border-radius: 100px;
   padding: 2px 8px;
+  align-content: center;
+}
+
+.download-option-detail {
+  font-size: 0.75rem;
+  color: var(--grey-mid);
+  margin-top: 2px;
 }
 
 .download-modal-note {
@@ -2598,14 +2600,19 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   }
 }
 
-#hamburgerCard .page-tag {
-  background: rgba(var(--teaching-accent-rgb), 0.1);
-  border: 1px solid rgba(var(--teaching-accent-rgb), 0.2);
-  span {
-    color: var(--teaching-accent-color);
-    font-weight: 500;
+#hamburgerCard {
+  cursor: pointer;
+
+  .page-tag {
+    background: rgba(var(--teaching-accent-rgb), 0.1);
+    border: 1px solid rgba(var(--teaching-accent-rgb), 0.2);
+    span {
+      color: var(--teaching-accent-color);
+      font-weight: 500;
+    }
   }
 }
+
 .hamburger-card-content {
   display: grid;
   grid-template-columns: 2fr 1fr;
