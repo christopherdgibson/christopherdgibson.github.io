@@ -118,7 +118,6 @@ const viewCallbacks = {
     () => initDownloadModal()
   ],
   "wordpress-plugins": [
-    () => initCardOverlay("#screenshotOverlay", "comingSoonCard", "btnWordPressDemo"),
     () => initCardOverlay("#screenshotOverlay", "wpGithubModal", "btnWordPressGithub")
   ],
   "personal-site-page": [
