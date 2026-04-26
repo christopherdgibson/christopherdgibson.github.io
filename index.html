@@ -13,10 +13,6 @@
   </head>
 
   <body>
-    <!-- <link
-      href="https://fonts.googleapis.com/css?family=Arvo&display=swap"
-      rel="stylesheet"
-    /> -->
     <header id="header" class="header">
       <h1>
         <a id="headerLink" class="header-link" href="#"
@@ -31,9 +27,7 @@
     <div id="cardOverlay" class="card-overlay"></div>
     <div id="miniSiteOverlay" class="mini-site-overlay">
       <div class="page-tag-close-container">
-        <div id="btnMiniSiteClose" class="page-tag page-tag-close">
-          Close X
-        </div>
+        <div id="btnMiniSiteClose" class="page-tag page-tag-close">Close X</div>
       </div>
     </div>
     <!-- // keep id if needed to identify when mini-site is active -->
@@ -42,6 +36,9 @@
     </div>
 
     <div id="miniSiteCard" class="modal-card">
+      <div class="page-tag-close-container">
+        <div class="page-tag page-tag-close page-tag-close-right">✕ Close</div>
+      </div>
       <div class="page-tag">
         <span>You are here</span>
       </div>
@@ -68,12 +65,17 @@
 
         Close this window to return.-->
     </div>
-        <div id="comingSoonCard" class="modal-card">
+    <div id="comingSoonCard" class="modal-card">
+      <div class="page-tag-close-container">
+        <div id="btnMiniSiteClose" class="page-tag page-tag-close page-tag-close-right">X</div>
+      </div>
       <div class="page-tag">
         <span>Under construction</span>
       </div>
       <p class="modal-title">Coming soon</p>
-      <p class="modal-body">This feature will be available soon. Thank you for your patience.</p>
+      <p class="modal-body">
+        This feature will be available soon. Thank you for your patience.
+      </p>
     </div>
 
     <button id="scrollToTop" class="scroll-to-top-btn">

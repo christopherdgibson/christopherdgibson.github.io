@@ -2127,6 +2127,10 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   border-color: rgba(var(--red-accent-rgb), 0.75);
 }
 
+.page-tag-close-right {
+  margin-left: auto;
+}
+
 .mini-site-wrapper {
   display: flex;
   position: relative;
@@ -2516,6 +2520,10 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   flex-direction: column;
   gap: 12px;
   margin-bottom: 32px;
+
+  img {
+    border-radius: var(--radius)
+  }
 }
 
 .download-option {
@@ -2546,6 +2554,12 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
 
 .download-option-info {
   flex: 1;
+}
+
+.demo-redirect {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .download-option-default {

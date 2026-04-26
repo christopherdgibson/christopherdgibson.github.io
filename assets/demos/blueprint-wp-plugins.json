@@ -1,0 +1,31 @@
+{
+    "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+    "login": true,
+    "landingPage": "/wp-admin/edit.php?post_type=page",
+    "steps": [
+        {
+            "step": "installPlugin",
+            "pluginData": {
+                "resource": "url",
+                "url": "https://raw.githubusercontent.com/christopherdgibson/wp-agenda-block/main/docs/agenda-block.zip"
+            },
+            "options": { "activate": true }
+        },
+        {
+            "step": "installPlugin",
+            "pluginData": {
+                "resource": "url",
+                "url": "https://raw.githubusercontent.com/christopherdgibson/wp-daily-feed-block/main/docs/daily-feed-block.zip"
+            },
+            "options": { "activate": true }
+        },
+        {
+            "step": "wp-cli",
+            "command": "wp post create --post_title='DEMO: Agenda Block' --post_content='<!-- wp:create-block/agenda-block /-->' --post_status=draft --post_type=page --porcelain"
+        },
+        {
+            "step": "wp-cli",
+            "command": "wp post create --post_title='DEMO: Daily Feed Block' --post_content='<!-- wp:create-block/daily-feed-block /-->' --post_status=draft --post_type=page --porcelain"
+        }
+    ]
+}

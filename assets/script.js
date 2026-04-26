@@ -40,7 +40,7 @@ initNavMenu('#nav-placeholder', 'nav.html');
 function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")) {
   fetch(`views/${viewName}.html`)
     .then((response) => {
-      if (!response.ok) throw new Error("View not found");
+      if (!response.ok) throw new Error(`View not found: ${viewName}`);
       return response.text();
     })
     .then((html) => {
@@ -118,6 +118,8 @@ const viewCallbacks = {
     () => initDownloadModal()
   ],
   "wordpress-plugins": [
+    () => initCardOverlay("#screenshotOverlay", "wpDemoModal", "btnWordPressDemo"),
+    () => initDemoLaunch("#screenshotOverlay", "wpDemoModal", "btnWordPressDemo"),
     () => initCardOverlay("#screenshotOverlay", "wpGithubModal", "btnWordPressGithub")
   ],
   "personal-site-page": [
@@ -635,6 +637,66 @@ function showToast(message, duration = 3000) {
   setTimeout(() => toast.classList.remove('visible'), duration);
 }
 
+// Wordpress demo countdown
+
+function initDemoLaunch(overlaySelector, itemId, btnId) {
+  btnId = btnId ?? `btn${toPascalCase(itemId)}`;
+  const overlay = document.querySelector(overlaySelector);
+  const btn = document.getElementById(btnId);
+
+  if (!overlay || !btn) {
+    return;
+  }
+
+  const modal = document.getElementById(itemId);
+    console.log('modal', modal);
+
+  const countdownEl = modal.querySelector('.demo-redirect .download-option-platform');
+  console.log('countdownEl', countdownEl);
+
+  btn.addEventListener("click", function (e) {
+    let count = 5;
+    const interval = setInterval(() => {
+        countdownEl.textContent = `Launching in ${--count}s...`;
+        if (count === 0) {
+            clearInterval(interval);
+            launchUrl('https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/christopherdgibson/christopherdgibson.github.io/main/assets/demos/blueprint-wp-plugins.json', '_blank');
+            
+            modal.classList.remove('expanded');
+            overlay.classList.remove('active');
+        }
+    }, 1000);
+
+    countdownEl.addEventListener('click', () => {
+      clearInterval(interval);
+      modal.classList.remove('expanded');
+      overlay.classList.remove('active');
+    });
+  });
+}
+
+function launchUrl(url, target) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = target;
+    a.rel = 'noopener noreferrer';
+    a.click();
+}
+
+function delayedUrlLaunch(overlay, modal, btnId, countdownEL, url) {
+  let count = 5;
+  const interval = setInterval(() => {
+      countdownEl.textContent = `Launching in ${--count}s...`;
+      if (count === 0) {
+          clearInterval(interval);
+          window.open(url, '_blank');
+          
+          modal.classList.remove('expanded');
+          overlay.classList.remove('active');
+      }
+  }, 1000);
+}
+
 // Carousel JS
 
 function initCarousel() {
@@ -774,6 +836,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Otherwise handle normal refresh/direct navigation
   const path = window.location.pathname.replace("/", "");
+  console.log('path: ', path);
+  if (path === 'wp-agenda-block') {
+    loadView('wordpress-plugins');
+    return;
+  }
+  console.log('path below return: ', path);
   if (path && path !== "index.html") {
     loadView(path);
   } else {
