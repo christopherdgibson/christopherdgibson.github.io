@@ -19,6 +19,14 @@
             },
             "options": { "activate": true }
         },
+                {
+            "step": "installPlugin",
+            "pluginData": {
+                "resource": "url",
+                "url": "https://raw.githubusercontent.com/christopherdgibson/wp-local-time-block/main/docs/local-time-block.zip"
+            },
+            "options": { "activate": true }
+        },
         {
             "step": "wp-cli",
             "command": "wp post create --post_title='DEMO: Agenda Block' --post_content='<!-- wp:create-block/agenda-block /-->' --post_status=draft --post_type=page --porcelain"
@@ -26,6 +34,10 @@
         {
             "step": "wp-cli",
             "command": "wp post create --post_title='DEMO: Daily Feed Block' --post_content='<!-- wp:create-block/daily-feed-block /-->' --post_status=draft --post_type=page --porcelain"
+        },
+        {
+            "step": "wp-cli",
+            "command": "wp post create --post_title='DEMO: Local Time Block' --post_content='<!-- wp:create-block/local-time-block /-->' --post_status=draft --post_type=page --porcelain"
         }
     ]
 }
