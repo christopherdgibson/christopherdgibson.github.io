@@ -23,6 +23,7 @@ function initNavMenu(navSelector, navHtml, bodyElement = document.querySelector(
       addNavClick("#btnNYCDashboard", "nyc-dashboard", bodyElement);
       addNavClick("#btnReportDownloadHub", "report-download-hub", bodyElement);
       addNavClick("#btnWordPress", "wordpress-plugins", bodyElement);
+      addNavClick("#btnTZComp", "react-native-tzcomp", bodyElement);
       addNavClick("#btnPersonalSite", "personal-site-page", bodyElement);
     });
   }
@@ -121,6 +122,10 @@ const viewCallbacks = {
     () => initCardOverlay("#screenshotOverlay", "wpDemoModal", "btnWordPressDemo"),
     () => initDemoLaunch("#screenshotOverlay", "wpDemoModal", "btnWordPressDemo"),
     () => initCardOverlay("#screenshotOverlay", "wpGithubModal", "btnWordPressGithub")
+  ],
+  "react-native-tzcomp": [
+    () => initCardOverlay("#screenshotOverlay", "tzCompApk", "btnTzCompApk"),
+    //() => initDownloadModal()
   ],
   "personal-site-page": [
     () => initCarousel(),
@@ -434,7 +439,6 @@ function initCardOverlay(overlaySelector, itemId, btnId) {
 }
 
 function closeModalAndOverlay(modal, overlay, closeSelector = '.page-tag-close') {
-  // const modal = document.querySelector(modalSelector);
   const closeBtn = modal.querySelector(closeSelector);
   if (!closeBtn) {
     return;
