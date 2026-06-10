@@ -13,17 +13,18 @@
   <h1 class="hero-title">TZComp</h1>
   <p class="hero-desc">
     A cross-platform timezone comparison app built with React Native and Expo.
-    Compare multiple timezones side by side, adjust a base time to see how it
-    propagates across all cards, and customise the appearance with colour
+    Compare multiple timezones side by side, adjust a reference time to see how
+    it propagates across all cards, and customise the appearance with colour
     themes and gradient accents.
   </p>
   <div class="hero-actions">
     <a id="btnTzCompApk" href="#" class="btn btn-primary"
       >Download Application →</a
     >
-    <a href="https://github.com/christopherdgibson/tzcomp"
-    target="_blank"
-    class="btn btn-ghost"
+    <a
+      href="https://github.com/christopherdgibson/tzcomp"
+      target="_blank"
+      class="btn btn-ghost"
       >GitHub Repository</a
     >
   </div>
@@ -58,7 +59,8 @@
   </div>
   <div class="download-modal-title">TZComp</div>
   <div class="download-modal-subtitle">
-    Android APK build - if prompted, enable 'Install unknown apps' in your Android settings.
+    Android APK build - if prompted, enable 'Install unknown apps' in your
+    Android settings.
   </div>
 
   <div class="download-modal-divider"></div>
@@ -144,14 +146,14 @@
       Native as an exercise in cross-platform development. The app runs on
       Android and web from a single codebase, with platform-specific behaviour
       handled via React Native's Platform API where needed. Every interactive
-      component — dropdowns, number inputs, colour panels — is custom-built
-      with no third-party UI library.
+      component — dropdowns, number inputs, colour panels — is custom-built with
+      no third-party UI library.
     </p>
 
     <div class="pull-quote">
       <p>
-        One codebase, three targets. The same timezone logic, theme system,
-        and component library runs on Android, iOS, and web.
+        One codebase, three targets. The same timezone logic, theme system, and
+        component library runs on Android, iOS, and web.
       </p>
     </div>
   </section>
@@ -162,11 +164,12 @@
     <h2 class="section-title">Offset-anchored comparison</h2>
     <div class="divider"></div>
     <p class="section-body">
-      Comparison is anchored to a base timezone — the first card — with all
-      subsequent cards expressing their time as an offset from this base rather
-      than independently from UTC. When the user adjusts the base time to a
-      hypothetical local time, the delta propagates automatically through every
-      card, keeping all timezones consistent relative to the chosen moment.
+      Comparison is anchored to a shared UTC reference time. When the user
+      adjusts any card to a hypothetical local time, the delta is applied to the
+      underlying UTC timestamp and propagates automatically through every card,
+      keeping all timezones consistent relative to the chosen moment. DST
+      transitions are handled automatically — each card recalculates its UTC
+      offset when the timezone transitions between standard and daylight time.
     </p>
   </section>
 
@@ -182,7 +185,7 @@
         <div class="feature-body">
           Add and remove timezone cards at will. Each card displays live time,
           date, timezone badge, and full timezone name, updating in sync with
-          the base card.
+          the UTC reference time.
         </div>
       </div>
 
@@ -190,9 +193,9 @@
         <div class="feature-icon">🕐</div>
         <div class="feature-title">Local time selection</div>
         <div class="feature-body">
-          Select a hypothetical local time on the base card to see how it
-          translates across all other timezones simultaneously — useful for
-          scheduling across regions.
+          Select a hypothetical local time on any card to see how it translates
+          across all other timezones simultaneously — useful for scheduling
+          across regions.
         </div>
       </div>
 
@@ -211,9 +214,10 @@
         <div class="feature-icon">🔢</div>
         <div class="feature-title">Custom input components</div>
         <div class="feature-body">
-          Searchable dropdowns with Modal-based layering, number up/down inputs
-          with inline text editing, and a platform-aware keyboard search — all
-          built without third-party UI libraries.
+          Searchable dropdowns with Modal-based layering, adaptive opening
+          direction and height based on available screen space, keyboard-aware
+          repositioning, and number up/down inputs with inline text editing —
+          all built without third-party UI libraries.
         </div>
       </div>
     </div>
@@ -230,7 +234,17 @@
         <div class="tech-val">
           Dropdowns, number inputs, and colour panels are all custom-built —
           partly because the WordPress originals were custom, and partly because
-          React Native's built-in equivalents are either limited or platform-inconsistent.
+          React Native's built-in equivalents are either limited or
+          platform-inconsistent.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">UTC-anchored time state</div>
+        <div class="tech-val">
+          Rather than deriving time from a base card, all cards compute their
+          local time from a shared UTC timestamp. This ensures AM/PM toggles,
+          DST transitions, and day rollovers are always consistent across cards
+          without any card-to-card synchronisation logic.
         </div>
       </div>
       <div class="tech-row">
@@ -238,8 +252,8 @@
         <div class="tech-val">
           Timezone offset calculations use Intl.DateTimeFormat exclusively
           rather than Date.toLocaleString, which behaves inconsistently on
-          Android's Hermes engine. This ensures correct offset values across
-          all platforms.
+          Android's Hermes engine. This ensures correct offset values across all
+          platforms.
         </div>
       </div>
       <div class="tech-row">
@@ -247,24 +261,24 @@
         <div class="tech-val">
           Theme and settings are managed via separate context providers,
           allowing any component to consume the current accent colour or user
-          preferences without prop drilling. All derived colours are computed
-          at context level and passed down as a flat theme object.
+          preferences without prop drilling. All derived colours are computed at
+          context level and passed down as a flat theme object.
         </div>
       </div>
       <div class="tech-row">
         <div class="tech-key">Modal-based dropdowns</div>
         <div class="tech-val">
-          Dropdowns render their content in a React Native Modal, positioned
-          via measureInWindow, to escape the stacking context limitations that
-          make z-index unreliable in deeply nested component trees on Android.
+          Dropdowns render their content in a React Native Modal, positioned via
+          measureInWindow, to escape the stacking context limitations that make
+          z-index unreliable in deeply nested component trees on Android.
         </div>
       </div>
       <div class="tech-row">
         <div class="tech-key">Expo SDK 52</div>
         <div class="tech-val">
           Targeting SDK 52 rather than the latest release due to a known Gradle
-          compatibility issue with SDK 53+ on Windows. An upgrade path to SDK
-          56 is planned once upstream toolchain issues are resolved.
+          compatibility issue with SDK 53+ on Windows. An upgrade path to SDK 56
+          is planned once upstream toolchain issues are resolved.
         </div>
       </div>
     </div>
