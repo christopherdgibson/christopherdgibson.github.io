@@ -23,6 +23,7 @@ function initNavMenu(navSelector, navHtml, bodyElement = document.querySelector(
       addNavClick("#btnNYCDashboard", "nyc-dashboard", bodyElement);
       addNavClick("#btnReportDownloadHub", "report-download-hub", bodyElement);
       addNavClick("#btnWordPress", "wordpress-plugins", bodyElement);
+      addNavClick("#btnAdminDocRepo", "admin-doc-repo", bodyElement);
       addNavClick("#btnTZComp", "react-native-tzcomp", bodyElement);
       addNavClick("#btnPersonalSite", "personal-site-page", bodyElement);
     });
@@ -102,7 +103,7 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
 
 /* ─── View Callbacks ─── */
 const viewCallbacks = {
-    home: [
+  home: [
     () => addBtnListener("#btnWorkHome", "work"),
     () => addBtnListener("#btnExperienceHome", "experience"),
   ],
@@ -122,6 +123,10 @@ const viewCallbacks = {
     () => initCardOverlay("#screenshotOverlay", "wpDemoModal", "btnWordPressDemo"),
     () => initDemoLaunch("#screenshotOverlay", "wpDemoModal", "btnWordPressDemo"),
     () => initCardOverlay("#screenshotOverlay", "wpGithubModal", "btnWordPressGithub")
+  ],
+  "admin-doc-repo": [
+    () => initCardOverlay("#screenshotOverlay", "adrDemoModal", "btnAdminDocRepoDemo"),
+    () => initDemoLaunch("#screenshotOverlay", "adrDemoModal", "btnAdminDocRepoDemo")
   ],
   "react-native-tzcomp": [
     () => initCardOverlay("#screenshotOverlay", "tzCompApk", "btnTzCompApk"),

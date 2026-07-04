@@ -2085,7 +2085,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   font-size: 0.85rem;
   color: #4a5e6e;
   padding: 16px 20px;
-  display: flex;
+  /* display: flex; */
   align-items: center;
 }
 
