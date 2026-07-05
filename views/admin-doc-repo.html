@@ -156,7 +156,8 @@
           Each file supports multiple expense rows — category, submitter, date,
           and amount — for cases where a single document contains multiple
           receipts. Rows are added, edited, and removed inline with optimistic
-          updates and automatic revert on failure.
+          updates and automatic revert on failure. Optional input to select 
+          expenses to include / ignore for reimbursement.
         </div>
       </div>
 
@@ -178,7 +179,7 @@
           Deleted files are moved to a server-side trash directory rather than
           permanently removed. A trash panel shows original filename, deletion
           date, and full expense metadata at time of deletion, with a one-click
-          restore. Orphaned trash entries are automatically pruned on panel load.
+          restore. Orphaned trash entries are automatically pruned after 30 days.
         </div>
       </div>
 
