@@ -117,6 +117,22 @@
       rgba(56, 88, 233, 0.05) 0%,
       transparent 50%
     );
+    --background-image-adr:
+    radial-gradient(
+      ellipse 50% 90% at 90% 20%,
+      rgba(56, 88, 233, 0.12) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 40% 50% at 15% 45%,
+      rgba(var(--blue-accent-rgb), 0.12) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+        ellipse 30% 40% at 50% 15%,
+        rgba(56, 88, 233, 0.15) 0%,
+        transparent 50%
+      );
     --background-image-tz:
     radial-gradient(
       ellipse 60% 90% at 80% 60%,
@@ -1674,6 +1690,10 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
 
 .hero-wp {
   background-image: var(--background-image-wp);
+}
+
+.hero-adr {
+  background-image: var(--background-image-adr);
 }
 
 .hero-tz {
