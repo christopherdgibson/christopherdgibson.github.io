@@ -112,6 +112,8 @@ const viewCallbacks = {
     () => sweepSpanBilateral(".name-char"),
     () => addBtnListener("#btnNYCDashboardWork", "nyc-dashboard"),
     () => addBtnListener("#btnReportDownloadHubWork", "report-download-hub"),
+    () => addBtnListener("#btnTZCompWork", "react-native-tzcomp"),
+    () => addBtnListener("#btnAdminDocRepoWork", "admin-doc-repo"),
     () => addBtnListener("#btnWordPressWork", "wordpress-plugins"),
     () => addBtnListener("#btnPersonalSiteWork", "personal-site-page")
   ],
@@ -129,7 +131,7 @@ const viewCallbacks = {
     () => initDemoLaunch("#screenshotOverlay", "adrDemoModal", "btnAdminDocRepoDemo")
   ],
   "react-native-tzcomp": [
-    () => initCardOverlay("#screenshotOverlay", "tzCompApk", "btnTzCompApk"),
+    () => initCardOverlay("#screenshotOverlay", "tzCompApk", "btnTZCompApk"),
     //() => initDownloadModal()
   ],
   "personal-site-page": [

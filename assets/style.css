@@ -1780,8 +1780,8 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
 }
 
 .card-wrapper {
-  /* display: flex;
-    flex-direction: column; */
+  display: flex;
+  /* flex-direction: column; */
     cursor: pointer;
     /* display: contents; */
 }
