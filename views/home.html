@@ -27,48 +27,60 @@
     <div class="hero-home">
       <div class="hero-home-left">
         <div class="home-divider"></div>
-        <p class="hero-eyebrow">Tech stack</p>
-        <div class="accent-line"></div>
-        <div class="badges">
-          <span class="badge activeCarousel" data-index="[0, 1]">C#</span>
-          <span class="badge" data-index="[1]">Avalonia</span>
-          <span class="badge" data-index="[2, 4]">React</span>
-          <span class="badge" data-index="[3]">React Native</span>
-          <span class="badge" data-index="[2, 4]">Apache</span>
-          <span class="badge" data-index="[2, 4]">MySQL</span>
-          <span class="badge" data-index="[2, 4]">PHP</span>
-          <span class="badge" data-index="[5]">Node.js</span>
-          <span class="badge activeCarousel" data-index="[0, 2, 3, 4, 5]">JavaScript / Typescript</span>
-          <span class="badge activeCarousel" data-index="[0, 2, 3, 4, 5]">HTML</span>
-          <span class="badge activeCarousel" data-index="[0, 2, 4, 5]">CSS</span>
-          <span class="badge" data-index="[1]">XAML</span>
-        </div>
-        <p class="hero-eyebrow">Portfolio Projects</p>
-        <div class="accent-line"></div>
-        <div class="tech-list">
-          <div id="btnNYCHome" class="tech-row" data-index="0">
-            <div class="tech-key">NYC Dashboard</div>
-            <div class="tech-val">C# · Blazor WebAssembly · Open API</div>
+        <div class="home-left-container">
+          <div class="home-tech-stack">
+            <p class="hero-eyebrow">Tech stack</p>
+            <div class="accent-line"></div>
+            <div class="badges">
+              <span class="badge activeCarousel" data-index="[0, 1]">C#</span>
+              <span class="badge" data-index="[1]">Avalonia</span>
+              <span class="badge" data-index="[2, 4]">React</span>
+              <span class="badge" data-index="[3]">React Native</span>
+              <span class="badge" data-index="[2, 4]">Apache</span>
+              <span class="badge" data-index="[2, 4]">MySQL</span>
+              <span class="badge" data-index="[2, 4]">PHP</span>
+              <span class="badge" data-index="[5]">Node.js</span>
+              <span class="badge activeCarousel" data-index="[0, 2, 3, 4, 5]"
+                >JavaScript / Typescript</span
+              >
+              <span class="badge activeCarousel" data-index="[0, 2, 3, 4, 5]"
+                >HTML</span
+              >
+              <span class="badge activeCarousel" data-index="[0, 2, 4, 5]"
+                >CSS</span
+              >
+              <span class="badge" data-index="[1]">XAML</span>
+            </div>
           </div>
-          <div id="btnRDHHome" class="tech-row" data-index="1">
-            <div class="tech-key">Report Download Hub</div>
-            <div class="tech-val">C# · Avalonia · Selenium</div>
-          </div>
-          <div id="btnADRHome" class="tech-row" data-index="2">
-            <div class="tech-key">Admin Doc Repo</div>
-            <div class="tech-val">React · PHP · REST API</div>
-          </div>
-          <div id="btnTZCompHome" class="tech-row" data-index="3">
-            <div class="tech-key">Timezone Comparison</div>
-            <div class="tech-val">React Native · Typescript · Expo</div>
-          </div>
-          <div id="btnWPHome" class="tech-row" data-index="4">
-            <div class="tech-key">WordPress Plugins</div>
-            <div class="tech-val">React · Typescript · WordPress</div>
-          </div>
-          <div id="btnPersonalSiteHome" class="tech-row" data-index="5">
-            <div class="tech-key">This Site</div>
-            <div class="tech-val">Vanilla JS · CSS · HTML</div>
+          <div class="home-portfolio-projects">
+            <p class="hero-eyebrow">Portfolio Projects</p>
+            <div class="accent-line"></div>
+            <div class="tech-list">
+              <div id="btnNYCHome" class="tech-row" data-index="0">
+                <div class="tech-key">NYC Dashboard</div>
+                <div class="tech-val">C# · Blazor WebAssembly · Open API</div>
+              </div>
+              <div id="btnRDHHome" class="tech-row" data-index="1">
+                <div class="tech-key">Report Download Hub</div>
+                <div class="tech-val">C# · Avalonia · Selenium</div>
+              </div>
+              <div id="btnADRHome" class="tech-row" data-index="2">
+                <div class="tech-key">Admin Doc Repo</div>
+                <div class="tech-val">React · PHP · REST API</div>
+              </div>
+              <div id="btnTZCompHome" class="tech-row" data-index="3">
+                <div class="tech-key">Timezone Comparison</div>
+                <div class="tech-val">React Native · Typescript · Expo</div>
+              </div>
+              <div id="btnWPHome" class="tech-row" data-index="4">
+                <div class="tech-key">WordPress Plugins</div>
+                <div class="tech-val">React · Typescript · WordPress</div>
+              </div>
+              <div id="btnPersonalSiteHome" class="tech-row" data-index="5">
+                <div class="tech-key">This Site</div>
+                <div class="tech-val">Vanilla JS · CSS · HTML</div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="home-divider" style="margin-top: 30px"></div>
@@ -78,41 +90,20 @@
         <div id="carouselWrapper" class="carousel-wrapper-home">
           <div class="carousel-track-outer">
             <div class="carousel-track" id="carouselTrack">
-              
               <!-- NYC Dashboard -->
-              <a
-                id="btnNYCCarousel"
-                href="#"
-                class="carousel-card-home hero-experience"
-              ></a>
+              <a id="btnNYCCarousel" href="#" class="carousel-card-home"></a>
 
               <!-- Report Download Hub -->
-              <a
-                id="btnRDHCarousel"
-                href="#"
-                class="carousel-card-home hero-experience"
-              ></a>
+              <a id="btnRDHCarousel" href="#" class="carousel-card-home"></a>
 
               <!-- Admin Doc Repo -->
-              <a
-                id="btnADRCarousel"
-                href="#"
-                class="carousel-card-home hero-research"
-              ></a>
+              <a id="btnADRCarousel" href="#" class="carousel-card-home"></a>
 
               <!-- Timezone Comparison -->
-              <a
-                id="btnTZCompCarousel"
-                href="#"
-                class="carousel-card-home hero-projects-card"
-              ></a>
+              <a id="btnTZCompCarousel" href="#" class="carousel-card-home"></a>
 
               <!-- Wordpress Plugins -->
-              <a
-                id="btnWPCarousel"
-                href="#"
-                class="carousel-card-home hero-teaching"
-              ></a>
+              <a id="btnWPCarousel" href="#" class="carousel-card-home"></a>
 
               <!-- This Site -->
               <a
