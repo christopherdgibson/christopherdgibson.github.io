@@ -4,45 +4,180 @@
   data-next-text="To Experience"
   data-next-view="experience"
 ></div>
-<div class="hero home-container">
-  <p class="hero-eyebrow">About</p>
-  <div class="accent-line"></div>
-  <h1 class="hero-title">Home</h1>
-  <span class="page-tag"
-    ><button class="page-tag-btn" data-target="aboutMe">About Me</button>
-    ·
-    <button class="page-tag-btn" data-target="contactCta">Contact</button></span
-  >
-  <div class="about-container">
-    <div id="aboutMe" class="about-description">
-      I am an economist and software developer with a background spanning
-      academic research, competition consulting, and tax technology. Trained as
-      a theoretical microeconomist, I bring rigorous analytical thinking to
-      software development — building tools that are not only functional but
-      carefully considered in their architecture and design. In the past year I
-      have transitioned into full-stack development, building production-quality
-      applications in C# and Blazor, and I am looking to move further in that
-      direction. I work best on problems that reward both technical precision
-      and subject matter depth, in international environments with equally
-      passionate colleagues.
+
+<!-- HERO -->
+<div class="home-container">
+  <div class="hero">
+    <h1 class="hero-title">Home</h1>
+    <p class="hero-desc">
+      Economist and software developer with a background spanning academic
+      research, competition consulting, and tax technology.
+    </p>
+    <div class="contact-cta-outer">
       <div id="contactCta" class="contact-cta">
-        <a href="mailto:cdg2131@columbia.edu">Email</a>
+        <a class="btn btn-contact" href="mailto:cdg2131@columbia.edu">Email</a>
         <a
+          class="btn btn-contact"
           href="https://www.linkedin.com/in/christopherdgibson-econ/"
           target="_blank"
           >LinkedIn</a
         >
       </div>
     </div>
-    <img
-      class="headshot"
-      src="./assets/images/cg_headshot.jpg"
-      alt="Chris headshot"
-    />
-  </div>
+    <!-- </div> -->
+    <div class="hero-home">
+      <div class="hero-home-left">
+        <!-- <h1 class="hero-title">Home</h1>
+      <p class="hero-desc">
+        Economist and software developer with a background spanning academic
+        research, competition consulting, and tax technology.
+      </p>
+      <div class="contact-cta-outer">
+        <div id="contactCta" class="contact-cta">
+          <a class="btn btn-contact" href="mailto:cdg2131@columbia.edu">Email</a>
+          <a class="btn btn-contact"
+            href="https://www.linkedin.com/in/christopherdgibson-econ/"
+            target="_blank"
+            >LinkedIn</a
+          >
+        </div>
+      </div> -->
+        <div class="home-divider"></div>
+        <!-- <div style="display: flex; flex-direction: row"> -->
+        <p class="hero-eyebrow">Tech stack</p>
+        <div class="accent-line"></div>
+        <div class="badges">
+          <span class="badge">C#</span>
+          <span class="badge">JavaScript / Typescript</span>
+          <span class="badge">React</span>
+          <span class="badge">React Native</span>
+          <span class="badge">Apache</span>
+          <span class="badge">MySQL</span>
+          <span class="badge">PHP</span>
+          <span class="badge">HTML</span>
+          <span class="badge">CSS</span>
+        </div>
+        <!-- </div> -->
+        <p class="hero-eyebrow">Portfolio Projects</p>
+        <div class="accent-line"></div>
+        <div class="tech-list">
+          <div id="btnNYCHome" class="tech-row">
+            <div class="tech-key">NYC Dashboard</div>
+            <div class="tech-val">C# · Blazor WebAssembly · Open API</div>
+          </div>
+          <div id="btnRDHHome" class="tech-row">
+            <div class="tech-key">Report Download Hub</div>
+            <div class="tech-val">C# · Avalonia · Selenium</div>
+          </div>
+          <div id="btnTZCompHome" class="tech-row">
+            <div class="tech-key">Timezone Comparison</div>
+            <div class="tech-val">React Native · Typescript · Expo</div>
+          </div>
+          <div id="btnADRHome" class="tech-row">
+            <div class="tech-key">Admin Doc Repo</div>
+            <div class="tech-val">React · PHP · REST API</div>
+          </div>
+          <div id="btnWPHome" class="tech-row">
+            <div class="tech-key">WordPress Plugins</div>
+            <div class="tech-val">React · Typescript · WordPress</div>
+          </div>
+          <div id="btnPersonalSiteHome" class="tech-row">
+            <div class="tech-key">This Site</div>
+            <div class="tech-val">Vanilla JS · CSS · HTML</div>
+          </div>
+        </div>
+        <!-- <div class="badges home-badges">
+        <span class="badge">NYC Dashboard · C# Blazor Avalonia</span>
+        <span class="badge">Report Download Hub</span>
+        <span class="badge">Admin Doc Repo</span>
+        <span class="badge">Timezone Comparison</span>
+        <span class="badge">WordPress Plugins</span>
+        <span class="badge">This Site</span>
+      </div> -->
+        <div class="home-divider" style="margin-top: 30px"></div>
+        <!-- <div class="contact-cta-outer">
+        <div id="contactCta" class="contact-cta">
+          <a href="mailto:cdg2131@columbia.edu">Email</a>
+          <a
+            href="https://www.linkedin.com/in/christopherdgibson-econ/"
+            target="_blank"
+            >LinkedIn</a
+          >
+        </div>
+      </div> -->
+      </div>
+      <div class="hero-home-right">
+        <!-- Carousel -->
+        <div id="carouselWrapper" class="carousel-wrapper-home">
+          <div class="carousel-track-outer">
+            <div class="carousel-track" id="carouselTrack">
+              <!-- NYC Dashboard -->
+              <a
+                id="btnNYCCarousel"
+                href="#"
+                class="carousel-card-home hero-experience"
+              ></a>
 
-  <div class="hero-actions">
-    <a id="btnWorkHome" href="#" class="btn btn-primary">Jump to Portfolio →</a>
-    <a id="btnExperienceHome" href="#" class="btn btn-ghost">To Experience →</a>
+              <!-- Report Download Hub -->
+              <a
+                id="btnRDHCarousel"
+                href="#"
+                class="carousel-card-home hero-experience"
+              ></a>
+
+              <!-- Timezone Comparison -->
+              <a
+                id="btnTZCompCarousel"
+                href="#"
+                class="carousel-card-home hero-projects-card"
+              ></a>
+
+              <!-- Admin Doc Repo -->
+              <a
+                id="btnADRCarousel"
+                href="#"
+                class="carousel-card-home hero-research"
+              ></a>
+
+              <!-- Wordpress Plugins -->
+              <a
+                id="btnWPCarousel"
+                href="#"
+                class="carousel-card-home hero-teaching"
+              ></a>
+
+              <!-- This Site -->
+              <a
+                id="btnPersonalSiteCarousel"
+                href="#"
+                class="carousel-card-home"
+              ></a>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="carousel-controls">
+            <button class="carousel-btn" id="carouselPrev">&#8249;</button>
+            <div class="carousel-dots" id="carouselDots">
+              <div class="carousel-dot activeCarousel" data-index="0"></div>
+              <div class="carousel-dot" data-index="1"></div>
+              <div class="carousel-dot" data-index="2"></div>
+              <div class="carousel-dot" data-index="3"></div>
+              <div class="carousel-dot" data-index="4"></div>
+              <div class="carousel-dot" data-index="5"></div>
+            </div>
+            <button class="carousel-btn" id="carouselNext">&#8250;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a id="btnWorkHome" href="#" class="btn btn-primary"
+        >Jump to Portfolio →</a
+      >
+      <a id="btnExperienceHome" href="#" class="btn btn-ghost"
+        >To Experience →</a
+      >
+    </div>
   </div>
 </div>

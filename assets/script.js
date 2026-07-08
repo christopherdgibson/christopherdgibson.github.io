@@ -26,6 +26,7 @@ function initNavMenu(navSelector, navHtml, bodyElement = document.querySelector(
       addNavClick("#btnAdminDocRepo", "admin-doc-repo", bodyElement);
       addNavClick("#btnTZComp", "react-native-tzcomp", bodyElement);
       addNavClick("#btnPersonalSite", "personal-site-page", bodyElement);
+      addNavClick("#btnAbout", "about", bodyElement);
     });
   }
 
@@ -37,6 +38,39 @@ function addNavClick(selector, view, bodyElement) {
 }
 
 initNavMenu('#nav-placeholder', 'nav.html');
+
+function populateHomeCarousel() {
+  const ponies = [
+    {id: 'btnNYC', viewName: 'nyc-dashboard'},
+    {id: 'btnRDH', viewName: 'report-download-hub'},
+    {id: 'btnTZComp', viewName: 'react-native-tzcomp'},
+    {id: 'btnADR', viewName: 'admin-doc-repo'},
+    {id: 'btnWP', viewName: 'wordpress-plugins'},
+    {id: 'btnPersonalSite', viewName: 'personal-site-page', callback: () => initHoverSweep("#btnPersonalSiteWork .mockup-site-name span", "#btnPersonalSiteWork")},
+  ];
+  ponies.forEach(pony => {
+    const ponyId = `#${pony.id}Carousel`;
+    const ponyIdHome = `#${pony.id}Home`;
+    const card = document.querySelector(ponyId);
+    const viewName = pony.viewName;
+    fetch(`views/work-cards/${viewName}-card.html`)
+      .then((response) => {
+        if (!response.ok) throw new Error(`View not found: ${viewName}`);
+        return response.text();
+      })
+      .then((html) => {
+        card.innerHTML = html;
+      })
+      .then(() => {
+        if (pony.callback) {
+          pony.callback();
+        }
+      })
+      .catch((err) => console.error(err));
+      addBtnListener(ponyId, viewName);
+      addBtnListener(ponyIdHome, viewName);
+  })
+}
 
 /* ────────── SPA swapping logic ────────── */
 function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")) {
@@ -104,8 +138,15 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
 /* ─── View Callbacks ─── */
 const viewCallbacks = {
   home: [
+    () => initCarousel(),
+    () => populateHomeCarousel(),
+    () => initHoverSweep("#carouselWrapper .mockup-site-name span", "#carouselWrapper"),
     () => addBtnListener("#btnWorkHome", "work"),
     () => addBtnListener("#btnExperienceHome", "experience"),
+  ],
+  about: [
+    () => addBtnListener("#btnWorkAbout", "work"),
+    () => addBtnListener("#btnExperienceAbout", "experience"),
   ],
   work: [
     () => initHoverSweep("#btnPersonalSiteWork .mockup-site-name span", "#btnPersonalSiteWork"),
@@ -660,10 +701,7 @@ function initDemoLaunch(overlaySelector, itemId, btnId) {
   }
 
   const modal = document.getElementById(itemId);
-    console.log('modal', modal);
-
   const countdownEl = modal.querySelector('.demo-redirect .download-option-platform');
-  console.log('countdownEl', countdownEl);
 
   btn.addEventListener("click", function (e) {
     let count = 5;
@@ -847,12 +885,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Otherwise handle normal refresh/direct navigation
   const path = window.location.pathname.replace("/", "");
-  console.log('path: ', path);
   if (path === 'wp-agenda-block') {
     loadView('wordpress-plugins');
     return;
   }
-  console.log('path below return: ', path);
   if (path && path !== "index.html") {
     loadView(path);
   } else {

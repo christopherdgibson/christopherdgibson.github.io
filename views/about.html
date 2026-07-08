@@ -1,13 +1,59 @@
-<div>
-  <p>ABOUT ME</p>
-  I am a software developer with an interest in developing creative solutions
-  for all things computing. The wonder about development is that if you learn to
-  speak the language of the computer, you can instruct it to carry out specific
-  functionalities tailored to your needs. If you don't like how Excel appears or
-  functions, you can tell it to do something else. If you don't like how your
-  website appears, you can change its appearance with granular precision. And,
-  perhaps most powerfully, if you don't like repeating the same task over and
-  over again (such as repeatedly downloading data and performing calculations,
-  or fetching updated files online), you can instruct a program to do this for
-  you! I have experience with C#, Html, Css, Javascript, React, Python
+<div
+  class="view-nav"
+  hidden
+  data-back-text="Back to Teaching"
+  data-back-view="teaching"
+  data-next-text="Home"
+  data-next-view="home"
+></div>
+
+<div
+  class="view-nav"
+  hidden
+  data-back-text="Back to Home"
+  data-back-view="home"
+  data-next-text="To Work"
+  data-next-view="work"
+></div>
+<div class="hero home-container">
+  <p class="hero-eyebrow">About</p>
+  <div class="accent-line"></div>
+  <h1 class="hero-title">Home</h1>
+  <span class="page-tag"
+    ><button class="page-tag-btn" data-target="aboutMe">About Me</button>
+    ·
+    <button class="page-tag-btn" data-target="contactCta">Contact</button></span
+  >
+  <div class="about-container">
+    <div id="aboutMe" class="about-description">
+      I am an economist and software developer with a background spanning
+      academic research, competition consulting, and tax technology. Trained as
+      a theoretical microeconomist, I bring rigorous analytical thinking to
+      software development — building tools that are not only functional but
+      carefully considered in their architecture and design. In the past year I
+      have transitioned into full-stack development, building production-quality
+      applications in C# and Blazor, and I am looking to move further in that
+      direction. I work best on problems that reward both technical precision
+      and subject matter depth, in international environments with equally
+      passionate colleagues.
+      <div id="contactCta" class="contact-cta">
+        <a href="mailto:cdg2131@columbia.edu">Email</a>
+        <a
+          href="https://www.linkedin.com/in/christopherdgibson-econ/"
+          target="_blank"
+          >LinkedIn</a
+        >
+      </div>
+    </div>
+    <img
+      class="headshot"
+      src="./assets/images/cg_headshot.jpg"
+      alt="Chris headshot"
+    />
+  </div>
+
+  <div class="hero-actions">
+    <a id="btnWorkAbout" href="#" class="btn btn-primary">Jump to Portfolio →</a>
+    <a id="btnExperienceAbout" href="#" class="btn btn-ghost">To Experience →</a>
+  </div>
 </div>
