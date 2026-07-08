@@ -20,13 +20,14 @@ function initNavMenu(navSelector, navHtml, bodyElement = document.querySelector(
       addNavClick("#btnWorkMobile", "work", bodyElement);
       addNavClick("#btnResearch", "research", bodyElement);
       addNavClick("#btnTeaching", "teaching", bodyElement);
+      addNavClick("#btnAbout", "about", bodyElement);
+      // Work sub-menu
       addNavClick("#btnNYCDashboard", "nyc-dashboard", bodyElement);
       addNavClick("#btnReportDownloadHub", "report-download-hub", bodyElement);
-      addNavClick("#btnWordPress", "wordpress-plugins", bodyElement);
       addNavClick("#btnAdminDocRepo", "admin-doc-repo", bodyElement);
       addNavClick("#btnTZComp", "react-native-tzcomp", bodyElement);
+      addNavClick("#btnWordPress", "wordpress-plugins", bodyElement);
       addNavClick("#btnPersonalSite", "personal-site-page", bodyElement);
-      addNavClick("#btnAbout", "about", bodyElement);
     });
   }
 
@@ -43,8 +44,8 @@ function populateHomeCarousel() {
   const ponies = [
     {id: 'btnNYC', viewName: 'nyc-dashboard'},
     {id: 'btnRDH', viewName: 'report-download-hub'},
-    {id: 'btnTZComp', viewName: 'react-native-tzcomp'},
     {id: 'btnADR', viewName: 'admin-doc-repo'},
+    {id: 'btnTZComp', viewName: 'react-native-tzcomp'},
     {id: 'btnWP', viewName: 'wordpress-plugins'},
     {id: 'btnPersonalSite', viewName: 'personal-site-page', callback: () => initHoverSweep("#btnPersonalSiteWork .mockup-site-name span", "#btnPersonalSiteWork")},
   ];
@@ -138,7 +139,7 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
 /* ─── View Callbacks ─── */
 const viewCallbacks = {
   home: [
-    () => initCarousel(),
+    () => initCarousel('.tech-row', '.badge'),
     () => populateHomeCarousel(),
     () => initHoverSweep("#carouselWrapper .mockup-site-name span", "#carouselWrapper"),
     () => addBtnListener("#btnWorkHome", "work"),
@@ -153,8 +154,8 @@ const viewCallbacks = {
     () => sweepSpanBilateral(".name-char"),
     () => addBtnListener("#btnNYCDashboardWork", "nyc-dashboard"),
     () => addBtnListener("#btnReportDownloadHubWork", "report-download-hub"),
-    () => addBtnListener("#btnTZCompWork", "react-native-tzcomp"),
     () => addBtnListener("#btnAdminDocRepoWork", "admin-doc-repo"),
+    () => addBtnListener("#btnTZCompWork", "react-native-tzcomp"),
     () => addBtnListener("#btnWordPressWork", "wordpress-plugins"),
     () => addBtnListener("#btnPersonalSiteWork", "personal-site-page")
   ],
@@ -186,6 +187,7 @@ const viewCallbacks = {
     () => addBtnListener("#btnWorkCarousel", "work"),
     () => addBtnListener("#btnResearchCarousel", "research"),
     () => addBtnListener("#btnTeachingCarousel", "teaching"),
+    () => addBtnListener("#btnAboutCarousel", "about"),
   ],
 };
 
@@ -748,7 +750,7 @@ function delayedUrlLaunch(overlay, modal, btnId, countdownEL, url) {
 
 // Carousel JS
 
-function initCarousel() {
+function initCarousel(rowSelector, badgeSelector) {
   const track = getCleanElement("#carouselTrack");
   if (!track) return;
   const dots = document.querySelectorAll("#carouselWrapper .carousel-dot"); // clean dot elements as well with getCleanElements()?
@@ -756,12 +758,25 @@ function initCarousel() {
   const next = getCleanElement("#carouselNext");
   const navItems = document.querySelectorAll("#carouselNav .mockup-nav-item");
   const total = dots.length;
+
+  // if (rowSelector) {
+  //   const rows = document.querySelectorAll(rowSelector);
+  // }
+  // if (badgeSelector) {
+  //   const badges = document.querySelectorAll(rowSelector);
+  // }
+
+  const rows = document.querySelectorAll(rowSelector);
+  const badges = document.querySelectorAll(badgeSelector);
+
   let current = 0;
   let autoplay;
 
   function setActive(index) {
     navItems.forEach((item, i) => item.classList.toggle("activeCarousel", i === index));
     dots.forEach((d, i) => d.classList.toggle("activeCarousel", i === index));
+    rows?.forEach((r, i) => r.classList.toggle("activeCarousel", i === index));
+    badges?.forEach((b, i) => b.classList.toggle("activeCarousel", +b.dataset.index.includes(index)));
     track.style.transform = `translateX(-${index * 100}%)`;
   }
 
@@ -797,6 +812,17 @@ function initCarousel() {
       goTo(+d.dataset.index);
       resetAutoplay();
     }),
+  );
+
+  rows?.forEach((d) => {
+      d.addEventListener("mouseenter", () => {
+        goTo(+d.dataset.index);
+        stopAutoplay();
+      });
+      d.addEventListener("mouseleave", () => {
+        startInterval();
+      });
+    }
   );
   track.addEventListener("mouseenter", stopAutoplay);
   track.addEventListener("mouseleave", startInterval);

@@ -24,93 +24,61 @@
         >
       </div>
     </div>
-    <!-- </div> -->
     <div class="hero-home">
       <div class="hero-home-left">
-        <!-- <h1 class="hero-title">Home</h1>
-      <p class="hero-desc">
-        Economist and software developer with a background spanning academic
-        research, competition consulting, and tax technology.
-      </p>
-      <div class="contact-cta-outer">
-        <div id="contactCta" class="contact-cta">
-          <a class="btn btn-contact" href="mailto:cdg2131@columbia.edu">Email</a>
-          <a class="btn btn-contact"
-            href="https://www.linkedin.com/in/christopherdgibson-econ/"
-            target="_blank"
-            >LinkedIn</a
-          >
-        </div>
-      </div> -->
         <div class="home-divider"></div>
-        <!-- <div style="display: flex; flex-direction: row"> -->
         <p class="hero-eyebrow">Tech stack</p>
         <div class="accent-line"></div>
         <div class="badges">
-          <span class="badge">C#</span>
-          <span class="badge">JavaScript / Typescript</span>
-          <span class="badge">React</span>
-          <span class="badge">React Native</span>
-          <span class="badge">Apache</span>
-          <span class="badge">MySQL</span>
-          <span class="badge">PHP</span>
-          <span class="badge">HTML</span>
-          <span class="badge">CSS</span>
+          <span class="badge activeCarousel" data-index="[0, 1]">C#</span>
+          <span class="badge" data-index="[1]">Avalonia</span>
+          <span class="badge" data-index="[2, 4]">React</span>
+          <span class="badge" data-index="[3]">React Native</span>
+          <span class="badge" data-index="[2, 4]">Apache</span>
+          <span class="badge" data-index="[2, 4]">MySQL</span>
+          <span class="badge" data-index="[2, 4]">PHP</span>
+          <span class="badge" data-index="[5]">Node.js</span>
+          <span class="badge activeCarousel" data-index="[0, 2, 3, 4, 5]">JavaScript / Typescript</span>
+          <span class="badge activeCarousel" data-index="[0, 2, 3, 4, 5]">HTML</span>
+          <span class="badge activeCarousel" data-index="[0, 2, 4, 5]">CSS</span>
+          <span class="badge" data-index="[1]">XAML</span>
         </div>
-        <!-- </div> -->
         <p class="hero-eyebrow">Portfolio Projects</p>
         <div class="accent-line"></div>
         <div class="tech-list">
-          <div id="btnNYCHome" class="tech-row">
+          <div id="btnNYCHome" class="tech-row" data-index="0">
             <div class="tech-key">NYC Dashboard</div>
             <div class="tech-val">C# · Blazor WebAssembly · Open API</div>
           </div>
-          <div id="btnRDHHome" class="tech-row">
+          <div id="btnRDHHome" class="tech-row" data-index="1">
             <div class="tech-key">Report Download Hub</div>
             <div class="tech-val">C# · Avalonia · Selenium</div>
           </div>
-          <div id="btnTZCompHome" class="tech-row">
-            <div class="tech-key">Timezone Comparison</div>
-            <div class="tech-val">React Native · Typescript · Expo</div>
-          </div>
-          <div id="btnADRHome" class="tech-row">
+          <div id="btnADRHome" class="tech-row" data-index="2">
             <div class="tech-key">Admin Doc Repo</div>
             <div class="tech-val">React · PHP · REST API</div>
           </div>
-          <div id="btnWPHome" class="tech-row">
+          <div id="btnTZCompHome" class="tech-row" data-index="3">
+            <div class="tech-key">Timezone Comparison</div>
+            <div class="tech-val">React Native · Typescript · Expo</div>
+          </div>
+          <div id="btnWPHome" class="tech-row" data-index="4">
             <div class="tech-key">WordPress Plugins</div>
             <div class="tech-val">React · Typescript · WordPress</div>
           </div>
-          <div id="btnPersonalSiteHome" class="tech-row">
+          <div id="btnPersonalSiteHome" class="tech-row" data-index="5">
             <div class="tech-key">This Site</div>
             <div class="tech-val">Vanilla JS · CSS · HTML</div>
           </div>
         </div>
-        <!-- <div class="badges home-badges">
-        <span class="badge">NYC Dashboard · C# Blazor Avalonia</span>
-        <span class="badge">Report Download Hub</span>
-        <span class="badge">Admin Doc Repo</span>
-        <span class="badge">Timezone Comparison</span>
-        <span class="badge">WordPress Plugins</span>
-        <span class="badge">This Site</span>
-      </div> -->
         <div class="home-divider" style="margin-top: 30px"></div>
-        <!-- <div class="contact-cta-outer">
-        <div id="contactCta" class="contact-cta">
-          <a href="mailto:cdg2131@columbia.edu">Email</a>
-          <a
-            href="https://www.linkedin.com/in/christopherdgibson-econ/"
-            target="_blank"
-            >LinkedIn</a
-          >
-        </div>
-      </div> -->
       </div>
       <div class="hero-home-right">
         <!-- Carousel -->
         <div id="carouselWrapper" class="carousel-wrapper-home">
           <div class="carousel-track-outer">
             <div class="carousel-track" id="carouselTrack">
+              
               <!-- NYC Dashboard -->
               <a
                 id="btnNYCCarousel"
@@ -125,18 +93,18 @@
                 class="carousel-card-home hero-experience"
               ></a>
 
-              <!-- Timezone Comparison -->
-              <a
-                id="btnTZCompCarousel"
-                href="#"
-                class="carousel-card-home hero-projects-card"
-              ></a>
-
               <!-- Admin Doc Repo -->
               <a
                 id="btnADRCarousel"
                 href="#"
                 class="carousel-card-home hero-research"
+              ></a>
+
+              <!-- Timezone Comparison -->
+              <a
+                id="btnTZCompCarousel"
+                href="#"
+                class="carousel-card-home hero-projects-card"
               ></a>
 
               <!-- Wordpress Plugins -->

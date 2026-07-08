@@ -743,26 +743,21 @@ ul li ul li:last-child {
     /* color: white; */
   }
 
-  .home-badges {
-    flex-direction: column;
-    align-items: left;
-
-    .badge {
-      flex: 0;
-      margin: auto;
-    }
-  }
-
   .btn-contact {
     background: rgba(var(--blue-accent-rgb), 0.05);
-    border: none;
-    &:hover {      
+    border: solid 1px rgba(var(--blue-accent-rgb), 0.38);;
+    &:hover {
       background: rgba(var(--blue-accent-rgb), 0.08);
+      border: solid 1px var(--blue-accent);
     }
   }
 
   .badge {
     color: var(--teaching-accent-color);
+    &.activeCarousel {
+      color: white;
+      background: rgba(var(--blue-accent-rgb), 0.5)
+    }
   }
 
   .accent-line {
