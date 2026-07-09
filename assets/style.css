@@ -201,6 +201,9 @@ body:has(.hero-about):not(:has(.mini-site)) {
   .hero, footer {
     background: none;
   }
+  .footer-next-desktop-text {
+    display: none;
+  }
 }
 
 /* Style the header */
@@ -1268,6 +1271,10 @@ ul li ul li:last-child {
 }
 
 @media (max-width: 768px) {
+  .footer-back-desktop-text, .footer-next-desktop-text {
+    display: none;
+  }
+
   .home-container {
     .hero-home {
       grid-template-columns: 1fr;
@@ -1294,8 +1301,6 @@ ul li ul li:last-child {
       background-color: rgba(var(--blue-accent-rgb), 0.1);
     }
   }
-
-    
 
   .about-container {
     flex-direction: column;

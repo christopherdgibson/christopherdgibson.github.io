@@ -231,7 +231,7 @@ function initFooterButtons(bodyElement) {
   }
 
   if (back && viewNav.dataset.backText) {
-    back.innerHTML = `&larr; ${viewNav.dataset.backText}`;
+    back.innerHTML = `&larr; <span class="footer-back-desktop-text">Back to </span> ${viewNav.dataset.backText}`;
     back.addEventListener("click", function (event) {
       event.preventDefault();
       loadView(viewNav.dataset.backView, bodyElement);
@@ -244,7 +244,7 @@ function initFooterButtons(bodyElement) {
     if (viewNav.dataset.nextLink) {
       next.innerHTML = `<a href='${viewNav.dataset.nextLink}' target='_blank'> ${viewNav.dataset.nextText} &rarr; </a>`;
     } else if (viewNav.dataset.nextView) {
-      next.innerHTML = `${viewNav.dataset.nextText} &rarr;`;
+      next.innerHTML = `<span class="footer-next-desktop-text">To </span>${viewNav.dataset.nextText} &rarr;`;
       next.addEventListener("click", function (event) {
         event.preventDefault();
         loadView(viewNav.dataset.nextView, bodyElement);
