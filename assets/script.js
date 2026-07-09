@@ -703,7 +703,13 @@ function initDemoLaunch(overlaySelector, itemId, btnId) {
   }
 
   const modal = document.getElementById(itemId);
-  const countdownEl = modal.querySelector('.demo-redirect .download-option-platform');
+  const state = { interval: null, modal: null, overlay: null };
+
+  function closeDemoLaunch() {
+    clearInterval(state.interval);
+    state.modal.classList.remove('expanded');
+    state.overlay.classList.remove('active');
+  }
 
   btn.addEventListener("click", function (e) {
     let count = 5;
@@ -718,10 +724,18 @@ function initDemoLaunch(overlaySelector, itemId, btnId) {
         }
     }, 1000);
 
-    countdownEl.addEventListener('click', () => {
-      clearInterval(interval);
-      modal.classList.remove('expanded');
-      overlay.classList.remove('active');
+    state.interval = interval;
+    state.modal = modal;
+    state.overlay = overlay;
+
+    const countdownEl = document.querySelector('.demo-redirect .download-option-platform', modal);
+    const launchNowEl = document.querySelector('.download-option .download-option-platform', modal);
+    const closeEl = document.querySelector('.page-tag-close-container', modal);
+
+    [countdownEl, launchNowEl, closeEl].forEach(el => {
+      if (el) {
+        el.addEventListener('click', closeDemoLaunch); // same reference every time — auto-deduped, no WeakSet needed
+      }
     });
   });
 }
@@ -841,8 +855,8 @@ function scrollToTop(container = window, behavior = "smooth") {
   container.scrollTo({ top: 0, behavior: behavior });
 }
 
-function getCleanElement(selector) {
-  const el = document.querySelector(selector);
+function getCleanElement(selector, parent = document) {
+  const el = parent.querySelector(selector);
   if (!el) return;
   const elClone = el.cloneNode(true);
   el.parentNode.replaceChild(elClone, el);
