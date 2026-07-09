@@ -139,7 +139,7 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
 /* ─── View Callbacks ─── */
 const viewCallbacks = {
   home: [
-    () => initCarousel('.tech-row', '.badge'),
+    () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
     () => populateHomeCarousel(),
     () => initHoverSweep("#carouselWrapper .mockup-site-name span", "#carouselWrapper"),
     () => addBtnListener("#btnWorkHome", "work"),

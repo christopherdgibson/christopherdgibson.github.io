@@ -884,7 +884,7 @@ ul li ul li:last-child {
   }
 }
 
-.hero.home-container, .home-container .hero {
+.hero.home-container, .home-container .hero, .hero.hero-about {
   background:none;
 }
     
@@ -2352,7 +2352,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   height: var(--mini-site-top);
   .page-tag-close {
     margin: auto;
-    font-size: 1rem;
+    font-size: 0.75rem;
     z-index: var(--z-btn-close-mini);
     animation: fadeIn 0.4s ease 2.5s both;
   }
@@ -2430,6 +2430,14 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
 
 .mini-site:has(.home-container) {
   background: var(--background-radial-blue);
+
+  footer {
+    background: none;
+  }
+}
+
+.mini-site:has(.about-container) {
+  background: var(--background-image-about), var(--navy);
 
   footer {
     background: none;
