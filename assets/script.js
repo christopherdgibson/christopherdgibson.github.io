@@ -1,10 +1,8 @@
 // Global variables in index.html for single query and reuse
-// let body = document.querySelector("#body-placeholder");
 let footer = document.querySelector("#footer-placeholder");
 let title = document.querySelector("#title-placeholder");
 
 /* ────────── Load navbar and menu events ────────── */
-// let navMenu = document.querySelector("#nav-placeholder");
 
 function initNavMenu(navSelector, navHtml, bodyElement = document.querySelector("#body-placeholder")) {
   const navMenu = document.querySelector(navSelector);
@@ -40,20 +38,24 @@ function addNavClick(selector, view, bodyElement) {
 
 initNavMenu('#nav-placeholder', 'nav.html');
 
-function populateHomeCarousel() {
+function populateProjectCards(page = "Home") {
   const ponies = [
-    {id: 'btnNYC', viewName: 'nyc-dashboard'},
-    {id: 'btnRDH', viewName: 'report-download-hub'},
-    {id: 'btnADR', viewName: 'admin-doc-repo'},
+    {id: 'btnNYCDashboard', viewName: 'nyc-dashboard'},
+    {id: 'btnReportDownloadHub', viewName: 'report-download-hub'},
+    {id: 'btnAdminDocRepo', viewName: 'admin-doc-repo'},
     {id: 'btnTZComp', viewName: 'react-native-tzcomp'},
-    {id: 'btnWP', viewName: 'wordpress-plugins'},
+    {id: 'btnWordPress', viewName: 'wordpress-plugins'},
     {id: 'btnPersonalSite', viewName: 'personal-site-page', callback: () => initHoverSweep("#btnPersonalSiteWork .mockup-site-name span", "#btnPersonalSiteWork")},
   ];
   ponies.forEach(pony => {
-    const ponyId = `#${pony.id}Carousel`;
-    const ponyIdHome = `#${pony.id}Home`;
-    const card = document.querySelector(ponyId);
     const viewName = pony.viewName;
+    const ponyIdPage = `#${pony.id}${page}`;
+    let ponyIdCarousel = `#${pony.id}Carousel`;
+
+    let card = document.querySelector(ponyIdCarousel);
+    if (card === null) {
+      card = document.querySelector(ponyIdPage);
+    }
     fetch(`views/work-cards/${viewName}-card.html`)
       .then((response) => {
         if (!response.ok) throw new Error(`View not found: ${viewName}`);
@@ -68,8 +70,8 @@ function populateHomeCarousel() {
         }
       })
       .catch((err) => console.error(err));
-      addBtnListener(ponyId, viewName);
-      addBtnListener(ponyIdHome, viewName);
+      addBtnListener(ponyIdCarousel, viewName);
+      addBtnListener(ponyIdPage, viewName);
   })
 }
 
@@ -140,7 +142,7 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
 const viewCallbacks = {
   home: [
     () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
-    () => populateHomeCarousel(),
+    () => populateProjectCards(),
     () => initHoverSweep("#carouselWrapper .mockup-site-name span", "#carouselWrapper"),
     () => addBtnListener("#btnWorkHome", "work"),
     () => addBtnListener("#btnExperienceHome", "experience"),
@@ -152,12 +154,7 @@ const viewCallbacks = {
   work: [
     () => initHoverSweep("#btnPersonalSiteWork .mockup-site-name span", "#btnPersonalSiteWork"),
     () => sweepSpanBilateral(".name-char"),
-    () => addBtnListener("#btnNYCDashboardWork", "nyc-dashboard"),
-    () => addBtnListener("#btnReportDownloadHubWork", "report-download-hub"),
-    () => addBtnListener("#btnAdminDocRepoWork", "admin-doc-repo"),
-    () => addBtnListener("#btnTZCompWork", "react-native-tzcomp"),
-    () => addBtnListener("#btnWordPressWork", "wordpress-plugins"),
-    () => addBtnListener("#btnPersonalSiteWork", "personal-site-page")
+    () => populateProjectCards("Work")
   ],
   "report-download-hub": [
     () => initCardOverlay("#screenshotOverlay", "reportDownloadHubExe", "btnReportDownloadHubExe"),
