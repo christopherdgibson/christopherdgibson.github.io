@@ -343,7 +343,7 @@ function sweepSpanRight(nameChars) {
 
 function fetchIndexSvgIcons() {
   const linkedInIcon = document.querySelector(".footer-social");
-  fetchSvgIcon(linkedInIcon, "assets/images/linkedin-icon.svg");
+  fetchSvgIcon(linkedInIcon, "assets/svgs/linkedin.svg");
 }
 
 function fetchSvgIcon(iconEl, iconPath) {
@@ -366,7 +366,7 @@ function initSvgIcons() {
   if (!icons.length) return;
   icons.forEach((icon) => {
     if (!icon.dataset.target) return;
-    fetchSvgIcon(icon, `assets/images/${icon.dataset.target}.svg`);
+    fetchSvgIcon(icon, `assets/svgs/${icon.dataset.target}.svg`);
   });
 }
 

@@ -2024,7 +2024,9 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
 
 .btn-svg {
   background: transparent;
+  color: white;
   fill: var(--grey-mid);
+  text-decoration: none;
   svg {
     fill: var(--grey-mid);
     max-height: var(--max-height-contact-svg);
