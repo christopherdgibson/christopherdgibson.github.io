@@ -45,7 +45,7 @@ function populateProjectCards(page = "Home") {
     {id: 'btnAdminDocRepo', viewName: 'admin-doc-repo'},
     {id: 'btnTZComp', viewName: 'react-native-tzcomp'},
     {id: 'btnWordPress', viewName: 'wordpress-plugins'},
-    {id: 'btnPersonalSite', viewName: 'personal-site-page', callback: () => initHoverSweep("#btnPersonalSiteWork .mockup-site-name span", "#btnPersonalSiteWork")},
+    {id: 'btnPersonalSite', viewName: 'personal-site-page', callback: () => initHoverSweep("#btnPersonalSiteCarousel .mockup-site-name span", "#btnPersonalSiteCarousel")},
   ];
   ponies.forEach(pony => {
     const viewName = pony.viewName;
@@ -770,15 +770,18 @@ function initCarousel(rowSelector, badgeSelector) {
   const navItems = document.querySelectorAll("#carouselNav .mockup-nav-item");
   const total = dots.length;
 
-  // if (rowSelector) {
-  //   const rows = document.querySelectorAll(rowSelector);
-  // }
-  // if (badgeSelector) {
-  //   const badges = document.querySelectorAll(rowSelector);
-  // }
+  const rows = rowSelector ? document.querySelectorAll(rowSelector) : null;
+  const badges = badgeSelector ? document.querySelectorAll(badgeSelector) : null;
 
-  const rows = document.querySelectorAll(rowSelector);
-  const badges = document.querySelectorAll(badgeSelector);
+  const startupPulses = document.querySelectorAll(`${rowSelector}.activeCarousel, ${badgeSelector}.activeCarousel`);
+
+  startupPulses.forEach(badge => {
+    console.log("badge-pulse: ", badge);
+    badge.classList.add('badge-pulse-once');
+    badge.addEventListener('animationend', () => {
+      badge.classList.remove('badge-pulse-once');
+    }, { once: true });
+  });
 
   let current = 0;
   let autoplay;
