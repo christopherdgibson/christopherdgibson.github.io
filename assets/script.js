@@ -36,44 +36,7 @@ function addNavClick(selector, view, bodyElement) {
   });
 }
 
-initNavMenu('#nav-placeholder', 'nav.html');
-
-function populateProjectCards(page = "Home") {
-  const ponies = [
-    {id: 'btnNYCDashboard', viewName: 'nyc-dashboard'},
-    {id: 'btnReportDownloadHub', viewName: 'report-download-hub'},
-    {id: 'btnAdminDocRepo', viewName: 'admin-doc-repo'},
-    {id: 'btnTZComp', viewName: 'react-native-tzcomp'},
-    {id: 'btnWordPress', viewName: 'wordpress-plugins'},
-    {id: 'btnPersonalSite', viewName: 'personal-site-page', callback: () => initHoverSweep("#btnPersonalSiteCarousel .mockup-site-name span", "#btnPersonalSiteCarousel")},
-  ];
-  ponies.forEach(pony => {
-    const viewName = pony.viewName;
-    const ponyIdPage = `#${pony.id}${page}`;
-    let ponyIdCarousel = `#${pony.id}Carousel`;
-
-    let card = document.querySelector(ponyIdCarousel);
-    if (card === null) {
-      card = document.querySelector(ponyIdPage);
-    }
-    fetch(`views/work-cards/${viewName}-card.html`)
-      .then((response) => {
-        if (!response.ok) throw new Error(`View not found: ${viewName}`);
-        return response.text();
-      })
-      .then((html) => {
-        card.innerHTML = html;
-      })
-      .then(() => {
-        if (pony.callback) {
-          pony.callback();
-        }
-      })
-      .catch((err) => console.error(err));
-      addBtnListener(ponyIdCarousel, viewName);
-      addBtnListener(ponyIdPage, viewName);
-  })
-}
+initNavMenu('#nav-placeholder', 'nav.html'); // todo: place this inside loadview to avoid loading on home page?
 
 /* ────────── SPA swapping logic ────────── */
 function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")) {
@@ -216,6 +179,30 @@ function initAnchorButtons(container = window, behavior = "smooth") {
   });
 }
 
+function initSvgIcons() {
+  const icons = document.querySelectorAll(".svg-icon");
+  if (!icons.length) return;
+  icons.forEach((icon) => {
+    if (!icon.dataset.target) return;
+    fetchSvgIcon(icon, `assets/svgs/${icon.dataset.target}.svg`);
+  });
+}
+
+function fetchSvgIcon(iconEl, iconPath) {
+  if (!iconEl) return;
+  fetch(iconPath)
+    .then((response) => {
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("svg")) return null;
+      return response.text();
+    })
+    .then((svg) => {
+      if (!svg) return;
+      iconEl.innerHTML = svg;
+    })
+    .catch((error) => console.error("SVG load failed:", error));
+}
+
 function initFooterButtons(bodyElement) {
   const viewNav = document.querySelector(".view-nav");
   let back = getCleanElement('#footer-back-btn');
@@ -250,6 +237,147 @@ function initFooterButtons(bodyElement) {
   } else if (next) {
     next.innerHTML = "";
   }
+}
+
+// Clear overlay event listeners to prevent stacking on multiple view loads
+function initCleanOverlays(overlaySelectors) {
+  const overlays = getCleanElements(overlaySelectors);
+  overlays.forEach((overlay) => {
+    overlay.addEventListener("click", function () {
+      const expanded = document.querySelectorAll(".expanded, .hidden");
+      if (expanded.length) {
+        expanded.forEach((el) => {
+          el.classList.remove("expanded");
+          el.classList.remove("hidden");
+        });
+      }
+      this.classList.remove("active");
+    });
+  });
+}
+
+function initFeatureCards() {
+  initOverlay("#cardOverlay", ".feature-card");
+}
+
+function initOverlay(
+  overlaySelector,
+  itemSelector,
+  minWidth = 768,
+  proxySelector = null,
+  expandedClass = "expanded",
+  activeClass = "active") {
+  const overlay = document.querySelector(overlaySelector);
+  const items = document.querySelectorAll(itemSelector);
+
+  if (!overlay || !items.length) {
+    return;
+  }
+
+  let proxy = null;
+  if (proxySelector) {
+    proxy = document.querySelector(proxySelector);
+    proxy.addEventListener("click", function(e) {
+      e.preventDefault();
+    })
+  }
+
+  items.forEach((item) => {
+    const itemEvent = proxy ?? item;
+    itemEvent.addEventListener("click", function () {
+      if (window.innerWidth > minWidth) return;
+      this.classList.add(`${expandedClass}`);
+      overlay.classList.add(`${activeClass}`);
+    });
+  });
+}
+
+function initScreenshots() {
+  const overlay = document.querySelector("#screenshotOverlay");
+  const wrappers = document.querySelectorAll(".screenshot-wrapper");
+  if (!overlay || !wrappers.length) return;
+
+  wrappers.forEach((wrapper) => {
+    const img = wrapper.querySelector(".hero-screenshot");
+    const chevronLeft = document.querySelector(".chevron-left");
+    const chevronRight = document.querySelector(".chevron-right");
+    const images = JSON.parse(wrapper.dataset.images);
+    let current = 0;
+
+    // create chevrons dynamically
+    // const left = document.createElement('button');
+    // const right = document.createElement('button');
+    // left.className = 'chevron chevron-left';
+    // right.className = 'chevron chevron-right';
+    // left.innerHTML = '&#8249;';
+    // right.innerHTML = '&#8250;';
+    // wrapper.appendChild(left);
+    // wrapper.appendChild(right);
+
+    if (images.length <= 1) {
+      chevronLeft.style.visibility = "hidden";
+      chevronRight.style.visibility = "hidden";
+    } else {
+      chevronLeft.addEventListener("click", (e) => {
+        e.stopPropagation();
+        showImage(current - 1);
+      });
+
+      chevronRight.addEventListener("click", (e) => {
+        e.stopPropagation();
+        showImage(current + 1);
+      });
+    }
+
+    function showImage(index) {
+      current = (index + images.length) % images.length;
+      img.src = images[current];
+    }
+
+    wrappers.forEach((wrapper) => {
+      wrapper.addEventListener("click", function () {
+        this.classList.add("expanded");
+        overlay.classList.add("active");
+      });
+    });
+  });
+}
+
+function populateProjectCards(page = "Home") {
+  const ponies = [
+    {id: 'btnNYCDashboard', viewName: 'nyc-dashboard'},
+    {id: 'btnReportDownloadHub', viewName: 'report-download-hub'},
+    {id: 'btnAdminDocRepo', viewName: 'admin-doc-repo'},
+    {id: 'btnTZComp', viewName: 'react-native-tzcomp'},
+    {id: 'btnWordPress', viewName: 'wordpress-plugins'},
+    {id: 'btnPersonalSite', viewName: 'personal-site-page', callback: () => initHoverSweep("#btnPersonalSiteCarousel .mockup-site-name span", "#btnPersonalSiteCarousel")},
+  ];
+  ponies.forEach(pony => {
+    const viewName = pony.viewName;
+    const ponyIdPage = `#${pony.id}${page}`;
+    let ponyIdCarousel = `#${pony.id}Carousel`;
+
+    let card = document.querySelector(ponyIdCarousel);
+    if (card === null) {
+      card = document.querySelector(ponyIdPage);
+    }
+    fetch(`views/work-cards/${viewName}-card.html`)
+      .then((response) => {
+        if (!response.ok) throw new Error(`View not found: ${viewName}`);
+        return response.text();
+      })
+      .then((html) => {
+        card.innerHTML = html;
+      })
+      .then(() => {
+        if (pony.callback) {
+          pony.callback();
+        }
+      })
+      .catch((err) => console.error(err));
+      addBtnListener(ponyIdCarousel, viewName);
+      addBtnListener(ponyIdPage, viewName);
+  })
 }
 
 function initHeaderSweep(textSelector = "#headerLink span", eventSelector = "#checkNav", event = "change") {
@@ -344,66 +472,6 @@ function sweepSpanRight(nameChars) {
 function fetchIndexSvgIcons() {
   const linkedInIcon = document.querySelector(".footer-social");
   fetchSvgIcon(linkedInIcon, "assets/svgs/linkedin.svg");
-}
-
-function fetchSvgIcon(iconEl, iconPath) {
-  if (!iconEl) return;
-  fetch(iconPath)
-    .then((response) => {
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("svg")) return null;
-      return response.text();
-    })
-    .then((svg) => {
-      if (!svg) return;
-      iconEl.innerHTML = svg;
-    })
-    .catch((error) => console.error("SVG load failed:", error));
-}
-
-function initSvgIcons() {
-  const icons = document.querySelectorAll(".svg-icon");
-  if (!icons.length) return;
-  icons.forEach((icon) => {
-    if (!icon.dataset.target) return;
-    fetchSvgIcon(icon, `assets/svgs/${icon.dataset.target}.svg`);
-  });
-}
-
-function initFeatureCards() {
-  initOverlay("#cardOverlay", ".feature-card");
-}
-
-function initOverlay(
-  overlaySelector,
-  itemSelector,
-  minWidth = 768,
-  proxySelector = null,
-  expandedClass = "expanded",
-  activeClass = "active") {
-  const overlay = document.querySelector(overlaySelector);
-  const items = document.querySelectorAll(itemSelector);
-
-  if (!overlay || !items.length) {
-    return;
-  }
-
-  let proxy = null;
-  if (proxySelector) {
-    proxy = document.querySelector(proxySelector);
-    proxy.addEventListener("click", function(e) {
-      e.preventDefault();
-    })
-  }
-
-  items.forEach((item) => {
-    const itemEvent = proxy ?? item;
-    itemEvent.addEventListener("click", function () {
-      if (window.innerWidth > minWidth) return;
-      this.classList.add(`${expandedClass}`);
-      overlay.classList.add(`${activeClass}`);
-    });
-  });
 }
 
 function initMiniSiteOverlay() {
@@ -542,74 +610,6 @@ function initHamburgerAnimation() {
 
   document.querySelector('.modal-card').addEventListener("click", () => {
     addClickEvent(current + 1);
-  });
-}
-
-function initScreenshots() {
-  const overlay = document.querySelector("#screenshotOverlay");
-  const wrappers = document.querySelectorAll(".screenshot-wrapper");
-  if (!overlay || !wrappers.length) return;
-
-  wrappers.forEach((wrapper) => {
-    const img = wrapper.querySelector(".hero-screenshot");
-    const chevronLeft = document.querySelector(".chevron-left");
-    const chevronRight = document.querySelector(".chevron-right");
-    const images = JSON.parse(wrapper.dataset.images);
-    let current = 0;
-
-    // create chevrons dynamically
-    // const left = document.createElement('button');
-    // const right = document.createElement('button');
-    // left.className = 'chevron chevron-left';
-    // right.className = 'chevron chevron-right';
-    // left.innerHTML = '&#8249;';
-    // right.innerHTML = '&#8250;';
-    // wrapper.appendChild(left);
-    // wrapper.appendChild(right);
-
-    if (images.length <= 1) {
-      chevronLeft.style.visibility = "hidden";
-      chevronRight.style.visibility = "hidden";
-    } else {
-      chevronLeft.addEventListener("click", (e) => {
-        e.stopPropagation();
-        showImage(current - 1);
-      });
-
-      chevronRight.addEventListener("click", (e) => {
-        e.stopPropagation();
-        showImage(current + 1);
-      });
-    }
-
-    function showImage(index) {
-      current = (index + images.length) % images.length;
-      img.src = images[current];
-    }
-
-    wrappers.forEach((wrapper) => {
-      wrapper.addEventListener("click", function () {
-        this.classList.add("expanded");
-        overlay.classList.add("active");
-      });
-    });
-  });
-}
-
-// Clear overlay event listeners to prevent stacking on multiple view loads
-function initCleanOverlays(overlaySelectors) {
-  const overlays = getCleanElements(overlaySelectors);
-  overlays.forEach((overlay) => {
-    overlay.addEventListener("click", function () {
-      const expanded = document.querySelectorAll(".expanded, .hidden");
-      if (expanded.length) {
-        expanded.forEach((el) => {
-          el.classList.remove("expanded");
-          el.classList.remove("hidden");
-        });
-      }
-      this.classList.remove("active");
-    });
   });
 }
 
@@ -776,7 +776,6 @@ function initCarousel(rowSelector, badgeSelector) {
   const startupPulses = document.querySelectorAll(`${rowSelector}.activeCarousel, ${badgeSelector}.activeCarousel`);
 
   startupPulses.forEach(badge => {
-    console.log("badge-pulse: ", badge);
     badge.classList.add('badge-pulse-once');
     badge.addEventListener('animationend', () => {
       badge.classList.remove('badge-pulse-once');
