@@ -26,6 +26,10 @@ function initNavMenu(navSelector, navHtml, bodyElement = document.querySelector(
       addNavClick("#btnTZComp", "react-native-tzcomp", bodyElement);
       addNavClick("#btnWordPress", "wordpress-plugins", bodyElement);
       addNavClick("#btnPersonalSite", "personal-site-page", bodyElement);
+    })
+    .then(() => {
+      const header = document.querySelector("#header");
+      header.style.display = null;
     });
   }
 
@@ -36,10 +40,16 @@ function addNavClick(selector, view, bodyElement) {
   });
 }
 
-initNavMenu('#nav-placeholder', 'nav.html'); // todo: place this inside loadview to avoid loading on home page?
+var navInitiated = false;
+//initNavMenu('#nav-placeholder', 'nav.html'); // todo: place this inside loadview to avoid loading on home page?
 
 /* ────────── SPA swapping logic ────────── */
 function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")) {
+  
+  if (!navInitiated && viewName !== "home") {
+      navInitiated = true;
+      initNavMenu('#nav-placeholder', 'nav.html');
+  }
   fetch(`views/${viewName}.html`)
     .then((response) => {
       if (!response.ok) throw new Error(`View not found: ${viewName}`);
@@ -345,11 +355,11 @@ function initScreenshots() {
 }
 
 function initContactBtns(selectors) {
-  const ctaOuter = document.querySelector('.contact-cta-outer');
+  const homeHeader = document.querySelector('.hero-home-header-grid');
   const conactGrid = document.querySelector('.contact-cta-grid');
 
   conactGrid.addEventListener('mouseenter', () => {
-    ctaOuter.classList.toggle('expanded');
+    homeHeader.classList.toggle('expanded');
     getCleanElement('.contact-cta-grid');
   });
 }
@@ -942,6 +952,7 @@ window.addEventListener("DOMContentLoaded", () => {
   if (path && path !== "index.html") {
     loadView(path);
   } else {
+    navInitiated = false;
     loadView("home"); // default view
   }
 });

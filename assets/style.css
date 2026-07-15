@@ -952,7 +952,7 @@ ul li ul li:last-child {
         margin: auto;
       }
 
-      .contact-cta-outer {
+      .contact-cta-outer, .contact-cta-grid {
         grid-row: 3;
         grid-column: 1/3;
         /* flex-direction: column; */
@@ -1110,22 +1110,26 @@ ul li ul li:last-child {
   transition: transform 1.2s ease;
 }
 
-.contact-cta-outer.expanded {
+.hero-home-header-grid.expanded {
   .contact-cta-grid {
     pointer-events: none;
     animation: slideFadeOut 0.6s ease forwards;
   }
-  .btn-contact-email, .btn-contact-cv, .btn-contact-github, .btn-contact-linkedin {
-    opacity: 1;
-    transform: translateX(0);
-    transition: transform 0.4s ease;
-    pointer-events: all;
+
+  .contact-cta-outer {
+    .btn-contact-email, .btn-contact-cv, .btn-contact-github, .btn-contact-linkedin {
+      opacity: 1;
+      transform: translateX(0);
+      transition: transform 0.4s ease;
+      pointer-events: all;
+    }
   }
 }
 
 .contact-cta-grid {
-  position: absolute;
   background: none;
+  grid-row: 3;
+  grid-column: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 5px;
@@ -1136,6 +1140,8 @@ ul li ul li:last-child {
   border-radius: var(--radius);
   cursor: pointer;
   z-index: var(--z-header);
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.6s forwards;
   transition: transform 1.4s ease;
   .hero-actions {
     display: grid;
