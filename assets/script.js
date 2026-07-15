@@ -104,6 +104,7 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
 /* ─── View Callbacks ─── */
 const viewCallbacks = {
   home: [
+    () => initContactBtns('.btn-svg'),
     () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
     () => populateProjectCards(),
     () => initHoverSweep("#carouselWrapper .mockup-site-name span", "#carouselWrapper"),
@@ -340,6 +341,16 @@ function initScreenshots() {
         overlay.classList.add("active");
       });
     });
+  });
+}
+
+function initContactBtns(selectors) {
+  const ctaOuter = document.querySelector('.contact-cta-outer');
+  const conactGrid = document.querySelector('.contact-cta-grid');
+
+  conactGrid.addEventListener('mouseenter', () => {
+    ctaOuter.classList.toggle('expanded');
+    getCleanElement('.contact-cta-grid');
   });
 }
 
