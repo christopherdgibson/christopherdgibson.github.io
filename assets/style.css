@@ -2129,7 +2129,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   /* padding: 48px 52px; */
   font-size: 0.9rem;
   color: #6a7f8e;
-  border-top: 3px solid var(--grey-soft);
+  /* border-top: 3px solid var(--grey-soft); */
 }
 
 .page-body-inner {
