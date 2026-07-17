@@ -44,7 +44,7 @@ var navInitiated = false;
 //initNavMenu('#nav-placeholder', 'nav.html'); // todo: place this inside loadview to avoid loading on home page?
 
 /* ────────── SPA swapping logic ────────── */
-function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")) {
+function loadView(viewName, bodyEl = document.querySelector("#body-placeholder"), noHistory = false) {
   
   if (!navInitiated && viewName !== "home") {
       navInitiated = true;
@@ -68,7 +68,9 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
       if (workDropdown) {
         workDropdown.checked = false;
       }
-      history.pushState({ view: viewName }, "", `/${viewName}`);
+      if (noHistory === false){
+        history.pushState({ view: viewName }, "", `/${viewName}`);
+      }
       const miniSite = document.querySelector('.mini-site.expanded-mini-site');
       container = miniSite ?? window;
       const baseCallbacks = [
@@ -85,8 +87,14 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
       ];
       const viewSpecific = viewCallbacks[viewName] ?? [];
       const callbacks = [...baseCallbacks, ...viewSpecific];
-      if (!callbacks) return;
-      callbacks.forEach(cb => cb());
+      if (callbacks.length === 0) return;
+      callbacks.forEach(cb => {
+        try {
+          cb();
+        } catch (err) {
+          console.error('Callback failed:', err);
+        }
+      });
     })
     .then(() => {
       const images = bodyEl.querySelectorAll("img");
@@ -102,7 +110,9 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
       return Promise.all(imagePromises);
     })
     .then(() => {
-      scrollToTop(container);
+      if (noHistory === false){
+        scrollToTop(container);
+      }
     })
     .catch((error) => {
       // Fallback to home view or show error message
@@ -115,6 +125,8 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
 const viewCallbacks = {
   home: [
     () => initContactBtns('.btn-svg'),
+    () => initPeekSection('experience'),
+    () => initPeekSection('work'),
     () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
     () => populateProjectCards(),
     () => initHoverSweep("#carouselWrapper .mockup-site-name span", "#carouselWrapper"),
@@ -175,19 +187,27 @@ function addBtnListener(btnId, viewName) {
 
 function initAnchorButtons(container = window, behavior = "smooth") {
   document.querySelectorAll(".page-tag-btn").forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const target = document.getElementById(this.dataset.target);
-      if (!target) return;
-      let headerHeight = document.querySelector("#header").offsetHeight;
-      if (container != window) {
-        const containerRect = container.getBoundingClientRect();
-        headerHeight += containerRect.top; // account for container's position relative to viewport
-      }
-      // Account for fixed position header and current height
-      const targetRect = target.getBoundingClientRect();
-      container.scrollBy({top: targetRect.top - headerHeight - 16, left: 0, behavior: behavior});
+    btn.addEventListener("click", () => {
+      const target = document.getElementById(btn.dataset.target);
+      scrollToAnchor(target, container, true, behavior)
     });
   });
+}
+
+function scrollToAnchor(target, container = window, includeHeader = false, behavior = "smooth") {
+  if (!target) return;
+  const targetRect = target.getBoundingClientRect();
+  let scrollHeight = targetRect.top;
+  if (includeHeader === true) {
+    const header = document.querySelector("#header");
+    if (!header) return;
+    let headerHeight = header.offsetHeight;
+    if (container != window) {
+      const containerRect = container.getBoundingClientRect();
+      headerHeight += containerRect.top; // account for container's position relative to viewport
+    }
+    scrollHeight -= headerHeight;  }  
+  container.scrollBy({top: scrollHeight - 16, left: 0, behavior: behavior});
 }
 
 function initSvgIcons() {
@@ -361,6 +381,73 @@ function initContactBtns(selectors) {
   conactGrid.addEventListener('mouseenter', () => {
     homeHeader.classList.toggle('expanded');
     getCleanElement('.contact-cta-grid');
+  });
+}
+
+let previewExpanded;
+function initPeekSection(section) {
+  const peekWrapper = document.querySelector(`.peek-wrapper.${section}`);
+  const btn = document.querySelector(`#btn${toPascalCase(section)}Home`);
+  const hoverBridge = document.querySelector('.hover-bridge');
+  const peekBtn = document.querySelector(`#peekBtn${toPascalCase(section)}`);
+  const peekPanel = document.querySelector(`#peek${toPascalCase(section)}Home`);
+  const defaultOrder = {work: '1', experience: '2'}
+  let closeTimer = null;
+  previewExpanded = 0
+
+  function open() {
+    clearTimeout(closeTimer);
+    peekWrapper.classList.add('expanded');
+  }
+
+  function scheduleClose() {
+    if (peekPanel.classList.contains('expanded')) return;
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(() => {
+      peekWrapper.classList.remove('expanded');
+    }, 200); // grace period to move mouse from button to panel
+  }
+
+  btn.addEventListener('mouseenter', () => {
+    if (peekPanel.classList.contains('expanded')) return;
+    peekWrapper.style.order = '0';
+    open();
+  });
+  btn.addEventListener('mouseleave', () => {
+    scheduleClose();
+  });
+
+  [peekWrapper, hoverBridge].forEach((el) => {
+    el.addEventListener('mouseenter', () => {
+      if (peekWrapper.classList.contains('expanded')) {
+        open();
+      }
+    });
+     el.addEventListener('mouseleave', () => {
+      if (peekWrapper.classList.contains('expanded')) {
+        scheduleClose();
+      }
+    });
+  });
+
+  peekBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+      loadView(section, peekPanel, true);
+  }, { once: true });
+  peekBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    peekWrapper.style.order = defaultOrder[section];
+    peekPanel.classList.toggle('expanded');
+    const isExpanded = peekPanel.classList.contains('expanded');
+    peekBtn.setAttribute('aria-expanded', isExpanded);
+    if (!isExpanded) {
+      previewExpanded --;
+      return;
+    }
+    if (previewExpanded > 0) {
+      scrollToAnchor(peekWrapper, container);
+    }
+    previewExpanded ++;
   });
 }
 
