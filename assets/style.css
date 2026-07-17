@@ -1188,10 +1188,20 @@ ul li ul li:last-child {
         margin: auto;
       }
 
+      .contact-cta-grid, .contact-cta-outer {
+        grid-row: 3;
+        grid-column: 1/3;
+        /* flex-direction: column; */
+      }
+
       .hero-actions {
         grid-row: 5;
         grid-column: 1/3;
         display: flex;
+
+        .btn-primary {
+          margin-bottom: 10px;
+        }
       }
     }
   }
