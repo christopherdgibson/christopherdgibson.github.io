@@ -125,11 +125,10 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
 const viewCallbacks = {
   home: [
     () => initContactBtns('.btn-svg'),
-    // () => initPeekSection('experience'),
-    // () => initPeekSection('work'),
+    () => initPeekSection('experience'),
+    () => initPeekSection('work'),
     () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
     () => populateProjectCards(),
-    () => initHoverSweep("#carouselWrapper .mockup-site-name span", "#carouselWrapper"),
     () => addBtnListener("#btnWorkHome", "work"),
     () => addBtnListener("#btnExperienceHome", "experience"),
   ],
@@ -138,7 +137,6 @@ const viewCallbacks = {
     () => addBtnListener("#btnExperienceAbout", "experience"),
   ],
   work: [
-    () => initHoverSweep("#btnPersonalSiteWork .mockup-site-name span", "#btnPersonalSiteWork"),
     () => sweepSpanBilateral(".name-char"),
     () => populateProjectCards("Work")
   ],
@@ -452,21 +450,23 @@ function initPeekSection(section) {
 }
 
 function populateProjectCards(page = "Home") {
+  const hoverId = page === "Home" ? '#btnPersonalSiteCarousel' : '#btnPersonalSiteWork';
   const ponies = [
     {id: 'btnNYCDashboard', viewName: 'nyc-dashboard'},
     {id: 'btnReportDownloadHub', viewName: 'report-download-hub'},
     {id: 'btnAdminDocRepo', viewName: 'admin-doc-repo'},
     {id: 'btnTZComp', viewName: 'react-native-tzcomp'},
     {id: 'btnWordPress', viewName: 'wordpress-plugins'},
-    {id: 'btnPersonalSite', viewName: 'personal-site-page', callback: () => initHoverSweep("#btnPersonalSiteCarousel .mockup-site-name span", "#btnPersonalSiteCarousel")},
+    {id: 'btnPersonalSite', viewName: 'personal-site-page', callback: () => initHoverSweep(`${hoverId} .mockup-site-name span`, hoverId)},
   ];
   ponies.forEach(pony => {
     const viewName = pony.viewName;
     const ponyIdPage = `#${pony.id}${page}`;
     let ponyIdCarousel = `#${pony.id}Carousel`;
-
-    let card = document.querySelector(ponyIdCarousel);
-    if (card === null) {
+    let card;
+    if (page === "Home") {
+      card = document.querySelector(ponyIdCarousel);
+    } else {
       card = document.querySelector(ponyIdPage);
     }
     fetch(`views/work-cards/${viewName}-card.html`)
