@@ -1074,6 +1074,7 @@ ul li ul li:last-child {
 .peek-section {
   display: flex;
   flex-direction: column;
+  max-width: 1200px;
   width: 100%
 }
 
@@ -1095,7 +1096,7 @@ ul li ul li:last-child {
   padding: 10px 14px;
   /* margin-top: 10px; */
   font-size: 0.85rem;
-  color: var(--blue-accent);
+  color: var(--teaching-accent-color);
   background: rgba(var(--blue-accent-rgb), 0.06);
   border: 1px solid rgba(var(--blue-accent-rgb), 0.2);
   cursor: pointer;
