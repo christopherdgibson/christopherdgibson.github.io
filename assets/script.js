@@ -125,8 +125,8 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
 const viewCallbacks = {
   home: [
     () => initContactBtns('.btn-svg'),
-    () => initPeekSection('experience'),
-    () => initPeekSection('work'),
+    // () => initPeekSection('experience'),
+    // () => initPeekSection('work'),
     () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
     () => populateProjectCards(),
     () => initHoverSweep("#carouselWrapper .mockup-site-name span", "#carouselWrapper"),
