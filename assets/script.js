@@ -627,10 +627,22 @@ function initMiniSiteOverlay() {
         // }
         initNavMenu('#nav-placeholder', 'nav.html', bodyMini);
         loadView("personal-site-page", bodyMini);
+      })
+      .then(() => {
         initScrollToTop(miniSite);
         initHeaderLink();
-        const headerHeight = document.querySelector("#header").offsetHeight;
-        document.querySelector('#btnMiniSiteCard').style.top = `calc(${headerHeight}px + 8px)`;
+
+        const header = document.querySelector('#header');
+        const btn = document.querySelector('#btnMiniSiteCard');
+
+        const resizeObserver = new ResizeObserver(entries => {
+          for (const entry of entries) {
+            const headerHeight = entry.target.offsetHeight;
+            btn.style.top = `calc(${headerHeight}px + 8px)`;
+          }
+        });
+
+        resizeObserver.observe(header);
         overlay.addEventListener("click", function () {
           sessionStorage.setItem("redirect", "personal-site-page");
           window.location.href = "/";
