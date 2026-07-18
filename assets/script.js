@@ -411,6 +411,10 @@ function initPeekSection(section) {
     peekWrapper.style.order = '0';
     open();
   });
+  btn.addEventListener("mouseenter", (event) => {
+    event.preventDefault();
+    loadView(section, peekPanel, true);
+  }, { once: true });
   btn.addEventListener('mouseleave', () => {
     scheduleClose();
   });
@@ -428,10 +432,6 @@ function initPeekSection(section) {
     });
   });
 
-  peekBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-      loadView(section, peekPanel, true);
-  }, { once: true });
   peekBtn.addEventListener("click", (event) => {
     event.preventDefault();
     peekWrapper.style.order = defaultOrder[section];
