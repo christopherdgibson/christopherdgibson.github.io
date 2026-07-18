@@ -4,7 +4,7 @@ let title = document.querySelector("#title-placeholder");
 
 /* ────────── Load navbar and menu events ────────── */
 
-function initNavMenu(navSelector, navHtml, bodyElement = document.querySelector("#body-placeholder")) {
+function initNavMenu(navSelector, navHtml, bodyElement = document.querySelector("#body-placeholder"), containerSelector) {
   const navMenu = document.querySelector(navSelector);
   fetch(navHtml)
     .then((response) => response.text())
@@ -12,20 +12,20 @@ function initNavMenu(navSelector, navHtml, bodyElement = document.querySelector(
       navMenu.innerHTML = data;
       fetchIndexSvgIcons();
       initHeaderSweep();
-      addNavClick("#btnHome", "home", bodyElement);
-      addNavClick("#btnExperience", "experience", bodyElement);
-      addNavClick("#btnWork", "work", bodyElement);
-      addNavClick("#btnWorkMobile", "work", bodyElement);
-      addNavClick("#btnResearch", "research", bodyElement);
-      addNavClick("#btnTeaching", "teaching", bodyElement);
-      addNavClick("#btnAbout", "about", bodyElement);
+      addNavClick("#btnHome", "home", bodyElement, containerSelector);
+      addNavClick("#btnExperience", "experience", bodyElement, containerSelector);
+      addNavClick("#btnWork", "work", bodyElement, containerSelector);
+      addNavClick("#btnWorkMobile", "work", bodyElement, containerSelector);
+      addNavClick("#btnResearch", "research", bodyElement, containerSelector);
+      addNavClick("#btnTeaching", "teaching", bodyElement, containerSelector);
+      addNavClick("#btnAbout", "about", bodyElement, containerSelector);
       // Work sub-menu
-      addNavClick("#btnNYCDashboard", "nyc-dashboard", bodyElement);
-      addNavClick("#btnReportDownloadHub", "report-download-hub", bodyElement);
-      addNavClick("#btnAdminDocRepo", "admin-doc-repo", bodyElement);
-      addNavClick("#btnTZComp", "react-native-tzcomp", bodyElement);
-      addNavClick("#btnWordPress", "wordpress-plugins", bodyElement);
-      addNavClick("#btnPersonalSite", "personal-site-page", bodyElement);
+      addNavClick("#btnNYCDashboard", "nyc-dashboard", bodyElement, containerSelector);
+      addNavClick("#btnReportDownloadHub", "report-download-hub", bodyElement, containerSelector);
+      addNavClick("#btnAdminDocRepo", "admin-doc-repo", bodyElement, containerSelector);
+      addNavClick("#btnTZComp", "react-native-tzcomp", bodyElement, containerSelector);
+      addNavClick("#btnWordPress", "wordpress-plugins", bodyElement, containerSelector);
+      addNavClick("#btnPersonalSite", "personal-site-page", bodyElement, containerSelector);
     })
     .then(() => {
       const header = document.querySelector("#header");
@@ -33,20 +33,25 @@ function initNavMenu(navSelector, navHtml, bodyElement = document.querySelector(
     });
   }
 
-function addNavClick(selector, view, bodyElement) {
+function addNavClick(selector, view, bodyElement, containerSelector) {
   document.querySelector(selector).addEventListener("click", function(event) {
     event.preventDefault();
-    loadView(view, bodyElement);
+    loadView(view, bodyElement, containerSelector);
   });
 }
 
 var navInitiated = false;
-//initNavMenu('#nav-placeholder', 'nav.html'); // todo: place this inside loadview to avoid loading on home page?
 
 /* ────────── SPA swapping logic ────────── */
-function loadView(viewName, bodyEl = document.querySelector("#body-placeholder"), noHistory = false) {
+
+function loadView(
+  viewName, 
+  bodyEl = document.querySelector("#body-placeholder"), // body element to replace with default
+  containerSelector = null, // string selector for container reference, defaults to window
+  contentOnly = false // true if view is only to display content and is not a page navigation (e.g., skips history, footer buttons, and scrollToTop)
+) {
   
-  if (!navInitiated && viewName !== "home") {
+  if (!navInitiated && viewName !== "home") { // load once after home page
       navInitiated = true;
       initNavMenu('#nav-placeholder', 'nav.html');
   }
@@ -68,23 +73,32 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
       if (workDropdown) {
         workDropdown.checked = false;
       }
-      if (noHistory === false){
+      if (contentOnly === false){
         history.pushState({ view: viewName }, "", `/${viewName}`);
       }
-      const miniSite = document.querySelector('.mini-site.expanded-mini-site');
-      container = miniSite ?? window;
-      const baseCallbacks = [
-        () => {(
-            initAnchorButtons(container),
-            initSvgIcons(),
-            initFooterButtons(),
-            initCleanOverlays([".card-overlay", ".screenshot-overlay"]), // include base and mini-site overlays?
-            initCardOverlay("#screenshotOverlay", "miniSiteCard"),
-            initFeatureCards(),
-            initScreenshots()
-          );
-        },
+
+      if (containerSelector !== null) {
+        container = document.querySelector(containerSelector);
+      } else {
+        container = window;
+      }
+
+      container = container ?? window;
+
+      console.log('loadView container: ', container);
+
+      let baseCallbacks = [
+        () => initAnchorButtons(container),
+        () => initSvgIcons(),
+        ...(contentOnly === false ? [
+          () => initFooterButtons(containerSelector),
+          () => initCleanOverlays([".card-overlay", ".screenshot-overlay"]), // include base and mini-site overlays?
+          () => initCardOverlay("#screenshotOverlay", "miniSiteCard"),
+        ] : []),
+        () => initFeatureCards(),
+        () => initScreenshots(),
       ];
+
       const viewSpecific = viewCallbacks[viewName] ?? [];
       const callbacks = [...baseCallbacks, ...viewSpecific];
       if (callbacks.length === 0) return;
@@ -110,7 +124,7 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
       return Promise.all(imagePromises);
     })
     .then(() => {
-      if (noHistory === false){
+      if (contentOnly === false) {
         scrollToTop(container);
       }
     })
@@ -125,8 +139,8 @@ function loadView(viewName, bodyEl = document.querySelector("#body-placeholder")
 const viewCallbacks = {
   home: [
     () => initContactBtns('.btn-svg'),
-    () => initPeekSection('experience'),
-    () => initPeekSection('work'),
+    () => initPreviewSection('experience', container),
+    () => initPreviewSection('work', container),
     () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
     () => populateProjectCards(),
     () => addBtnListener("#btnWorkHome", "work"),
@@ -183,11 +197,13 @@ function addBtnListener(btnId, viewName) {
 
 /* ────────── Base Callbacks ────────── */
 
-function initAnchorButtons(container = window, behavior = "smooth") {
-  document.querySelectorAll(".page-tag-btn").forEach((btn) => {
+function initAnchorButtons(container = window, includeHeader = true, behavior = "smooth") {
+  const pageTagParent = container !== window ? container : document;
+
+  pageTagParent.querySelectorAll(".page-tag-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const target = document.getElementById(btn.dataset.target);
-      scrollToAnchor(target, container, true, behavior)
+      scrollToAnchor(target, container, includeHeader, behavior)
     });
   });
 }
@@ -232,7 +248,8 @@ function fetchSvgIcon(iconEl, iconPath) {
     .catch((error) => console.error("SVG load failed:", error));
 }
 
-function initFooterButtons(bodyElement) {
+function initFooterButtons(containerSelector = null) {
+  const bodyElement = document.querySelector("#body-placeholder");
   const viewNav = document.querySelector(".view-nav");
   let back = getCleanElement('#footer-back-btn');
   let next = getCleanElement('#footer-next-btn');
@@ -247,7 +264,7 @@ function initFooterButtons(bodyElement) {
     back.innerHTML = `&larr; <span class="footer-back-desktop-text">Back to </span> ${viewNav.dataset.backText}`;
     back.addEventListener("click", function (event) {
       event.preventDefault();
-      loadView(viewNav.dataset.backView, bodyElement);
+      loadView(viewNav.dataset.backView, bodyElement, containerSelector);
     });
   } else if (back) {
     back.innerHTML = "";
@@ -260,7 +277,7 @@ function initFooterButtons(bodyElement) {
       next.innerHTML = `<span class="footer-next-desktop-text">To </span>${viewNav.dataset.nextText} &rarr;`;
       next.addEventListener("click", function (event) {
         event.preventDefault();
-        loadView(viewNav.dataset.nextView, bodyElement);
+        loadView(viewNav.dataset.nextView, bodyElement, containerSelector);
       });
     }
   } else if (next) {
@@ -377,43 +394,44 @@ function initContactBtns(selectors) {
   const conactGrid = document.querySelector('.contact-cta-grid');
 
   conactGrid.addEventListener('mouseenter', () => {
-    homeHeader.classList.toggle('expanded');
+    homeHeader.classList.toggle('expanded-contact');
     getCleanElement('.contact-cta-grid');
   });
 }
 
 let previewExpanded;
-function initPeekSection(section) {
+function initPreviewSection(section, container = window) {
+  const Section = toPascalCase(section);
   const peekWrapper = document.querySelector(`.peek-wrapper.${section}`);
-  const btn = document.querySelector(`#btn${toPascalCase(section)}Home`);
+  const btn = document.querySelector(`#btn${Section}Home`);
   const hoverBridge = document.querySelector('.hover-bridge');
-  const peekBtn = document.querySelector(`#peekBtn${toPascalCase(section)}`);
-  const peekPanel = document.querySelector(`#peek${toPascalCase(section)}Home`);
+  const peekBtn = document.querySelector(`#peekBtn${Section}`);
+  const peekPanel = document.querySelector(`#peek${Section}Home`);
   const defaultOrder = {work: '1', experience: '2'}
   let closeTimer = null;
   previewExpanded = 0
 
   function open() {
     clearTimeout(closeTimer);
-    peekWrapper.classList.add('expanded');
+    peekWrapper.classList.add('expanded-preview');
   }
 
   function scheduleClose() {
-    if (peekPanel.classList.contains('expanded')) return;
+    if (peekPanel.classList.contains('expanded-preview')) return;
     clearTimeout(closeTimer);
     closeTimer = setTimeout(() => {
-      peekWrapper.classList.remove('expanded');
-    }, 200); // grace period to move mouse from button to panel
+      peekWrapper.classList.remove('expanded-preview');
+    }, 200); // grace period to avoid flickering
   }
 
   btn.addEventListener('mouseenter', () => {
-    if (peekPanel.classList.contains('expanded')) return;
+    if (peekPanel.classList.contains('expanded-preview')) return;
     peekWrapper.style.order = '0';
     open();
   });
   btn.addEventListener("mouseenter", (event) => {
     event.preventDefault();
-    loadView(section, peekPanel, true);
+    loadView(section, peekPanel, `#peek${Section}Home`, true);
   }, { once: true });
   btn.addEventListener('mouseleave', () => {
     scheduleClose();
@@ -421,12 +439,12 @@ function initPeekSection(section) {
 
   [peekWrapper, hoverBridge].forEach((el) => {
     el.addEventListener('mouseenter', () => {
-      if (peekWrapper.classList.contains('expanded')) {
+      if (peekWrapper.classList.contains('expanded-preview')) {
         open();
       }
     });
      el.addEventListener('mouseleave', () => {
-      if (peekWrapper.classList.contains('expanded')) {
+      if (peekWrapper.classList.contains('expanded-preview')) {
         scheduleClose();
       }
     });
@@ -435,15 +453,16 @@ function initPeekSection(section) {
   peekBtn.addEventListener("click", (event) => {
     event.preventDefault();
     peekWrapper.style.order = defaultOrder[section];
-    peekPanel.classList.toggle('expanded');
-    const isExpanded = peekPanel.classList.contains('expanded');
+    peekPanel.classList.toggle('expanded-preview');
+    const isExpanded = peekPanel.classList.contains('expanded-preview');
     peekBtn.setAttribute('aria-expanded', isExpanded);
     if (!isExpanded) {
       previewExpanded --;
+      scrollToTop(peekPanel); // reset to top when closed
       return;
     }
     if (previewExpanded > 0) {
-      scrollToAnchor(peekWrapper, container);
+      scrollToAnchor(peekWrapper, container); // scroll to preview when multiple open
     }
     previewExpanded ++;
   });
@@ -625,8 +644,8 @@ function initMiniSiteOverlay() {
         //   loadView('personal-site-page.html');
         //   return;
         // }
-        initNavMenu('#nav-placeholder', 'nav.html', bodyMini);
-        loadView("personal-site-page", bodyMini);
+        initNavMenu('#nav-placeholder', 'nav.html', bodyMini, '.mini-site.expanded-mini-site');
+        loadView("personal-site-page", bodyMini, '.mini-site.expanded-mini-site');
       })
       .then(() => {
         initScrollToTop(miniSite);

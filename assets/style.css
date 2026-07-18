@@ -782,12 +782,6 @@ ul li ul li:last-child {
     animation: row-pulse 1.7s ease-in-out;
   }
 
-  .page-tag {
-    color: var(--teaching-accent-color);
-    animation: fadeIn 0.4s ease 2s both;
-    border: 1px solid rgba(var(--blue-accent-rgb), 0.45)
-  }
-
   .accent-line {
     animation: fadeUp 0.6s ease 0.55s forwards;
   }
@@ -877,6 +871,12 @@ ul li ul li:last-child {
         opacity: 1;
         animation: none
       }
+    }
+
+    .page-tag {
+      color: var(--teaching-accent-color);
+      animation: fadeIn 0.4s ease 2s both;
+      border: 1px solid rgba(var(--blue-accent-rgb), 0.45)
     }
 
     .hero-vert-divider {
@@ -1135,12 +1135,12 @@ ul li ul li:last-child {
   transform: rotate(180deg);
 }
 
-.peek-wrapper.expanded .peek-btn {
+.peek-wrapper.expanded-preview .peek-btn {
   max-height: 260px;
   opacity: 1;
 }
 
-.peek-wrapper.expanded, .peek-panel.expanded {
+.peek-wrapper.expanded-preview, .peek-panel.expanded-preview {
   max-height: 500px;
   opacity: 1;
 }
@@ -1238,7 +1238,7 @@ ul li ul li:last-child {
   transition: transform 1.2s ease;
 }
 
-.hero-home-header-grid.expanded {
+.hero-home-header-grid.expanded-contact {
   .contact-cta-grid {
     pointer-events: none;
     animation: slideFadeOut 0.6s ease forwards;
@@ -1601,9 +1601,11 @@ ul li ul li:last-child {
     color 0.2s ease;
 }
 
-.feature-card:hover .skill-tag {
-  background: rgba(var(--blue-accent-rgb), 0.14);
-  color: var(--text);
+.feature-card:hover, .feature-card.expanded {
+  .skill-tag {
+    background: rgba(var(--blue-accent-rgb), 0.14);
+    color: var(--text);
+  }
 }
 
 .skill-tags {
