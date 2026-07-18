@@ -104,7 +104,7 @@ function loadView(
       if (callbacks.length === 0) return;
       callbacks.forEach(cb => {
         try {
-          cb();
+          cb(containerSelector);
         } catch (err) {
           console.error('Callback failed:', err);
         }
@@ -142,17 +142,17 @@ const viewCallbacks = {
     () => initPreviewSection('experience', container),
     () => initPreviewSection('work', container),
     () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
-    () => populateProjectCards(),
-    () => addBtnListener("#btnWorkHome", "work"),
-    () => addBtnListener("#btnExperienceHome", "experience"),
+    (containerSelector) => populateProjectCards("Home", containerSelector),
+    (containerSelector) => addBtnListener("#btnWorkHome", "work", containerSelector),
+    (containerSelector) => addBtnListener("#btnExperienceHome", "experience", containerSelector),
   ],
   about: [
-    () => addBtnListener("#btnWorkAbout", "work"),
-    () => addBtnListener("#btnExperienceAbout", "experience"),
+    (containerSelector) => addBtnListener("#btnWorkAbout", "work", containerSelector),
+    (containerSelector) => addBtnListener("#btnExperienceAbout", "experience", containerSelector),
   ],
   work: [
     () => sweepSpanBilateral(".name-char"),
-    () => populateProjectCards("Work")
+    (containerSelector) => populateProjectCards("Work", containerSelector)
   ],
   "report-download-hub": [
     () => initCardOverlay("#screenshotOverlay", "reportDownloadHubExe", "btnReportDownloadHubExe"),
@@ -177,21 +177,22 @@ const viewCallbacks = {
     () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),
     () => initMiniSiteOverlay(),
-    () => addBtnListener("#btnHomeCarousel", "home"),
-    () => addBtnListener("#btnExperienceCarousel", "experience"),
-    () => addBtnListener("#btnWorkCarousel", "work"),
-    () => addBtnListener("#btnResearchCarousel", "research"),
-    () => addBtnListener("#btnTeachingCarousel", "teaching"),
-    () => addBtnListener("#btnAboutCarousel", "about"),
+    (containerSelector) => addBtnListener("#btnHomeCarousel", "home", containerSelector),
+    (containerSelector) => addBtnListener("#btnExperienceCarousel", "experience", containerSelector),
+    (containerSelector) => addBtnListener("#btnWorkCarousel", "work", containerSelector),
+    (containerSelector) => addBtnListener("#btnResearchCarousel", "research", containerSelector),
+    (containerSelector) => addBtnListener("#btnTeachingCarousel", "teaching", containerSelector),
+    (containerSelector) => addBtnListener("#btnAboutCarousel", "about", containerSelector),
   ],
 };
 
-function addBtnListener(btnId, viewName) {
+function addBtnListener(btnId, viewName, containerSelector) {
   const el = document.querySelector(btnId);
   if (!el) return;
+  const bodyElement = undefined;
   el.addEventListener("click", function (event) {
     event.preventDefault();
-    loadView(viewName);
+    loadView(viewName, bodyElement, containerSelector);
   });
 }
 
@@ -468,7 +469,7 @@ function initPreviewSection(section, container = window) {
   });
 }
 
-function populateProjectCards(page = "Home") {
+function populateProjectCards(page = "Home", containerSelector) {
   const hoverId = page === "Home" ? '#btnPersonalSiteCarousel' : '#btnPersonalSiteWork';
   const ponies = [
     {id: 'btnNYCDashboard', viewName: 'nyc-dashboard'},
@@ -502,8 +503,8 @@ function populateProjectCards(page = "Home") {
         }
       })
       .catch((err) => console.error(err));
-      addBtnListener(ponyIdCarousel, viewName);
-      addBtnListener(ponyIdPage, viewName);
+      addBtnListener(ponyIdCarousel, viewName, containerSelector);
+      addBtnListener(ponyIdPage, viewName, containerSelector);
   })
 }
 
