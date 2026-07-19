@@ -873,9 +873,7 @@ ul li ul li:last-child {
     }
 
     .page-tag {
-      color: var(--teaching-accent-color);
       animation: fadeIn 0.4s ease 2s both;
-      border: 1px solid rgba(var(--blue-accent-rgb), 0.45)
     }
 
     .contact-trigger {
