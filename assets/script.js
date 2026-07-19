@@ -143,6 +143,7 @@ const viewCallbacks = {
     () => initPreviewSection('work', container),
     () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
     (containerSelector) => populateProjectCards("Home", containerSelector),
+    (containerSelector) => addHomeTableBtns(containerSelector),
     (containerSelector) => addBtnListener("#btnWorkHome", "work", containerSelector),
     (containerSelector) => addBtnListener("#btnExperienceHome", "experience", containerSelector),
   ],
@@ -469,26 +470,22 @@ function initPreviewSection(section, container = window) {
   });
 }
 
+const projects = [
+  {id: 'btnNYCDashboard', viewName: 'nyc-dashboard'},
+  {id: 'btnReportDownloadHub', viewName: 'report-download-hub'},
+  {id: 'btnAdminDocRepo', viewName: 'admin-doc-repo'},
+  {id: 'btnTZComp', viewName: 'react-native-tzcomp'},
+  {id: 'btnWordPress', viewName: 'wordpress-plugins'},
+  {id: 'btnPersonalSite', viewName: 'personal-site-page', callback: (hoverId) => initHoverSweep(`${hoverId} .mockup-site-name span`, hoverId)},
+];
+
 function populateProjectCards(page = "Home", containerSelector) {
-  const hoverId = page === "Home" ? '#btnPersonalSiteCarousel' : '#btnPersonalSiteWork';
-  const ponies = [
-    {id: 'btnNYCDashboard', viewName: 'nyc-dashboard'},
-    {id: 'btnReportDownloadHub', viewName: 'report-download-hub'},
-    {id: 'btnAdminDocRepo', viewName: 'admin-doc-repo'},
-    {id: 'btnTZComp', viewName: 'react-native-tzcomp'},
-    {id: 'btnWordPress', viewName: 'wordpress-plugins'},
-    {id: 'btnPersonalSite', viewName: 'personal-site-page', callback: () => initHoverSweep(`${hoverId} .mockup-site-name span`, hoverId)},
-  ];
-  ponies.forEach(pony => {
-    const viewName = pony.viewName;
-    const ponyIdPage = `#${pony.id}${page}`;
-    let ponyIdCarousel = `#${pony.id}Carousel`;
-    let card;
-    if (page === "Home") {
-      card = document.querySelector(ponyIdCarousel);
-    } else {
-      card = document.querySelector(ponyIdPage);
-    }
+  const hoverId = `#btnPersonalSite${page}`;
+
+  projects.forEach(project => {
+    const viewName = project.viewName;
+    const projectId = `#${project.id}${page}`;
+    const card = document.querySelector(projectId);
     fetch(`views/work-cards/${viewName}-card.html`)
       .then((response) => {
         if (!response.ok) throw new Error(`View not found: ${viewName}`);
@@ -498,13 +495,20 @@ function populateProjectCards(page = "Home", containerSelector) {
         card.innerHTML = html;
       })
       .then(() => {
-        if (pony.callback) {
-          pony.callback();
+        if (project.callback) {
+          project.callback(hoverId);
         }
       })
       .catch((err) => console.error(err));
-      addBtnListener(ponyIdCarousel, viewName, containerSelector);
-      addBtnListener(ponyIdPage, viewName, containerSelector);
+      addBtnListener(projectId, viewName, containerSelector);
+  })
+}
+
+function addHomeTableBtns(containerSelector) {
+    projects.forEach(project => {
+    const viewName = project.viewName;
+    const tableId = `#${project.id}Table`;
+    addBtnListener(tableId, viewName, containerSelector);
   })
 }
 
