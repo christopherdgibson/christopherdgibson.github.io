@@ -85,8 +85,6 @@ function loadView(
 
       container = container ?? window;
 
-      console.log('loadView container: ', container);
-
       let baseCallbacks = [
         () => initAnchorButtons(container),
         () => initSvgIcons(),
@@ -392,13 +390,41 @@ function initScreenshots() {
 }
 
 function initContactBtns(selectors) {
-  const homeHeader = document.querySelector('.hero-home-header-grid');
-  const conactGrid = document.querySelector('.contact-cta-grid');
+  const contactTrigger = document.querySelector('#contactTrigger');
+  const envelope = document.querySelector('#contactEnvelope');
+  let stopIdleShake = shakeContactEnvelope(envelope, contactTrigger);
 
-  conactGrid.addEventListener('mouseenter', () => {
-    homeHeader.classList.toggle('expanded-contact');
-    getCleanElement('.contact-cta-grid');
+  envelope.addEventListener('mouseenter', () => {
+    stopIdleShake();
+    contactTrigger.classList.add('expanded-contact');
+    contactTrigger.setAttribute('aria-expanded', true);
   });
+
+  contactTrigger.addEventListener('click', () => {
+    if (contactTrigger.classList.contains('expanded-contact')) {
+      contactTrigger.classList.remove('expanded-contact');
+      contactTrigger.setAttribute('aria-expanded', false);
+      stopIdleShake = shakeContactEnvelope(envelope, contactTrigger);
+    }
+  });
+}
+
+function shakeContactEnvelope(envelope, contactTrigger) {
+  if (!envelope.dataset.shakeListenerAttached) {
+    envelope.addEventListener('animationend', () => {
+      envelope.classList.remove('shake');
+    });
+    envelope.dataset.shakeListenerAttached = 'true';
+  }
+
+  let shakeInterval = setInterval(() => {
+    if (contactTrigger.classList.contains('expanded-contact')) return;
+    envelope.classList.remove('shake');
+    void envelope.offsetWidth;
+    envelope.classList.add('shake');
+  }, 5000);
+
+  return () => clearInterval(shakeInterval);
 }
 
 let previewExpanded;
