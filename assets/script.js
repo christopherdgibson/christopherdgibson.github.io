@@ -393,8 +393,13 @@ function initContactBtns(triggerSelector, envelopeSelector) {
   const contactTrigger = document.querySelector(triggerSelector);
   const envelope = document.querySelector(envelopeSelector);
   let stopIdleShake = shakeContactEnvelope(envelope, contactTrigger);
+  let inputLocked = false;
 
   function setExpanded(expanded) {
+    if (inputLocked) return; // ignore calls that arrive during the lockout window
+    inputLocked = true;
+    setTimeout(() => { inputLocked = false; }, 300);
+
     contactTrigger.classList.toggle('expanded-contact', expanded);
     contactTrigger.setAttribute('aria-expanded', expanded);
     if (expanded) {
