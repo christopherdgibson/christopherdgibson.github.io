@@ -136,7 +136,7 @@ function loadView(
 /* ─── View Callbacks ─── */
 const viewCallbacks = {
   home: [
-    () => initContactBtns('.btn-svg'),
+    () => initContactBtns('#contactTrigger', '#contactEnvelope'),
     () => initPreviewSection('experience', container),
     () => initPreviewSection('work', container),
     () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
@@ -389,23 +389,29 @@ function initScreenshots() {
   });
 }
 
-function initContactBtns(selectors) {
-  const contactTrigger = document.querySelector('#contactTrigger');
-  const envelope = document.querySelector('#contactEnvelope');
+function initContactBtns(triggerSelector, envelopeSelector) {
+  const contactTrigger = document.querySelector(triggerSelector);
+  const envelope = document.querySelector(envelopeSelector);
   let stopIdleShake = shakeContactEnvelope(envelope, contactTrigger);
 
-  envelope.addEventListener('mouseenter', () => {
-    stopIdleShake();
-    contactTrigger.classList.add('expanded-contact');
-    contactTrigger.setAttribute('aria-expanded', true);
+  function setExpanded(expanded) {
+    contactTrigger.classList.toggle('expanded-contact', expanded);
+    contactTrigger.setAttribute('aria-expanded', expanded);
+    if (expanded) {
+      stopIdleShake();
+    } else {
+      stopIdleShake = shakeContactEnvelope(envelope, contactTrigger);
+    }
+  }
+
+   envelope.addEventListener('pointerenter', (event) => {
+    if (event.pointerType !== 'mouse') return; // ignore touch/pen-simulated hover
+    setExpanded(true);
   });
 
   contactTrigger.addEventListener('click', () => {
-    if (contactTrigger.classList.contains('expanded-contact')) {
-      contactTrigger.classList.remove('expanded-contact');
-      contactTrigger.setAttribute('aria-expanded', false);
-      stopIdleShake = shakeContactEnvelope(envelope, contactTrigger);
-    }
+    const isExpanded = contactTrigger.classList.contains('expanded-contact');
+    setExpanded(!isExpanded);
   });
 }
 
