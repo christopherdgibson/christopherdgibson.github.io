@@ -10,7 +10,6 @@ function initNavMenu(navSelector, navHtml, bodyElement = document.querySelector(
     .then((response) => response.text())
     .then((data) => {
       navMenu.innerHTML = data;
-      fetchIndexSvgIcons();
       initHeaderSweep();
       addNavClick("#btnHome", "home", bodyElement, containerSelector);
       addNavClick("#btnExperience", "experience", bodyElement, containerSelector);
@@ -1089,6 +1088,7 @@ function initHeaderLink() {
 
 initScrollToTop();
 initHeaderLink();
+fetchIndexSvgIcons();
 
 /* ─── Navigation handling with History API and graceful fallback ─── */
 
