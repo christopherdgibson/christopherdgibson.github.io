@@ -2881,6 +2881,11 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   border: 1px solid rgba(var(--blue-accent-rgb), 0.4);
 }
 
+.page-tag-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .page-tag-close-container {
   display: flex;
 }
