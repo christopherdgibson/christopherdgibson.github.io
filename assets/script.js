@@ -50,7 +50,6 @@ function loadView(
   containerSelector = null, // string selector for container reference, defaults to window
   contentOnly = false // true if view is only to display content and is not a page navigation (e.g., skips history, footer buttons, and scrollToTop)
 ) {
-  
   if (!navInitiated && viewName !== "home") { // load once after home page
       navInitiated = true;
       initNavMenu('#nav-placeholder', 'nav.html');
@@ -77,16 +76,8 @@ function loadView(
         history.pushState({ view: viewName }, "", `/${viewName}`);
       }
 
-      if (containerSelector !== null) {
-        container = document.querySelector(containerSelector);
-      } else {
-        container = window;
-      }
-
-      container = container ?? window;
-
       let baseCallbacks = [
-        () => initAnchorButtons(container),
+        () => initAnchorButtons(containerSelector),
         () => initSvgIcons(),
         ...(contentOnly === false ? [
           () => initFooterButtons(containerSelector),
@@ -123,13 +114,19 @@ function loadView(
     })
     .then(() => {
       if (contentOnly === false) {
+        const container = getContainer(containerSelector);
         scrollToTop(container);
       }
     })
     .catch((error) => {
       // Fallback to home view or show error message
       console.error("Failed to load view:", error);
-      loadView("home"); // todo: show a "page not found" message?
+      if (viewName !== 'home') {
+        loadView('home');
+      } 
+      // else {
+      //   showFatalError(); // todo: show a "page not found" message?
+      // }
     });
 }
 
@@ -137,8 +134,8 @@ function loadView(
 const viewCallbacks = {
   home: [
     () => initContactBtns('#contactTrigger', '#contactEnvelope'),
-    () => initPreviewSection('experience', container),
-    () => initPreviewSection('work', container),
+    (containerSelector) => initPreviewSection('experience', containerSelector),
+    (containerSelector) => initPreviewSection('work', containerSelector),
     () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
     (containerSelector) => populateProjectCards("Home", containerSelector),
     (containerSelector) => addHomeTableBtns(containerSelector),
@@ -197,7 +194,8 @@ function addBtnListener(btnId, viewName, containerSelector) {
 
 /* ────────── Base Callbacks ────────── */
 
-function initAnchorButtons(container = window, includeHeader = true, behavior = "smooth") {
+function initAnchorButtons(containerSelector, includeHeader = true, behavior = "smooth") {
+  const container = getContainer(containerSelector);
   const pageTagParent = container !== window ? container : document;
 
   pageTagParent.querySelectorAll(".page-tag-btn").forEach((btn) => {
@@ -439,7 +437,7 @@ function shakeContactEnvelope(envelope, contactTrigger) {
 }
 
 let previewExpanded;
-function initPreviewSection(section, container = window) {
+function initPreviewSection(section, containerSelector) {
   const Section = toPascalCase(section);
   const peekWrapper = document.querySelector(`.peek-wrapper.${section}`);
   const btn = document.querySelector(`#btn${Section}Home`);
@@ -501,6 +499,7 @@ function initPreviewSection(section, container = window) {
       return;
     }
     if (previewExpanded > 0) {
+      const container = getContainer(containerSelector);
       scrollToAnchor(peekWrapper, container); // scroll to preview when multiple open
     }
     previewExpanded ++;
@@ -1031,6 +1030,17 @@ function toPascalCase(input) {
   return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
+function getContainer(containerSelector) {
+  let container;
+  if (containerSelector !== null | undefined) {
+    container = document.querySelector(containerSelector);
+  } else {
+    container = window;
+  }
+
+  return container;
+}
+
 function scrollToTop(container = window, behavior = "smooth") {
   container.scrollTo({ top: 0, behavior: behavior });
 }
@@ -1060,7 +1070,7 @@ function getCleanElements(selector) {
 /* ────────── Initialise on start-up ────────── */
 
 /* ─── Index-page listeners ─── */
-function initScrollToTop(container = window) {
+function initScrollToTop(container) {
   const btn = document.querySelector("#scrollToTop");
   if (!btn) return;
   btn.addEventListener("click", function () {
