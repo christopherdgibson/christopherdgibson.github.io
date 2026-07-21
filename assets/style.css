@@ -1067,6 +1067,8 @@ ul li ul li:last-child {
   grid-column: 1 / 5;
   grid-row: 1;
   width: 200px;
+  stroke-width: 3;
+  fill: none;
   z-index: 2;
   transition: opacity 0.3s ease, transform 1.3s ease;
   stroke: var(--grey-mid);
@@ -1076,8 +1078,6 @@ ul li ul li:last-child {
 }
 
 .envelope-flap {
-  fill: none;
-  stroke-width: 1.5;
   transform-origin: 30px 8px;
   transition: transform 0.5s ease-in-out 1.5s; /* used when closing */
 }
@@ -1092,15 +1092,12 @@ ul li ul li:last-child {
 }
 
 .envelope-body {
-  stroke-width: 1.5;
   /* fill: none; */
   fill: color-mix(in hsl, 8% var(--blue-accent), 92% var(--navy));
 }
 
 .envelope-flap-left,
 .envelope-flap-right {
-  fill: none;
-  stroke-width: 1.5;
   stroke-linecap: round;
   transition: transform 0.5s ease-in 1s; /* used when closing*/
 }
