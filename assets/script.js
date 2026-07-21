@@ -664,7 +664,7 @@ function initMiniSiteOverlay() {
   btnLiveMiniSite.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
-    closeOverlays([".card-overlay", ".screenshot-overlay"]); // in case other overlays are open (should I instead remove active or do I need an event assigned? initCleanOverlays() instead?)
+    closeOverlays([".card-overlay", ".screenshot-overlay"]); // in case other overlays are open
     removeClasses(['expanded', 'view-nav']); // in case other cards are expanded
     document.querySelectorAll('[id]').forEach(el => { el.removeAttribute('id'); });
     document.querySelector("header").style.display = "none";
@@ -724,7 +724,7 @@ function initCardOverlay(overlaySelector, itemId, btnId) {
   btn.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
-    closeOverlays(["#cardOverlay", "#screenshotOverlay"]); // in case other overlays are open; todo: can just removeClasses active?
+    closeOverlays(["#cardOverlay", "#screenshotOverlay"]); // in case other overlays are open;
     removeClasses(['expanded']); // in case other cards are expanded
     modal.classList.add("expanded");
     overlay.classList.add("active");
@@ -796,9 +796,7 @@ function initHamburgerAnimation() {
 function closeOverlays(overlaySelectors) {
   const overlays = document.querySelectorAll(overlaySelectors);
   overlays.forEach((overlay) => {
-    overlay.addEventListener("click", function () {
       removeClasses(['active']);
-    });
   });
 }
 
@@ -880,7 +878,7 @@ function initDemoLaunch(overlaySelector, itemId, btnId) {
   }
 
   const modal = document.getElementById(itemId);
-  const state = { interval: null, modal: null, overlay: null };
+  const state = { interval: 0, modal: null, overlay: null };
 
   function closeDemoLaunch() {
     clearInterval(state.interval);
@@ -890,6 +888,12 @@ function initDemoLaunch(overlaySelector, itemId, btnId) {
 
   btn.addEventListener("click", function (e) {
     let count = 5;
+    const countdownEl = modal.querySelector('.demo-redirect .download-option-platform');
+    const launchNowEl = modal.querySelector('.download-option .download-option-platform');
+    const closeEl = modal.querySelector('.page-tag-close-container');
+
+    countdownEl.textContent = `Launching in ${count}s...`;
+
     const interval = setInterval(() => {
         countdownEl.textContent = `Launching in ${--count}s...`;
         if (count === 0) {
@@ -904,10 +908,6 @@ function initDemoLaunch(overlaySelector, itemId, btnId) {
     state.interval = interval;
     state.modal = modal;
     state.overlay = overlay;
-
-    const countdownEl = document.querySelector('.demo-redirect .download-option-platform', modal);
-    const launchNowEl = document.querySelector('.download-option .download-option-platform', modal);
-    const closeEl = document.querySelector('.page-tag-close-container', modal);
 
     [countdownEl, launchNowEl, closeEl].forEach(el => {
       if (el) {
