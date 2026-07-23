@@ -3,7 +3,7 @@ import { getBaseCallbacks } from './baseCallbacks.js';
 import { viewCallbacks } from './viewCallbacks.js';
 // import { getViewCallbacks } from './viewCallbacks.js';
 import { getContainer, toPageTitleCase } from './utils.js';
-import { scrollToTop } from './shared/misc.js';
+import { fetchFragment, scrollToTop } from './shared/misc.js';
 
 import type { ViewCallbackKey, ViewKey } from './types.js';
 
@@ -23,22 +23,17 @@ export default function loadView(
   }
   if (!navInitiated && viewName !== "home") { // load once after home page
       navInitiated = true;
-      initNavMenu('#nav-placeholder', '/nav.html');
+      initNavMenu('#nav-placeholder', 'nav');
   }
-  // fetch(`${import.meta. env.BASE_URL}views/${viewName}.html`)
-  fetch(`/views/${viewName}.html`)
-    .then((response) => {
-      console.log('response: ', response);
-      // console.log('import.meta.env.BASE_URL: ', import.meta.env.BASE_URL);
+    fetchFragment(`views/${viewName}.html`, (response) => {
       if (!response.ok) throw new Error(`View not found: ${viewName}`);
-      return response.text();
+      return true;
     })
     .then((html) => {
       let title = document.querySelector("#title-placeholder");
       bodyEl.innerHTML = html;
       if (title !== null) {
         title.innerHTML = toPageTitleCase(viewName);
-        // title.innerHTML = viewName.charAt(0).toUpperCase() + viewName.slice(1).replace(/-/g, " ");
       }
       
       const checkNav: HTMLInputElement | null = document.querySelector("#checkNav");
@@ -51,7 +46,8 @@ export default function loadView(
         workDropdown.checked = false;
       }
       if (contentOnly === false){
-        history.pushState({ view: viewName }, "", `/${viewName}`);
+        const base = import.meta.env.BASE_URL;
+        history.pushState({ view: viewName }, "", `${base}${viewName}`);
       }
 
       const baseCallbacks = getBaseCallbacks(containerSelector, contentOnly);

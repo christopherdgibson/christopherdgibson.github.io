@@ -1,7 +1,7 @@
 import { addBtnListener, initNavMenu } from '../shared/nav.js';
 import { initCarousel } from '../shared/carousel.js';
 import { initHoverSweep } from '../shared/headerSweep.js';
-import { initHeaderLink, initScrollToTop } from '../shared/misc.js';
+import { fetchFragment, initHeaderLink, initScrollToTop } from '../shared/misc.js';
 import { closeOverlays, initCardOverlay } from '../shared/overlays.js';
 import loadView from '../router.js';
 import { removeClasses } from '../utils.js';
@@ -58,8 +58,10 @@ function initMiniSiteOverlay() {
     miniSite.classList.add("expanded-mini-site");
     overlay.classList.add("active-mini-site");
 
-    fetch('index.html')
-      .then(response => response.text())
+    fetchFragment('index.html', (response) => {
+      if (!response.ok) throw new Error(`View not found: index`);
+      return true;
+    })
       .then(data => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(data, 'text/html');
@@ -72,7 +74,7 @@ function initMiniSiteOverlay() {
         //   loadView('personal-site-page.html');
         //   return;
         // }
-        initNavMenu('#nav-placeholder', '/nav.html', bodyMini, '.mini-site.expanded-mini-site');
+        initNavMenu('#nav-placeholder', 'nav', bodyMini, '.mini-site.expanded-mini-site');
         loadView("personal-site-page", bodyMini, '.mini-site.expanded-mini-site');
       })
       .then(() => {

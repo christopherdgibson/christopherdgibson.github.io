@@ -1,4 +1,5 @@
 import { initHeaderSweep } from './headerSweep.js';
+import { fetchFragment } from './misc.js';
 import loadView from '../router.js'
 
 import type { ViewKey } from '../types.js';
@@ -9,11 +10,9 @@ import type { ViewKey } from '../types.js';
 export function initNavMenu(navSelector: string, navHtml: string, bodyElement: Element | null | undefined = document.querySelector("#body-placeholder"), containerSelector?: string) {
   const navMenu = document.querySelector(navSelector);
   if (navMenu === null) return;
-  fetch(navHtml)
-    .then((response) => response.text())
+    fetchFragment(`${navHtml}.html`)
     .then((data) => {
       navMenu.innerHTML = data;
-    //   fetchIndexSvgIcons();
       initHeaderSweep();
       addNavClick("#btnHome", "home", bodyElement, containerSelector);
       addNavClick("#btnExperience", "experience", bodyElement, containerSelector);

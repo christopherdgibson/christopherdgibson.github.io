@@ -36,7 +36,6 @@ export function initScrollToTop(container: HTMLElement | (Window & typeof global
   });
 }
 
-
 export function initHeaderLink() {
   const headerLink = document.querySelector("#headerLink");
   if (!headerLink) return;
@@ -45,7 +44,6 @@ export function initHeaderLink() {
     loadView("work"); //todo: do these apply to mini-site?
   });
 }
-
 
 export function initContactBtns(triggerSelector: string, envelopeSelector: string) {
   const contactTrigger: HTMLElement | null = document.querySelector(triggerSelector);
@@ -168,4 +166,19 @@ export function initPreviewSection(section: PreviewViewKey, containerSelector?: 
     }
     previewExpanded ++;
   });
+}
+
+export async function fetchFragment(
+  path: string,
+  validate: (response: Response) => boolean = (response) => response.ok
+): Promise<string | null> {
+  const base = import.meta.env.BASE_URL;
+  const response = await fetch(`${base}${path}`);
+  if (!validate(response)) {
+    return null;
+  }
+  const text = await response.text();
+  if (base === "/") return text;
+  const resolvedHtml = text.replace(/(["'(])\/(images|pdfs|svgs|views)\//g, `$1${base}$2/`);
+  return resolvedHtml;
 }

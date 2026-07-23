@@ -1,8 +1,8 @@
 import { initHoverSweep } from './headerSweep.js';
 import { addBtnListener } from './nav.js';
+import { fetchFragment } from './misc.js';
 
 import type { ViewKey } from '../types.js';
-
 
 type ProjectEntry = {
   id: string;
@@ -26,11 +26,11 @@ export function populateProjectCards(page = "Home", containerSelector?: string) 
     const viewName = project.viewName;
     const projectId = `#${project.id}${page}`;
     const card = document.querySelector(projectId);
+
     if (card === null) return;
-    fetch(`/views/work-cards/${viewName}-card.html`)
-      .then((response) => {
+    fetchFragment(`views/work-cards/${viewName}-card.html`, (response) => {
         if (!response.ok) throw new Error(`View not found: ${viewName}`);
-        return response.text();
+        return true;
       })
       .then((html) => {
         card.innerHTML = html;

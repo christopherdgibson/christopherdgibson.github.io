@@ -12,7 +12,7 @@ import type { ViewKey } from './types.js';
 
 function fetchIndexSvgIcons() {
   const linkedInIcon: HTMLElement | null = document.querySelector(".footer-social");
-  fetchSvgIcon(linkedInIcon, "/svgs/linkedin.svg");
+  fetchSvgIcon(linkedInIcon, "linkedin");
 }
 
 /* ─── Index-page listeners ─── */
@@ -36,17 +36,24 @@ window.addEventListener("popstate", (event) => {
 
 // Handle refresh - check URL on page load
 window.addEventListener("DOMContentLoaded", () => {
+  const base = import.meta.env.BASE_URL;
+
   // Check for 404 redirect first
   const redirect = sessionStorage.getItem("redirect");
   if (redirect) {
     sessionStorage.removeItem("redirect");
-    const view = redirect.replace("/", "");
+    const view = redirect.replace(/^\//, "");
     loadView(view as ViewKey);
     return; // Exit early after handling the redirect
   }
 
   // Otherwise handle normal refresh/direct navigation
-  const path = window.location.pathname.replace("/", "");
+  let path = window.location.pathname;
+  if (path.startsWith(base)) {
+    path = path.slice(base.length);
+  }
+  path = path.replace(/^\//, "");
+
   if (path === 'wp-agenda-block') {
     loadView('wordpress-plugins');
     return;

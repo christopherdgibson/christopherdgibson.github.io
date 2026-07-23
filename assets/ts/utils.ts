@@ -1,3 +1,5 @@
+import { fetchFragment } from './shared/misc.js';
+
 /* ────────── Helper functions ────────── */
 
 export function toPascalCase(input: string) {
@@ -8,14 +10,12 @@ export function toPageTitleCase(input: string) {
   return toPascalCase(input).replace(/-/g, " ");
 }
 
-export function fetchSvgIcon(iconEl: HTMLElement | null, iconPath: string) {
+export function fetchSvgIcon(iconEl: HTMLElement | null, iconName: string) {
   if (!iconEl) return;
-  fetch(iconPath)
-    .then((response) => {
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("svg")) return null;
-      return response.text();
-    })
+  fetchFragment(`svgs/${iconName}.svg`, (response) => {
+    const contentType = response.headers.get("content-type");
+    return !!contentType && contentType.includes("svg");
+  })
     .then((svg) => {
       if (!svg) return;
       iconEl.innerHTML = svg;
