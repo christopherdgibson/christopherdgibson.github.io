@@ -27,7 +27,7 @@ export function populateProjectCards(page = "Home", containerSelector?: string) 
     const projectId = `#${project.id}${page}`;
     const card = document.querySelector(projectId);
     if (card === null) return;
-    fetch(`views/work-cards/${viewName}-card.html`)
+    fetch(`/views/work-cards/${viewName}-card.html`)
       .then((response) => {
         if (!response.ok) throw new Error(`View not found: ${viewName}`);
         return response.text();

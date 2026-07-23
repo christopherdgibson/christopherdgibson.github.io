@@ -43,7 +43,7 @@ function initSvgIcons() {
   if (!icons.length) return;
   icons.forEach((icon) => {
     if (!icon.dataset.target) return;
-    fetchSvgIcon(icon, `assets/svgs/${icon.dataset.target}.svg`);
+    fetchSvgIcon(icon, `/assets/svgs/${icon.dataset.target}.svg`);
   });
 }
 

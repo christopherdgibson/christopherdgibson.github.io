@@ -25,7 +25,7 @@ export default function loadView(
       navInitiated = true;
       initNavMenu('#nav-placeholder', '/nav.html');
   }
-  fetch(`views/${viewName}.html`)
+  fetch(`/views/${viewName}.html`)
     .then((response) => {
       if (!response.ok) throw new Error(`View not found: ${viewName}`);
       return response.text();
