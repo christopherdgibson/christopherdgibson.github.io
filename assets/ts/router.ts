@@ -25,8 +25,11 @@ export default function loadView(
       navInitiated = true;
       initNavMenu('#nav-placeholder', '/nav.html');
   }
+  // fetch(`${import.meta. env.BASE_URL}views/${viewName}.html`)
   fetch(`/views/${viewName}.html`)
     .then((response) => {
+      console.log('response: ', response);
+      // console.log('import.meta.env.BASE_URL: ', import.meta.env.BASE_URL);
       if (!response.ok) throw new Error(`View not found: ${viewName}`);
       return response.text();
     })

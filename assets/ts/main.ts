@@ -12,7 +12,7 @@ import type { ViewKey } from './types.js';
 
 function fetchIndexSvgIcons() {
   const linkedInIcon: HTMLElement | null = document.querySelector(".footer-social");
-  fetchSvgIcon(linkedInIcon, "/assets/svgs/linkedin.svg");
+  fetchSvgIcon(linkedInIcon, "/svgs/linkedin.svg");
 }
 
 /* ─── Index-page listeners ─── */

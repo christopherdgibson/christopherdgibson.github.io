@@ -149,17 +149,17 @@
 
 @font-face {
   font-family: "Avenir Light";
-  src: url("./assets/fonts/AvenirLTStdLight.otf");
+  src: url("/fonts/AvenirLTStdLight.otf");
 }
 
 /* @font-face {
   font-family: "Avenir Light";
-  src: url("./assets/fonts/Avenir-LightOblique.woff");
+  src: url("./fonts/Avenir-LightOblique.woff");
 } */
 
 /* @font-face {
     font-family: "Avenir Heavy";
-    src: url("/assets/fonts/Avenir LT Std Heavy.otf");
+    src: url("/fonts/Avenir LT Std Heavy.otf");
 } */
 
 *,
