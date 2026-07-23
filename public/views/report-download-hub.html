@@ -1,0 +1,349 @@
+<div
+  class="view-nav"
+  hidden
+  data-back-text="Work"
+  data-back-view="work"
+  data-next-text="View GitHub"
+  data-next-link="https://github.com/christopherdgibson/report-download-hub"
+></div>
+
+<!-- HERO -->
+<section class="hero hero-project hero-download-hub">
+  <p class="hero-eyebrow">Portfolio · C# / Avalonia / Selenium</p>
+  <h1 class="hero-title">Report Download Hub</h1>
+  <p class="hero-desc">
+    A cross-platform desktop application for automated, multi-source document
+    collection. Configure filters, select sources, and download matching reports
+    in one submission.
+  </p>
+  <div class="hero-actions">
+    <a id="btnReportDownloadHubExe" href="#" class="btn btn-primary"
+      >Download Application →</a
+    >
+    <a
+      target="_blank"
+      href="https://github.com/christopherdgibson/report-download-hub"
+      class="btn btn-ghost"
+      >GitHub Repository</a
+    >
+  </div>
+  <div class="badges">
+    <span class="badge">C#</span>
+    <span class="badge">Avalonia UI</span>
+    <span class="badge">Selenium</span>
+    <span class="badge">.NET</span>
+    <span class="badge">Model Factory</span>
+    <span class="badge">Cross-Platform</span>
+  </div>
+
+  <div
+    class="screenshot-wrapper"
+    data-images='["./assets/images/avalonia-screenshot1.png", "./assets/images/avalonia-screenshot2.png", "./assets/images/avalonia-screenshot3.png"]'
+    data-current="0"
+  >
+    <button class="chevron chevron-left">&#8249;</button>
+    <img
+      class="hero-screenshot"
+      src="./assets/images/avalonia-screenshot1.png"
+      alt="Report Download Hub screenshot"
+    />
+    <button class="chevron chevron-right">&#8250;</button>
+  </div>
+</section>
+
+<!-- Download modal -->
+<div id="reportDownloadHubExe" class="modal-card">
+  <div class="page-tag-close-container">
+    <div class="page-tag page-tag-close">✕ Close</div>
+  </div>
+  <div class="download-modal-title">Report Download Hub</div>
+  <div class="download-modal-subtitle">
+    Standalone desktop app — no installation required
+  </div>
+
+  <div class="download-modal-divider"></div>
+
+  <div class="download-modal-options">
+    <a
+      href="./assets/downloads/ReportDownloadHub-win-x64.exe"
+      class="download-option"
+      data-platform="Windows 64-bit"
+      data-note="Windows builds are unsigned. If prompted by SmartScreen, click 'More info' then 'Run anyway'."
+    >
+      <span class="download-option-icon">🪟</span>
+      <div class="download-option-info">
+        <div class="download-option-default">
+          <div class="download-option-platform">Windows</div>
+          <div class="download-option-badge">Recommended</div>
+        </div>
+        <div class="download-option-detail">64-bit · Windows 10 and above</div>
+      </div>
+    </a>
+
+    <a
+      href="./assets/downloads/ReportDownloadHub-win-x86.exe"
+      class="download-option"
+      data-platform="Windows 32-bit"
+      data-note="Windows builds are unsigned. If prompted by SmartScreen, click 'More info' then 'Run anyway'."
+    >
+      <span class="download-option-icon">🪟</span>
+      <div class="download-option-info">
+        <div class="download-option-platform">Windows</div>
+        <div class="download-option-detail">32-bit · Legacy systems</div>
+      </div>
+    </a>
+
+    <a
+      href="./assets/downloads/ReportDownloadHub-linux-x64"
+      class="download-option"
+      data-platform="Linux x86_64"
+      data-note="Run chmod +x before launching. Desktop icon requires a .desktop file (optional)."
+    >
+      <span class="download-option-icon">🐧</span>
+      <div class="download-option-info">
+        <div class="download-option-platform">Linux</div>
+        <div class="download-option-detail">x64 · Ubuntu, Debian, Fedora</div>
+      </div>
+    </a>
+
+    <a
+      href="./assets/downloads/ReportDownloadHub-osx-x64.zip"
+      class="download-option"
+      data-platform="macOS"
+      data-note="Distributed as a .zip — extract before running. No app icon (unbundled executable). You may need to allow the app in Security & Privacy settings."
+    >
+      <span class="download-option-icon">🍎</span>
+      <div class="download-option-info">
+        <div class="download-option-platform">macOS</div>
+        <div class="download-option-detail">Intel &amp; Apple Silicon</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="download-modal-note">
+    Report availability is subject to third-party site stability and maintained
+    on a best-effort basis.
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div id="downloadConfirmModal" class="modal-card download-confirm-card">
+  <div class="page-tag-close-container">
+    <div id="btnDownloadConfirmClose" class="page-tag page-tag-close">
+      ✕ Close
+    </div>
+  </div>
+
+  <p class="modal-title">Report Download Hub</p>
+  <p class="modal-body">
+    You are downloading the
+    <span class="modal-highlight">Windows 64-bit</span>
+    build. This is a self-contained executable — no installation required.
+  </p>
+
+  <div class="modal-footer">
+    <div class="modal-footer-note">
+      Report availability is subject to third-party site stability and
+      maintained on a best-effort basis.
+    </div>
+    <div class="modal-footer-actions">
+      <button id="btnDownloadCancel" class="btn-modal btn-modal-secondary">
+        Cancel
+      </button>
+      <a id="btnDownloadConfirm" class="btn-modal btn-modal-primary" href="#"
+        >Download</a
+      >
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<main class="content">
+  <!-- Overview -->
+  <section class="section">
+    <p class="section-label">Overview</p>
+    <h2 class="section-title">
+      Automated document collection, across multiple sources
+    </h2>
+    <div class="divider"></div>
+    <p class="section-body">
+      The Report Download Hub aggregates publicly available documents from three
+      institutional sources simultaneously. Configure filters for each source
+      independently — document type, keyword, year or date range — check the
+      sources you want, and submit. Matching PDFs are downloaded directly to
+      your chosen directory, with options to skip existing files, append
+      timestamps, and maintain a versioned history folder.
+    </p>
+
+    <div class="pull-quote">
+      <p>
+        The user's machine is the server — no infrastructure, no authentication
+        handoff, no data leaving the local environment.
+      </p>
+    </div>
+  </section>
+
+  <!-- Sources -->
+  <section class="section">
+    <p class="section-label">Supported Sources</p>
+    <h2 class="section-title">Three sources, one submission</h2>
+    <div class="divider"></div>
+    <p class="section-body">
+      Each source is independently configurable and optional. Sources can be
+      combined freely — the output is the union of matching documents across all
+      selected sources. The architecture is extensible to additional sources,
+      including internal sites requiring authentication.
+    </p>
+    <div class="source-grid">
+      <div class="source-card eu">
+        <div class="source-flag">🇪🇺</div>
+        <div class="source-name">EU Open Data Portal</div>
+        <div class="source-desc">
+          Studies from the official European Union data portal, with keyword
+          title search not available in the native site filter and filterable by
+          year.
+        </div>
+        <span class="source-tag">data.europa.eu</span>
+      </div>
+      <div class="source-card be">
+        <div class="source-flag">🇧🇪</div>
+        <div class="source-name">National Bank of Belgium</div>
+        <div class="source-desc">
+          Research and working papers from the NBB, searchable by type, keyword,
+          paper number, and date.
+        </div>
+        <span class="source-tag">nbb.be</span>
+      </div>
+      <div class="source-card uk">
+        <div class="source-flag">🇬🇧</div>
+        <div class="source-name">UK Government</div>
+        <div class="source-desc">
+          Command Papers and Act Papers from the official UK government
+          publications portal, searchable by keyword, topic, organisation, and
+          date.
+        </div>
+        <span class="source-tag">gov.uk</span>
+      </div>
+    </div>
+    <div class="sources-disclaimer">
+      <p>
+        Report availability depends on the stability of third-party site
+        structures. Web automation is inherently sensitive to front-end changes
+        — selectors and navigation flows are maintained on a best-effort basis.
+        The tool is designed with extensibility in mind: the automation layer
+        can be swapped for a stable internal source or API where broader
+        adoption warrants it.
+      </p>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">What's under the hood</h2>
+    <div class="divider"></div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🏭</div>
+        <div class="feature-title">Model factory architecture</div>
+        <div class="feature-body">
+          A factory pattern resolves the correct service model per source. Each
+          service inherits from a typed base —
+          <code>EUStudiesService : BaseService&lt;EUStudiesModel&gt;</code>
+          — with source-specific navigation and download logic as needed.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Element-driven automation</div>
+        <div class="feature-body">
+          No arbitrary delays. Selenium waits for specific DOM elements before
+          proceeding, keeping automation fast and reliable without hardcoded
+          timeouts.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <div class="feature-title">Smart download options</div>
+        <div class="feature-body">
+          Skip files that already exist, append download timestamps, and
+          optionally maintain a History folder with versioned copies.
+          Confirmation prompt if the batch exceeds a configurable threshold.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <div class="feature-title">Extended keyword search</div>
+        <div class="feature-body">
+          Title keyword filtering beyond what the native site search exposes —
+          applied as a post-retrieval filter across result sets from any source.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💻</div>
+        <div class="feature-title">Cross-platform desktop</div>
+        <div class="feature-body">
+          Built with Avalonia UI — runs on Windows, macOS, and Linux without
+          modification. The user's machine provides the browser and filesystem;
+          no server required.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔌</div>
+        <div class="feature-title">Extensible by design</div>
+        <div class="feature-body">
+          Adding a new source means implementing the base interface — existing
+          services and the download pipeline require no modification. Internal
+          sources requiring authentication are supported by the same pattern.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical decisions -->
+  <section class="section">
+    <p class="section-label">Technical decisions</p>
+    <h2 class="section-title">Why these choices</h2>
+    <div class="divider"></div>
+    <div class="tech-list">
+      <div class="tech-row">
+        <div class="tech-key">Avalonia UI</div>
+        <div class="tech-val">
+          Cross-platform desktop framework for .NET — runs on Windows, macOS,
+          and Linux without platform-specific code.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Selenium</div>
+        <div class="tech-val">
+          Full browser automation is required — JavaScript-heavy sites lose all
+          state on navigation, ruling out headless HTTP approaches.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Model factory</div>
+        <div class="tech-val">
+          Decouples source resolution from download logic. New sources are added
+          by implementing an interface, not by modifying existing code.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Desktop over web</div>
+        <div class="tech-val">
+          Browser automation requires a persistent process with filesystem
+          access — a desktop app distributes this to the user's own machine
+          cleanly.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Element waits</div>
+        <div class="tech-val">
+          Waiting for specific DOM elements rather than fixed delays makes
+          automation faster and more robust across varying network conditions.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

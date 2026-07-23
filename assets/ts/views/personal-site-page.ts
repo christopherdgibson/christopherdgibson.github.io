@@ -72,7 +72,7 @@ function initMiniSiteOverlay() {
         //   loadView('personal-site-page.html');
         //   return;
         // }
-        initNavMenu('#nav-placeholder', 'nav.html', bodyMini, '.mini-site.expanded-mini-site');
+        initNavMenu('#nav-placeholder', '/nav.html', bodyMini, '.mini-site.expanded-mini-site');
         loadView("personal-site-page", bodyMini, '.mini-site.expanded-mini-site');
       })
       .then(() => {

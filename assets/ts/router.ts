@@ -23,7 +23,7 @@ export default function loadView(
   }
   if (!navInitiated && viewName !== "home") { // load once after home page
       navInitiated = true;
-      initNavMenu('#nav-placeholder', 'nav.html');
+      initNavMenu('#nav-placeholder', '/nav.html');
   }
   fetch(`views/${viewName}.html`)
     .then((response) => {

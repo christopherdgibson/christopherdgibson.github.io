@@ -1,0 +1,215 @@
+<div
+  class="view-nav"
+  hidden
+  data-next-text="Experience"
+  data-next-view="experience"
+></div>
+
+<!-- HERO -->
+<div class="home-container">
+  <div class="hero-home-header-grid">
+    <div class="hero-title-outer">
+    <h1 class="hero-title">Christopher Gibson</h1>
+      <div class="page-tag">
+        Actively job seeking · Brussels-based
+      </div>
+      </div>
+    <div class="hero-vert-divider"></div>
+    <img
+      class="headshot"
+      src="./assets/images/cg_headshot.jpg"
+      alt="Chris headshot"
+    />
+    <p class="hero-desc">
+      Economist and full-stack developer with a background spanning academic
+      research, competition consulting, and tax technology.
+    </p>
+    <div class="hero-home-eyebrow">
+      <p class="hero-eyebrow">Contact</p>
+      <div class="accent-line"></div>
+    </div>
+    <div class="contact-trigger" id="contactTrigger" aria-expanded="false">
+      <svg id="contactEnvelope" class="envelope" viewBox="-20 -15 100 55">
+        <rect class="envelope-body" x="2" y="6" width="56" height="32" rx="4" />
+        <g class="envelope-flap">
+          <path class="envelope-flap-left" d="M3 9 L30 22" />
+          <path class="envelope-flap-right" d="M57 9 L30 22" />
+        </g>
+      </svg>
+
+      <a
+        data-target="email"
+        title="Send me an email"
+        class="btn-svg btn-contact-email svg-icon spill-icon" style="--i: 0;"
+        href="mailto:cdg2131@columbia.edu"
+      >
+      </a>
+      <a
+        data-target="cv"
+        title="View my CV"
+        class="btn-svg btn-contact-cv svg-icon spill-icon" style="--i: 1;"
+        target="_blank"
+        href="./assets/pdfs/Christopher_Gibson_CV.pdf"
+        aria-label="ChristopherGibsonCV"
+        download
+        type="application/pdf"
+      >
+      </a>
+      <a
+        data-target="github"
+        title="View my GitHub"
+        class="btn-svg btn-contact-github svg-icon spill-icon" style="--i: 2;"
+        target="_blank"
+        href="https://github.com/christopherdgibson"
+      >
+      </a>
+      <a
+        data-target="linkedin"
+        title="Connect with me on LinkedIn"
+        class="btn-svg btn-contact-linkedin svg-icon spill-icon" style="--i: 3;"
+        href="https://www.linkedin.com/in/christopherdgibson-econ/"
+        target="_blank"
+      >
+      </a>
+    </div>
+    <div class="hero-actions">
+      <a id="btnWorkHome" href="#" class="btn btn-primary">Jump to Portfolio →</a>
+      <a id="btnExperienceHome" href="#" class="btn btn-ghost">To Experience →</a>
+      <div class="hover-bridge"></div>
+    </div>
+  </div>
+  <div class="peek-section">
+    <div class="peek-wrapper work">
+      <button id="peekBtnWork" class="peek-btn" aria-expanded="false">
+        <span>Preview Work</span>
+        <svg class="peek-chevron" width="12" height="12" viewBox="0 0 12 12">
+          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" />
+        </svg>
+      </button>
+      <div id="peekWorkHome" class="peek-panel"></div>
+    </div>
+    <div class="peek-wrapper experience">
+      <button id="peekBtnExperience" class="peek-btn" aria-expanded="false">
+        <span>Preview Experience</span>
+        <svg class="peek-chevron" width="12" height="12" viewBox="0 0 12 12">
+          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" />
+        </svg>
+      </button>
+      <div id="peekExperienceHome" class="peek-panel"></div>
+    </div>
+  </div>
+  <div class="hero-home">
+    <!-- <cite>
+      <div class="hero-home-hint">
+      <div class="svg-icon" data-target="cursor"></div>
+        Hover table rows or scroll carousel to preview projects - badges highlight relevant tools
+      </div>
+    </cite> -->
+
+    <div class="hero-home-grid">
+      <div class="hero-home-tech-stack">
+        <p class="hero-eyebrow">Tech stack</p>
+        <div class="accent-line"></div>
+        <div class="badges">
+          <span class="badge activeCarousel" data-index="[0, 1]">C#</span>
+          <span class="badge activeCarousel" data-index="[0]"
+            >Blazor WebAssembly</span
+          >
+          <span class="badge" data-index="[1]">Avalonia</span>
+          <span class="badge" data-index="[2, 4]">React</span>
+          <span class="badge" data-index="[3]">React Native</span>
+          <span class="badge" data-index="[2, 4]">Apache</span>
+          <span class="badge" data-index="[2, 4]">MySQL</span>
+          <span class="badge" data-index="[2, 4]">PHP</span>
+          <span class="badge" data-index="[5]">Node.js</span>
+          <span class="badge activeCarousel" data-index="[0, 2, 3, 4, 5]"
+            >JavaScript / Typescript</span
+          >
+          <span class="badge activeCarousel" data-index="[0, 2, 3, 4, 5]"
+            >HTML</span
+          >
+          <span class="badge activeCarousel" data-index="[0, 2, 4, 5]"
+            >CSS</span
+          >
+          <span class="badge" data-index="[1]">XAML</span>
+        </div>
+      </div>
+      <div class="hero-section-title">
+        <p class="hero-eyebrow">Featured Work</p>
+        <div class="accent-line"></div>
+        <p class="section-title">Porfolio Projects</p>
+      </div>
+      <div class="hero-home-portfolio-projects">
+        <div class="tech-list">
+          <div
+            id="btnNYCDashboardTable"
+            class="tech-row activeCarousel"
+            data-index="0"
+          >
+            <div class="tech-key">NYC Dashboard</div>
+            <div class="tech-val">C# · Blazor WebAssembly · Open API</div>
+          </div>
+          <div id="btnReportDownloadHubTable" class="tech-row" data-index="1">
+            <div class="tech-key">Report Download Hub</div>
+            <div class="tech-val">C# · Avalonia · Selenium</div>
+          </div>
+          <div id="btnAdminDocRepoTable" class="tech-row" data-index="2">
+            <div class="tech-key">Admin Doc Repo</div>
+            <div class="tech-val">React · PHP · REST API</div>
+          </div>
+          <div id="btnTZCompTable" class="tech-row" data-index="3">
+            <div class="tech-key">Timezone Comparison</div>
+            <div class="tech-val">React Native · Typescript · Expo</div>
+          </div>
+          <div id="btnWordPressTable" class="tech-row" data-index="4">
+            <div class="tech-key">WordPress Plugins</div>
+            <div class="tech-val">React · Typescript · WordPress</div>
+          </div>
+          <div id="btnPersonalSiteTable" class="tech-row" data-index="5">
+            <div class="tech-key">This Site</div>
+            <div class="tech-val">Vanilla JS · CSS · HTML</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carousel -->
+      <div id="carouselWrapper" class="carousel-wrapper-home">
+        <div class="carousel-track-outer">
+          <div class="carousel-track" id="carouselTrack">
+            <!-- NYC Dashboard -->
+            <div id="btnNYCDashboardHome" class="carousel-card"></div>
+
+            <!-- Report Download Hub -->
+            <div id="btnReportDownloadHubHome" class="carousel-card" ></div>
+
+            <!-- Admin Doc Repo -->
+            <div id="btnAdminDocRepoHome" class="carousel-card"></div>
+
+            <!-- Timezone Comparison -->
+            <div id="btnTZCompHome" class="carousel-card"></div>
+
+            <!-- Wordpress Plugins -->
+            <div id="btnWordPressHome" class="carousel-card"></div>
+
+            <!-- This Site -->
+            <div id="btnPersonalSiteHome" class="carousel-card"></div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="carouselPrev">&#8249;</button>
+          <div class="carousel-dots" id="carouselDots">
+            <div class="carousel-dot activeCarousel" data-index="0"></div>
+            <div class="carousel-dot" data-index="1"></div>
+            <div class="carousel-dot" data-index="2"></div>
+            <div class="carousel-dot" data-index="3"></div>
+            <div class="carousel-dot" data-index="4"></div>
+            <div class="carousel-dot" data-index="5"></div>
+          </div>
+          <button class="carousel-btn" id="carouselNext">&#8250;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

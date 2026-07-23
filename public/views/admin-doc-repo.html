@@ -1,0 +1,283 @@
+<div
+  class="view-nav"
+  hidden
+  data-back-text="Work"
+  data-back-view="work"
+  data-next-text="View Demo"
+  data-next-link="https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/christopherdgibson/christopherdgibson.github.io/main/assets/demos/blueprint-wp-plugins.json"
+></div>
+
+<!-- HERO -->
+<section class="hero hero-project hero-adr">
+  <p class="hero-eyebrow">Portfolio · WordPress / React / TypeScript</p>
+  <h1 class="hero-title">Admin Doc Repo</h1>
+  <p class="hero-desc">
+    A password-protected document repository with per-file expense tracking,
+    delivered as a WordPress Gutenberg block. Upload and manage files through
+    a sortable, filterable table, annotate each document with multiple expense
+    rows, and configure access levels, permissions, and appearance directly
+    from the block editor.
+  </p>
+  <div class="hero-actions">
+    <a
+      id="btnAdminDocRepoDemo"
+      target="_blank"
+      href="#"
+      class="btn btn-primary tooltip-wrapper"
+      >View Demo →</a
+    >
+    <a
+        href="https://github.com/christopherdgibson/admin-doc-repo"
+        target="_blank"
+        class="btn btn-ghost"
+      >GitHub Repository</a
+    >
+  </div>
+  <div class="badges">
+    <span class="badge">WordPress</span>
+    <span class="badge">Gutenberg</span>
+    <span class="badge">React</span>
+    <span class="badge">TypeScript</span>
+    <span class="badge">PHP</span>
+    <span class="badge">REST API</span>
+    <span class="badge">SCSS</span>
+  </div>
+
+  <div
+    class="screenshot-wrapper"
+    data-images='["./assets/images/admin-doc-repo-screenshot1.png", "./assets/images/admin-doc-repo-screenshot2.png", "./assets/images/admin-doc-repo-screenshot3.png", "./assets/images/admin-doc-repo-screenshot4.png", "./assets/images/admin-doc-repo-screenshot5.png"]'
+    data-current="0"
+  >
+    <button class="chevron chevron-left">&#8249;</button>
+    <img
+      class="hero-screenshot"
+      src="./assets/images/admin-doc-repo-screenshot1.png"
+      alt="Admin Doc Repo screenshot"
+    />
+    <button class="chevron chevron-right">&#8250;</button>
+  </div>
+</section>
+
+<!-- Demo modal -->
+<div id="adrDemoModal" class="modal-card">
+  <div class="page-tag-close-container">
+    <div class="page-tag page-tag-close">✕ Close</div>
+  </div>
+  <div class="download-modal-title">WordPress Demos</div>
+  <div class="download-modal-subtitle">
+    You will be redirected to a WordPress "Playground" with both plugins
+    pre-installed, as depicted below. Click on one to demo!
+  </div>
+
+  <div class="download-modal-options">
+    <img
+      src="./assets/demos/screenshots/wp-demo-screenshot.png"
+      alt="Meetings demo screenshot"
+    />
+      <div class="download-modal-divider"></div>
+    <div class="download-option-info demo-redirect">
+      <div class="download-option-platform">Agenda block</div>
+      <a
+        target="_blank"
+        href="https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/christopherdgibson/christopherdgibson.github.io/main/assets/demos/blueprint-wp-plugins.json"
+        class="download-option"
+      >
+        <div class="download-option-platform">Launch now →</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- Overview -->
+  <section class="section">
+    <p class="section-label">Overview</p>
+    <h2 class="section-title">A document repository built into WordPress</h2>
+    <div class="divider"></div>
+    <p class="section-body">
+      Admin Doc Repo started as a simple password-protected file upload page
+      and grew into a full document management system with expense tracking,
+      access control, deletion history, and a configurable block editor
+      interface. The plugin is distributed on WordPress.org and installable
+      on any WordPress site without modifying theme files or writing code.
+      The frontend is a React and TypeScript application served via a custom
+      Gutenberg block, communicating with a PHP REST API backend.
+    </p>
+
+    <div class="pull-quote">
+      <p>
+        A full document management system delivered as a single WordPress block —
+        drop it on any page, configure it from the editor sidebar, and it works.
+      </p>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section">
+    <p class="section-label">How it works</p>
+    <h2 class="section-title">Session-based access with server-enforced permissions</h2>
+    <div class="divider"></div>
+    <p class="section-body">
+      Visitors authenticate via a password form rendered by the React frontend.
+      On success, the PHP backend sets a session variable recording the access
+      level — full or restricted. Every subsequent REST API request is gated by
+      a permission callback that reads this server-side session value, making
+      the access level impossible to spoof from the client. WordPress
+      administrators bypass the frontend entirely via a separate dashboard file
+      manager. Permissions for each operation — upload, rename, delete, restore,
+      and permanent deletion — are configurable independently from the block
+      editor and stored as WordPress options, enforced server-side regardless of
+      what the frontend renders.
+    </p>
+  </section>
+
+  <!-- Features -->
+  <section class="section">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">What's under the hood</h2>
+    <div class="divider"></div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📁</div>
+        <div class="feature-title">File management</div>
+        <div class="feature-body">
+          Upload, rename, delete, and download files through a sortable,
+          filterable table. Files are stored outside the plugin directory
+          and persist across plugin updates, deactivations, and reinstalls.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🧾</div>
+        <div class="feature-title">Per-file expense tracking</div>
+        <div class="feature-body">
+          Each file supports multiple expense rows — category, submitter, date,
+          and amount — for cases where a single document contains multiple
+          receipts. Rows are added, edited, and removed inline with optimistic
+          updates and automatic revert on failure. Optional input to select 
+          expenses to include / ignore for reimbursement.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">Two-tier access control</div>
+        <div class="feature-body">
+          Full and restricted access passwords are configured independently.
+          Each operation is individually permission-gated — restricted users
+          can be allowed or blocked from any combination of upload, rename,
+          delete, restore, and permanent deletion, enforced at the API level.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🗑</div>
+        <div class="feature-title">Deletion history</div>
+        <div class="feature-body">
+          Deleted files are moved to a server-side trash directory rather than
+          permanently removed. A trash panel shows original filename, deletion
+          date, and full expense metadata at time of deletion, with a one-click
+          restore. Orphaned trash entries are automatically pruned after 30 days.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <div class="feature-title">Block editor configuration</div>
+        <div class="feature-body">
+          Categories, submitters, colours, and permissions are all configurable
+          from the Gutenberg block editor sidebar. Colour changes apply
+          immediately to an inline preview. Preset themes provide one-click
+          coordinated colour schemes with custom override support.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⚙️</div>
+        <div class="feature-title">WordPress admin integration</div>
+        <div class="feature-body">
+          A separate dashboard file manager gives WordPress administrators
+          direct access without a frontend password. A Settings page under
+          Settings → Doc Repo manages access passwords independently of the
+          block editor.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical decisions -->
+  <section class="section">
+    <p class="section-label">Technical decisions</p>
+    <h2 class="section-title">Why these choices</h2>
+    <div class="divider"></div>
+    <div class="tech-list">
+      <div class="tech-row">
+        <div class="tech-key">Gutenberg block over shortcode</div>
+        <div class="tech-val">
+          The plugin began as a PHP shortcode but was migrated to a Gutenberg
+          block to resolve JSX runtime compatibility issues with the WordPress
+          bundler and to enable the block editor sidebar for configuration.
+          The block's <code>render.php</code> passes PHP-side configuration
+          to the React frontend via <code>wp_localize_script</code>, keeping
+          server and client data in sync without a separate API call on load.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Server-side session auth</div>
+        <div class="tech-val">
+          Authentication uses PHP sessions rather than WordPress nonce-only
+          verification. The access level is stored server-side in
+          <code>$_SESSION['sfm_access']</code> and checked in every REST
+          permission callback, making it impossible for a client to escalate
+          privileges by modifying request parameters or headers.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Optimistic updates</div>
+        <div class="tech-val">
+          Expense row edits, additions, and removals update local React state
+          immediately before the API call resolves, making interactions feel
+          instant. On API failure, the previous state is restored from a
+          snapshot taken before the optimistic update, and an inline error
+          message is shown without disrupting other rows.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Filename-keyed metadata</div>
+        <div class="tech-val">
+          File metadata is stored in a single <code>meta.json</code> file
+          keyed by filename. Rename operations migrate the metadata key
+          atomically alongside the filesystem rename, keeping the two in
+          sync. A migration guard in the read path transparently upgrades
+          the legacy single-object format to the current array-of-rows format
+          without requiring a data migration step.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Stable row keys via crypto.randomUUID</div>
+        <div class="tech-val">
+          Expense rows are keyed by a <code>crypto.randomUUID()</code>-generated
+          identifier assigned at creation time rather than by array index.
+          This prevents React from reusing component instances across row
+          removals, which would cause local edit state — including the
+          newly-added row's auto-opened edit mode — to bleed between rows.
+          The key is stripped before sending rows to the server.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Separate editor API client</div>
+        <div class="tech-val">
+          The main API client reads <code>window.SFM.apiBase</code> and
+          <code>window.SFM.nonce</code>, which are only available on the
+          published frontend. A separate <code>editorApi.ts</code> uses
+          WordPress's <code>apiFetch</code> utility for calls made from the
+          block editor context, where <code>window.SFM</code> is not defined.
+          This keeps the two execution contexts cleanly separated.
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
