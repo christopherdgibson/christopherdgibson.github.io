@@ -42,9 +42,9 @@ window.addEventListener("DOMContentLoaded", () => {
   const redirect = sessionStorage.getItem("redirect");
   if (redirect) {
     sessionStorage.removeItem("redirect");
-    let view = normalizeViewPath(redirect, base);
-
-    loadView(view as ViewKey);
+    const view = normalizeViewPath(redirect, base);
+    history.replaceState({ view }, "", location.href);
+    loadView(view as ViewKey, undefined, undefined, false, false);
     return; // Exit early after handling the redirect
   }
 
@@ -52,14 +52,16 @@ window.addEventListener("DOMContentLoaded", () => {
   const path = normalizeViewPath(window.location.pathname, base);
 
   if (path === 'wp-agenda-block') {
-    loadView('wordpress-plugins');
+    history.replaceState({ view: 'wordpress-plugins' }, "", location.href);
+    loadView('wordpress-plugins', undefined, undefined, false, false);
     return;
   }
 
   if (path && path !== "index.html") {
+    history.replaceState({ view: path }, "", location.href);
     loadView(path as ViewKey, undefined, undefined, false, false); // loadView validates cast internally
   } else {
-    // navInitiated = false;
-    loadView("home", undefined, undefined, false, false); // default view
+    history.replaceState({ view: 'home' }, "", location.href);
+    loadView('home', undefined, undefined, false, false); // default view
   }
 });
