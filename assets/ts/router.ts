@@ -1,9 +1,9 @@
 import { initNavMenu } from './shared/nav.js';
 import { getBaseCallbacks } from './baseCallbacks.js';
 import { viewCallbacks } from './viewCallbacks.js';
-// import { getViewCallbacks } from './viewCallbacks.js';
-import { getContainer, toPageTitleCase } from './utils.js';
 import { fetchFragment, scrollToTop } from './shared/misc.js';
+import { isViewKey } from './types.js';
+import { getContainer, toPageTitleCase } from './utils.js';
 
 import type { ViewCallbackKey, ViewKey } from './types.js';
 
@@ -11,7 +11,7 @@ import type { ViewCallbackKey, ViewKey } from './types.js';
 
 var navInitiated = false;
 
-export default function loadView(
+export default async function loadView(
   viewName: ViewKey,
   bodyEl: Element | null = document.querySelector("#body-placeholder"), // body element to replace with default
   containerSelector?: string, // string selector for container reference, defaults to window
@@ -25,70 +25,71 @@ export default function loadView(
       navInitiated = true;
       initNavMenu('#nav-placeholder', 'nav');
   }
-    fetchFragment(`views/${viewName}.html`, (response) => {
+  try{
+    if (!isViewKey(viewName)) throw new Error(`Invalid view name: ${viewName}`);
+
+    const html = await fetchFragment(`views/${viewName}.html`, (response) => {
       if (!response.ok) throw new Error(`View not found: ${viewName}`);
       return true;
-    })
-    .then((html) => {
-      let title = document.querySelector("#title-placeholder");
-      bodyEl.innerHTML = html;
-      if (title !== null) {
-        title.innerHTML = toPageTitleCase(viewName);
-      }
-      
-      const checkNav: HTMLInputElement | null = document.querySelector("#checkNav");
-      if (checkNav) {
-        checkNav.checked = false;
-        checkNav.dispatchEvent(new Event("change"));
-      }
-      const workDropdown: HTMLInputElement | null = document.querySelector("#workDropdown");
-      if (workDropdown) {
-        workDropdown.checked = false;
-      }
-      if (contentOnly === false){
-        const base = import.meta.env.BASE_URL;
-        history.pushState({ view: viewName }, "", `${base}${viewName}`);
-      }
-
-      const baseCallbacks = getBaseCallbacks(containerSelector, contentOnly);
-      const viewSpecific = viewCallbacks[viewName as ViewCallbackKey] ?? [];
-      const callbacks = [...baseCallbacks, ...viewSpecific];
-      if (callbacks.length === 0) return;
-      callbacks.forEach(cb => {
-        try {
-          cb(containerSelector);
-        } catch (err) {
-          console.error('Callback failed:', err);
-        }
-      });
-    })
-    .then(() => {
-      const images = bodyEl.querySelectorAll("img");
-      const imagePromises = Array.from(images)
-        .filter((img) => !img.complete)
-        .map(
-          (img) =>
-            new Promise((resolve) => {
-              img.onload = resolve;
-              img.onerror = resolve;
-            }),
-        );
-      return Promise.all(imagePromises);
-    })
-    .then(() => {
-      if (contentOnly === false) {
-        const container = getContainer(containerSelector);
-        scrollToTop(container);
-      }
-    })
-    .catch((error) => {
-      // Fallback to home view or show error message
-      console.error("Failed to load view:", error);
-      if (viewName !== 'home') {
-        loadView('home');
-      } 
-      // else {
-      //   showFatalError(); // todo: show a "page not found" message?
-      // }
     });
+
+    let title = document.querySelector("#title-placeholder");
+    bodyEl.innerHTML = html;
+    if (title !== null) {
+      title.innerHTML = toPageTitleCase(viewName);
+    }
+    
+    const checkNav: HTMLInputElement | null = document.querySelector("#checkNav");
+    if (checkNav) {
+      checkNav.checked = false;
+      checkNav.dispatchEvent(new Event("change"));
+    }
+    const workDropdown: HTMLInputElement | null = document.querySelector("#workDropdown");
+    if (workDropdown) {
+      workDropdown.checked = false;
+    }
+    if (contentOnly === false){
+      const base = import.meta.env.BASE_URL;
+      history.pushState({ view: viewName }, "", `${base}${viewName}`);
+    }
+
+    const baseCallbacks = getBaseCallbacks(containerSelector, contentOnly);
+    const viewSpecific = viewCallbacks[viewName as ViewCallbackKey] ?? [];
+    const callbacks = [...baseCallbacks, ...viewSpecific];
+    if (callbacks.length === 0) return;
+    callbacks.forEach(cb => {
+      try {
+        cb(containerSelector);
+      } catch (err) {
+        console.error('Callback failed:', err);
+      }
+    });
+
+    const images = bodyEl.querySelectorAll("img");
+    const imagePromises = Array.from(images)
+      .filter((img) => !img.complete)
+      .map(
+        (img) =>
+          new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          }),
+      );
+    await Promise.all(imagePromises);
+
+    if (contentOnly === false) {
+      const container = getContainer(containerSelector);
+      scrollToTop(container);
+    }
+
+  } catch (error) {
+    // Fallback to home view or show error message
+    console.error("Failed to load view:", error);
+    if (viewName !== 'home') {
+      loadView('home');
+    } 
+    // else {
+    //   showFatalError(); // todo: show a "page not found" message?
+    // }
+  }
 }

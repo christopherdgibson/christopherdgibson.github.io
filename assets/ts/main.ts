@@ -1,4 +1,5 @@
 import loadView from './router.js';
+import { isViewKey } from './types.js';
 
 import { initHeaderLink, initScrollToTop } from './shared/misc.js';
 import { fetchSvgIcon } from './utils.js';
@@ -42,7 +43,11 @@ window.addEventListener("DOMContentLoaded", () => {
   const redirect = sessionStorage.getItem("redirect");
   if (redirect) {
     sessionStorage.removeItem("redirect");
-    const view = redirect.replace(/^\//, "");
+    let view = redirect;
+    if (view.startsWith(base)) {
+      view = view.slice(base.length);
+    }
+    view = view.replace(/^\//, "");
     loadView(view as ViewKey);
     return; // Exit early after handling the redirect
   }
@@ -58,8 +63,9 @@ window.addEventListener("DOMContentLoaded", () => {
     loadView('wordpress-plugins');
     return;
   }
+
   if (path && path !== "index.html") {
-    loadView(path as ViewKey);
+    loadView(path as ViewKey); // loadView validates cast internally
   } else {
     // navInitiated = false;
     loadView("home"); // default view
