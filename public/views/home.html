@@ -9,22 +9,30 @@
 <div class="home-container">
   <div class="hero-home-header-grid">
     <div class="hero-title-outer">
-    <h1 class="hero-title">Christopher Gibson</h1>
-      <div class="page-tag">
-        Actively job seeking · Brussels-based
-      </div>
-      </div>
+      <h1 class="hero-title">Christopher Gibson</h1>
+       <span class="page-tag">
+        <button class="page-tag-btn" data-target="portfolio">
+          Actively job seeking
+        </button>
+        ·
+        <button id="contactPageTag" class="page-tag-btn" data-target="contact">
+          Brussels-based
+        </button>
+      </span>
+    </div>
     <div class="hero-vert-divider"></div>
-    <img
-      class="headshot"
-      src="/images/cg_headshot.jpg"
-      alt="Chris headshot"
-    />
+    <div class="headshot-container">
+      <img
+        class="headshot"
+        src="/images/cg_headshot.jpg"
+        alt="Chris headshot"
+      />
+    </div>
     <p class="hero-desc">
       Economist and full-stack developer with a background spanning academic
       research, competition consulting, and tax technology.
     </p>
-    <div class="hero-home-eyebrow">
+    <div id="contact" class="hero-home-eyebrow">
       <p class="hero-eyebrow">Contact</p>
       <div class="accent-line"></div>
     </div>
@@ -106,7 +114,7 @@
       </div>
     </cite> -->
 
-    <div class="hero-home-grid">
+    <div id="portfolio" class="hero-home-grid">
       <div class="hero-home-tech-stack">
         <p class="hero-eyebrow">Tech stack</p>
         <div class="accent-line"></div>

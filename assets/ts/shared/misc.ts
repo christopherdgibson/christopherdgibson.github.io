@@ -45,9 +45,10 @@ export function initHeaderLink() {
   });
 }
 
-export function initContactBtns(triggerSelector: string, envelopeSelector: string) {
+export function initContactBtns(triggerSelector: string, envelopeSelector: string, pageTagSelector?: string) {
   const contactTrigger: HTMLElement | null = document.querySelector(triggerSelector);
   const envelope: HTMLElement | null = document.querySelector(envelopeSelector);
+  const pageTag: HTMLElement | null = document.querySelector(pageTagSelector);
   if (envelope === null || contactTrigger === null) return;
   let stopIdleShake = shakeContactEnvelope(envelope, contactTrigger);
   let inputLocked = false;
@@ -75,6 +76,8 @@ export function initContactBtns(triggerSelector: string, envelopeSelector: strin
     const isExpanded = contactTrigger.classList.contains('expanded-contact');
     setExpanded(!isExpanded);
   });
+
+  pageTag?.addEventListener('click', () => setExpanded(true));
 }
 
 function shakeContactEnvelope(envelope: HTMLElement, contactTrigger: HTMLElement) {
