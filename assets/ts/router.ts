@@ -15,7 +15,8 @@ export default async function loadView(
   viewName: ViewKey,
   bodyEl: Element | null = document.querySelector("#body-placeholder"), // body element to replace with default
   containerSelector?: string, // string selector for container reference, defaults to window
-  contentOnly: boolean = false // true if view is only to display content and is not a page navigation (e.g., skips history, footer buttons, and scrollToTop)
+  contentOnly: boolean = false, // true if view is only to display content and is not a page navigation (e.g., skips history, footer buttons, and scrollToTop)
+  updateHistory: boolean = true // false when called from popstate or initial load
 ) {
   if (bodyEl === null) {  // todo: check and throw error if not found? (e.g., if (!body) { throw new Error("Body element not found");})
     console.log("Body element not found!");
@@ -48,7 +49,7 @@ export default async function loadView(
     if (workDropdown) {
       workDropdown.checked = false;
     }
-    if (contentOnly === false){
+    if (contentOnly === false && updateHistory){
       const base = import.meta.env.BASE_URL;
       history.pushState({ view: viewName }, "", `${base}${viewName}`);
     }

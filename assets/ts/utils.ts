@@ -10,6 +10,15 @@ export function toPageTitleCase(input: string) {
   return toPascalCase(input).replace(/-/g, " ");
 }
 
+export function normalizeViewPath(path: string, base: string): string {
+  let result = path;
+  if (result.startsWith(base)) {
+    result = result.slice(base.length);
+  }
+  result = result.replace(/^\/+/, "").replace(/\/+$/, "");
+  return result;
+}
+
 export function fetchSvgIcon(iconEl: HTMLElement | null, iconName: string) {
   if (!iconEl) return;
   fetchFragment(`svgs/${iconName}.svg`, (response) => {

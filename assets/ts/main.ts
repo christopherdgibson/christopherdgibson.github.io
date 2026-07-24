@@ -1,8 +1,7 @@
 import loadView from './router.js';
-import { isViewKey } from './types.js';
 
 import { initHeaderLink, initScrollToTop } from './shared/misc.js';
-import { fetchSvgIcon } from './utils.js';
+import { fetchSvgIcon, normalizeViewPath } from './utils.js';
 
 import type { ViewKey } from './types.js';
 
@@ -28,10 +27,10 @@ fetchIndexSvgIcons();
 // Listen for back/forward button
 window.addEventListener("popstate", (event) => {
   if (event.state && event.state.view) {
-    loadView(event.state.view);
+    loadView(event.state.view, undefined, undefined, false, false);
   } else {
     // Load default/home view
-    loadView("home");
+    loadView("home", undefined, undefined, false, false);
   }
 });
 
@@ -43,21 +42,14 @@ window.addEventListener("DOMContentLoaded", () => {
   const redirect = sessionStorage.getItem("redirect");
   if (redirect) {
     sessionStorage.removeItem("redirect");
-    let view = redirect;
-    if (view.startsWith(base)) {
-      view = view.slice(base.length);
-    }
-    view = view.replace(/^\//, "");
+    let view = normalizeViewPath(redirect, base);
+
     loadView(view as ViewKey);
     return; // Exit early after handling the redirect
   }
 
   // Otherwise handle normal refresh/direct navigation
-  let path = window.location.pathname;
-  if (path.startsWith(base)) {
-    path = path.slice(base.length);
-  }
-  path = path.replace(/^\//, "");
+  const path = normalizeViewPath(window.location.pathname, base);
 
   if (path === 'wp-agenda-block') {
     loadView('wordpress-plugins');
@@ -65,9 +57,9 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   if (path && path !== "index.html") {
-    loadView(path as ViewKey); // loadView validates cast internally
+    loadView(path as ViewKey, undefined, undefined, false, false); // loadView validates cast internally
   } else {
     // navInitiated = false;
-    loadView("home"); // default view
+    loadView("home", undefined, undefined, false, false); // default view
   }
 });
