@@ -29,12 +29,12 @@ export function initNavMenu(navSelector: string, navHtml: string, bodyElement: E
       addNavClick("#btnWordPress", "wordpress-plugins", bodyElement, containerSelector);
       addNavClick("#btnPersonalSite", "personal-site-page", bodyElement, containerSelector);
     })
-    // .then(() => {
-    //   const header: HTMLElement | null = document.querySelector("#header");
-    //   if (header !== null) {
-    //     header.style.display = null;
-    //   }
-    // })
+    .then(() => {
+      const header: HTMLElement | null = document.querySelector("#header");
+      if (header !== null) {
+        header.style.display = null;
+      }
+    })
     ;
     
   function addNavClick(selector: string, view: ViewKey, bodyElement: Element | null, containerSelector?: string) {
