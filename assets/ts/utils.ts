@@ -8,19 +8,13 @@ export function toPageTitleCase(input: string) {
   return toPascalCase(input).replace(/-/g, " ");
 }
 
-export function fetchSvgIcon(iconEl: HTMLElement | null, iconPath: string) {
-  if (!iconEl) return;
-  fetch(iconPath)
-    .then((response) => {
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("svg")) return null;
-      return response.text();
-    })
-    .then((svg) => {
-      if (!svg) return;
-      iconEl.innerHTML = svg;
-    })
-    .catch((error) => console.error("SVG load failed:", error));
+export function normalizeViewPath(path: string, base: string): string {
+  let result = path;
+  if (result.startsWith(base)) {
+    result = result.slice(base.length);
+  }
+  result = result.replace(/^\/+/, "").replace(/\/+$/, "");
+  return result;
 }
 
 export function getContainer(containerSelector?: string): HTMLElement | (Window & typeof globalThis) {

@@ -114,6 +114,7 @@ export function initDemoLaunch(overlaySelector: string, itemId: string, btnId: s
   const overlay: HTMLElement | null = document.querySelector(overlaySelector);
   const btn = document.getElementById(btnId);
   const modal = document.getElementById(itemId);
+  const demoUrl = 'https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/christopherdgibson/christopherdgibson.github.io/main/assets/demos/blueprint-wp-plugins.json';
 
   if (!overlay || !btn || !modal) {
     return;
@@ -143,7 +144,7 @@ export function initDemoLaunch(overlaySelector: string, itemId: string, btnId: s
       }
       if (count === 0) {
           clearInterval(interval);
-          launchUrl('https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/christopherdgibson/christopherdgibson.github.io/main/assets/demos/blueprint-wp-plugins.json', '_blank');
+          launchUrl(demoUrl, '_blank');
           
           modal.classList.remove('expanded');
           overlay.classList.remove('active');

@@ -1,0 +1,22 @@
+<svg preserveAspectRatio="xMidYMid meet" data-bbox="39 38.998 122.001 122.004" viewBox="39 38.998 122.001 122.004" height="200" width="200" xmlns="http://www.w3.org/2000/svg" data-type="color" role="presentation" aria-hidden="true" aria-label=""><defs><style>#comp-lq5q1n0c__item1 svg [data-color="1"] {fill: #3D9BE9;}
+#comp-lq5q1n0c__item1 svg [data-color="4"] {fill: #81D5A6;}</style></defs>
+    <g>
+        <path d="M161 99.995c0 33.694-27.311 61.007-60.997 61.007C66.311 161.002 39 133.689 39 99.995c0-33.684 27.311-60.997 61.003-60.997 33.686 0 60.997 27.313 60.997 60.997z" fill="#00658A" data-color="1"></path>
+        <path d="M160.461 92.274L127.807 73.3v9.823l-19.627-11.41v10.492L81.867 66.917v57.557h26.313v1.996L99.625 125l-39.76 1.47 55.799 32.427c13.68-3.632 25.445-11.907 33.572-23.007a62.232 62.232 0 0 0 2.859-4.263c5.623-9.22 8.906-20.029 8.906-31.631-.001-2.623-.22-5.187-.54-7.722z" opacity=".2"></path>
+        <path fill="#FF8969" d="M82.026 66.917v54.591H70.611V66.917h11.415z" data-color="2"></path>
+        <path fill="#FFC76A" d="M82.026 71.881v2.355H70.611v-2.355h11.415z" data-color="3"></path>
+        <path fill="#FFC76A" d="M82.026 113.94v2.355H70.611v-2.355h11.415z" data-color="3"></path>
+        <path fill="#FFC76A" d="M127.807 73.059v48.45h-11.415v-48.45h11.415z" data-color="3"></path>
+        <path fill="#81D5A6" d="M127.807 77.464v2.095h-11.415v-2.095h11.415z" data-color="4"></path>
+        <path fill="#81D5A6" d="M127.807 114.79v2.093h-11.415v-2.093h11.415z" data-color="4"></path>
+        <path fill="#FF8969" d="M108.273 71.72l5.713 48.912-7.559.883-5.713-48.912 7.56-.883z" data-color="2"></path>
+        <path fill="#FFFFFF" d="M109.043 78.272l-7.554.886-.249-2.113 7.563-.881.24 2.108z" data-color="5"></path>
+        <path fill="#FFFFFF" d="M109.382 81.166l-7.553.883-.25-2.113 7.559-.883.244 2.113z" data-color="5"></path>
+        <path fill="#FFFFFF" d="M113.443 115.958l-7.563.878-.24-2.108 7.554-.88.249 2.11z" data-color="5"></path>
+        <path fill="#81D5A6" d="M101.136 78.33v43.179H85.25V78.33h15.886z" data-color="4"></path>
+        <path fill="#35BED1" d="M126.13 82.049v24.322h-8.062V82.049h8.062z" data-color="4"></path>
+        <path fill="#FFFFFF" d="M139.247 121.508v4.962H59.58v-4.962h79.667z" data-color="5"></path>
+        <path opacity=".2" d="M101.136 82.408v6.563H85.25v-6.563h15.886z"></path>
+        <path opacity=".2" d="M101.136 110.654v6.571H85.25v-6.571h15.886z"></path>
+    </g>
+</svg>

@@ -1,7 +1,7 @@
-import { scrollToAnchor } from './shared/misc.js';
+import { fetchSvgIcon, scrollToAnchor } from './shared/misc.js';
 import { initCardOverlay } from './shared/overlays.js';
 import loadView from './router.js';
-import { fetchSvgIcon, getCleanElement, getCleanElements, getContainer } from './utils.js';
+import { getCleanElement, getCleanElements, getContainer } from './utils.js';
 
 import type { ViewKey } from './types.js';
 
@@ -43,7 +43,7 @@ function initSvgIcons() {
   if (!icons.length) return;
   icons.forEach((icon) => {
     if (!icon.dataset.target) return;
-    fetchSvgIcon(icon, `assets/svgs/${icon.dataset.target}.svg`);
+    fetchSvgIcon(icon, `${icon.dataset.target}`);
   });
 }
 

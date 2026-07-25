@@ -1,0 +1,14 @@
+<!-- 404.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    // Redirect to index with the path preserved
+    // Derive base path as first path segment (GitHub Pages project-site convention)
+    const pathSegments = location.pathname.split('/').filter(Boolean);
+    const base = pathSegments.length > 0 ? `/${pathSegments[0]}/` : '/';
+    sessionStorage.setItem('redirect', location.pathname);
+    location.replace(base);
+  </script>
+</head>
+</html>

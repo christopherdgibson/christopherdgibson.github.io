@@ -1,6 +1,13 @@
 import { viewCallbacks } from './viewCallbacks.js';
 
-export type ViewKey = "home" | "experience" | "work" | "research" | "teaching" | "about" | "nyc-dashboard"| "report-download-hub" | "admin-doc-repo" | "react-native-tzcomp" | "wordpress-plugins" | "personal-site-page";
+// types.ts
+export const VIEW_KEYS = [
+  'home', 'experience', 'work', 'research', 'teaching', 'about',
+  "nyc-dashboard", "report-download-hub", "admin-doc-repo" , "react-native-tzcomp", "wordpress-plugins", "personal-site-page"
+] as const;
+
+export type ViewKey = typeof VIEW_KEYS[number];
+
 export type PreviewViewKey = "experience" | "work";
 
 export interface ProjectType {
@@ -21,4 +28,8 @@ export type ViewCallbackProps = {
  "react-native-tzcomp": (() => void)[];
  "wordpress-plugins": (() => void)[];
  "personal-site-page": ((containerSelector?: string) => void)[];
+}
+
+export function isViewKey(value: string): value is ViewKey {
+  return (VIEW_KEYS as readonly string[]).includes(value);
 }

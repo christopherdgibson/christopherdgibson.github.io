@@ -1,4 +1,5 @@
 import { initHeaderSweep } from './headerSweep.js';
+import { fetchFragment } from './misc.js';
 import loadView from '../router.js'
 
 import type { ViewKey } from '../types.js';
@@ -9,11 +10,9 @@ import type { ViewKey } from '../types.js';
 export function initNavMenu(navSelector: string, navHtml: string, bodyElement: Element | null | undefined = document.querySelector("#body-placeholder"), containerSelector?: string) {
   const navMenu = document.querySelector(navSelector);
   if (navMenu === null) return;
-  fetch(navHtml)
-    .then((response) => response.text())
+  fetchFragment(`${navHtml}.html`)
     .then((data) => {
       navMenu.innerHTML = data;
-    //   fetchIndexSvgIcons();
       initHeaderSweep();
       addNavClick("#btnHome", "home", bodyElement, containerSelector);
       addNavClick("#btnExperience", "experience", bodyElement, containerSelector);
@@ -30,21 +29,28 @@ export function initNavMenu(navSelector: string, navHtml: string, bodyElement: E
       addNavClick("#btnWordPress", "wordpress-plugins", bodyElement, containerSelector);
       addNavClick("#btnPersonalSite", "personal-site-page", bodyElement, containerSelector);
     })
-    // .then(() => {
-    //   const header: HTMLElement | null = document.querySelector("#header");
-    //   if (header !== null) {
-    //     header.style.display = null;
-    //   }
-    // })
+    .then(() => {
+      const header: HTMLElement | null = document.querySelector("#header");
+      if (header !== null) {
+        header.style.display = null;
+      }
+    })
     ;
     
-    function addNavClick(selector: string, view: ViewKey, bodyElement: Element | null, containerSelector?: string) {
-        document.querySelector(selector)?.addEventListener("click", function(event) {
-            event.preventDefault();
-            loadView(view, bodyElement, containerSelector);
-        });
-    }
+  function addNavClick(selector: string, view: ViewKey, bodyElement: Element | null, containerSelector?: string) {
+    document.querySelector(selector)?.addEventListener("click", function(event) {
+      event.preventDefault();
+      loadView(view, bodyElement, containerSelector);
+    });
   }
+}
+
+export function ensureNavMenu(navSelector: string = '#nav-placeholder', navHtml: string = 'nav', bodyElement?: Element | null, containerSelector?: string) {
+  const navPlaceholder = document.querySelector(navSelector);
+  if (navPlaceholder && navPlaceholder.childElementCount === 0) {
+    initNavMenu('#nav-placeholder', navHtml, bodyElement, containerSelector);
+  }
+}
 
 export function addBtnListener(btnId: string, viewName: ViewKey, containerSelector?: string) {
   const el = document.querySelector(btnId);

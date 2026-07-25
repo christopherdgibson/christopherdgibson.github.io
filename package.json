@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "build": "tsc --noEmit && vite build"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.1.5"
+  }
+}
