@@ -3,6 +3,38 @@ import loadView from '../router.js';
 
 import type { PreviewViewKey } from '../types.js';
 
+export function fetchSvgIcon(iconEl: HTMLElement | null, iconName: string) {
+  if (!iconEl) return;
+  fetchFragment(`svgs/${iconName}.svg`, (response) => {
+    const contentType = response.headers.get("content-type");
+    return !!contentType && contentType.includes("svg");
+  })
+    .then((svg) => {
+      if (!svg) return;
+      iconEl.innerHTML = svg;
+    })
+    .catch((error) => console.error("SVG load failed:", error));
+}
+
+export function fetchIndexSvgIcons() {
+  const linkedInIcon: HTMLElement | null = document.querySelector(".footer-social");
+  fetchSvgIcon(linkedInIcon, "linkedin");
+}
+
+export async function fetchFragment(
+  path: string,
+  validate: (response: Response) => boolean = (response) => response.ok
+): Promise<string | null> {
+  const base = import.meta.env.BASE_URL;
+  const response = await fetch(`${base}${path}`);
+  if (!validate(response)) {
+    return null;
+  }
+  const text = await response.text();
+  if (base === "/") return text;
+  const resolvedHtml = text.replace(/(["'(])\/(demos|downloads|images|pdfs|svgs|views)\//g, `$1${base}$2/`);
+  return resolvedHtml;
+}
 
 export function scrollToTop(container: Element | (Window & typeof globalThis) = window, behavior: ScrollBehavior = "smooth") {
   container.scrollTo({ top: 0, behavior: behavior });
@@ -44,6 +76,8 @@ export function initHeaderLink() {
     loadView("work"); //todo: do these apply to mini-site?
   });
 }
+
+/* ────────── Page-specific functions that may eventually be reusable ────────── */
 
 export function initContactBtns(triggerSelector: string, envelopeSelector: string, pageTagSelector?: string) {
   const contactTrigger: HTMLElement | null = document.querySelector(triggerSelector);
@@ -169,37 +203,4 @@ export function initPreviewSection(section: PreviewViewKey, containerSelector?: 
     }
     previewExpanded ++;
   });
-}
-
-export function fetchSvgIcon(iconEl: HTMLElement | null, iconName: string) {
-  if (!iconEl) return;
-  fetchFragment(`svgs/${iconName}.svg`, (response) => {
-    const contentType = response.headers.get("content-type");
-    return !!contentType && contentType.includes("svg");
-  })
-    .then((svg) => {
-      if (!svg) return;
-      iconEl.innerHTML = svg;
-    })
-    .catch((error) => console.error("SVG load failed:", error));
-}
-
-export function fetchIndexSvgIcons() {
-  const linkedInIcon: HTMLElement | null = document.querySelector(".footer-social");
-  fetchSvgIcon(linkedInIcon, "linkedin");
-}
-
-export async function fetchFragment(
-  path: string,
-  validate: (response: Response) => boolean = (response) => response.ok
-): Promise<string | null> {
-  const base = import.meta.env.BASE_URL;
-  const response = await fetch(`${base}${path}`);
-  if (!validate(response)) {
-    return null;
-  }
-  const text = await response.text();
-  if (base === "/") return text;
-  const resolvedHtml = text.replace(/(["'(])\/(images|pdfs|svgs|views)\//g, `$1${base}$2/`);
-  return resolvedHtml;
 }
