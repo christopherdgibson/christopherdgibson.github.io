@@ -1,15 +1,13 @@
-import { initNavMenu } from './shared/nav.js';
 import { getBaseCallbacks } from './baseCallbacks.js';
 import { viewCallbacks } from './viewCallbacks.js';
 import { fetchFragment, scrollToTop } from './shared/misc.js';
+import { ensureNavMenu } from './shared/nav.js';
 import { isViewKey } from './types.js';
-import { getContainer, toPageTitleCase } from './utils.js';
+import { getContainer, normalizeViewPath, toPageTitleCase } from './utils.js';
 
 import type { ViewCallbackKey, ViewKey } from './types.js';
 
 /* ────────── SPA swapping logic ────────── */
-
-var navInitiated = false;
 
 export default async function loadView(
   viewName: ViewKey,
@@ -22,9 +20,8 @@ export default async function loadView(
     console.log("Body element not found!");
     return;
   }
-  if (!navInitiated && viewName !== "home") { // load once after home page
-      navInitiated = true;
-      initNavMenu('#nav-placeholder', 'nav');
+  if (viewName !== "home") { // load once after home page
+      ensureNavMenu();
   }
   try{
     if (!isViewKey(viewName)) throw new Error(`Invalid view name: ${viewName}`);
@@ -93,4 +90,50 @@ export default async function loadView(
     //   showFatalError(); // todo: show a "page not found" message?
     // }
   }
+}
+
+/* ─── Navigation handling with History API and graceful fallback ─── */
+
+export function initRouter() {
+  // Listen for back/forward button
+  window.addEventListener("popstate", (event) => {
+    if (event.state && event.state.view) {
+      loadView(event.state.view, undefined, undefined, false, false);
+    } else {
+      // Load default/home view
+      loadView("home", undefined, undefined, false, false);
+    }
+  });
+
+  // Handle refresh - check URL on page load
+  window.addEventListener("DOMContentLoaded", () => {
+    const base = import.meta.env.BASE_URL;
+
+    // Check for 404 redirect first
+    const redirect = sessionStorage.getItem("redirect");
+    if (redirect) {
+      sessionStorage.removeItem("redirect");
+      const view = normalizeViewPath(redirect, base);
+      history.replaceState({ view }, "", location.href);
+      loadView(view as ViewKey, undefined, undefined, false, false);
+      return; // Exit early after handling the redirect
+    }
+
+    // Otherwise handle normal refresh/direct navigation
+    const path = normalizeViewPath(window.location.pathname, base);
+
+    if (path === 'wp-agenda-block') {
+      history.replaceState({ view: 'wordpress-plugins' }, "", location.href);
+      loadView('wordpress-plugins', undefined, undefined, false, false);
+      return;
+    }
+
+    if (path && path !== "index.html") {
+      history.replaceState({ view: path }, "", location.href);
+      loadView(path as ViewKey, undefined, undefined, false, false); // loadView validates cast internally
+    } else {
+      history.replaceState({ view: 'home' }, "", location.href);
+      loadView('home', undefined, undefined, false, false); // default view
+    }
+  });
 }

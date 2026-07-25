@@ -171,6 +171,24 @@ export function initPreviewSection(section: PreviewViewKey, containerSelector?: 
   });
 }
 
+export function fetchSvgIcon(iconEl: HTMLElement | null, iconName: string) {
+  if (!iconEl) return;
+  fetchFragment(`svgs/${iconName}.svg`, (response) => {
+    const contentType = response.headers.get("content-type");
+    return !!contentType && contentType.includes("svg");
+  })
+    .then((svg) => {
+      if (!svg) return;
+      iconEl.innerHTML = svg;
+    })
+    .catch((error) => console.error("SVG load failed:", error));
+}
+
+export function fetchIndexSvgIcons() {
+  const linkedInIcon: HTMLElement | null = document.querySelector(".footer-social");
+  fetchSvgIcon(linkedInIcon, "linkedin");
+}
+
 export async function fetchFragment(
   path: string,
   validate: (response: Response) => boolean = (response) => response.ok

@@ -1,7 +1,7 @@
-import { scrollToAnchor } from './shared/misc.js';
+import { fetchSvgIcon, scrollToAnchor } from './shared/misc.js';
 import { initCardOverlay } from './shared/overlays.js';
 import loadView from './router.js';
-import { fetchSvgIcon, getCleanElement, getCleanElements, getContainer } from './utils.js';
+import { getCleanElement, getCleanElements, getContainer } from './utils.js';
 
 import type { ViewKey } from './types.js';
 

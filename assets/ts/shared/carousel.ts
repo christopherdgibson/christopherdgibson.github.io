@@ -30,8 +30,6 @@ export function initCarousel(rowSelector?: string, badgeSelector?: string) {
     navItems.forEach((item, i) => item.classList.toggle("activeCarousel", i === index));
     dots.forEach((d, i) => d.classList.toggle("activeCarousel", i === index));
     rows?.forEach((r, i) => r.classList.toggle("activeCarousel", i === index));
-    // badges?.forEach((b, i) => b.classList.toggle("activeCarousel", +b.dataset.index.includes(index)));
-    // track.style.transform = `translateX(-${index * 100}%)`;
     badges?.forEach((b, i) => {
       if (b.dataset.index) {
         b.classList.toggle("activeCarousel", +b.dataset.index.includes(index.toString()) > 0)
@@ -94,6 +92,6 @@ export function initCarousel(rowSelector?: string, badgeSelector?: string) {
   track.addEventListener("mouseenter", stopAutoplay);
   track.addEventListener("mouseleave", startInterval);
 
-  // start
+  // Start carousel
   startInterval();
 }

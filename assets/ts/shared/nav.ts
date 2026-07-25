@@ -10,7 +10,7 @@ import type { ViewKey } from '../types.js';
 export function initNavMenu(navSelector: string, navHtml: string, bodyElement: Element | null | undefined = document.querySelector("#body-placeholder"), containerSelector?: string) {
   const navMenu = document.querySelector(navSelector);
   if (navMenu === null) return;
-    fetchFragment(`${navHtml}.html`)
+  fetchFragment(`${navHtml}.html`)
     .then((data) => {
       navMenu.innerHTML = data;
       initHeaderSweep();
@@ -37,13 +37,20 @@ export function initNavMenu(navSelector: string, navHtml: string, bodyElement: E
     // })
     ;
     
-    function addNavClick(selector: string, view: ViewKey, bodyElement: Element | null, containerSelector?: string) {
-        document.querySelector(selector)?.addEventListener("click", function(event) {
-            event.preventDefault();
-            loadView(view, bodyElement, containerSelector);
-        });
-    }
+  function addNavClick(selector: string, view: ViewKey, bodyElement: Element | null, containerSelector?: string) {
+    document.querySelector(selector)?.addEventListener("click", function(event) {
+      event.preventDefault();
+      loadView(view, bodyElement, containerSelector);
+    });
   }
+}
+
+export function ensureNavMenu(navSelector: string = '#nav-placeholder', navHtml: string = 'nav', bodyElement?: Element | null, containerSelector?: string) {
+  const navPlaceholder = document.querySelector(navSelector);
+  if (navPlaceholder && navPlaceholder.childElementCount === 0) {
+    initNavMenu('#nav-placeholder', navHtml, bodyElement, containerSelector);
+  }
+}
 
 export function addBtnListener(btnId: string, viewName: ViewKey, containerSelector?: string) {
   const el = document.querySelector(btnId);

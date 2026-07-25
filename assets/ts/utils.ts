@@ -1,5 +1,3 @@
-import { fetchFragment } from './shared/misc.js';
-
 /* ────────── Helper functions ────────── */
 
 export function toPascalCase(input: string) {
@@ -17,19 +15,6 @@ export function normalizeViewPath(path: string, base: string): string {
   }
   result = result.replace(/^\/+/, "").replace(/\/+$/, "");
   return result;
-}
-
-export function fetchSvgIcon(iconEl: HTMLElement | null, iconName: string) {
-  if (!iconEl) return;
-  fetchFragment(`svgs/${iconName}.svg`, (response) => {
-    const contentType = response.headers.get("content-type");
-    return !!contentType && contentType.includes("svg");
-  })
-    .then((svg) => {
-      if (!svg) return;
-      iconEl.innerHTML = svg;
-    })
-    .catch((error) => console.error("SVG load failed:", error));
 }
 
 export function getContainer(containerSelector?: string): HTMLElement | (Window & typeof globalThis) {
