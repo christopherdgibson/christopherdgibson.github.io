@@ -114,7 +114,7 @@ export function initRouter() {
     if (redirect) {
       sessionStorage.removeItem("redirect");
       const view = normalizeViewPath(redirect, base);
-      history.replaceState({ view }, "", location.href);
+      history.replaceState({ view }, "", `${base}${view}`);
       loadView(view as ViewKey, undefined, undefined, false, false);
       return; // Exit early after handling the redirect
     }
@@ -132,7 +132,7 @@ export function initRouter() {
       history.replaceState({ view: path }, "", location.href);
       loadView(path as ViewKey, undefined, undefined, false, false); // loadView validates cast internally
     } else {
-      history.replaceState({ view: 'home' }, "", location.href);
+      history.replaceState({ view: 'home' }, "", `${base}home`);
       loadView('home', undefined, undefined, false, false); // default view
     }
   });
