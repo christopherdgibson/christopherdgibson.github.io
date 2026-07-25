@@ -20,8 +20,8 @@ export default async function loadView(
     console.log("Body element not found!");
     return;
   }
-  if (viewName !== "home") { // load once after home page
-      ensureNavMenu();
+  if (viewName !== "home" && !contentOnly) { // load once after home page
+      ensureNavMenu('#nav-placeholder', 'nav', bodyEl, containerSelector);
   }
   try{
     if (!isViewKey(viewName)) throw new Error(`Invalid view name: ${viewName}`);
