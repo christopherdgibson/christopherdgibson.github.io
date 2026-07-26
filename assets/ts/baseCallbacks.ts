@@ -38,8 +38,8 @@ function initAnchorButtons(containerSelector?: string, includeHeader: boolean = 
   });
 }
 
-function initSvgIcons() {
-  const icons: NodeListOf<HTMLElement> = document.querySelectorAll(".svg-icon");
+export function initSvgIcons(iconSelector: string = ".svg-icon") {
+  const icons: NodeListOf<HTMLElement> = document.querySelectorAll(iconSelector);
   if (!icons.length) return;
   icons.forEach((icon) => {
     if (!icon.dataset.target) return;

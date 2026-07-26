@@ -1192,12 +1192,26 @@ ul li ul li:last-child {
   transform: translateY(-2px) scale(1.05);
 }
 
+.btn-contact-email.pulse-once {
+  svg {
+    fill: var(--blue-accent);
+  }
+  .email-flap {
+    transform: translateY(-2px) scale(1.05);
+  }
+}
+
 .btn-contact-cv:hover svg {
   animation: download-bounce 0.4s ease-in-out;
 }
 
-.btn-contact-linkedin:hover svg {
-  animation: notification-bump 0.45s ease-out;
+.btn-contact-linkedin {
+  &:hover, &.pulse-once {
+    svg {
+      fill: var(--blue-accent);
+      animation: notification-bump 0.45s ease-out;
+    }
+  }
 }
 
 .btn-contact-github:hover svg {
@@ -3730,7 +3744,6 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   60% { transform: translateY(-1px); }
   100% { transform: translateY(0); }
 }
-
 
 /* Hamburger animations */
 

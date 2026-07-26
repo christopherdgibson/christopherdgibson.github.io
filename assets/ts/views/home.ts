@@ -5,6 +5,7 @@ import { addBtnListener } from '../shared/nav.js';
 
 
 export default [
+  // () => populateContact('#contactTrigger', '#contactEnvelope', '#contactPageTag'),
   () => initContactBtns('#contactTrigger', '#contactEnvelope', '#contactPageTag'),
   (containerSelector?: string) => initPreviewSection('experience', containerSelector),
   (containerSelector?: string) => initPreviewSection('work', containerSelector),

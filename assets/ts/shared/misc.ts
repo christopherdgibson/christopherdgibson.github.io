@@ -1,4 +1,5 @@
 import { getContainer, toPascalCase } from '../utils.js';
+import { initSvgIcons } from '../baseCallbacks.js';
 import loadView from '../router.js';
 
 import type { PreviewViewKey } from '../types.js';
@@ -78,6 +79,25 @@ export function initHeaderLink() {
 }
 
 /* ────────── Page-specific functions that may eventually be reusable ────────── */
+
+export function populateContact(triggerSelector = "contact-trigger", envelopeSelector: string, pageTagSelector?: string) {
+
+  const target: HTMLElement | null = document.querySelector(triggerSelector);
+
+  if (target === null) return;
+  fetchFragment(`components/contact-envelope.html`, (response) => {
+      if (!response.ok) throw new Error(`View not found: contact-envelope.html`);
+      return true;
+    })
+    .then((html) => {
+      target.innerHTML = html;
+    })
+    .then(() => initSvgIcons('.spill-icon'))
+    .then(() => {
+      initContactBtns(triggerSelector, envelopeSelector, pageTagSelector);
+    })
+    .catch((err) => console.error(err));
+}
 
 export function initContactBtns(triggerSelector: string, envelopeSelector: string, pageTagSelector?: string) {
   const contactTrigger: HTMLElement | null = document.querySelector(triggerSelector);
