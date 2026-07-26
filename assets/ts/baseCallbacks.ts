@@ -33,7 +33,7 @@ function initAnchorButtons(containerSelector?: string, includeHeader: boolean = 
     btn.addEventListener("click", () => {
       const target = document.getElementById(btn.dataset.target ?? '');
       if (!target) return;
-      scrollToAnchor(target, container, includeHeader, behavior)
+      scrollToAnchor({target, container, includeHeader, behavior})
     });
   });
 }

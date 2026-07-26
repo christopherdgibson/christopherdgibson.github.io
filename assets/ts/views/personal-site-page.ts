@@ -1,7 +1,7 @@
 import { addBtnListener, initNavMenu } from '../shared/nav.js';
 import { initCarousel } from '../shared/carousel.js';
 import { initHoverSweep } from '../shared/headerSweep.js';
-import { fetchFragment, initHeaderLink, initScrollToTop } from '../shared/misc.js';
+import { fetchFragment, fetchIndexSvgIcons, initHeaderLink, initScrollToTop } from '../shared/misc.js';
 import { closeOverlays, initCardOverlay } from '../shared/overlays.js';
 import loadView from '../router.js';
 import { removeClasses } from '../utils.js';
@@ -68,12 +68,13 @@ function initMiniSiteOverlay() {
         miniSite.innerHTML = doc.body.innerHTML;
       })
       .then(() => {
-        let bodyMini = document.querySelector('#body-placeholder');
+        let bodyMini: HTMLElement | null = document.querySelector('#body-placeholder');
         // if (bodyMini && !document.querySelector('#nav-placeholder')) {
         //   window.location.href = "index.html";
         //   loadView('personal-site-page.html');
         //   return;
         // }
+        fetchIndexSvgIcons();
         initNavMenu({navSelector: '#nav-placeholder', navHtml: 'nav', bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'});
         loadView({view: "personal-site-page", bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'});
       })

@@ -4,6 +4,13 @@ import loadView from '../router.js';
 
 import type { PreviewViewKey } from '../types.js';
 
+interface ScrollToAnchorProps {
+  target: HTMLElement;
+  container?: Element | (Window & typeof globalThis);
+  includeHeader?: boolean;
+  behavior?: ScrollBehavior;
+}
+
 export function fetchSvgIcon(iconEl: HTMLElement | null, iconName: string) {
   if (!iconEl) return;
   fetchFragment(`svgs/${iconName}.svg`, (response) => {
@@ -18,7 +25,7 @@ export function fetchSvgIcon(iconEl: HTMLElement | null, iconName: string) {
 }
 
 export function fetchIndexSvgIcons() {
-  const linkedInIcon: HTMLElement | null = document.querySelector(".footer-social");
+  const linkedInIcon: HTMLElement | null = document.querySelector("#footerIcon");
   fetchSvgIcon(linkedInIcon, "linkedin");
 }
 
@@ -41,7 +48,7 @@ export function scrollToTop(container: Element | (Window & typeof globalThis) = 
   container.scrollTo({ top: 0, behavior: behavior });
 }
 
-export function scrollToAnchor(target: HTMLElement, container: Element | (Window & typeof globalThis) = window, includeHeader = false, behavior: ScrollBehavior = "smooth") {
+export function scrollToAnchor({target, container = window, includeHeader = false, behavior = "smooth"}: ScrollToAnchorProps) {
   if (!target) return;
   const targetRect = target.getBoundingClientRect();
   let scrollHeight = targetRect.top - 16;
@@ -217,9 +224,15 @@ export function initPreviewSection(section: PreviewViewKey, containerSelector?: 
       scrollToTop(peekPanel); // reset to top when closed
       return;
     }
-    if (previewExpanded > 0) {
-      const container = getContainer(containerSelector);
-      scrollToAnchor(peekWrapper, container); // scroll to preview when multiple open
+
+    const container = getContainer(containerSelector);
+    const pageTagParent = container !== window ? container as HTMLElement : document;
+    let heroActions: HTMLElement | null = pageTagParent.querySelector('.hero-actions');
+
+    if (previewExpanded === 0) { // scroll to hover buttons
+      scrollToAnchor({target: heroActions, container, includeHeader: true});
+    } else {
+      scrollToAnchor({target: peekWrapper, container, includeHeader: true}); // scroll to preview when multiple open
     }
     previewExpanded ++;
   });
