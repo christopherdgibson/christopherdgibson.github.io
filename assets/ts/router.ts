@@ -56,7 +56,8 @@ export default async function loadView({
     }
     if (contentOnly === false && updateHistory){
       const base = import.meta.env.BASE_URL;
-      history.pushState({ view: view }, "", `${base}${view}`);
+      history.pushState({ view: view, containerSelector: containerSelector },
+        "", `${base}${view}`);
     }
 
     const baseCallbacks = getBaseCallbacks(containerSelector, contentOnly);
@@ -106,7 +107,8 @@ export function initRouter() {
   // Listen for back/forward button
   window.addEventListener("popstate", (event) => {
     if (event.state && event.state.view) {
-      loadView({view: event.state, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false});
+      const { view, containerSelector } = event.state;
+      loadView({view, bodyElement: undefined, containerSelector, contentOnly: false, updateHistory: false});
     } else {
       // Load default/home view
       loadView({view: "home", bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false});
@@ -122,7 +124,7 @@ export function initRouter() {
     if (redirect) {
       sessionStorage.removeItem("redirect");
       const view = normalizeViewPath(redirect, base);
-      history.replaceState({ view }, "", `${base}${view}`);
+      history.replaceState({ view: view, containerSelector: undefined }, "", `${base}${view}`);
       loadView({view: view as ViewKey, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false});
       return; // Exit early after handling the redirect
     }
