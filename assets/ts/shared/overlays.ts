@@ -42,11 +42,11 @@ export function closeModalAndOverlay(modal: HTMLElement | null, overlay: HTMLEle
 }
 
 // Download modal
-export function initDownloadModal() {
-  let downloadBtn: HTMLAnchorElement | null = document.querySelector('#btnDownloadConfirm');
-  let downloadOptions: NodeListOf<HTMLAnchorElement> = document.querySelectorAll('#reportDownloadHubExe .download-option');
-  let downloadModal: HTMLElement | null = document.getElementById('reportDownloadHubExe');
-  let downloadConfirmModal: HTMLElement | null = document.getElementById('downloadConfirmModal');
+export function initDownloadModal(btnSelector: string, optionsSelector: string, modalSelector: string, confirmModalSelector: string) {
+  let downloadBtn: HTMLAnchorElement | null = document.querySelector(btnSelector);
+  let downloadOptions: NodeListOf<HTMLAnchorElement> = document.querySelectorAll(optionsSelector);
+  let downloadModal: HTMLElement | null = document.getElementById(modalSelector);
+  let downloadConfirmModal: HTMLElement | null = document.getElementById(confirmModalSelector);
   downloadOptions.forEach(downloadOption => {
     downloadOption.addEventListener('click', (e: Event) => {
       e.preventDefault();

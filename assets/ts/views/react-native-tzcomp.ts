@@ -1,7 +1,6 @@
-import { initCardOverlay } from '../shared/overlays.js';
+import { initCardOverlay, initDownloadModal } from '../shared/overlays.js';
 
 export default [
     () => initCardOverlay("#screenshotOverlay", "tzCompApk", "btnTZCompApk"),
-    //() => initDownloadModal() // todo: generalise so not just reportDownloadHub
-
+    () => initDownloadModal('#btnDownloadConfirm', '#tzCompApk .download-option[data-platform=Android]', 'tzCompApk', 'downloadConfirmModal')
 ];

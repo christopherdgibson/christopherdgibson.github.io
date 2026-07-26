@@ -71,9 +71,8 @@ export function ensureNavMenu({navSelector = '#nav-placeholder', navHtml = 'nav'
 export function addBtnListener({selector, view, containerSelector}: BtnClickProps) {
   const el = document.querySelector(selector);
   if (!el) return;
-  const bodyElement = undefined;
   el.addEventListener("click", function (event) {
     event.preventDefault();
-    loadView({view, bodyElement, containerSelector});
+    loadView({view, bodyElement: undefined, containerSelector});
   });
 }

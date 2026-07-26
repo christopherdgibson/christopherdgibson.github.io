@@ -139,7 +139,7 @@ export function initRouter() {
     }
 
     if (path && path !== "index.html") {
-      history.replaceState({ view: path }, "", location.href);
+      history.replaceState({ view: path }, "", `${base}${path}`);
       loadView({view: path as ViewKey, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false}); // loadView validates cast internally
     } else {
       history.replaceState({ view: 'home' }, "", `${base}home`);
