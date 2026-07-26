@@ -12,12 +12,12 @@ export default [
     () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),
     () => initMiniSiteOverlay(),
-    (containerSelector?: string) => addBtnListener("#btnHomeCarousel", "home", containerSelector),
-    (containerSelector?: string) => addBtnListener("#btnExperienceCarousel", "experience", containerSelector),
-    (containerSelector?: string) => addBtnListener("#btnWorkCarousel", "work", containerSelector),
-    (containerSelector?: string) => addBtnListener("#btnResearchCarousel", "research", containerSelector),
-    (containerSelector?: string) => addBtnListener("#btnTeachingCarousel", "teaching", containerSelector),
-    (containerSelector?: string) => addBtnListener("#btnAboutCarousel", "about", containerSelector)
+    (containerSelector?: string) => addBtnListener({selector: "#btnHomeCarousel", view: "home", containerSelector}),
+    (containerSelector?: string) => addBtnListener({selector: "#btnExperienceCarousel", view: "experience", containerSelector}),
+    (containerSelector?: string) => addBtnListener({selector: "#btnWorkCarousel", view: "work", containerSelector}),
+    (containerSelector?: string) => addBtnListener({selector: "#btnResearchCarousel", view: "research", containerSelector}),
+    (containerSelector?: string) => addBtnListener({selector: "#btnTeachingCarousel", view: "teaching", containerSelector}),
+    (containerSelector?: string) => addBtnListener({selector: "#btnAboutCarousel", view: "about", containerSelector})
 ];
 
 function initMiniSiteOverlay() {
@@ -74,8 +74,8 @@ function initMiniSiteOverlay() {
         //   loadView('personal-site-page.html');
         //   return;
         // }
-        initNavMenu('#nav-placeholder', 'nav', bodyMini, '.mini-site.expanded-mini-site');
-        loadView("personal-site-page", bodyMini, '.mini-site.expanded-mini-site');
+        initNavMenu({navSelector: '#nav-placeholder', navHtml: 'nav', bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'});
+        loadView({view: "personal-site-page", bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'});
       })
       .then(() => {
         initScrollToTop(miniSite);

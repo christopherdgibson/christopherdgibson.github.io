@@ -63,7 +63,7 @@ function initFooterButtons(containerSelector?: string) {
     back.innerHTML = `&larr; <span class="footer-back-desktop-text">Back to </span> ${viewNav.dataset.backText}`;
     back.addEventListener("click", function (event) {
       event.preventDefault();
-      loadView(viewNav.dataset.backView as ViewKey, bodyElement, containerSelector);
+      loadView({view: viewNav.dataset.backView as ViewKey, bodyElement, containerSelector});
     });
   } else if (back) {
     back.innerHTML = "";
@@ -76,7 +76,7 @@ function initFooterButtons(containerSelector?: string) {
       next.innerHTML = `<span class="footer-next-desktop-text">To </span>${viewNav.dataset.nextText} &rarr;`;
       next.addEventListener("click", function (event) {
         event.preventDefault();
-        loadView(viewNav.dataset.nextView as ViewKey, bodyElement, containerSelector);
+        loadView({view: viewNav.dataset.nextView as ViewKey, bodyElement, containerSelector});
       });
     }
   } else if (next) {

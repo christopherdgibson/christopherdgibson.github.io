@@ -73,7 +73,7 @@ export function initHeaderLink() {
   if (!headerLink) return;
   headerLink.addEventListener("click", function (event) {
     event.preventDefault();
-    loadView("work"); //todo: do these apply to mini-site?
+    loadView({view: "work"}); //todo: do these apply to mini-site?
   });
 }
 
@@ -167,7 +167,7 @@ export function initPreviewSection(section: PreviewViewKey, containerSelector?: 
   });
   btn?.addEventListener("mouseenter", (event) => {
     event.preventDefault();
-    loadView(section, peekPanel, `#peek${Section}Home`, true);
+    loadView({view: section, bodyElement: peekPanel, containerSelector: `#peek${Section}Home`, contentOnly: true});
   }, { once: true });
   btn?.addEventListener('mouseleave', () => {
     scheduleClose();

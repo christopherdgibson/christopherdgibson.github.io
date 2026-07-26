@@ -11,7 +11,7 @@ export default [
   () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
   (containerSelector?: string) => populateProjectCards("Home", containerSelector),
   (containerSelector?: string) => addHomeTableBtns(containerSelector),
-  (containerSelector?: string) => addBtnListener(".hero-home-header-grid .headshot", "about", containerSelector),
-  (containerSelector?: string) => addBtnListener("#btnWorkHome", "work", containerSelector),
-  (containerSelector?: string) => addBtnListener("#btnExperienceHome", "experience", containerSelector)
+  (containerSelector?: string) => addBtnListener({selector: ".hero-home-header-grid .headshot", view: "about", containerSelector}),
+  (containerSelector?: string) => addBtnListener({selector: "#btnWorkHome", view: "work", containerSelector}),
+  (containerSelector?: string) => addBtnListener({selector: "#btnExperienceHome", view: "experience", containerSelector})
 ];

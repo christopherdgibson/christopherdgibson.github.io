@@ -4,30 +4,46 @@ import loadView from '../router.js'
 
 import type { ViewKey } from '../types.js';
 
+type NavMenuProps = {
+  navSelector: string;
+  navHtml: string;
+  bodyElement?: Element | null;
+  containerSelector?: string;
+}
+
+interface BtnClickProps {
+  selector: string;
+  view: ViewKey;
+  containerSelector?: string;
+}
+
+interface NavClickProps extends BtnClickProps {
+  bodyElement: Element | null;
+}
 
 /* ────────── Load navbar and menu events ────────── */
 
-export function initNavMenu(navSelector: string, navHtml: string, bodyElement: Element | null | undefined = document.querySelector("#body-placeholder"), containerSelector?: string) {
+export function initNavMenu({navSelector, navHtml, bodyElement = document.querySelector("#body-placeholder"), containerSelector}: NavMenuProps) {
   const navMenu = document.querySelector(navSelector);
   if (navMenu === null) return;
   fetchFragment(`${navHtml}.html`)
     .then((data) => {
       navMenu.innerHTML = data;
       initHeaderSweep();
-      addNavClick("#btnHome", "home", bodyElement, containerSelector);
-      addNavClick("#btnExperience", "experience", bodyElement, containerSelector);
-      addNavClick("#btnWork", "work", bodyElement, containerSelector);
-      addNavClick("#btnWorkMobile", "work", bodyElement, containerSelector);
-      addNavClick("#btnResearch", "research", bodyElement, containerSelector);
-      addNavClick("#btnTeaching", "teaching", bodyElement, containerSelector);
-      addNavClick("#btnAbout", "about", bodyElement, containerSelector);
+      addNavClick({selector: "#btnHome", view: "home", bodyElement, containerSelector});
+      addNavClick({selector: "#btnExperience", view: "experience", bodyElement, containerSelector});
+      addNavClick({selector: "#btnWork", view: "work", bodyElement, containerSelector});
+      addNavClick({selector: "#btnWorkMobile", view: "work", bodyElement, containerSelector});
+      addNavClick({selector: "#btnResearch", view: "research", bodyElement, containerSelector});
+      addNavClick({selector: "#btnTeaching", view: "teaching", bodyElement, containerSelector});
+      addNavClick({selector: "#btnAbout", view: "about", bodyElement, containerSelector});
       // Work sub-menu
-      addNavClick("#btnNYCDashboard", "nyc-dashboard", bodyElement, containerSelector);
-      addNavClick("#btnReportDownloadHub", "report-download-hub", bodyElement, containerSelector);
-      addNavClick("#btnAdminDocRepo", "admin-doc-repo", bodyElement, containerSelector);
-      addNavClick("#btnTZComp", "react-native-tzcomp", bodyElement, containerSelector);
-      addNavClick("#btnWordPress", "wordpress-plugins", bodyElement, containerSelector);
-      addNavClick("#btnPersonalSite", "personal-site-page", bodyElement, containerSelector);
+      addNavClick({selector: "#btnNYCDashboard", view: "nyc-dashboard", bodyElement, containerSelector});
+      addNavClick({selector: "#btnReportDownloadHub", view: "report-download-hub", bodyElement, containerSelector});
+      addNavClick({selector: "#btnAdminDocRepo", view: "admin-doc-repo", bodyElement, containerSelector});
+      addNavClick({selector: "#btnTZComp", view: "react-native-tzcomp", bodyElement, containerSelector});
+      addNavClick({selector: "#btnWordPress", view: "wordpress-plugins", bodyElement, containerSelector});
+      addNavClick({selector: "#btnPersonalSite", view: "personal-site-page", bodyElement, containerSelector});
     })
     .then(() => {
       const header: HTMLElement | null = document.querySelector("#header");
@@ -37,27 +53,27 @@ export function initNavMenu(navSelector: string, navHtml: string, bodyElement: E
     })
     ;
     
-  function addNavClick(selector: string, view: ViewKey, bodyElement: Element | null, containerSelector?: string) {
+    function addNavClick({selector, view, bodyElement, containerSelector}: NavClickProps) {
     document.querySelector(selector)?.addEventListener("click", function(event) {
       event.preventDefault();
-      loadView(view, bodyElement, containerSelector);
+      loadView({view, bodyElement, containerSelector});
     });
   }
 }
 
-export function ensureNavMenu(navSelector: string = '#nav-placeholder', navHtml: string = 'nav', bodyElement?: Element | null, containerSelector?: string) {
+export function ensureNavMenu({navSelector = '#nav-placeholder', navHtml = 'nav', bodyElement, containerSelector}: NavMenuProps) {
   const navPlaceholder = document.querySelector(navSelector);
   if (navPlaceholder && navPlaceholder.childElementCount === 0) {
-    initNavMenu('#nav-placeholder', navHtml, bodyElement, containerSelector);
+    initNavMenu({navSelector: '#nav-placeholder', navHtml, bodyElement, containerSelector});
   }
 }
 
-export function addBtnListener(btnId: string, viewName: ViewKey, containerSelector?: string) {
-  const el = document.querySelector(btnId);
+export function addBtnListener({selector, view, containerSelector}: BtnClickProps) {
+  const el = document.querySelector(selector);
   if (!el) return;
   const bodyElement = undefined;
   el.addEventListener("click", function (event) {
     event.preventDefault();
-    loadView(viewName, bodyElement, containerSelector);
+    loadView({view, bodyElement, containerSelector});
   });
 }

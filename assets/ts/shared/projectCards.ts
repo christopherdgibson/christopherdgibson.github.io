@@ -6,30 +6,30 @@ import type { ViewKey } from '../types.js';
 
 type ProjectEntry = {
   id: string;
-  viewName: ViewKey;
+  view: ViewKey;
   callback?: (hoverId: string) => void;
 };
 
 const projects: Array<ProjectEntry> = [
-  {id: 'btnNYCDashboard', viewName: 'nyc-dashboard'},
-  {id: 'btnReportDownloadHub', viewName: 'report-download-hub'},
-  {id: 'btnAdminDocRepo', viewName: 'admin-doc-repo'},
-  {id: 'btnTZComp', viewName: 'react-native-tzcomp'},
-  {id: 'btnWordPress', viewName: 'wordpress-plugins'},
-  {id: 'btnPersonalSite', viewName: 'personal-site-page', callback: (hoverId: string) => initHoverSweep(`${hoverId} .mockup-site-name span`, hoverId)},
+  {id: 'btnNYCDashboard', view: 'nyc-dashboard'},
+  {id: 'btnReportDownloadHub', view: 'report-download-hub'},
+  {id: 'btnAdminDocRepo', view: 'admin-doc-repo'},
+  {id: 'btnTZComp', view: 'react-native-tzcomp'},
+  {id: 'btnWordPress', view: 'wordpress-plugins'},
+  {id: 'btnPersonalSite', view: 'personal-site-page', callback: (hoverId: string) => initHoverSweep(`${hoverId} .mockup-site-name span`, hoverId)},
 ];
 
 export function populateProjectCards(page = "Home", containerSelector?: string) {
   const hoverId = `#btnPersonalSite${page}`;
 
   projects.forEach(project => {
-    const viewName = project.viewName;
+    const view = project.view;
     const projectId = `#${project.id}${page}`;
     const card = document.querySelector(projectId);
 
     if (card === null) return;
-    fetchFragment(`views/work-cards/${viewName}-card.html`, (response) => {
-        if (!response.ok) throw new Error(`View not found: ${viewName}`);
+    fetchFragment(`views/work-cards/${view}-card.html`, (response) => {
+        if (!response.ok) throw new Error(`View not found: ${view}`);
         return true;
       })
       .then((html) => {
@@ -41,14 +41,14 @@ export function populateProjectCards(page = "Home", containerSelector?: string) 
         }
       })
       .catch((err) => console.error(err));
-      addBtnListener(projectId, viewName, containerSelector);
+      addBtnListener({selector: projectId, view, containerSelector});
   })
 }
 
 export function addHomeTableBtns(containerSelector?: string) {
     projects.forEach(project => {
-    const viewName = project.viewName;
+    const view = project.view;
     const tableId = `#${project.id}Table`;
-    addBtnListener(tableId, viewName, containerSelector);
+    addBtnListener({selector: tableId, view, containerSelector});
   })
 }
