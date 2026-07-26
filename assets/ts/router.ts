@@ -134,7 +134,7 @@ export function initRouter() {
 
     if (path === 'wp-agenda-block') {
       history.replaceState({ view: 'wordpress-plugins' }, "", location.href);
-      loadView('wordpress-plugins', undefined, undefined, false, false);
+      loadView({view: 'wordpress-plugins', bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false});
       return;
     }
 
