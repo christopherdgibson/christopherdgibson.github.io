@@ -1164,6 +1164,15 @@ ul li ul li:last-child {
   transition-delay: calc(750ms + var(--i) * 150ms);
 }
 
+.contact-trigger.expanded-contact .spill-icon {
+  &.btn-contact-cv, &.btn-contact-github {
+    opacity: 1;
+    transform: translateX(0) translateY(-10px) scale(1);
+    transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-out;
+    transition-delay: calc(750ms + var(--i) * 150ms);
+  }
+}
+
 /* .spill-icon {
   grid-row: 1;
   z-index: 1;

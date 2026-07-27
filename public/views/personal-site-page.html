@@ -9,12 +9,13 @@
 
 <!-- HERO -->
 <section class="hero hero-personal-site">
-  <p class="hero-eyebrow">Portfolio · HTML / CSS / JavaScript</p>
+  <p class="hero-eyebrow">Portfolio · TypeScript / Vite / SPA Routing</p>
   <h1 class="hero-title">This Site</h1>
   <p class="hero-desc">
-    A personal portfolio site built from scratch in vanilla HTML, CSS, and
-    JavaScript — no frameworks, no templates. Every interaction, animation, and
-    layout decision is custom-coded.
+    A personal portfolio site built from scratch in TypeScript — no UI
+    framework, no templates, and a hand-built client-side router. Every
+    interaction, animation, and navigation decision is custom-coded and compiled
+    with Vite.
   </p>
   <div class="hero-actions">
     <a id="btnMiniSite" href="#" class="btn btn-primary">View Live Site →</a>
@@ -26,12 +27,12 @@
     >
   </div>
   <div class="badges">
-    <span class="badge">HTML</span>
-    <span class="badge">CSS</span>
-    <span class="badge">Vanilla JS</span>
+    <span class="badge">TypeScript</span>
+    <span class="badge">Vite</span>
     <span class="badge">SPA Routing</span>
     <span class="badge">CSS Animations</span>
     <span class="badge">SVG</span>
+    <span class="badge">GitHub Actions</span>
   </div>
 
   <!-- Carousel -->
@@ -136,13 +137,9 @@
           </div>
           <span class="carousel-card-visit">Visit page →</span>
         </a>
-        
+
         <!-- About -->
-        <a
-          id="btnAboutCarousel"
-          href="#"
-          class="carousel-card hero-home"
-        >
+        <a id="btnAboutCarousel" href="#" class="carousel-card hero-home">
           <div class="carousel-card-body">
             <p class="carousel-card-eyebrow">About</p>
             <div class="carousel-accent"></div>
@@ -189,10 +186,12 @@
     <p class="section-body">
       This site is itself a portfolio piece. Every component — the responsive
       navbar, the animated hamburger sweep, the SPA routing system, the mobile
-      overlays — is custom-coded in vanilla HTML, CSS, and JavaScript without
-      any framework or library. The decision to avoid frameworks was deliberate:
-      the site demonstrates what can be built with the fundamentals alone, and
-      keeps the codebase fully owned and understood.
+      overlays — is custom-coded in TypeScript without any UI framework or
+      library. The one exception is Vite, used purely as a build tool to compile
+      and bundle the TypeScript. The decision to avoid a UI framework was
+      deliberate: the site demonstrates what can be built with the fundamentals
+      alone, minimal overhead keeps the site lean and performant, and the
+      codebase remains fully owned and understood.
     </p>
     <div class="pull-quote">
       <p>
@@ -231,13 +230,31 @@
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">🗂️</div>
-        <div class="feature-title">SPA routing</div>
+        <div class="feature-icon">🔀</div>
+        <div class="feature-title">SPA view loading</div>
         <div class="feature-body">
-          Pages load dynamically without full reloads. A view callback system
-          runs page-specific initialisation functions after each navigation —
-          anchor buttons, SVG icons, feature card overlays, footer buttons, and
-          screenshot carousels are all initialised on demand.
+          Views load as HTML fragments swapped into a placeholder, with a
+          callback system that runs page-specific initialisation after each swap
+          and waits for images to load before scrolling — no flash of unstyled
+          or half-loaded content.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧭</div>
+        <div class="feature-title">Client-side routing</div>
+        <div class="feature-body">
+          Built on the History API directly — correct back/forward behaviour,
+          direct URL entry, and refresh handled via a custom 404 fallback, since
+          GitHub Pages has no server-side routing of its own.
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🪞</div>
+        <div class="feature-title">A site within itself</div>
+        <div class="feature-body">
+          The "View Live Site" button renders a live, independent instance of
+          this same site inside an overlay — same router, same view-loading
+          logic, scoped to its own container for scrolling and navigation state.
         </div>
       </div>
 
@@ -358,11 +375,29 @@
         </div>
       </div>
       <div class="tech-row">
-        <div class="tech-key">SPA routing</div>
+        <div class="tech-key">SPA view loading</div>
         <div class="tech-val">
-          Dynamic page loading without reloads preserves header and footer
-          state, enables transition animations, and avoids the flicker of full
-          page navigation.
+          Fragment swapping with a per-view callback system and an image-load
+          wait before scrolling, so navigation never shows a flash of unstyled
+          content.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Client-side routing</div>
+        <div class="tech-val">
+          Built on the History API directly — pushState/popState,
+          container-scoped rendering (used by the embedded mini-site), and a
+          404-redirect fallback for direct URL entry and refresh on a static
+          host with no server-side routing.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">TypeScript + Vite</div>
+        <div class="tech-val">
+          Written in TypeScript for compile-time safety — catches invalid view
+          names and unsafe DOM access before they reach the browser. Vite
+          compiles and bundles the build; GitHub Actions runs the build and
+          deploys automatically on push.
         </div>
       </div>
       <div class="tech-row">
