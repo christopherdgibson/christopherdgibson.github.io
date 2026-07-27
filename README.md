@@ -20,7 +20,9 @@ The site runs entirely from one HTML file, with views loaded dynamically into a 
 |---|---|---|
 | NYC 311 Dashboard      | Web app (Blazor/.NET)        | Live URL       |
 | Report Download Hub | Desktop app (Avalonia/.NET) | Executable download |
-| WordPress Plugins      | CMS plugins (WordPress/PHP)  | WordPress demo |
+| Admin Doc Repo | CMS plugins (React/PHP/WordPress)  | WordPress demo |
+| Timezone Comparison | Mobile app (React Native) | Android APK download |
+| WordPress Plugins      | CMS plugins (React/PHP/WordPress)  | WordPress demo |
 | | | |
 
 ---
@@ -39,12 +41,17 @@ The site runs entirely from one HTML file, with views loaded dynamically into a 
 ```
 christopherdgibson.github.io/
   index.html          # single HTML file, all views loaded dynamically
-  style.css           # global styles and CSS variables
-  script.js           # view routing and shared interaction logic
   assets/
+    ts/               # view routing and shared interaction logic
+    style.css         # global styles and CSS variables
+  public/
+    404.html          # redirect logic HTML
+    demos/            # demo blueprint, screenshots
     downloads/        # distributable executables
     images/           # site images
     pdfs/             # document assets
+    svgs/             # site svg elements
+    views/            # page views
   drafts/             # local only, not tracked
 ```
 
