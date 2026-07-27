@@ -16,7 +16,7 @@ function contactPulse() {
     const tags = [btnEmail, btnLinkedIn].filter((t): t is HTMLElement => t !== null);
     if (tags.length === 0) return;
 
-    let timeout = 200;
+    let timeout = 500;
     tags.forEach(tag => {
       timeout += 100;
       const addTime = timeout;

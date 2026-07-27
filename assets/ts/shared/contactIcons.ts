@@ -28,6 +28,20 @@ export function initContactIcons(triggerSelector: string, envelopeSelector: stri
   let stopIdleShake = shakeContactEnvelope(envelope, contactTrigger);
   let inputLocked = false;
 
+  function scheduleExpanded(expanded: boolean) {
+    if (expanded && envelope.classList.contains('shake')) {
+        envelope.addEventListener('animationend', () => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    setExpanded(expanded);
+                });
+            });
+        }, { once: true });
+    } else {
+        setExpanded(expanded);
+    }
+  }
+
   function setExpanded(expanded: boolean) {
     if (inputLocked) return; // ignore calls that arrive during the lockout window
     inputLocked = true;
@@ -44,15 +58,15 @@ export function initContactIcons(triggerSelector: string, envelopeSelector: stri
   
   envelope?.addEventListener('pointerenter', (event) => {
     if (event.pointerType !== 'mouse') return; // ignore touch/pen-simulated hover
-    setExpanded(true);
+    scheduleExpanded(true);
   });
 
   contactTrigger?.addEventListener('click', () => {
     const isExpanded = contactTrigger.classList.contains('expanded-contact');
-    setExpanded(!isExpanded);
+    scheduleExpanded(!isExpanded);
   });
 
-  pageTag?.addEventListener('click', () => setExpanded(true));
+  pageTag?.addEventListener('click', () => scheduleExpanded(true));
 }
 
 function shakeContactEnvelope(envelope: HTMLElement, contactTrigger: HTMLElement) {
@@ -66,7 +80,7 @@ function shakeContactEnvelope(envelope: HTMLElement, contactTrigger: HTMLElement
   let shakeInterval = setInterval(() => {
     if (contactTrigger.classList.contains('expanded-contact')) return;
     envelope.classList.remove('shake');
-    void envelope.offsetWidth;
+    void envelope.offsetWidth; // forces reflow
     envelope.classList.add('shake');
   }, 5000);
 
