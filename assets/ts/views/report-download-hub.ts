@@ -1,4 +1,4 @@
-import { initDownloadModal, initCardOverlay } from '../shared/overlays.js';
+import { initCardOverlay, initDownloadModal } from '../shared/overlays.js';
 
 export default [
     () => initCardOverlay("#screenshotOverlay", "reportDownloadHubExe", "btnReportDownloadHubExe"),

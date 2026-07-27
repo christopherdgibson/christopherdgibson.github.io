@@ -1,7 +1,5 @@
 import { getCleanElement } from '../utils.js';
 
-// Carousel JS
-
 export function initCarousel(rowSelector?: string, badgeSelector?: string) {
   const track = getCleanElement("#carouselTrack");
   if (!track) return;

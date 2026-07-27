@@ -1,5 +1,3 @@
-
-
 export function initHeaderSweep(textSelector: string = "#headerLink span", eventSelector: string = "#checkNav", event: any = "change") {
   splitStringIntoSpans(textSelector);
 

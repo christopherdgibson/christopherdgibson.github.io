@@ -1,6 +1,5 @@
 import { viewCallbacks } from './viewCallbacks.js';
 
-// types.ts
 export const VIEW_KEYS = [
   'home', 'experience', 'work', 'research', 'teaching', 'about',
   "nyc-dashboard", "report-download-hub", "admin-doc-repo" , "react-native-tzcomp", "wordpress-plugins", "personal-site-page"

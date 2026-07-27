@@ -17,7 +17,7 @@ type LoadViewProps = {
 
 /* ────────── SPA swapping logic ────────── */
 
-export default async function loadView({
+export async function loadView({
   view,
   bodyElement = document.querySelector("#body-placeholder"), // body element to replace with default
   containerSelector, // string selector for container reference, defaults to window

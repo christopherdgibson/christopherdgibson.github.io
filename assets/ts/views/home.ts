@@ -1,12 +1,12 @@
-import { initContactBtns, initPreviewSection } from '../shared/misc.js';
 import { initCarousel } from '../shared/carousel.js';
-import { populateProjectCards, addHomeTableBtns } from '../shared/projectCards.js';
+import { initContactIcons } from '../shared/contactIcons.js';
 import { addBtnListener } from '../shared/nav.js';
-
+import { populateProjectCards, addHomeTableBtns } from '../shared/projectCards.js';
+import { initPreviewSection } from '../shared/previewSection.js';
 
 export default [
   // () => populateContact('#contactTrigger', '#contactEnvelope', '#contactPageTag'),
-  () => initContactBtns('#contactTrigger', '#contactEnvelope', '#contactPageTag'),
+  () => initContactIcons('#contactTrigger', '#contactEnvelope', '#contactPageTag'),
   (containerSelector?: string) => initPreviewSection('experience', containerSelector),
   (containerSelector?: string) => initPreviewSection('work', containerSelector),
   () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),

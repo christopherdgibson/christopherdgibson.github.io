@@ -1,13 +1,10 @@
 import { fetchSvgIcon, scrollToAnchor } from './shared/misc.js';
 import { initCardOverlay } from './shared/overlays.js';
-import loadView from './router.js';
+import { loadView } from './router.js';
 import { getCleanElement, getCleanElements, getContainer } from './utils.js';
 
 import type { ViewKey } from './types.js';
 
-/* ────────── Base Callbacks ────────── */
-
-// baseCallbacks.js
 export function getBaseCallbacks(containerSelector?: string, contentOnly?: boolean) {
   return [
     () => initAnchorButtons(containerSelector),

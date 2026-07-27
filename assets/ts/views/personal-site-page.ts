@@ -1,9 +1,9 @@
-import { addBtnListener, initNavMenu } from '../shared/nav.js';
 import { initCarousel } from '../shared/carousel.js';
 import { initHoverSweep } from '../shared/headerSweep.js';
 import { fetchFragment, fetchIndexSvgIcons, initHeaderLink, initScrollToTop } from '../shared/misc.js';
+import { addBtnListener, initNavMenu } from '../shared/nav.js';
 import { closeOverlays, initCardOverlay } from '../shared/overlays.js';
-import loadView from '../router.js';
+import { loadView } from '../router.js';
 import { removeClasses } from '../utils.js';
 
 export default [

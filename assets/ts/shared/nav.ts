@@ -1,6 +1,6 @@
 import { initHeaderSweep } from './headerSweep.js';
 import { fetchFragment } from './misc.js';
-import loadView from '../router.js'
+import { loadView } from '../router.js';
 
 import type { ViewKey } from '../types.js';
 
