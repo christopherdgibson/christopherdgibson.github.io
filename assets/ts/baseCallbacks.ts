@@ -19,6 +19,7 @@ export function getBaseCallbacks(containerSelector?: string, contentOnly?: boole
   ];
 }
 
+let pulseIteration = 0;
 function initAnchorButtons(containerSelector?: string, includeHeader: boolean = true, behavior: ScrollBehavior = "smooth") {
   const container = getContainer(containerSelector);
   const pageTagParent = container !== window ? container as HTMLElement : document;
@@ -32,6 +33,25 @@ function initAnchorButtons(containerSelector?: string, includeHeader: boolean = 
       if (!target) return;
       scrollToAnchor({target, container, includeHeader, behavior})
     });
+  });
+
+  if (pulseIteration < 3) { // limit pulse of badge to 3 times
+    addPulses(pageTagBtns, 500, 200);
+    pulseIteration++;
+  }
+}
+
+function addPulses(elements: NodeListOf<HTMLButtonElement>, delay: number, stagger: number) {
+  if (elements.length === 0) return;
+
+  let timeout = delay;
+  elements.forEach(el => {
+    timeout += stagger;
+    const addTime = timeout;
+    setTimeout(() => {
+      el.classList.add('pulse-once');
+      setTimeout(() => el.classList.remove('pulse-once'), 300);
+    }, addTime);
   });
 }
 

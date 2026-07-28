@@ -873,7 +873,7 @@ ul li ul li:last-child {
     }
 
     .page-tag {
-      animation: fadeIn 0.4s ease 2s both;
+      animation: fadeUp 0.6s ease 0.3s both;
     }
 
     .contact-trigger {
@@ -1780,7 +1780,7 @@ ul li ul li:last-child {
       grid-row: auto;
     }
 
-     .hero-home {
+    .hero-home {
       max-width: var(--hero-desc-max-width);
     }
 
@@ -2326,6 +2326,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   animation: fadeUp 0.5s ease 0.5s forwards;
 
   .page-tag-btn {
+    --anchor-btn-animation-timeout: 0.3s;
     background: none;
     border: none;
     padding: 0;
@@ -2334,6 +2335,12 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: inherit;
+    transition: color var(--anchor-btn-animation-timeout) ease, text-shadow var(--anchor-btn-animation-timeout) ease, scale var(--anchor-btn-animation-timeout) ease;
+
+    &:hover, &.pulse-once {
+      text-shadow: 0 0 10px currentColor;
+      scale: 1.05;
+    }
   }
 }
 
@@ -2342,7 +2349,6 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   border-color: rgba(123, 184, 232, 0.3);
   background: rgba(123, 184, 232, 0.08);
 }
-
 
 /* ────────────── Projects pages ────────────── */
 .hero-project, .hero-projects {
@@ -3769,7 +3775,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   100% {
     background-color: var(--blue-accent); 
     transform-origin: center;
-    transform:  translateY(-22.5px) rotate(90deg);
+    transform:  translateY(-24px) rotate(90deg);
   }
 }
 
