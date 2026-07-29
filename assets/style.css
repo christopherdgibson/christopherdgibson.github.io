@@ -152,15 +152,10 @@
   src: url("/fonts/AvenirLTStdLight.otf");
 }
 
-/* @font-face {
-  font-family: "Avenir Light";
-  src: url("./fonts/Avenir-LightOblique.woff");
-} */
-
-/* @font-face {
+@font-face {
     font-family: "Avenir Heavy";
     src: url("/fonts/Avenir LT Std Heavy.otf");
-} */
+}
 
 *,
 *::before,
@@ -179,22 +174,17 @@ html {
 } */
 
 body {
-  font-family: "Avenir Light", Arial, Helvetica, sans-serif;
-  /* font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", sans-serif; */
+  font-family: "Avenir Light", "DM Sans", sans-serif;
   margin: 0;
   font-size: 16px;
   /* line-height: 1.95em; */
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  /* }
-
-  body { */
-  font-family: "DM Sans", sans-serif;
   font-weight: 300;
   color: var(--text);
   background: var(--white);
-  line-height: 1.75;
+  line-height: 1.95;
 }
 
 body:has(.home-container) {
@@ -1561,7 +1551,7 @@ ul li ul li:last-child {
 .feature-body {
   font-size: 0.825rem;
   color: #6a7f8e;
-  line-height: 1.65;
+  line-height: 1.85;
 }
 
 /* @media (hover: none) { */
@@ -2598,7 +2588,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
 .project-card-desc {
   font-size: 0.85rem;
   color: #4a5e6e;
-  line-height: 1.65;
+  line-height: 1.85;
   margin-bottom: 16px;
   flex: 1;
 }
@@ -3049,7 +3039,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   font-size: 0.82rem;
   color: var(--grey-mid);
   max-width: 48ch;
-  line-height: 1.65;
+  line-height: 1.85;
 }
 
 /* Accent line */
