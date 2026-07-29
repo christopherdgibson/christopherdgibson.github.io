@@ -1,0 +1,41 @@
+<svg preserveAspectRatio="xMidYMid meet" height="400" xmlns="http://www.w3.org/2000/svg" data-type="color" role="presentation" width="400" viewBox="69.5 69.5 60 60">
+  <defs>
+    <style>
+      .fav-cls-bg{fill:none;}
+      .fav-cls-front{fill:#0d1f2d;}
+      .fav-cls-top{fill:#7bb8e8;}
+      .fav-cls-right{fill:#3ca0e7;}
+      .fav-cls-edge{stroke:#ffffff;stroke-width:1.3;stroke-linejoin:round}
+      .fav-cls-hidden-edge{stroke:#ffffff;stroke-width:1;stroke-linejoin:round;stroke-dasharray:2.4 2.6;fill:none}
+      .fav-cls-text{fill:#ffffff;}
+    </style>
+  </defs>
+  <g>
+
+    <!-- background -->
+    <rect class="fav-cls-bg" width="60" height="60" x="69.5" y="69.5"></rect>
+
+    <!-- Top face: P1(70.65,86.85) P5(86.54,70.4) P6(128.2,70.4) P2(111.9,86.85) -->
+    <polygon points="70.65,86.85 86.54,70.4 128.2,70.4 111.9,86.85"
+             class="fav-cls-top fav-cls-edge"/>
+
+    <!-- Right face: P2(111.9,86.85) P6(128.2,70.4) P7(128.2,112.0) P3(111.9,128.0) -->
+    <polygon points="111.9,86.85 128.2,70.4 128.2,112.0 111.9,128.0"
+             class="fav-cls-right fav-cls-edge"/>
+
+    <!-- Front face: P1(70.65,86.85) P2(111.9,86.85) P3(111.9,128.0) P4(70.65,128.0) -->
+    <polygon points="70.65,86.85 111.9,86.85 111.9,128.0 70.65,128.0"
+             class="fav-cls-front fav-cls-edge"/>
+
+    <!-- Hidden edges, meeting at hidden back-bottom-left vertex P8(86.5,112) -->
+    <g class="fav-cls-hidden-edge">
+      <line x1="86.54" y1="70.4" x2="86.5" y2="112.0"/>   <!-- P5 to P8 -->
+      <line x1="86.5" y1="112.0" x2="128.2" y2="112.0"/>  <!-- P8 to P7 -->
+      <line x1="86.5" y1="112.0" x2="70.65" y2="128.0"/>  <!-- P8 to P4 -->
+    </g>
+
+    <!-- text on front face -->
+    <text class="fav-cls-text" xml:space="preserve" text-anchor="start" font-family="Avenir" font-size="40" font-weight="700" font-style="italic" x="72" y="113">cg</text>
+    
+  </g>
+</svg>
