@@ -1163,19 +1163,6 @@ ul li ul li:last-child {
   }
 }
 
-/* .spill-icon {
-  grid-row: 1;
-  z-index: 1;
-  font-size: 1.4rem;
-  opacity: 0;
-  transform: translateX(calc(75px - (var(--i) * 50px))) translateY(var(--contact-envelope-expandedY)) scale(0.4);
-}
-
-.contact-trigger.expanded-contact .spill-icon {
-  animation: spill-arc 1s ease-out forwards;
-  animation-delay: calc(750ms + var(--i) * 150ms);
-} */
-
 .email-flap {
   transform-origin: 12px 2px;
   transition: transform 0.3s ease-out;
@@ -2852,11 +2839,6 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   border: 1px solid rgba(var(--blue-accent-rgb), 0.4);
 }
 
-.page-tag-container {
-  display: flex;
-  justify-content: space-between;
-}
-
 .page-tag-close-container {
   display: flex;
 }
@@ -2889,8 +2871,8 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   border-color: rgba(var(--red-accent-rgb), 0.75);
 }
 
-.page-tag-close-right {
-  margin-left: auto;
+.page-tag.page-tag-close.page-tag-close-right {
+  margin: 0 0 6px auto;
 }
 
 .mini-site-wrapper {
@@ -3151,6 +3133,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   .page-tag {
     animation: none;
     opacity: 1;
+    margin-bottom: 20px;
   }
 }
 
@@ -3166,7 +3149,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
 
 .modal-title {
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 700;
   margin: 0 0 0.75rem;
   color: white;
   line-height: 1.4;
