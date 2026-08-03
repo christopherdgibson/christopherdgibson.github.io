@@ -215,6 +215,9 @@ body:has(.hero-about):not(:has(.mini-site)) {
   .hero, footer {
     background: none;
   }
+}
+
+body:has(.writing-article) {
   .footer-next-desktop-text {
     display: none;
   }
