@@ -20,6 +20,15 @@
   --nbb-blue:   #005fa3;
   --uk-red:     #cf102d;
   --tech-list-border-color: #e8edf1;
+
+  /* Writing */
+  --paper: #F7F7F5;
+  --ink: #1B1D1F;
+  --ink-soft: #4A4D51;
+  --rule: #DEDBD4;
+  --amber: #C98A3A;
+  --code-bg: #EFEDE7;
+
   --header-height-mobile: 70px;
   --header-nav-offset: 5px;
   --mini-site-top: 3rem;
@@ -1908,7 +1917,6 @@ footer {
   text-align: center;
   margin-top: auto;
   color: white;
-
 }
 .footer-grid {
   display: flex;
@@ -2616,6 +2624,30 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   justify-items: center;
   gap: 6px;
   flex-shrink: 0;
+}
+
+.mockup-site-footer {
+  background: var(--background-radial-blue);
+  padding: 10px;
+  text-align: center;
+  margin-top: auto;
+  color: white;
+  font-size: 0.75rem !important;
+  .footer-grid {
+    line-height: 1;
+  }
+  .mockup-site-name {
+    justify-content: center;
+  }
+  .footer-copyright, .mockup-footer-email a {
+    /* text-decoration: none; */
+    font-size: 0.5rem;
+  }
+
+  .footer-social {
+    height: 15px;
+    width: 15px;
+  }
 }
 
 .mockup-site-name {

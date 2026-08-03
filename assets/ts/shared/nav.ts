@@ -37,6 +37,7 @@ export function initNavMenu({navSelector, navHtml, bodyElement = document.queryS
       addNavClick({selector: "#btnResearch", view: "research", bodyElement, containerSelector});
       addNavClick({selector: "#btnTeaching", view: "teaching", bodyElement, containerSelector});
       addNavClick({selector: "#btnAbout", view: "about", bodyElement, containerSelector});
+      addNavClick({selector: "#btnThoughts", view: "articles/building-a-router", bodyElement, containerSelector});
       // Work sub-menu
       addNavClick({selector: "#btnNYCDashboard", view: "nyc-dashboard", bodyElement, containerSelector});
       addNavClick({selector: "#btnReportDownloadHub", view: "report-download-hub", bodyElement, containerSelector});

@@ -1,7 +1,7 @@
 import { viewCallbacks } from './viewCallbacks.js';
 
 export const VIEW_KEYS = [
-  'home', 'experience', 'work', 'research', 'teaching', 'about',
+  'home', 'experience', 'work', 'research', 'teaching', 'about', 'articles/building-a-router',
   "nyc-dashboard", "report-download-hub", "admin-doc-repo" , "react-native-tzcomp", "wordpress-plugins", "personal-site-page"
 ] as const;
 

@@ -1,0 +1,349 @@
+<div class="writing-article">
+  <div class="kicker">Field notes / routing</div>
+  <h1>What Building a Router From Scratch Taught Me About Why Routers Exist</h1>
+  <p class="lede">
+    I built my personal site as a single-page app in vanilla TypeScript — no
+    React, no Vue, no router library. This is the story of what I learned, told
+    through the bugs I found along the way.
+  </p>
+
+  <p>
+    If you've only ever used <code>react-router</code> or
+    <code>vue-router</code>, this is what they're quietly doing for you.
+  </p>
+
+  <h2>The setup</h2>
+  <p>
+    At its core, a router serves two main functions. The first is to load views
+    so that navigation clicks swap only the necessary content. The second is
+    managing browser interaction by responding to forward / back / refresh
+    clicks, as well as enabling url navigation.
+  </p>
+  <!-- <h3 class="article-section-header"><span class="bug-num">01</span>LoadView</h3> -->
+  <h3 class="article-section-header">
+    <span class="sec-num">01</span>Swap the content
+  </h3>
+
+  <!-- <h3 class="article-section-header bug-num">loadView</h3> -->
+
+  <p>
+    The site loads views by fetching HTML fragments and swapping them into a
+    placeholder element. This way, the elements that do not require re-loading
+    (the header and footer) remain in place for improved continuity and
+    performance:
+  </p>
+
+  <div class="diagram-block">
+    <div class="browser-frame">
+      <div class="browser-chrome"><span></span><span></span><span></span></div>
+      <div class="browser-body">
+        <div class="mockup-site-header">
+          <div class="mockup-site-name">
+            <span>Christopher Gibson</span>
+          </div>
+          <div class="mockup-site-nav">
+            <span class="mockup-nav-item">Home</span>
+            <span class="mockup-nav-item">Experience</span>
+            <span class="mockup-nav-item active">Work ▾</span>
+            <span class="mockup-nav-item">Research</span>
+            <span class="mockup-nav-item">Teaching</span>
+            <span class="mockup-nav-item">About</span>
+          </div>
+        </div>
+
+        <div class="mock-content">
+          <div class="view-box view-a">view A</div>
+          <div class="arrow-track">→</div>
+          <div class="view-box view-b">view B</div>
+        </div>
+        <!-- <div class="mock-footer">FOOTER — stays put</div> -->
+        <div class="mockup-site-footer">
+          <div class="footer-grid">
+            <div class="footer-back">
+              <a>&larr;</a>
+            </div>
+            <div class="footer-center">
+              <span class="mockup-site-name">Christopher Gibson</span>
+              <span class="mockup-footer-email">
+                <a href="mailto:cdg2131@columbia.edu">cdg2131@columbia.edu</a>
+              </span>
+              <div>
+                <ul class="social-bar" aria-label="Social Bar">
+                  <li>
+                    <a
+                      class="footer-social svg-icon"
+                      href="https://www.linkedin.com/in/christopherdgibson-econ/"
+                      target="_blank"
+                      data-target="linkedin"
+                      aria-label="LinkedIn"
+                    >
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="footer-copyright">©2026 by Christopher Gibson</div>
+            </div>
+            <div class="footer-next">
+              <a>&rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="diagram-caption">
+      only the body content swaps · header, footer, and the URL bar all change
+      independently
+    </div>
+  </div>
+
+  <p>
+    It worked immediately, and it sated my idea of good modular design:
+    separating elements into isolated, reusable components to keep code clean
+    and maintainable.
+  </p>
+
+  <h3 class="article-section-header">
+    <span class="sec-num">02</span>Save history
+  </h3>
+  <!-- <h3 class="article-section-header bug-num">history</h3> -->
+
+  <p>
+    I noticed that with a single page app, the url always stayed the same so
+    that back, forward, and refresh buttons did not work. To handle this I added
+    a saved history, and my views swapping logic told a cohesive story: click a
+    nav link, swap the content, update the URL.
+  </p>
+
+  <pre><code>async function loadView(viewName) {
+  const html = await fetch(`views/${viewName}.html`).then(r => r.text());
+  document.querySelector('#body-placeholder').innerHTML = html; // 01: Loads view
+  history.pushState({ view: viewName }, '', `/${viewName}`); // 02: Saves in history
+}</code></pre>
+
+  <p>
+    While everything seemed fine on the surface, without my knowledge bugs were
+    wriggling around inside the code, looking for their next snack.
+    Inadvertently, I had left them at least four. Thus began the hard part of
+    building my own router, teaching me in the process more about the browser's
+    History API and static hosting than years of using frameworks ever had.
+  </p>
+
+  <h3 class="article-section-header">
+    <span class="bug-num">01</span>Refresh doesn't exist, as far as the server
+    is concerned
+  </h3>
+  <p>
+    The first bug surfaced: refreshing the page or typing a URL directly does
+    not work.
+  </p>
+  <p>
+    This was one of the very functions my router was designed to handle and it
+    did not even pretend to work long enough to give me a false sense of
+    accomplishment. The reason is that in my <code>loadView</code> function, I
+    introduced a <code>history.pushState</code> that changes the address bar
+    without making an actual request. This gave me the mistaken impression that
+    the ULR in the address bar was meaningful, while in reality it pointed to a
+    path that does not exist. My JavaScript maintains this entirely client-side
+    so that the moment you refresh, the browser makes an actual HTTP request for
+    <code>/about</code>, and my static host (GitHub Pages) looks for a file at
+    that path, finds nothing, and 404s. As far as the server is concerned,
+    <code>/about</code> is not a real thing.
+  </p>
+  <p>
+    On a lot of hosts, a framework's router doesn't have to consider this at all
+    because the server is configured with a wildcard fallback to
+    <code>index.html</code> so that unmatched paths are resolved without ever
+    bothering your app. GitHub Pages doesn't give you that lever since it is a
+    static host, serving files as-is with no server-side routing or custom logic
+    per request. The only tool it provides is a custom <code>404.html</code>. So
+    that became the fix: catch the 404, store the intended path in
+    <code>sessionStorage</code>, redirect to the real <code>index.html</code>,
+    and only then allow my router to initiate <code>loadView</code> from the
+    stored path.
+  </p>
+  <p>
+    It is worth being clear that this constraint does not rule out running React
+    or Vue on GitHub Pages. Plenty of people do just this, and there's even a
+    small, well-known community package (<code>spa-github-pages</code>) that
+    packages up this exact 404-redirect approach for that purpose. Frameworks
+    don't remove this problem, but rather provide a pre-written fix for the
+    issue, or the framework's router supports hash-based URLs
+    (<code>/#/about</code>) that sidestep server lookups entirely, since
+    anything after
+    <code>#</code> never leaves the browser. Without a framework, I had to
+    discover the actual process myself, which satisfied my desire to know how
+    everything works and to fully understand the mechanisms underlying my code.
+  </p>
+
+  <h3 class="article-section-header">
+    <span class="bug-num">02</span>The "same" URL isn't always the same kind of
+    history entry
+  </h3>
+  <p>
+    Once refresh was fixed, the browser's forward and back buttons started
+    behaving strangely. They navigated forward and back between views, as
+    designed, but I noticed for specific entries what <em>seemed</em> to be
+    increased latency. Clicking a nav link and then hitting back was as seamless
+    as expected in my single page app, but as soon as I typed a URL directly,
+    navigating back to <em>that</em> page seemed to trigger a full page instead
+    of a smooth client-side transition.
+  </p>
+  <p>
+    As it turns out, the browser tracks <em>how</em> a history entry was
+    created. An entry made by <code>pushState</code> is understood by the
+    browser to be a same-document transition, so that going back to it just
+    fires a <code>popstate</code> event without the need for a network request.
+    An entry created by an actual navigation (typing a URL, or my own
+    404-redirect) is a "hard" entry. Going back to it can trigger a real reload,
+    because that browser state was created by an actual network request.
+  </p>
+  <p>
+    Coming to terms with what the browser was actually tracking, I realised that
+    this is a bug I could not fix. A <code>popstate</code> and a network request
+    are genuinely different, and the forward / back navigation behaviour
+    reflected that.
+  </p>
+  <p>
+    I was facing a very real limitation of a static host. At the time a URL
+    request is made (forward, back, refresh, or manual URL entry), the browser
+    looks for that URL. When the browser cannot find it (since
+    <code>website.com/about</code> does not exist on the web, only on the
+    client-side browsing session), it loses access completely to
+    <code>index.html</code> and all JavaScript code referenced therein. It only
+    has access to the fallback <code>404.html</code> file. Thus the 404 kicks in
+    and the entire page is reloaded.
+  </p>
+  <p>
+    In order to prevent this full reload, I would have had to duplicate my
+    view-loading JavaScript into the 404 page by building
+    <code>404.html</code> as a second real entry point alongside
+    <code>index.html</code>. This would enable both pages to boot from the exact
+    same compiled bundle so that on load, either page could read
+    <code>location.pathname</code> directly and call <code>loadView</code>,
+    skipping the <code>sessionStorage</code> stash-and-redirect relay entirely.
+  </p>
+  <p>
+    Even this workaround wouldn't have made the reload disappear completely, as
+    the 404 activation is unavoidable once the browser fails to find
+    <code>website.com/about</code>. I could have limited this redirect to one
+    HTTP response instead of two, with the correct view rendering immediately
+    inside the 404's response instead of a second full load of
+    <code>index.html</code>. Given the infrequency with which this is expected
+    to happen and that a reload already takes place, I decided that a permanent
+    second entry point in my build config was not justified.
+  </p>
+
+  <h3 class="article-section-header">
+    <span class="bug-num">03</span>State needs everything the render needs, not
+    just the URL
+  </h3>
+  <p>
+    My router stored <code>{ view: viewName }</code> in history state. This
+    worked until the router encountered one of my site's more technically
+    creative elements. My website features a "mini-site" - a live, embedded
+    miniature version of the whole site, rendered inside an overlay. This is
+    possible because the SPA architecture allows loading views inside any
+    container, not just the main body container. But in order to ensure the
+    mini-site behaved like the full site, I had to specify this container
+    specifically. This was particularly important, for example, when I was
+    directing anchor buttons to scroll down to particular points in the page. If
+    I did not specify the mini-container, these anchor buttons would just scroll
+    the main site behind the embedded mini-site.
+  </p>
+  <p>
+    When the forward / back buttons on my router broke this behaviour on the
+    mini-site, this may have been the time to take stock and question whether
+    this mini-site idea was a bit over the top, both figuratively and literally.
+    But I naturally took it as an opportunity to solve another problem, learning
+    more about routers along the way!
+  </p>
+  <p>
+    In my router, the <code>popstate</code> only included the
+    <code>{ view: viewName }</code> so the container selector was never in the
+    state object to begin with. When the browser navigation buttons were used,
+    only the view was returned and the container was lost. Since the forward /
+    back buttons were losing track of the container, the router reverted to the
+    default container: the main body placeholder. This broke mini-site actions
+    that required references to its container, such as scrolling to an anchor,
+    as evidenced by the wildly scrolling main page beneath.
+  </p>
+  <p>
+    Since the history entry was losing track of the container, it became clear
+    that each state needs to carry
+    <em>everything a re-render needs</em>, not just enough to identify the
+    route. <code>{ view, containerSelector }</code> — the full shape of what
+    <code>loadView</code> needs — has to travel with the history entry, or
+    <code>popstate</code> is working with an incomplete picture every time. By
+    completing the picture, my router handed back a fully-functioning mini-site,
+    container included.
+  </p>
+
+  <h3 class="article-section-header">
+    <span class="bug-num">04</span>A heuristic that only works until it doesn't
+  </h3>
+  <p>
+    For testing, I deployed to a second, throwaway repo at subpath
+    <code>/site-preview-repo/</code> instead of root. This meant every hardcoded
+    absolute path in the app needed a base prefix, and because
+    <code>404.html</code> is a plain static file, untouched by any build
+    tooling, it needed its own way to figure out what that prefix was.
+  </p>
+  <p>
+    I considered telling the 404 explicitly by hard-coding the base path, but
+    instead I wrote a heuristic wherein the first segment of the URL path was
+    assumed to be the base subpath. For example, if the full URL is
+    website.com/site-preview-repo/about, then
+    <code>location.pathname</code> resolves to
+    <code>site-preview-repo/about</code>, and the base is parsed as
+    <code>site-preview-repo</code>.
+  </p>
+
+  <p>
+    This technique worked on the test repo. In production, it worked
+    <em>infinitely</em>
+    well. Infinitely in the sense that the page continued refreshing with no end
+    in sight. When I limited the redirect to break when it hit the home page, I
+    realised the issue was that my root-hosted production site had no "first
+    segment" to take here; the first element of the pathname was a view name,
+    not a subpath. The pathname was returning as
+    <code>/home</code> with one segment, and trying to incorporate this into a
+    base location <code>https://website.com/home</code>. Since my otherwise
+    generous host was unable to find this location (it did not exist, to be
+    fair), the fallback redirected to pathname + home and the URL
+    <code>https://website.com/home/home</code> was attempted. My host could
+    sense I was a bit lost, again tried to take me home, but with the same base
+    path <code>https://website.com/home/home</code> could not be found and the
+    loop continues infinitely.
+  </p>
+  <p>
+    Given that the pathname can also be blank (e.g., website.com), other clever
+    parsing methods would have been risky in the sense of risking an infinite
+    redirect that would have rendered the site useless if I omitted some
+    edge-case. Weighing flexibility against the potential for catastrophic
+    failure, in the end I decided to hardcode the base for deployment, the same
+    way the build tool's own config already required.
+  </p>
+
+  <div class="closing">
+    <p>
+      Every one of these bugs maps to something a router library handles
+      invisibly: matching a URL to a fallback, tracking navigation provenance,
+      keeping render-state complete, deployment-path awareness. Engaging
+      directly with these browser API operations without the cloak of
+      invisibility revealed the edge-cases that only show up under specific,
+      easy-to-miss conditions: a refresh, a typed URL, a nested container, a
+      subpath deploy.
+    </p>
+    <p>
+      I don't think everyone should build their own router. But I do think
+      building one once is one of the more efficient ways to actually understand
+      what
+      <code>react-router</code> is doing when it works and, perhaps more
+      usefully, what's happening when it doesn't.
+    </p>
+  </div>
+
+  <div class="byline">
+    Written while debugging the router that navigated to this very page.
+  </div>
+</div>
