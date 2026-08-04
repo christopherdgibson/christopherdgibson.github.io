@@ -56,7 +56,7 @@ export function initHeaderSweep(textSelector: string = "#headerLink span", event
   if (eventEl === null) return;
   eventEl.addEventListener(event, function () {
     const nameChars: NodeListOf<HTMLElement> = document.querySelectorAll(textSelector + ".name-char");
-    const bar: HTMLElement | null = document.querySelector(".menu-icon-item .hamburger-bar");
+    const bar: HTMLElement | null = document.querySelector("#header .menu-icon-item .hamburger-bar");
     const charCount = nameChars.length;
     if (this.checked) {
       // sweep left on open — right to left delay, open animate hamburger
