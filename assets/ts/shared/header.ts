@@ -1,3 +1,54 @@
+import { fetchFragment } from './misc.js';
+import { loadView } from '../router.js';
+import { getContainer } from '../utils.js';
+
+interface MockHeaderProps {
+  containerSelector?: string,
+  textSelector: string,
+  eventSelector: string,
+  activeTab: string,
+  activeClass?: string,
+  callback?: () => void,
+}
+
+export function initHeaderLink() {
+  const headerLink = document.querySelector("#headerLink");
+  if (!headerLink) return;
+  headerLink.addEventListener("click", function (event) {
+    event.preventDefault();
+    loadView({view: "work"});
+  });
+}
+
+export function initMockHeader({containerSelector, textSelector, eventSelector, activeTab, activeClass = 'active', callback}: MockHeaderProps) {
+  const container = getContainer(containerSelector);
+  const headerParent = container !== window ? container as HTMLElement : document;
+  const mockHeader = headerParent.querySelector('.mockup-site-header');
+
+  if (mockHeader === null) return;
+  fetchFragment(`components/mockup-header.html`, (response) => {
+    if (!response.ok) throw new Error('Mockup header not found');
+    return true;
+  })
+  .then((html) => {
+    mockHeader.innerHTML = html;
+  })
+  .then(() => {
+    const mockupNavItems = mockHeader.querySelectorAll('.mockup-nav-item');
+    mockupNavItems.forEach(item => {
+      item.classList.toggle(activeClass, item.innerHTML.includes(activeTab));
+    })
+  })
+  .then(() => {
+    if (callback) {
+      callback();
+    }
+  })
+  .then(() => {
+    initHoverSweep(textSelector, eventSelector)
+  })
+  .catch((err) => console.error(err));
+}
 export function initHeaderSweep(textSelector: string = "#headerLink span", eventSelector: string = "#checkNav", event: any = "change") {
   splitStringIntoSpans(textSelector);
 

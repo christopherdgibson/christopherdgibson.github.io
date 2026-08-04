@@ -27,6 +27,7 @@ export type ViewCallbackProps = {
  "react-native-tzcomp": (() => void)[];
  "wordpress-plugins": (() => void)[];
  "personal-site-page": ((containerSelector?: string) => void)[];
+ "articles/building-a-router": ((containerSelector?: string) => void)[];
 }
 
 export function isViewKey(value: string): value is ViewKey {

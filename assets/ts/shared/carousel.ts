@@ -6,7 +6,7 @@ export function initCarousel(rowSelector?: string, badgeSelector?: string) {
   const dots: NodeListOf<HTMLAnchorElement> = document.querySelectorAll("#carouselWrapper .carousel-dot"); // clean dot elements as well with getCleanElements()?
   const prev = getCleanElement("#carouselPrev");
   const next = getCleanElement("#carouselNext");
-  const navItems = document.querySelectorAll("#carouselNav .mockup-nav-item");
+  const navItems = document.querySelectorAll("#carouselWrapper .mockup-nav-item");
   const total = dots.length;
 
   const badges: NodeListOf<HTMLElement> | null = badgeSelector ? document.querySelectorAll(badgeSelector) : null;

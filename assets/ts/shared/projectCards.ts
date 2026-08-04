@@ -1,4 +1,4 @@
-import { initHoverSweep } from './headerSweep.js';
+import { initMockHeader } from './header.js';
 import { addBtnListener } from './nav.js';
 import { fetchFragment } from './misc.js';
 
@@ -7,7 +7,7 @@ import type { ViewKey } from '../types.js';
 type ProjectEntry = {
   id: string;
   view: ViewKey;
-  callback?: (hoverId: string) => void;
+  callback?: (hoverId: string, containerSelector?: string) => void;
 };
 
 const projects: Array<ProjectEntry> = [
@@ -16,7 +16,7 @@ const projects: Array<ProjectEntry> = [
   {id: 'btnAdminDocRepo', view: 'admin-doc-repo'},
   {id: 'btnTZComp', view: 'react-native-tzcomp'},
   {id: 'btnWordPress', view: 'wordpress-plugins'},
-  {id: 'btnPersonalSite', view: 'personal-site-page', callback: (hoverId: string) => initHoverSweep(`${hoverId} .mockup-site-name span`, hoverId)},
+  {id: 'btnPersonalSite', view: 'personal-site-page', callback: (hoverId: string, containerSelector?: string) => initMockHeader({containerSelector, textSelector:`${hoverId} .mockup-site-name span`, eventSelector: hoverId,  activeTab: "Work"})},
 ];
 
 export function populateProjectCards(page = "Home", containerSelector?: string) {
@@ -37,7 +37,7 @@ export function populateProjectCards(page = "Home", containerSelector?: string) 
       })
       .then(() => {
         if (project.callback) {
-          project.callback(hoverId);
+          project.callback(hoverId, containerSelector);
         }
       })
       .catch((err) => console.error(err));

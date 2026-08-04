@@ -1,5 +1,3 @@
-import { loadView } from '../router.js';
-
 interface ScrollToAnchorProps {
   target: HTMLElement;
   container?: Element | (Window & typeof globalThis);
@@ -69,14 +67,5 @@ export function initScrollToTop(container: HTMLElement | (Window & typeof global
   if (!btn) return;
   btn.addEventListener("click", function () {
     scrollToTop(container);
-  });
-}
-
-export function initHeaderLink() {
-  const headerLink = document.querySelector("#headerLink");
-  if (!headerLink) return;
-  headerLink.addEventListener("click", function (event) {
-    event.preventDefault();
-    loadView({view: "work"}); //todo: do these apply to mini-site?
   });
 }

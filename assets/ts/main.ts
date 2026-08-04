@@ -1,4 +1,5 @@
-import { fetchIndexSvgIcons, initHeaderLink, initScrollToTop } from './shared/misc.js';
+import { initHeaderLink } from './shared/header.js';
+import { fetchIndexSvgIcons, initScrollToTop } from './shared/misc.js';
 import { initRouter } from './router.js';
 
 // Global variables in index.html for single query and reuse

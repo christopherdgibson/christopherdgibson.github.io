@@ -1,4 +1,4 @@
-import { sweepSpanBilateral } from '../shared/headerSweep.js';
+import { sweepSpanBilateral } from '../shared/header.js';
 import { populateProjectCards } from '../shared/projectCards.js';
 
 export default [

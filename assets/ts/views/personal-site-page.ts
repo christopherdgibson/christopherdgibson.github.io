@@ -1,14 +1,20 @@
 import { initCarousel } from '../shared/carousel.js';
-import { initHoverSweep } from '../shared/headerSweep.js';
-import { fetchFragment, fetchIndexSvgIcons, initHeaderLink, initScrollToTop } from '../shared/misc.js';
+import { initHeaderLink, initMockHeader } from '../shared/header.js';
+import { fetchFragment, fetchIndexSvgIcons, initScrollToTop } from '../shared/misc.js';
 import { addBtnListener, initNavMenu } from '../shared/nav.js';
 import { closeOverlays, initCardOverlay } from '../shared/overlays.js';
 import { loadView } from '../router.js';
 import { removeClasses } from '../utils.js';
 
 export default [
-    () => initCarousel(),
-    () => initHoverSweep("#carouselWrapper .mockup-site-name span", "#carouselWrapper"),
+    (containerSelector?: string) => initMockHeader({
+      containerSelector,
+      textSelector: "#carouselWrapper .mockup-site-name span",
+      eventSelector: "#carouselWrapper",
+      activeTab: "Home",
+      activeClass: "activeCarousel",
+      callback: () => initCarousel()
+    }),
     () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),
     () => initMiniSiteOverlay(),

@@ -1,4 +1,4 @@
-import { initHeaderSweep } from './headerSweep.js';
+import { initHeaderSweep } from './header.js';
 import { fetchFragment } from './misc.js';
 import { loadView } from '../router.js';
 
