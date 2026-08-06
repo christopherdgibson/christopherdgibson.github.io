@@ -13,17 +13,17 @@ export default [
       eventSelector: "#carouselWrapper",
       activeTab: "Home",
       activeClass: "activeCarousel",
-      callback: () => initCarousel()
+      callback: (containerSelector?: string) => {
+        initCarousel();
+        addBtnListener({selector: "#btnHomeCarousel", view: "home", containerSelector});
+        addBtnListener({selector: "#btnAboutCarousel", view: "about", containerSelector});
+        addBtnListener({selector: "#btnWorkCarousel", view: "work", containerSelector});
+        addBtnListener({selector: "#btnThoughtshCarousel", view: "articles/building-a-router", containerSelector});
+      }
     }),
     () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),
-    () => initMiniSiteOverlay(),
-    (containerSelector?: string) => addBtnListener({selector: "#btnHomeCarousel", view: "home", containerSelector}),
-    (containerSelector?: string) => addBtnListener({selector: "#btnExperienceCarousel", view: "experience", containerSelector}),
-    (containerSelector?: string) => addBtnListener({selector: "#btnWorkCarousel", view: "work", containerSelector}),
-    (containerSelector?: string) => addBtnListener({selector: "#btnResearchCarousel", view: "research", containerSelector}),
-    (containerSelector?: string) => addBtnListener({selector: "#btnTeachingCarousel", view: "teaching", containerSelector}),
-    (containerSelector?: string) => addBtnListener({selector: "#btnAboutCarousel", view: "about", containerSelector})
+    () => initMiniSiteOverlay()
 ];
 
 function initMiniSiteOverlay() {
