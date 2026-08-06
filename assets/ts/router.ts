@@ -50,10 +50,7 @@ export async function loadView({
       checkNav.checked = false;
       checkNav.dispatchEvent(new Event("change"));
     }
-    const workDropdown: HTMLInputElement | null = document.querySelector("#workDropdown");
-    if (workDropdown) {
-      workDropdown.checked = false;
-    }
+
     if (contentOnly === false && updateHistory){
       const base = import.meta.env.BASE_URL;
       history.pushState({ view: view, containerSelector: containerSelector },

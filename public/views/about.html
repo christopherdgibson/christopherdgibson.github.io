@@ -14,7 +14,11 @@
   <span class="page-tag"
     ><button class="page-tag-btn" data-target="aboutMe">About Me</button>
     ·
-    <button class="page-tag-btn" data-target="contactCta">Contact</button></span
+    <button class="page-tag-btn" data-target="contactCta">Contact</button>
+    ·
+    <button class="page-tag-btn" data-target="learnMore">
+      Learn More
+    </button></span
   >
   <div class="about-container">
     <div id="aboutMe" class="about-description">
@@ -46,15 +50,58 @@
         </a>
       </div>
     </div>
-    <img
-      class="about-picture"
-      src="/images/cg_about.png"
-      alt="Chris about"
-    />
+    <img class="about-picture" src="/images/cg_about.png" alt="Chris about" />
   </div>
 
-  <div class="hero-actions">
-    <a id="btnWorkAbout" href="#" class="btn btn-primary">Jump to Portfolio →</a>
-    <a id="btnExperienceAbout" href="#" class="btn btn-ghost">To Experience →</a>
-  </div>
+  <section class="section">
+    <p class="section-label">Background</p>
+    <h2 class="section-title">Education, Experience, and Employment</h2>
+    <div class="divider"></div>
+
+    <div id="learnMore" class="about-card-container">
+      <div class="about-card">
+        <div class="svg-icon hero-experience" data-target="experience"></div>
+        <div class="about-card-content">
+          <h2 class="about-card-title">Experience</h2>
+          <p class="about-card-text">
+            A background spanning academia, government, international
+            institutions, and the private sector united by rigorous analysis and
+            the tools to apply it.
+          </p>
+          <button id="btnExperienceAbout" class="btn btn-primary">
+            View Experience
+          </button>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="svg-icon hero-research" data-target="data-analysis"></div>
+        <div class="about-card-content">
+          <h2 class="about-card-title">Research</h2>
+          <p class="about-card-text">
+            Theoretical microeconomics research with applications in competition
+            policy, mechanism design, and market structure.
+          </p>
+          <button id="btnResearchAbout" class="btn btn-primary">
+            View Research
+          </button>
+        </div>
+      </div>
+      <div class="about-card">
+        <div
+          class="svg-icon hero-teaching"
+          data-target="classroom-teacher"
+        ></div>
+        <div class="about-card-content">
+          <h2 class="about-card-title">Teaching</h2>
+          <p class="about-card-text">
+            University-level Economics instruction at Columbia and UC San Diego,
+            from introductory principles to graduate microeconomic theory.
+          </p>
+          <button id="btnTeachingAbout" class="btn btn-primary">
+            View Teaching
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

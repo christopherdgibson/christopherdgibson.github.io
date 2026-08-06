@@ -66,11 +66,15 @@ export function initHeaderSweep(textSelector: string = "#headerLink span", event
       // sweep right on close — left to right delay, close animate hamburger
         sweepSpanRight(nameChars);
         bar?.classList.remove("open");
-        // close work dropdown if open; todo: should this logic live elsewhere since it's not directly related to the header sweep?
-        const workDropdown: HTMLInputElement | null = document.querySelector("#workDropdown");
-        if (workDropdown) {
-          workDropdown.checked = false;
-        }
+        // close dropdowns if open; todo: should this logic live elsewhere since it's not directly related to the header sweep?
+        const dropdowns: NodeListOf<HTMLInputElement> | null = document.querySelectorAll(".dropdown-toggle");
+        dropdowns.forEach(dropdown => {
+          if (dropdown) {
+            dropdown.checked = false;
+          }
+        })
+        
+        
     }
   });
 }

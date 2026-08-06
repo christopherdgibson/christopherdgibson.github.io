@@ -2,6 +2,8 @@
   --blue-accent-rgb: 60, 160, 231;
   --teaching-accent-rgb: 123, 184, 232;
   --navy-rgb: 13, 31, 45;
+  --black-rgb: 0, 0, 0;
+  --white-rgb: 255, 255, 255;
   /* --blue-accent: rgb(var(--blue-accent-rgb)); */
   --blue-accent: #3ca0e7;
   --blue-dark: #1a6fab;
@@ -624,6 +626,7 @@ ul li ul li:last-child {
             border-bottom: 2px solid #3ca0e7;
             padding: 20px 0 0 0 !important;
             width: 50%;
+            min-height: 80px;
 
             &:last-child {
               border-bottom: none;
@@ -1377,6 +1380,18 @@ ul li ul li:last-child {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.hero-about {
+  &.hero {
+    text-align: unset;
+  }
+  .section-label {
+    margin-right: auto;
+  }
+  .section-title {
+    color: white;
+  }
 }
 
 .about-description {

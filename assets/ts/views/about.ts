@@ -1,8 +1,9 @@
 import { addBtnListener } from '../shared/nav.js';
 
 export default [
-    (containerSelector?: string) => addBtnListener({selector: "#btnWorkAbout", view: "work", containerSelector}),
     (containerSelector?: string) => addBtnListener({selector: "#btnExperienceAbout", view: "experience", containerSelector}),
+    (containerSelector?: string) => addBtnListener({selector: "#btnResearchAbout", view: "research", containerSelector}),
+    (containerSelector?: string) => addBtnListener({selector: "#btnTeachingAbout", view: "teaching", containerSelector}),
     () => contactPulse()
 ];
 

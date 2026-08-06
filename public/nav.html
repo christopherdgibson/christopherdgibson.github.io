@@ -8,10 +8,34 @@
         </div>
       </label>
     </li>
-    <li><a id="btnHome" href="#">Home</a></li>
-    <li><a id="btnExperience" href="#">Experience</a></li>
+    <li><a href="#" data-target="home">Home</a></li>
     <li class="has-dropdown">
-      <a id="btnWork" href="#" class="desktop-link">Work &dtrif;</a>
+      <a href="#" class="desktop-link" data-target="about">About &dtrif;</a>
+      <input type="checkbox" class="dropdown-toggle" id="aboutDropdown" />
+      <label for="aboutDropdown" class="dropdown-label">About &dtrif;</label>
+      <ul class="dropdown">
+        <li class="dropdown-back">
+          <label for="aboutDropdown" class="back-btn">&larr; Back</label>
+        </li>
+        <li class="dropdown-header-mobile">
+          <a href="#" data-target="about">About</a>
+        </li>
+        <li>
+          <a href="#" data-target="experience">Experience</a>
+          <span class="stack-label">&#9656; Education · Employment</span>
+        </li>
+        <li>
+          <a href="#" data-target="research">Research</a>
+          <span class="stack-label">&#9656; Behavioural Finance · Social Learning</span>
+        </li>
+        <li>
+          <a href="#" data-target="teaching">Teaching</a>
+          <span class="stack-label">&#9656; Columbia · UCSD</span>
+        </li>
+      </ul>
+    </li>
+    <li class="has-dropdown">
+      <a href="#" class="desktop-link" data-target="work">Work &dtrif;</a>
       <input type="checkbox" class="dropdown-toggle" id="workDropdown" />
       <label for="workDropdown" class="dropdown-label">Work &dtrif;</label>
       <ul class="dropdown">
@@ -19,37 +43,36 @@
           <label for="workDropdown" class="back-btn">&larr; Back</label>
         </li>
         <li class="dropdown-header-mobile">
-          <a id="btnWorkMobile" href="#">Work</a>
+          <a href="#" data-target="work">Work</a>
         </li>
         <li>
-          <a id="btnNYCDashboard" href="#">NYC 311 Dashboard</a>
+          <a href="#" data-target="nyc-dashboard">NYC 311 Dashboard</a>
           <span class="stack-label">&#9656; C# · Blazor WebAssembly</span>
         </li>
         <li>
-          <a id="btnReportDownloadHub" href="#">Report Download Hub</a>
+          <a href="#" data-target="report-download-hub">Report Download Hub</a>
           <span class="stack-label">&#9656; Avalonia · Selenium</span>
         </li>
         <li>
-          <a id="btnAdminDocRepo" href="#">Admin Doc Repo</a>
+          <a href="#" data-target="admin-doc-repo">Admin Doc Repo</a>
           <span class="stack-label">&#9656; React · PHP · Typescript</span>
         </li>
         <li>
-          <a id="btnTZComp" href="#">Timezone Comparison</a>
+          <a href="#" data-target="react-native-tzcomp">Timezone Comparison</a>
           <span class="stack-label">&#9656; React Native · Expo · Android</span>
         </li>
         <li>
-          <a id="btnWordPress" href="#">WordPress Plugins</a>
-          <span class="stack-label">&#9656; WordPress · React · Typescript</span>
+          <a href="#" data-target="wordpress-plugins">WordPress Plugins</a>
+          <span class="stack-label"
+            >&#9656; WordPress · React · Typescript</span
+          >
         </li>
         <li>
-          <a id="btnPersonalSite" href="#">Personal Site</a>
+          <a href="#" data-target="personal-site-page">Personal Site</a>
           <span class="stack-label">&#9656; Vanilla JS · CSS · HTML</span>
         </li>
       </ul>
     </li>
-    <li><a id="btnResearch" href="#">Research</a></li>
-    <li><a id="btnTeaching" href="#">Teaching</a></li>
-    <li><a id="btnAbout" href="#">About</a></li>
-    <li><a id="btnThoughts" href="#">Thoughts</a></li>
+    <li><a href="#" data-target="articles/building-a-router">Thoughts</a></li>
   </ul>
 </nav>

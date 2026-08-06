@@ -29,37 +29,21 @@ export function initNavMenu({navSelector, navHtml, bodyElement = document.queryS
   fetchFragment(`${navHtml}.html`)
     .then((data) => {
       navMenu.innerHTML = data;
+      const navItems = navMenu.querySelectorAll('a');
       initHeaderSweep();
-      addNavClick({selector: "#btnHome", view: "home", bodyElement, containerSelector});
-      addNavClick({selector: "#btnExperience", view: "experience", bodyElement, containerSelector});
-      addNavClick({selector: "#btnWork", view: "work", bodyElement, containerSelector});
-      addNavClick({selector: "#btnWorkMobile", view: "work", bodyElement, containerSelector});
-      addNavClick({selector: "#btnResearch", view: "research", bodyElement, containerSelector});
-      addNavClick({selector: "#btnTeaching", view: "teaching", bodyElement, containerSelector});
-      addNavClick({selector: "#btnAbout", view: "about", bodyElement, containerSelector});
-      addNavClick({selector: "#btnThoughts", view: "articles/building-a-router", bodyElement, containerSelector});
-      // Work sub-menu
-      addNavClick({selector: "#btnNYCDashboard", view: "nyc-dashboard", bodyElement, containerSelector});
-      addNavClick({selector: "#btnReportDownloadHub", view: "report-download-hub", bodyElement, containerSelector});
-      addNavClick({selector: "#btnAdminDocRepo", view: "admin-doc-repo", bodyElement, containerSelector});
-      addNavClick({selector: "#btnTZComp", view: "react-native-tzcomp", bodyElement, containerSelector});
-      addNavClick({selector: "#btnWordPress", view: "wordpress-plugins", bodyElement, containerSelector});
-      addNavClick({selector: "#btnPersonalSite", view: "personal-site-page", bodyElement, containerSelector});
+      navItems.forEach(btn => {
+        btn.addEventListener("click", function(event) {
+          event.preventDefault();
+          loadView({view: btn.dataset.target as ViewKey, bodyElement, containerSelector});
+        });
+      });
     })
     .then(() => {
       const header: HTMLElement | null = document.querySelector("#header");
       if (header !== null) {
         header.style.display = null;
       }
-    })
-    ;
-    
-    function addNavClick({selector, view, bodyElement, containerSelector}: NavClickProps) {
-    document.querySelector(selector)?.addEventListener("click", function(event) {
-      event.preventDefault();
-      loadView({view, bodyElement, containerSelector});
     });
-  }
 }
 
 export function ensureNavMenu({navSelector = '#nav-placeholder', navHtml = 'nav', bodyElement, containerSelector}: NavMenuProps) {
