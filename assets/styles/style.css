@@ -1060,6 +1060,9 @@ body:has(.writing-article) {
   &.hero {
     text-align: unset;
   }
+  .section {
+    width: 100%;
+  }
   .section-label {
     margin-right: auto;
   }

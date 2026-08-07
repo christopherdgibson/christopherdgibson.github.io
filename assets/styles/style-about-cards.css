@@ -14,11 +14,13 @@
   padding: 1rem;
   max-width: 1024px;
   margin: 0 auto;
+  align-items: center;
 
   .about-card {
     position: relative;
     display: flex;
     min-width: 250px;
+    max-width: 500px;
     align-items: flex-end;
     overflow: hidden;
     padding: 1rem;
