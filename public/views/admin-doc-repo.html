@@ -13,10 +13,10 @@
   <h1 class="hero-title">Admin Doc Repo</h1>
   <p class="hero-desc">
     A password-protected document repository with per-file expense tracking,
-    delivered as a WordPress Gutenberg block. Upload and manage files through
-    a sortable, filterable table, annotate each document with multiple expense
-    rows, and configure access levels, permissions, and appearance directly
-    from the block editor.
+    delivered as a WordPress Gutenberg block. Upload and manage files through a
+    sortable, filterable table, annotate each document with multiple expense
+    rows, and configure access levels, permissions, and appearance directly from
+    the block editor.
   </p>
   <div class="hero-actions">
     <a
@@ -27,9 +27,9 @@
       >View Demo →</a
     >
     <a
-        href="https://github.com/christopherdgibson/admin-doc-repo"
-        target="_blank"
-        class="btn btn-ghost"
+      href="https://github.com/christopherdgibson/admin-doc-repo"
+      target="_blank"
+      class="btn btn-ghost"
       >GitHub Repository</a
     >
   </div>
@@ -74,7 +74,7 @@
       src="/demos/screenshots/wp-demo-screenshot.png"
       alt="Meetings demo screenshot"
     />
-      <div class="download-modal-divider"></div>
+    <div class="download-modal-divider"></div>
     <div class="download-option-info demo-redirect">
       <div class="download-option-platform">Agenda block</div>
       <a
@@ -90,26 +90,26 @@
 
 <!-- CONTENT -->
 <main class="content">
-
   <!-- Overview -->
   <section class="section">
     <p class="section-label">Overview</p>
     <h2 class="section-title">A document repository built into WordPress</h2>
     <div class="divider"></div>
     <p class="section-body">
-      Admin Doc Repo started as a simple password-protected file upload page
-      and grew into a full document management system with expense tracking,
-      access control, deletion history, and a configurable block editor
-      interface. The plugin is distributed on WordPress.org and installable
-      on any WordPress site without modifying theme files or writing code.
-      The frontend is a React and TypeScript application served via a custom
-      Gutenberg block, communicating with a PHP REST API backend.
+      Admin Doc Repo started as a simple password-protected file upload page and
+      grew into a full document management system with expense tracking, access
+      control, deletion history, and a configurable block editor interface. The
+      plugin is distributed on WordPress.org and installable on any WordPress
+      site without modifying theme files or writing code. The frontend is a
+      React and TypeScript application served via a custom Gutenberg block,
+      communicating with a PHP REST API backend.
     </p>
 
     <div class="pull-quote">
       <p>
-        A full document management system delivered as a single WordPress block —
-        drop it on any page, configure it from the editor sidebar, and it works.
+        A full document management system delivered as a single WordPress block.
+        Drop the plugin on any page, configure it from the editor sidebar, and
+        it works.
       </p>
     </div>
   </section>
@@ -117,19 +117,21 @@
   <!-- How it works -->
   <section class="section">
     <p class="section-label">How it works</p>
-    <h2 class="section-title">Session-based access with server-enforced permissions</h2>
+    <h2 class="section-title">
+      Session-based access with server-enforced permissions
+    </h2>
     <div class="divider"></div>
     <p class="section-body">
       Visitors authenticate via a password form rendered by the React frontend.
       On success, the PHP backend sets a session variable recording the access
-      level — full or restricted. Every subsequent REST API request is gated by
-      a permission callback that reads this server-side session value, making
-      the access level impossible to spoof from the client. WordPress
+      level, either full or restricted. Every subsequent REST API request is
+      gated by a permission callback that reads this server-side session value,
+      making the access level impossible to spoof from the client. WordPress
       administrators bypass the frontend entirely via a separate dashboard file
-      manager. Permissions for each operation — upload, rename, delete, restore,
-      and permanent deletion — are configurable independently from the block
-      editor and stored as WordPress options, enforced server-side regardless of
-      what the frontend renders.
+      manager. Permissions for each operation, including upload, rename, delete,
+      restore, and permanent deletion, are configurable independently from the
+      block editor and stored as WordPress options, enforced server-side
+      regardless of what the frontend renders.
     </p>
   </section>
 
@@ -144,8 +146,8 @@
         <div class="feature-title">File management</div>
         <div class="feature-body">
           Upload, rename, delete, and download files through a sortable,
-          filterable table. Files are stored outside the plugin directory
-          and persist across plugin updates, deactivations, and reinstalls.
+          filterable table. Files are stored outside the plugin directory and
+          persist across plugin updates, deactivations, and reinstalls.
         </div>
       </div>
 
@@ -153,10 +155,11 @@
         <div class="feature-icon">🧾</div>
         <div class="feature-title">Per-file expense tracking</div>
         <div class="feature-body">
-          Each file supports multiple expense rows — category, submitter, date,
-          and amount — for cases where a single document contains multiple
-          receipts. Rows are added, edited, and removed inline with optimistic
-          updates and automatic revert on failure. Optional input to select 
+          Each file supports multiple expense rows for cases where a single
+          document contains multiple receipts. This enables one expense upload
+          to contain multiple selections of expense category, submitter, date,
+          and amount. Rows are added, edited, and removed inline with optimistic
+          updates and automatic revert on failure. Optional input to select
           expenses to include / ignore for reimbursement.
         </div>
       </div>
@@ -166,9 +169,10 @@
         <div class="feature-title">Two-tier access control</div>
         <div class="feature-body">
           Full and restricted access passwords are configured independently.
-          Each operation is individually permission-gated — restricted users
-          can be allowed or blocked from any combination of upload, rename,
-          delete, restore, and permanent deletion, enforced at the API level.
+          Each operation is individually permission-gated. Restricted users can
+          be allowed or blocked from any combination of upload, rename, delete,
+          restore, and permanent deletion, enforced in the frontend and at the
+          API level.
         </div>
       </div>
 
@@ -179,7 +183,8 @@
           Deleted files are moved to a server-side trash directory rather than
           permanently removed. A trash panel shows original filename, deletion
           date, and full expense metadata at time of deletion, with a one-click
-          restore. Orphaned trash entries are automatically pruned after 30 days.
+          restore. Orphaned trash entries are automatically pruned after 30
+          days.
         </div>
       </div>
 
@@ -218,10 +223,10 @@
         <div class="tech-val">
           The plugin began as a PHP shortcode but was migrated to a Gutenberg
           block to resolve JSX runtime compatibility issues with the WordPress
-          bundler and to enable the block editor sidebar for configuration.
-          The block's <code>render.php</code> passes PHP-side configuration
-          to the React frontend via <code>wp_localize_script</code>, keeping
-          server and client data in sync without a separate API call on load.
+          bundler and to enable the block editor sidebar for configuration. The
+          block's <code>render.php</code> passes PHP-side configuration to the
+          React frontend via <code>wp_localize_script</code>, keeping server and
+          client data in sync without a separate API call on load.
         </div>
       </div>
       <div class="tech-row">
@@ -247,23 +252,23 @@
       <div class="tech-row">
         <div class="tech-key">Filename-keyed metadata</div>
         <div class="tech-val">
-          File metadata is stored in a single <code>meta.json</code> file
-          keyed by filename. Rename operations migrate the metadata key
-          atomically alongside the filesystem rename, keeping the two in
-          sync. A migration guard in the read path transparently upgrades
-          the legacy single-object format to the current array-of-rows format
-          without requiring a data migration step.
+          File metadata is stored in a single <code>meta.json</code> file keyed
+          by filename. Rename operations migrate the metadata key atomically
+          alongside the filesystem rename, keeping the two in sync. A migration
+          guard in the read path transparently upgrades the legacy single-object
+          format to the current array-of-rows format without requiring a data
+          migration step.
         </div>
       </div>
       <div class="tech-row">
         <div class="tech-key">Stable row keys via crypto.randomUUID</div>
         <div class="tech-val">
           Expense rows are keyed by a <code>crypto.randomUUID()</code>-generated
-          identifier assigned at creation time rather than by array index.
-          This prevents React from reusing component instances across row
-          removals, which would cause local edit state — including the
-          newly-added row's auto-opened edit mode — to bleed between rows.
-          The key is stripped before sending rows to the server.
+          identifier assigned at creation time rather than by array index. This
+          prevents React from reusing component instances across row removals,
+          which would cause local edit state, such as a newly-added row's
+          auto-opened edit mode, to bleed between rows. The key is stripped
+          before sending rows to the server.
         </div>
       </div>
       <div class="tech-row">
@@ -279,5 +284,4 @@
       </div>
     </div>
   </section>
-
 </main>

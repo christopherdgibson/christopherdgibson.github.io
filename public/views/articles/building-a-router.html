@@ -11,7 +11,7 @@
   <div class="kicker">Field notes / routing</div>
   <h1>What Building a Router From Scratch Taught Me About Why Routers Exist</h1>
   <p class="lede">
-    I built my personal site as a single-page app in vanilla TypeScript — no
+    I built my personal site as a single-page app in vanilla TypeScript. No
     React, no Vue, no router library. This is the story of what I learned, told
     through the bugs I found along the way.
   </p>
@@ -53,7 +53,6 @@
           <div class="arrow-track">→</div>
           <div class="view-box view-b">view B</div>
         </div>
-        <!-- <div class="mock-footer">FOOTER — stays put</div> -->
         <div class="mockup-site-footer">
           <div class="footer-grid">
             <div class="footer-back">
@@ -268,8 +267,8 @@
     Since the history entry was losing track of the container, it became clear
     that each state needs to carry
     <em>everything a re-render needs</em>, not just enough to identify the
-    route. <code>{ view, containerSelector }</code> — the full shape of what
-    <code>loadView</code> needs — has to travel with the history entry, or
+    route. <code>{ view, containerSelector }</code>, the full shape of what
+    <code>loadView</code> needs, has to travel with the history entry, or
     <code>popstate</code> is working with an incomplete picture every time. By
     completing the picture, my router handed back a fully-functioning mini-site,
     container included.

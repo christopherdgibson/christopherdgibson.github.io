@@ -12,7 +12,7 @@
   <p class="hero-eyebrow">Portfolio · TypeScript / Vite / SPA Routing</p>
   <h1 class="hero-title">This Site</h1>
   <p class="hero-desc">
-    A personal portfolio site built from scratch in TypeScript — no UI
+    A personal portfolio site built from scratch in TypeScript with no UI
     framework, no templates, and a hand-built client-side router. Every
     interaction, animation, and navigation decision is custom-coded and compiled
     with Vite.
@@ -59,8 +59,9 @@
             <div class="carousel-accent"></div>
             <h2 class="carousel-card-title">About Me</h2>
             <p class="carousel-card-desc">
-              Economist and software developer with a background spanning
-              academic research, competition consulting, and tax technology.
+              Bringing rigorous analytical thinking to software development to
+              build tools that are not only functional but carefully considered
+              in their architecture and design.
             </p>
           </div>
           <span class="carousel-card-visit">Visit page →</span>
@@ -95,8 +96,8 @@
             <div class="carousel-accent"></div>
             <h2 class="carousel-card-title">Thoughts</h2>
             <p class="carousel-card-desc">
-              A collection of writings on software development
-              and what I have learned in the process.
+              A collection of writings on software development and what I have
+              learned in the process.
             </p>
           </div>
           <span class="carousel-card-visit">Visit page →</span>
@@ -128,18 +129,18 @@
   <section class="section">
     <p class="section-label">Overview</p>
     <h2 class="section-title">
-      Built from scratch — no frameworks, no templates
+      Built from scratch without frameworks or templates
     </h2>
     <div class="divider"></div>
     <p class="section-body">
-      This site is itself a portfolio piece. Every component — the responsive
-      navbar, the animated hamburger sweep, the SPA routing system, the mobile
-      overlays — is custom-coded in TypeScript without any UI framework or
-      library. The one exception is Vite, used purely as a build tool to compile
-      and bundle the TypeScript. The decision to avoid a UI framework was
-      deliberate: the site demonstrates what can be built with the fundamentals
-      alone, minimal overhead keeps the site lean and performant, and the
-      codebase remains fully owned and understood.
+      This site is itself a portfolio piece. Every component, including the
+      responsive navbar, the animated hamburger sweep, the SPA routing system,
+      the mobile overlays, is custom-coded in TypeScript without any UI
+      framework or library. The one exception is Vite, used purely as a build
+      tool to compile and bundle the TypeScript. The decision to avoid a UI
+      framework was deliberate: the site demonstrates what can be built with the
+      fundamentals alone, minimal overhead keeps the site lean and performant,
+      and the codebase remains fully owned and understood.
     </p>
     <div class="pull-quote">
       <p>
@@ -158,7 +159,7 @@
       <div class="feature-card">
         <div class="feature-icon">✦</div>
         <div class="feature-title">
-          <span id="btnHamburgerCard" class="tooltip-wrapper hamburger-link"
+          <span id="btnHamburgerCard" class="tooltip-wrapper inline-link"
             ><span class="tooltip"
               ><span class="tooltip-inner"
                 ><a id="hamburgerLink" href="#"
@@ -172,8 +173,9 @@
         <div class="feature-body">
           On mobile, opening the nav wipes a light overlay across the header
           name. Each letter transitions to the accent blue with a staggered
-          delay — right to left on open, left to right on close — achieved with
-          per-character span injection and CSS transitions.
+          delay, sweeping right to left on open, and left to right on close.
+          This is achieved with per-character span injection and CSS
+          transitions.
         </div>
       </div>
 
@@ -182,9 +184,11 @@
         <div class="feature-title">SPA view loading</div>
         <div class="feature-body">
           Views load as HTML fragments swapped into a placeholder, with a
-          callback system that runs page-specific initialisation after each swap
-          and waits for images to load before scrolling — no flash of unstyled
-          or half-loaded content.
+          callback system that runs page-specific initialisation after each
+          swap. Css transitions on heavier elements to smooth loading and
+          prevent flash of unstyled content. Element and image loads awaited
+          before scroll to top to prevent half-loaded content and ensure
+          accurate sizing.
         </div>
       </div>
       <div class="feature-card">
@@ -247,8 +251,8 @@
         <div class="feature-body">
           When navigating from a sub-menu item in mobile, the main menu slides
           right and the sub-menu slides left simultaneously, returning to home
-          position, as the new page loads — a curtain-opening effect that
-          registers subconsciously without demanding attention.
+          position, as the new page loads. This provides a curtain-opening
+          effect that registers subconsciously without demanding attention.
         </div>
       </div>
     </div>
@@ -315,7 +319,7 @@
         <div class="tech-key">No framework</div>
         <div class="tech-val">
           Demonstrates command of fundamentals. Every behaviour is written from
-          first principles — nothing is delegated to a library whose internals
+          first principles with nothing delegated to a library whose internals
           are opaque.
         </div>
       </div>
@@ -330,16 +334,25 @@
       <div class="tech-row">
         <div class="tech-key">Client-side routing</div>
         <div class="tech-val">
-          Built on the History API directly — pushState/popState,
-          container-scoped rendering (used by the embedded mini-site), and a
-          404-redirect fallback for direct URL entry and refresh on a static
-          host with no server-side routing.
+          <span id="btnBuildingARouter" class="tooltip-wrapper inline-link"
+            ><span class="tooltip"
+              ><span class="tooltip-inner"
+                ><a href="#"
+                  >Click to learn more about the process of building a router!
+                  →</a
+                ></span
+              ></span
+            >Built on the History API directly</span
+          >
+          with pushState/popState, container-scoped rendering (used by the
+          embedded mini-site), and a 404-redirect fallback for direct URL entry
+          and refresh on a static host with no server-side routing.
         </div>
       </div>
       <div class="tech-row">
         <div class="tech-key">TypeScript + Vite</div>
         <div class="tech-val">
-          Written in TypeScript for compile-time safety — catches invalid view
+          Written in TypeScript for compile-time safety. Catches invalid view
           names and unsafe DOM access before they reach the browser. Vite
           compiles and bundles the build; GitHub Actions runs the build and
           deploys automatically on push.
@@ -356,7 +369,7 @@
         <div class="tech-key">Base callbacks</div>
         <div class="tech-val">
           A shared initialisation system runs on every page load. Each function
-          checks for its target elements before running — pages that don't need
+          checks for its target elements before running. Pages that don't need
           a feature pay only a null check.
         </div>
       </div>
@@ -372,7 +385,7 @@
         <div class="tech-key">Declarative navigation</div>
         <div class="tech-val">
           Footer back/next buttons are configured via hidden data-attributes on
-          each page and read dynamically on load — each page owns its navigation
+          each page and read dynamically on load. Each page owns its navigation
           content while events handlers are assigned centrally.
         </div>
       </div>

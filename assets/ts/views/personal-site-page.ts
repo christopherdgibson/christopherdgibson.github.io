@@ -21,6 +21,7 @@ export default [
         addBtnListener({selector: "#btnThoughtshCarousel", view: "articles/building-a-router", containerSelector});
       }
     }),
+    (containerSelector?: string) => addBtnListener({selector: "#btnBuildingARouter", view: "articles/building-a-router", containerSelector}),
     () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),
     () => initMiniSiteOverlay()

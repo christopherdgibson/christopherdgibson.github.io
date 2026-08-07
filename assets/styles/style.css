@@ -2086,6 +2086,15 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   background-image: var(--background-image-radial-blue);
 }
 
+
+.inline-link {
+  cursor: pointer;
+  color: var(--blue-accent);
+  &:hover {
+    text-shadow: 0 0 20px var(--teaching-accent-color);
+  }
+}
+
 .btn {
   display: inline-block;
   padding: 11px 20px;
