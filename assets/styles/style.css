@@ -725,10 +725,6 @@ body:has(.writing-article) {
       text-decoration: none;
       background-color: var(--navy);
       cursor: pointer;
-
-      .card-wrapper {
-        height: 100%;
-      }
     }
 
     .hero-screenshot-card {
@@ -2190,9 +2186,10 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
 
 .card-wrapper {
   display: flex;
+  height: 100%;
+  cursor: pointer;
   /* flex-direction: column; */
-    cursor: pointer;
-    /* display: contents; */
+  /* display: contents; */
 }
 
 .card-wrapper:hover .project-card {
