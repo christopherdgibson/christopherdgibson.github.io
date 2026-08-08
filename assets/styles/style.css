@@ -445,12 +445,9 @@ body:has(.writing-article) {
     margin-bottom: 0;
   }
 
-  .badge {
-    color: var(--teaching-accent-color);
-    &.activeCarousel {
-      color: white;
-      background: rgba(var(--blue-accent-rgb), 0.5);
-    }
+  .badge.activeCarousel {
+    color: white;
+    background: rgba(var(--blue-accent-rgb), 0.5);
   }
 
   .badge-pulse-once.badge {
@@ -2160,9 +2157,8 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   padding: 4px 12px;
   border-radius: 100px;
   background: rgba(var(--blue-accent-rgb), 0.12);
-  color: rgba(var(--blue-accent-rgb), 0.75);
+  color: var(--teaching-accent-color);
   border: 1px solid rgba(var(--blue-accent-rgb), 0.45);
-
 }
 
 /* Different colouring for badges on grey background */
