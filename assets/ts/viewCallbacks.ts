@@ -1,6 +1,7 @@
 import home from './views/home.js';
-import work from './views/work.js';
 import about from './views/about.js';
+import work from './views/work.js';
+import articles from './views/articles.js';
 // Work sub-menu
 import NYCDashboard from './views/nyc-dashboard.js';
 import reportDownloadHub from './views/report-download-hub.js';
@@ -15,8 +16,9 @@ import type { ViewCallbackProps } from './types.js';
 
 export const viewCallbacks: ViewCallbackProps = {
     home,
-    work,
     about,
+    work,
+    articles,
     "nyc-dashboard": NYCDashboard,
     "report-download-hub": reportDownloadHub,
     "admin-doc-repo": adminDocRepo,

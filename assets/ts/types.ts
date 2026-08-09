@@ -1,7 +1,7 @@
 import { viewCallbacks } from './viewCallbacks.js';
 
 export const VIEW_KEYS = [
-  'home', 'experience', 'work', 'research', 'teaching', 'about', 'articles/building-a-router',
+  'home', 'about', 'experience', 'research', 'teaching', 'work', 'articles', 'articles/building-a-router',
   "nyc-dashboard", "report-download-hub", "admin-doc-repo" , "react-native-tzcomp", "wordpress-plugins", "personal-site-page"
 ] as const;
 
@@ -19,8 +19,9 @@ export type ViewCallbackKey = keyof typeof viewCallbacks;
 
 export type ViewCallbackProps = {
  home: ((containerSelector?: string) => void)[];
- work: ((containerSelector?: string) => void)[];
  about: ((containerSelector?: string) => void)[];
+ work: ((containerSelector?: string) => void)[];
+ articles: ((containerSelector?: string) => void)[];
  "nyc-dashboard": ((containerSelector?: string) => void)[];
  "report-download-hub": (() => void)[];
  "admin-doc-repo": (() => void)[];

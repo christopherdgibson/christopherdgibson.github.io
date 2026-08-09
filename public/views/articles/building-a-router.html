@@ -1,21 +1,27 @@
 <div
   class="view-nav"
   hidden
-  data-back-text="Work"
-  data-back-view="work"
+  data-back-text="Thoughts"
+  data-back-view="articles"
   data-next-text="Home"
   data-next-view="home"
 ></div>
 
 <div class="writing-article">
-  <div class="kicker">Field notes / routing</div>
-  <h1>What Building a Router From Scratch Taught Me About Why Routers Exist</h1>
+  <div class="kicker">
+    <div class="svg-icon article-icon" data-target="notebook-pen"></div>
+
+    <div class="article-topic">Field notes / routing</div>
+  </div>
+  <h1 class="writing-article-title">What Building a Router From Scratch Taught Me About Why Routers Exist</h1>
   <p class="lede">
     I built my personal site as a single-page app in vanilla TypeScript. No
     React, no Vue, no router library. This is the story of what I learned, told
     through the bugs I found along the way.
   </p>
 
+  <div class="article-date">3 August 2026</div>
+  
   <p>
     If you've only ever used <code>react-router</code> or
     <code>vue-router</code>, this is what they're quietly doing for you.
@@ -28,12 +34,9 @@
     managing browser interaction by responding to forward / back / refresh
     clicks, as well as enabling url navigation.
   </p>
-  <!-- <h3 class="article-section-header"><span class="bug-num">01</span>LoadView</h3> -->
   <h3 class="article-section-header">
     <span class="sec-num">01</span>Swap the content
   </h3>
-
-  <!-- <h3 class="article-section-header bug-num">loadView</h3> -->
 
   <p>
     The site loads views by fetching HTML fragments and swapping them into a
@@ -48,7 +51,7 @@
       <div class="browser-body">
         <div class="mockup-site-header"></div>
 
-        <div class="mock-content">
+        <div class="mockup-loadview-content">
           <div class="view-box view-a">view A</div>
           <div class="arrow-track">→</div>
           <div class="view-box view-b">view B</div>
@@ -101,7 +104,6 @@
   <h3 class="article-section-header">
     <span class="sec-num">02</span>Save history
   </h3>
-  <!-- <h3 class="article-section-header bug-num">history</h3> -->
 
   <p>
     I noticed that with a single page app, the url always stayed the same so
