@@ -39,9 +39,13 @@ export function initNavMenu({navSelector, navHtml, bodyElement = document.queryS
       });
     })
     .then(() => {
+      const body: HTMLElement | null = document.querySelector("body");
       const header: HTMLElement | null = document.querySelector("#header");
       if (header !== null) {
-        header.style.display = null;
+        header.removeAttribute('style');
+      }
+      if (body !== null) {
+        body.removeAttribute('style');
       }
     });
 }
