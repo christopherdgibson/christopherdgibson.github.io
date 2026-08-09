@@ -1,4 +1,9 @@
 nav {
+  --navbar-transition-time: 0.3s;
+  --navbar-curtain-delay: 0.2s;
+  --navbar-transition: var(--navbar-transition-time) ease;
+  --navbar-accent-color: #3ca0e7;
+  --navbar-border: 2px solid var(--navbar-accent-color);
   &.navigation-menu {
     margin: 0 auto;
     display: block;
@@ -12,12 +17,14 @@ nav {
     .dropdown-toggle {
       display: none;
     }
+    .nav-menu-top > li:not(:nth-child(2)) {
+      border-left: var(--navbar-border);
+    }
     ul {
       padding: 0;
       > li {
         list-style: none;
         margin: 0 auto;
-        border-left: 2px solid #3ca0e7;
         display: inline-block;
         padding: 0 10px;
         position: relative;
@@ -25,44 +32,43 @@ nav {
         text-align: center;
       }
     }
-    /* Apply right-border only to last direct child */
-    > ul {
-      > li:last-child {
-        border-right: 2px solid #3ca0e7;
-      }
-    }
     li a {
       color: white;
+      transition: all var(--navbar-transition);
     }
-    li a:hover {
-      color: #3ca0e7;
-    }
+
     li:hover {
       cursor: pointer;
     }
 
     /* Desktop dropdown - hide by default */
     ul li ul {
-      visibility: hidden;
       opacity: 0;
       position: absolute;
       padding-left: 0;
       left: 0;
-      display: none;
+      display: block;
+      min-width: 250px;
+      text-align: left;
+      padding-top: 20px;
+      pointer-events: none;
+
       background: var(--background-radial-blue);
+      transition: all var(--navbar-transition);
       li.dropdown-back {
         display: none;
       }
     }
 
     /* Desktop dropdown - show on hover */
+    ul li:hover > a {
+      color: var(--navbar-accent-color);
+    }
+
     ul li:hover > ul,
     ul li ul:hover {
-      visibility: visible;
       opacity: 1;
-      display: block;
-      min-width: 250px;
-      text-align: left;
+      pointer-events: all;
       padding-top: 20px;
       box-shadow: 0px 3px 5px -1px #ccc;
       cursor: default;
@@ -73,27 +79,32 @@ nav {
       width: 100%;
       text-align: left;
       /* margin-bottom: 20px; */
-      border-style: none;
+      /* border-style: none; */
+      a {
+        border-left: 2px solid transparent;
+      }
     }
-    ul li ul li a:hover {
+    ul li ul li:hover:not(.dropdown-header-mobile) a {
       padding-left: 10px;
-      border-left: 2px solid #3ca0e7;
-      transition: all 0.3s ease;
+      border-left: var(--navbar-border);
+      transition: all var(--navbar-transition);
+      color: var(--navbar-accent-color);
     }
 
     /* Hide dropdown label on desktop */
-    .dropdown-label, .dropdown-header-mobile {
+    .dropdown-label,
+    .dropdown-header-mobile {
       display: none;
     }
   }
   a {
     text-decoration: none;
     &:hover {
-      color: #3ca0e7;
+      color: var(--navbar-accent-color);
     }
   }
   ul li ul li a {
-    transition: all 0.5s ease;
+    transition: all var(--navbar-transition);
   }
 }
 
@@ -108,8 +119,6 @@ nav {
   }
 }
 
-
-
 nav ul li.menu-icon-item {
   display: none;
 }
@@ -123,7 +132,7 @@ nav ul li.menu-icon-item {
   font-size: 0.75rem;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: all var(--navbar-transition);
 }
 
 ul li ul li:hover .stack-label {
@@ -146,8 +155,17 @@ ul li ul li:last-child {
   }
 
   .mini-site.expanded-mini-site .navigation-menu ul {
-    top: calc(var(--header-height-mobile) + var(--header-nav-offset) + var(--mini-site-top));
-    height: calc(100dvh - (var(--header-height-mobile) + var(--header-nav-offset) + var(--mini-site-top) + var(--mini-site-bottom)));
+    top: calc(
+      var(--header-height-mobile) + var(--header-nav-offset) +
+        var(--mini-site-top)
+    );
+    height: calc(
+      100dvh -
+        (
+          var(--header-height-mobile) + var(--header-nav-offset) +
+            var(--mini-site-top) + var(--mini-site-bottom)
+        )
+    );
   }
 
   .navigation-menu {
@@ -165,7 +183,7 @@ ul li ul li:last-child {
       font-size: 20px;
       width: 100%;
       &:hover {
-        color: #3ca0e7;
+        color: var(--navbar-accent-color);
       }
     }
 
@@ -174,13 +192,15 @@ ul li ul li:last-child {
       top: calc(var(--header-height-mobile) + var(--header-nav-offset));
       right: -100%;
       width: 100%;
-      height: calc(100dvh - (var(--header-height-mobile) + var(--header-nav-offset)));
+      height: calc(
+        100dvh - (var(--header-height-mobile) + var(--header-nav-offset))
+      );
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       background: var(--background-radial-blue);
-      transition: all 0.3s ease;
+      transition: all var(--navbar-transition);
 
       li.menu-icon-item {
         position: absolute;
@@ -195,7 +215,7 @@ ul li ul li:last-child {
         align-items: center;
 
         background: transparent;
-        transition: background 0.3s ease;
+        transition: background var(--navbar-transition);
       }
 
       > li {
@@ -204,7 +224,7 @@ ul li ul li:last-child {
         margin: 0;
         width: 20%;
         padding: 20px 0 !important; /* Needed for same shape while hidden */
-        border-bottom: 2px solid #3ca0e7;
+        border-bottom: var(--navbar-border);
         background-color: transparent;
 
         &:last-child {
@@ -222,6 +242,7 @@ ul li ul li:last-child {
           .dropdown-label {
             display: block;
             font-size: 20px;
+            text-wrap: nowrap;
           }
         }
       }
@@ -240,13 +261,13 @@ ul li ul li:last-child {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          transition: all 0.3s ease;
+          transition: all calc(var(--navbar-transition-time) + var(--navbar-curtain-delay)); /* slower close time */
           padding: 0;
           box-shadow: none;
           z-index: var(--z-navbar-submenu);
 
           li {
-            border-bottom: 2px solid #3ca0e7;
+            border-bottom: var(--navbar-border);
             padding: 20px 0 0 0 !important;
             width: 50%;
             min-height: 80px;
@@ -256,11 +277,7 @@ ul li ul li:last-child {
             }
 
             a {
-              font-size: 20px;
-              &:hover {
-                padding-left: 10px;
-                border-left: 2px solid #3ca0e7;
-              }
+              transition: all var(--navbar-transition);
             }
           }
 
@@ -277,9 +294,10 @@ ul li ul li:last-child {
               font-size: 18px;
               cursor: pointer;
               display: block;
+              transition: all var(--navbar-transition);
 
               &:hover {
-                color: #3ca0e7;
+                color: var(--navbar-accent-color);
                 padding-left: 0;
                 border-left: none;
               }
@@ -293,6 +311,7 @@ ul li ul li:last-child {
         left: 0;
         visibility: visible;
         opacity: 1;
+        transition: all var(--navbar-transition-time);
       }
     }
   }
@@ -310,26 +329,26 @@ ul li ul li:last-child {
       }
     }
 
-      li.dropdown-header-mobile {
-        display: block;
-        text-align: center;
-        font-family: "DM Serif Display", serif;
-        border-bottom: none !important;
-        padding: 10px 0 !important;
-        a {
-          font-size: 2rem;
-          font-weight: 500;
-        }
+    li.dropdown-header-mobile {
+      display: block;
+      text-align: center;
+      font-family: "DM Serif Display", serif;
+      border-bottom: none !important;
+      padding: 10px 0 !important;
+      a {
+        font-size: 2rem;
+        font-weight: 500;
+        width: min-content;
+        margin: auto;
+        border-bottom: var(--navbar-border);
       }
+    }
 
     li {
       border-left: none;
       border-right: none;
       padding: 20px 0;
-
-      /* &:first-child {
-        padding: 0;
-      } */
+      transition: all var(--navbar-transition);
 
       &.has-dropdown {
         .dropdown-label {
@@ -337,12 +356,19 @@ ul li ul li:last-child {
         }
       }
 
-      a {
-        &:hover {
+      a, label {
+        border-left: 0px solid transparent;
+        transition: all var(--navbar-transition);
+      }
+      &:hover:not(.dropdown-header-mobile):not(.dropdown-back) {
+        > a,
+        > label {
           padding-left: 10px;
-          border-left: 2px solid #3ca0e7;
-          transition: all 0.3s ease;
+          border-left: var(--navbar-border);
         }
+      }
+      &:hover.dropdown-header-mobile a {
+        animation: notification-bump 0.45s ease-out;
       }
     }
   }
