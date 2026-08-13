@@ -42,7 +42,11 @@ export async function loadView({
     let title = document.querySelector("#title-placeholder");
     bodyElement.innerHTML = html;
     if (title !== null) {
-      title.innerHTML = toPageTitleCase(view);
+      if (view === "home") {
+        title.innerHTML = "Christopher Gibson - Home"
+      } else {
+        title.innerHTML = toPageTitleCase(view);
+      }
     }
     
     const checkNav: HTMLInputElement | null = document.querySelector("#checkNav");
