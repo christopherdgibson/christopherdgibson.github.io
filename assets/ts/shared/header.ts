@@ -4,8 +4,9 @@ import { getContainer } from '../utils.js';
 
 interface MockHeaderProps {
   containerSelector?: string,
-  textSelector: string,
-  eventSelector: string,
+  mockHeaderSelector?: string;
+  sweepTextSelector?: string,
+  sweepEventSelector?: string,
   activeTab: string,
   activeClass?: string,
   callback?: () => void,
@@ -20,10 +21,10 @@ export function initHeaderLink() {
   });
 }
 
-export function initMockHeader({containerSelector, textSelector, eventSelector, activeTab, activeClass = 'active', callback}: MockHeaderProps) {
+export function initMockHeader({containerSelector, mockHeaderSelector = '.mockup-site-header', sweepTextSelector, sweepEventSelector, activeTab, activeClass = 'active', callback}: MockHeaderProps) {
   const container = getContainer(containerSelector);
   const headerParent = container !== window ? container as HTMLElement : document;
-  const mockHeader = headerParent.querySelector('.mockup-site-header');
+  const mockHeader = headerParent.querySelector(mockHeaderSelector);
 
   if (mockHeader === null) return;
   fetchFragment(`components/mockup-header.html`, (response) => {
@@ -45,7 +46,9 @@ export function initMockHeader({containerSelector, textSelector, eventSelector, 
     }
   })
   .then(() => {
-    initHoverSweep(textSelector, eventSelector)
+    if (sweepTextSelector && sweepEventSelector) {
+      initHoverSweep(sweepTextSelector, sweepEventSelector);
+    }
   })
   .catch((err) => console.error(err));
 }

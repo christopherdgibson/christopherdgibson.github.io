@@ -4,7 +4,7 @@ import { initMockHeader } from '../shared/header.js';
 import type { ViewKey } from '../types.js';
 
 export default [
-    (containerSelector?: string) => initMockHeader({containerSelector, textSelector: ".diagram-block .mockup-site-name span", eventSelector: ".diagram-block", activeTab: "Thoughts"}),
+    (containerSelector?: string) => initMockHeader({containerSelector, sweepTextSelector: ".diagram-block .mockup-site-name span", sweepEventSelector: ".diagram-block", activeTab: "Thoughts"}),
     (containerSelector?: string) => initArticleLinks(containerSelector)
 ];
 

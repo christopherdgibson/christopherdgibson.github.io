@@ -1,6 +1,7 @@
 @import url('./style-nav.css');
 @import url('./style-about-cards.css');
 @import url('./styles-hamburger.css');
+@import url('./styles-curtain-demo.css');
 @import url('./style-writing.css');
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap');
@@ -37,6 +38,13 @@
   --rule:                   #DEDBD4;
   --amber:                  #C98A3A;
   --code-bg:                #EFEDE7;
+
+  /* Navbar */
+  --navbar-transition-time: 0.3s;
+  --navbar-curtain-delay: 0.2s;
+  --navbar-transition: var(--navbar-transition-time) ease;
+  --navbar-accent-color: #3ca0e7;
+  --navbar-border: 2px solid var(--navbar-accent-color);
 
   --header-height-mobile: 70px;
   --header-nav-offset: 5px;
@@ -3104,6 +3112,11 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   pointer-events: none;
   transition: opacity 0.2s ease;
   white-space: nowrap;
+}
+
+.tooltip-centered {
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .tooltip-inner {

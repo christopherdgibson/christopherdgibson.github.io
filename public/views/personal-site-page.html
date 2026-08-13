@@ -251,7 +251,18 @@
         <div class="feature-body">
           When navigating from a sub-menu item in mobile, the main menu slides
           right and the sub-menu slides left simultaneously, returning to home
-          position, as the new page loads. This provides a curtain-opening
+          position, as the new page loads. This provides a
+          <span id="btnCurtainPreviewCard" class="tooltip-wrapper inline-link"
+            ><span class="tooltip tooltip-centered"
+              ><div class="tooltip-inner"
+                >
+                <a href="#">
+                  Click for an exaggerated<br>curtain-opening demo! →
+                  </a>
+                </div
+              ></span
+            >curtain-opening</span
+          >
           effect that registers subconsciously without demanding attention.
         </div>
       </div>
@@ -289,6 +300,20 @@
         here.
       </div>
     </div>
+  </div>
+
+  <div class="curtain-preview-overlay">
+    <div class="curtain-demo-menu menu-base"></div>
+    <div class="curtain-demo-menu menu-top">
+      <div class="mockup-site-nav">
+        <span class="mockup-nav-item">About</span>
+        <span class="mockup-nav-item">Experience</span>
+        <span class="mockup-nav-item">Research</span>
+        <span class="mockup-nav-item">Teaching</span>
+      </div>
+    </div>
+    <div class="flash" id="flash"></div>
+    <div class="rays" id="rays"></div>
   </div>
 
   <div id="miniSiteLimitCard" class="modal-card">
@@ -369,8 +394,8 @@
         <div class="tech-key">Base callbacks</div>
         <div class="tech-val">
           A shared initialisation system runs on every page load. Each function
-          checks for its target elements before running. Pages that don't need
-          a feature pay only a null check.
+          checks for its target elements before running. Pages that don't need a
+          feature pay only a null check.
         </div>
       </div>
       <div class="tech-row">

@@ -16,7 +16,7 @@ const projects: Array<ProjectEntry> = [
   {id: 'btnAdminDocRepo', view: 'admin-doc-repo'},
   {id: 'btnTZComp', view: 'react-native-tzcomp'},
   {id: 'btnWordPress', view: 'wordpress-plugins'},
-  {id: 'btnPersonalSite', view: 'personal-site-page', callback: (hoverId: string, activeTab, containerSelector?: string) => initMockHeader({containerSelector, textSelector:`${hoverId} .mockup-site-name span`, eventSelector: hoverId, activeTab})},
+  {id: 'btnPersonalSite', view: 'personal-site-page', callback: (hoverId: string, activeTab, containerSelector?: string) => initMockHeader({containerSelector, sweepTextSelector:`${hoverId} .mockup-site-name span`, sweepEventSelector: hoverId, activeTab})},
 ];
 
 export function populateProjectCards(page = "Home", containerSelector?: string) {
