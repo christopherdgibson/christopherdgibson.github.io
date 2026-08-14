@@ -1612,6 +1612,7 @@ footer {
     flex: 0 0 auto;
     width: calc((100% - 200px) / 2);
     max-width: 200px;
+    line-height: 1;
     a {
       text-decoration: none;
     }
@@ -1718,6 +1719,33 @@ footer {
   .footer-copyright {
     line-height: 1.79em;
     font-size: 14px;
+  }
+}
+
+@media (max-width: 500px) {
+  footer {
+    height:auto;
+  }
+  .footer-grid {
+    .footer-name {
+      font-size: 18px;
+    }
+    .footer-email a {
+      font-size: 14px;
+    }
+    .footer-social {
+      height: 20px;
+      width: auto;
+      scale: 0.6
+    }
+    .footer-copyright {
+      font-size: 12px;
+    }
+    .footer-back, .footer-next {
+      a {
+        font-size: 12px;
+      }
+    }
   }
 }
 
