@@ -67,37 +67,46 @@ export function initSvgIcons(iconSelector: string = ".svg-icon") {
 function initFooterButtons(containerSelector?: string) {
   const bodyElement: HTMLElement | null = document.querySelector("#body-placeholder");
   const viewNav: HTMLElement | null = document.querySelector(".view-nav");
-  let back: HTMLElement | null = getCleanElement('#footer-back-btn');
-  let next: HTMLElement | null = getCleanElement('#footer-next-btn');
+  let backLink: HTMLElement | null = getCleanElement('#footer-back-btn');
+  let nextLink: HTMLElement | null = getCleanElement('#footer-next-btn');
 
   if (!viewNav) {
-    if (back) back.innerHTML = "";
-    if (next) next.innerHTML = "";
+    backLink?.setAttribute('style', 'display: none');
+    nextLink?.setAttribute('style', 'display: none');
     return;
   }
 
-  if (back && viewNav.dataset.backText) {
-    back.innerHTML = `&larr; <span class="footer-back-desktop-text">Back to </span> ${viewNav.dataset.backText}`;
-    back.addEventListener("click", function (event) {
+  if (backLink && viewNav.dataset.backText) {
+    backLink.removeAttribute('class');
+    const backTextEl = backLink.querySelector('.footer-text');
+    backTextEl.innerHTML = viewNav.dataset.backText;
+    backLink.classList.toggle('hide-desktop-text', viewNav.dataset.backView === 'home')
+    backLink.setAttribute('href', viewNav.dataset.backView);
+    backLink.addEventListener("click", function (event) {
       event.preventDefault();
       loadView({view: viewNav.dataset.backView as ViewKey, bodyElement, containerSelector});
     });
-  } else if (back) {
-    back.innerHTML = "";
+  } else if (backLink) {
+    backLink.classList.toggle('hide-footer-link', true);
   }
 
-  if (next && viewNav.dataset.nextText) {
+  if (nextLink && viewNav.dataset.nextText) {
+      nextLink.removeAttribute('class');
+    const nextTextEl = nextLink.querySelector('.footer-text');
+    nextTextEl.innerHTML = viewNav.dataset.nextText;
     if (viewNav.dataset.nextLink) {
-      next.innerHTML = `<a href='${viewNav.dataset.nextLink}' target='_blank'> ${viewNav.dataset.nextText} &rarr; </a>`;
+      nextLink.setAttribute('href', viewNav.dataset.nextLink);
+      nextLink.classList.toggle('hide-desktop-text', true);
     } else if (viewNav.dataset.nextView) {
-      next.innerHTML = `<span class="footer-next-desktop-text">To </span>${viewNav.dataset.nextText} &rarr;`;
-      next.addEventListener("click", function (event) {
+      nextLink.classList.toggle('hide-desktop-text', viewNav.dataset.nextView === 'home');
+      nextLink.setAttribute('href', viewNav.dataset.nextView);
+      nextLink.addEventListener("click", function (event) {
         event.preventDefault();
         loadView({view: viewNav.dataset.nextView as ViewKey, bodyElement, containerSelector});
       });
     }
-  } else if (next) {
-    next.innerHTML = "";
+  } else if (nextLink) {
+    nextLink.classList.toggle('hide-footer-link', true);
   }
 }
 

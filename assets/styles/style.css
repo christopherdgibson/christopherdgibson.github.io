@@ -235,12 +235,6 @@ body:has(.hero-about):not(:has(.mini-site)) {
   }
 }
 
-body:has(.writing-article) {
-  .footer-next-desktop-text {
-    display: none;
-  }
-}
-
 /* Style the header */
 .header {
   position: sticky;
@@ -368,9 +362,6 @@ body:has(.writing-article) {
   font-family: "Avenir", Arial, Helvetica, sans-serif;
 }
 
-
-
-
 .name-char {
   display: inline-block;
   transition:
@@ -382,8 +373,6 @@ body:has(.writing-article) {
   color: var(--blue-accent);
   transform: translateY(-2px); /* subtle lift */
 }
-
-
 
 @media (max-width: 768px) {
   .header {
@@ -1182,7 +1171,6 @@ body:has(.writing-article) {
   border-radius: 2px;
 }
 
-/* pull quote */
 .pull-quote {
   border-left: 3px solid var(--blue-accent);
   padding: 20px 28px;
@@ -1444,7 +1432,7 @@ body:has(.writing-article) {
 }
 
 @media (max-width: 768px) {
-  .footer-back-desktop-text, .footer-next-desktop-text {
+  .footer-desktop-text {
     display: none;
   }
 
@@ -1627,21 +1615,41 @@ footer {
     a {
       text-decoration: none;
     }
+
+    a.hide-footer-link {
+      display: none;
+    }
   }
 
   .footer-back {
-      text-align: left;
+    text-align: left;
   }
 
   .footer-next {
-      text-align: right;
+    text-align: right;
+         
   }
-  
-  .footer-center {
-    flex: 1 0 200px;
-    text-align: center;
-    justify-content: center;
+
+  .hide-desktop-text .footer-desktop-text {
+    display: none;
   }
+
+  @media (min-width: 250px) {
+    .footer-center {
+      flex-grow: 1;
+      flex-shrink: 0;
+      flex-basis: 200px;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 250px) {
+    .footer-center {
+      flex-basis: 100px;
+    }
+  }
+
   .footer-name {
     text-align: center;
     line-height: 1.41em;
@@ -1669,21 +1677,20 @@ footer {
     }
   }
 
-    a {
-    line-height: 1.875em;
-    font-size: 15px;
-      color: white;
-      transition: color 0.2s ease, text-shadow 0.2s ease;
-    }
-    
-    a:hover {
-    color: var(--blue-accent);
-    text-shadow: 0 0 1px currentColor;
-
+  a {
+  line-height: 1.875em;
+  font-size: 15px;
+    color: white;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+  }
+  
+  a:hover {
+  color: var(--blue-accent);
+  text-shadow: 0 0 1px currentColor;
 }
-    a:active {
-      color: red;
-    }
+  a:active {
+    color: red;
+  }
 
   .footer-social {
     display: flex;
@@ -1706,11 +1713,20 @@ footer {
   .footer-social:hover svg {
     transform: scale(1.1);
     path { fill: var(--blue-accent); }
-}
+  }
 
   .footer-copyright {
     line-height: 1.79em;
     font-size: 14px;
+  }
+}
+
+@media (max-width: 350px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-text {
+    display: none;
   }
 }
 
@@ -3212,7 +3228,6 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
     padding: 32px 28px;
   }
 }
-
 
 /* Hero animations */
 @keyframes fadeUp {

@@ -57,7 +57,7 @@ nav {
       padding-left: 0;
       left: 0;
       display: block;
-      min-width: 250px;
+      min-width: min(250px, 90vw);
       text-align: left;
       padding-top: 20px;
       background: var(--background-radial-blue);
@@ -228,7 +228,7 @@ nav ul li.menu-icon-item {
         background-color: transparent;
 
         &:not(.menu-icon-item) {
-          min-width: 200px;
+          min-width: min(200px, 90%);
         }
         &:last-child {
           border-bottom: none;
@@ -274,7 +274,7 @@ nav ul li.menu-icon-item {
             padding: 20px 0 0 0 !important;
             width: 50%;
             min-height: 80px;
-            min-width: 250px;
+            min-width: min(250px, 90%);
 
             &:last-child {
               border-bottom: none;
