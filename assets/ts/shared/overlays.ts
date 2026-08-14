@@ -19,7 +19,7 @@ export function initCardOverlay(overlaySelector: string, itemId: string, btnId?:
     overlay.classList.add("active");
   });
 
-  closeModalAndOverlay(modal, overlay);
+  initCloseModalBtn(modal, overlay);
 }
 
 export function closeOverlays(overlaySelectors: string) {
@@ -29,7 +29,7 @@ export function closeOverlays(overlaySelectors: string) {
   });
 }
 
-export function closeModalAndOverlay(modal: HTMLElement | null, overlay: HTMLElement, closeSelector: string = '.page-tag-close') {
+export function initCloseModalBtn(modal: HTMLElement | null, overlay: HTMLElement, closeSelector: string = '.page-tag-close') {
   const closeBtn = modal?.querySelector(closeSelector);
   if (!closeBtn) {
     return;

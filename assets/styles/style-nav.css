@@ -227,6 +227,9 @@ nav ul li.menu-icon-item {
         border-bottom: var(--navbar-border);
         background-color: transparent;
 
+        &:not(.menu-icon-item) {
+          min-width: 200px;
+        }
         &:last-child {
           border-bottom: none;
         }
@@ -271,6 +274,7 @@ nav ul li.menu-icon-item {
             padding: 20px 0 0 0 !important;
             width: 50%;
             min-height: 80px;
+            min-width: 250px;
 
             &:last-child {
               border-bottom: none;

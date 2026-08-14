@@ -1,3 +1,4 @@
+import { initMobilePreview } from '../components/mobile-preview.js';
 import { initCarousel } from '../shared/carousel.js';
 import { initHeaderLink, initMockHeader } from '../shared/header.js';
 import { fetchFragment, fetchIndexSvgIcons, initScrollToTop } from '../shared/misc.js';
@@ -23,6 +24,7 @@ export default [
     }),
     (containerSelector?: string) => initMockHeader({containerSelector, mockHeaderSelector: '.curtain-demo-menu.menu-base', activeTab: "About"}),
     (containerSelector?: string) => addBtnListener({selector: "#btnBuildingARouter", view: "articles/building-a-router", containerSelector}),
+    (containerSelector?: string) => initMobilePreview({containerSelector}),
     () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),
     () => initMiniSiteOverlay(),

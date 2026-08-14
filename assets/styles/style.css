@@ -1,6 +1,7 @@
 @import url('./style-nav.css');
 @import url('./style-about-cards.css');
 @import url('./styles-hamburger.css');
+@import url('./styles-mobile-demo.css');
 @import url('./styles-curtain-demo.css');
 @import url('./style-writing.css');
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -934,7 +935,6 @@ body:has(.writing-article) {
   overflow: scroll;
   opacity: 0;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  border-radius: 8px;
   transition: max-height 0.35s ease, opacity 0.35s ease;
 
   .hero-experience {
@@ -1624,6 +1624,9 @@ footer {
     flex: 0 0 auto;
     width: calc((100% - 200px) / 2);
     max-width: 200px;
+    a {
+      text-decoration: none;
+    }
   }
 
   .footer-back {

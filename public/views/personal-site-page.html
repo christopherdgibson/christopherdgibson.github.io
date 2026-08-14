@@ -214,8 +214,14 @@
         <div class="feature-icon">📱</div>
         <div class="feature-title">Responsive at every width</div>
         <div class="feature-body">
-          The navbar collapses to a slide-out vertical menu on mobile. The
-          sub-menus expand over content on desktop and slide-out from
+          The navbar collapses to a slide-out vertical menu on
+          <span id="btnMobilePreviewCard" class="tooltip-wrapper inline-link"
+            ><span class="tooltip"
+              ><span class="tooltip-inner"
+                ><a href="#">Click to try the mobile version! →</a></span
+              ></span
+            >mobile</span
+          >. The sub-menus expand over content on desktop and slide-out from
           alternating directions on mobile. Feature cards pop out with a dimmed
           background overlay on mobile hover, resolving the ambiguity between
           decorative borders and clickable links.
@@ -315,6 +321,11 @@
     <div class="flash" id="flash"></div>
     <div class="rays" id="rays"></div>
   </div>
+
+  <section>
+    <div class="mobile-preview-overlay"></div>
+    <div id="mobilePreviewCard" class="phone-page-background modal-card" data-iframe-open="false"></div>    
+  </section>
 
   <div id="miniSiteLimitCard" class="modal-card">
     <div class="page-tag-close-container">
