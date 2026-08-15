@@ -1,3 +1,4 @@
+import { initCurtainPreview } from '../components/curtain-preview.js';
 import { initMobilePreview } from '../components/mobile-preview.js';
 import { initCarousel } from '../shared/carousel.js';
 import { initHeaderLink, initMockHeader } from '../shared/header.js';
@@ -30,44 +31,6 @@ export default [
     () => initMiniSiteOverlay(),
     () => initCurtainPreview()
 ];
-
-function initCurtainPreview(overlaySelector: string = '.curtain-preview-overlay') {
-  const overlay: HTMLElement | null = document.querySelector(overlaySelector);
-  const btnCurtainPreview = document.querySelector('#btnCurtainPreviewCard');
-  const submenu: HTMLElement | null = overlay.querySelector('.curtain-demo-submenu');
-
-  if (!overlay || !btnCurtainPreview) {
-    return;
-  }
-
-  ensureRays();
-  btnCurtainPreview.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    overlay.classList.remove('active',  'cycle');
-    void submenu?.offsetWidth; // reflow for re-trigger
-    overlay.classList.add('active', 'cycle');
-  });
-
-  overlay.addEventListener('animationend', (e) => {
-    if (e.animationName !== 'rayOut') return;
-    overlay.classList.remove('active', 'cycle');
-  });
-}
-
-function ensureRays(rays?: HTMLElement) {
-    rays = rays ?? document.getElementById("rays");
-
-    if (rays.childElementCount === 0) {
-      const n = 10; 
-      for (let i = 0; i < n; i++) {
-        const r = document.createElement("div");
-        r.className = "ray";
-        r.style.setProperty("--rot", i * (360 / n) + "deg");
-        rays.appendChild(r);
-      }
-    }
-}
 
 function initMiniSiteOverlay() {
   let overlay = document.querySelector(".mini-site-overlay"); // do not need to initiate clean since closing refreshes index.html
