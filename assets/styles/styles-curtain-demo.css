@@ -111,7 +111,7 @@
         padding-bottom: 0;
         margin: auto;
       }
-      
+
       &:hover {
         animation: notification-bump 0.45s ease-out;
       }
@@ -165,7 +165,7 @@
   }
 
   .rays {
-    animation: scaleDown calc(var(--curtain-animation-duration) * 0.25) ease-out
+    animation: scaleDown calc(var(--curtain-animation-duration) * 0.25) linear
       calc(var(--curtain-animation-duration) * 0.95) forwards;
   }
 
@@ -234,15 +234,15 @@
   }
   40% {
     opacity: 0.8;
-    transform: rotate(var(--rot)) scaleY(1);
+    transform: rotate(var(--rot)) scaleX(1) scaleY(1);
   }
   80% {
     opacity: 1;
-    transform: rotate(var(--rot)) scaleY(0.5);
+    transform: rotate(var(--rot)) scaleX(1) scaleY(0.5);
   }
   100% {
     opacity: 0;
-    transform: rotate(var(--rot)) scaleY(0.2);
+    transform: rotate(var(--rot)) scaleX(1) scaleY(0.2);
   }
 }
 
