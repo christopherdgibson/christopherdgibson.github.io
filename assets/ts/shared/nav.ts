@@ -1,13 +1,13 @@
 import { initHeaderSweep } from './header.js';
 import { fetchFragment } from './misc.js';
-import { loadView } from '../router.js';
+import { initHref, loadView } from '../router.js';
 
 import type { ViewKey } from '../types.js';
 
 type NavMenuProps = {
   navSelector: string;
   navHtml: string;
-  bodyElement?: Element | null;
+  bodyElement?: HTMLElement | null;
   containerSelector?: string;
 }
 
@@ -31,12 +31,9 @@ export function initNavMenu({navSelector, navHtml, bodyElement = document.queryS
       navMenu.innerHTML = data;
       const navItems = navMenu.querySelectorAll('a');
       initHeaderSweep();
-      navItems.forEach(btn => {
-        btn.addEventListener("click", function(event) {
-          event.preventDefault();
-          loadView({view: btn.dataset.target as ViewKey, bodyElement, containerSelector});
-        });
-      });
+      navItems.forEach(link => {
+        initHref({link, bodyElement, containerSelector, checkView: false}) // lead loadView throw
+      })
     })
     .then(() => {
       const body: HTMLElement | null = document.querySelector("body");

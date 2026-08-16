@@ -7,12 +7,20 @@ import { getContainer, normalizeViewPath, toPageTitleCase } from './utils.js';
 
 import type { ViewCallbackKey, ViewKey } from './types.js';
 
-type LoadViewProps = {
+interface LoadViewProps {
   view: ViewKey;
-  bodyElement?: Element | null;
+  bodyElement?: HTMLElement | null;
   containerSelector?: string;
   contentOnly?: boolean;
   updateHistory?: boolean;
+}
+
+interface InitHrefProps {
+  link: HTMLAnchorElement;
+  href?: string;
+  bodyElement: HTMLElement;
+  containerSelector: string;
+  checkView?: boolean;
 }
 
 /* ────────── SPA swapping logic ────────── */
@@ -146,5 +154,13 @@ export function initRouter() {
       history.replaceState({ view: 'home' }, "", `${base}home`);
       loadView({view: 'home', bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false}); // default view
     }
+  });
+}
+
+export function initHref({link, href = link.getAttribute('href'), bodyElement, containerSelector, checkView = true}: InitHrefProps) {
+  if (checkView === true && !isViewKey(href)) return;
+  link.addEventListener("click", function (event) {
+    event.preventDefault();
+    loadView({view: href as ViewKey, bodyElement, containerSelector});
   });
 }
