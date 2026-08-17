@@ -235,6 +235,10 @@ body:has(.hero-about):not(:has(.mini-site)) {
   }
 }
 
+a {
+  text-decoration: none;
+}
+
 /* Style the header */
 .header {
   position: sticky;

@@ -3,7 +3,6 @@ import about from './views/about.js';
 import work from './views/work.js';
 import articles from './views/articles.js';
 // Work sub-menu
-import NYCDashboard from './views/nyc-dashboard.js';
 import reportDownloadHub from './views/report-download-hub.js';
 import adminDocRepo from './views/admin-doc-repo.js';
 import TZComp from './views/react-native-tzcomp.js';
@@ -19,7 +18,6 @@ export const viewCallbacks: ViewCallbackProps = {
     about,
     work,
     articles,
-    "nyc-dashboard": NYCDashboard,
     "report-download-hub": reportDownloadHub,
     "admin-doc-repo": adminDocRepo,
     "react-native-tzcomp": TZComp,

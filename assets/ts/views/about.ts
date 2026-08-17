@@ -1,4 +1,4 @@
-import { initHrefs } from '../baseCallbacks.js';
+import { initHrefs } from '../router.js';
 
 export default [
     (containerSelector?: string) => initHrefs({containerSelector}),

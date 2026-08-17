@@ -23,6 +23,12 @@ interface InitHrefProps {
   checkView?: boolean;
 }
 
+interface InitHrefsProps {
+  viewSelector?: string;
+  bodyElement?: HTMLElement;
+  containerSelector: string;
+}
+
 /* ────────── SPA swapping logic ────────── */
 
 export async function loadView({
@@ -155,6 +161,13 @@ export function initRouter() {
       loadView({view: 'home', bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false}); // default view
     }
   });
+}
+
+export function initHrefs({viewSelector, bodyElement=document.querySelector('#body-placeholder'), containerSelector}: InitHrefsProps) {
+  const links: NodeListOf<HTMLAnchorElement> = bodyElement.querySelectorAll(`${viewSelector ?? ''} a`);
+  links.forEach(link => {
+    initHref({link, bodyElement, containerSelector});
+  })
 }
 
 export function initHref({link, href = link.getAttribute('href'), bodyElement, containerSelector, checkView = true}: InitHrefProps) {

@@ -22,7 +22,6 @@ export type ViewCallbackProps = {
  about: ((containerSelector?: string) => void)[];
  work: ((containerSelector?: string) => void)[];
  articles: ((containerSelector?: string) => void)[];
- "nyc-dashboard": ((containerSelector?: string) => void)[];
  "report-download-hub": (() => void)[];
  "admin-doc-repo": (() => void)[];
  "react-native-tzcomp": (() => void)[];

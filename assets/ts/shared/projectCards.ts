@@ -1,47 +1,31 @@
 import { initMockHeader } from './header.js';
 import { fetchFragment } from './misc.js';
-import { initHref } from '../router.js';
 
-import type { ViewKey } from '../types.js';
+interface ProjectCardProps {
+  cardSelector: string;
+   page?: string;
+   containerSelector?: string;
+}
 
-type ProjectEntry = {
-  id: string;
-  view: ViewKey;
-  callback?: (hoverId: string, activeTab: string, containerSelector?: string) => void;
-};
+export function populateProjectCards({cardSelector, page = "Home", containerSelector}: ProjectCardProps) {
+  const projectCardsSelector = `${containerSelector ?? ''} ${cardSelector ?? ''}`;
+  if (projectCardsSelector.trim() === '') return;
 
-const projects: Array<ProjectEntry> = [
-  {id: 'btnNYCDashboard', view: 'nyc-dashboard'},
-  {id: 'btnReportDownloadHub', view: 'report-download-hub'},
-  {id: 'btnAdminDocRepo', view: 'admin-doc-repo'},
-  {id: 'btnTZComp', view: 'react-native-tzcomp'},
-  {id: 'btnWordPress', view: 'wordpress-plugins'},
-  {id: 'btnPersonalSite', view: 'personal-site-page', callback: (hoverId: string, activeTab, containerSelector?: string) => initMockHeader({containerSelector, sweepTextSelector:`${hoverId} .mockup-site-name span`, sweepEventSelector: hoverId, activeTab})},
-];
-
-export function populateProjectCards(page = "Home", containerSelector?: string) {
-  const hoverId = `#btnPersonalSite${page}`;
-
-  projects.forEach(project => {
-    const view = project.view;
-    const projectId = `#${project.id}${page}`;
-    const card = document.querySelector(projectId);
-
+  const projectCards = document.querySelectorAll(projectCardsSelector);
+  projectCards.forEach(card => {
     if (card === null) return;
-    fetchFragment(`views/work-cards/${view}-card.html`, (response) => {
-        if (!response.ok) throw new Error(`View not found: ${view}`);
+    const href = card.getAttribute('href');
+    fetchFragment(`views/work-cards/${href}-card.html`, (response) => {
+        if (!response.ok) throw new Error(`View not found: ${href}`);
         return true;
       })
       .then((html) => {
         card.innerHTML = html;
-        const link = card.querySelector('a');
-        if (link) {
-          initHref({link, containerSelector});
-        }
       })
       .then(() => {
-        if (project.callback) {
-          project.callback(hoverId, page, containerSelector);
+        if (href === 'personal-site-page') {
+          const hoverId = `#btnPersonalSite${page}`;
+          initMockHeader({containerSelector, sweepTextSelector:`${hoverId} .mockup-site-name span`, sweepEventSelector: hoverId, activeTab: page})
         }
       })
       .catch((err) => console.error(err));

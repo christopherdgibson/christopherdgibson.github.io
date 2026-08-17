@@ -5,12 +5,6 @@ import { getCleanElement, getCleanElements, getContainer } from './utils.js';
 
 import type { ViewKey } from './types.js';
 
-interface InitHrefsProps {
-  viewSelector?: string;
-  bodyElement?: HTMLElement;
-  containerSelector: string;
-}
-
 export function getBaseCallbacks(containerSelector?: string, contentOnly?: boolean) {
   return [
     () => initAnchorButtons(containerSelector),
@@ -59,13 +53,6 @@ function addPulses(elements: NodeListOf<HTMLButtonElement>, delay: number, stagg
       setTimeout(() => el.classList.remove('pulse-once'), 300);
     }, addTime);
   });
-}
-
-export function initHrefs({viewSelector, bodyElement=document.querySelector('#body-placeholder'), containerSelector}: InitHrefsProps) {
-  const links: NodeListOf<HTMLAnchorElement> = bodyElement.querySelectorAll(`${viewSelector ?? ''} a`);
-  links.forEach(link => {
-    initHref({link, bodyElement, containerSelector});
-  })
 }
 
 export function initSvgIcons(iconSelector: string = ".svg-icon") {
