@@ -18,7 +18,7 @@
     with Vite.
   </p>
   <div class="hero-actions">
-    <a id="btnMiniSite" href="#" class="btn btn-primary">View Live Site →</a>
+    <button id="btnMiniSite" class="btn btn-primary">View Live Site →</button>
     <a
       class="btn btn-ghost"
       href="https://github.com/christopherdgibson/christopherdgibson.github.io"
@@ -41,7 +41,7 @@
       <div class="mockup-site-header"></div>
       <div class="carousel-track" id="carouselTrack">
         <!-- Home -->
-        <a id="btnHomeCarousel" href="#" class="carousel-card hero-home">
+        <a id="btnHomeCarousel" href="home" class="carousel-card hero-home">
           <div class="carousel-card-body">
             <h2 class="carousel-card-title">Home</h2>
             <p class="carousel-card-desc">
@@ -53,7 +53,7 @@
         </a>
 
         <!-- About -->
-        <a id="btnAboutCarousel" href="#" class="carousel-card hero-home">
+        <a id="btnAboutCarousel" href="about" class="carousel-card hero-home">
           <div class="carousel-card-body">
             <p class="carousel-card-eyebrow">About</p>
             <div class="carousel-accent"></div>
@@ -70,7 +70,7 @@
         <!-- Work -->
         <a
           id="btnWorkCarousel"
-          href="#"
+          href="work"
           class="carousel-card hero-projects-card"
         >
           <div class="carousel-card-body">
@@ -88,7 +88,7 @@
         <!-- Thoughts -->
         <a
           id="btnThoughtshCarousel"
-          href="#"
+          href="articles"
           class="carousel-card hero-research"
         >
           <div class="carousel-card-body">
@@ -161,11 +161,9 @@
         <div class="feature-title">
           <span id="btnHamburgerCard" class="tooltip-wrapper inline-link"
             ><span class="tooltip"
-              ><span class="tooltip-inner"
-                ><a id="hamburgerLink" href="#"
-                  >What is a hamburger? Click to find out! →</a
-                ></span
-              ></span
+              ><span class="tooltip-inner">
+                What is a hamburger? Click to find out! →
+              </span></span
             >Hamburger</span
           >
           sweep animation
@@ -217,9 +215,9 @@
           The navbar collapses to a slide-out vertical menu on
           <span id="btnMobilePreviewCard" class="tooltip-wrapper inline-link"
             ><span class="tooltip"
-              ><span class="tooltip-inner"
-                ><a href="#">Click to try the mobile version! →</a></span
-              ></span
+              ><span class="tooltip-inner">
+                Click to try the mobile version! →
+              </span></span
             >mobile</span
           >. The sub-menus expand over content on desktop and slide-out from
           alternating directions on mobile. Feature cards pop out with a dimmed
@@ -260,13 +258,9 @@
           position, as the new page loads. This provides a
           <span id="btnCurtainPreviewCard" class="tooltip-wrapper inline-link"
             ><span class="tooltip tooltip-centered"
-              ><div class="tooltip-inner"
-                >
-                <a href="#">
-                  Click for an exaggerated<br>curtain-opening demo! →
-                  </a>
-                </div
-              ></span
+              ><div class="tooltip-inner">
+                Click for an exaggerated<br />curtain-opening demo! →
+              </div></span
             >curtain-opening</span
           >
           effect that registers subconsciously without demanding attention.
@@ -335,7 +329,11 @@
 
   <section>
     <div class="mobile-preview-overlay"></div>
-    <div id="mobilePreviewCard" class="phone-page-background modal-card" data-iframe-open="false"></div>    
+    <div
+      id="mobilePreviewCard"
+      class="phone-page-background modal-card"
+      data-iframe-open="false"
+    ></div>
   </section>
 
   <div id="miniSiteLimitCard" class="modal-card">
@@ -381,16 +379,15 @@
       <div class="tech-row">
         <div class="tech-key">Client-side routing</div>
         <div class="tech-val">
-          <span id="btnBuildingARouter" class="tooltip-wrapper inline-link"
+          <a
+            href="articles/building-a-router"
+            class="tooltip-wrapper inline-link"
             ><span class="tooltip"
-              ><span class="tooltip-inner"
-                ><a href="#"
-                  >Click to learn more about the process of building a router!
-                  →</a
-                ></span
-              ></span
-            >Built on the History API directly</span
-          >
+              ><span class="tooltip-inner">
+                Click to learn more about the process of building a router!
+              </span></span
+            >Built on the History API directly
+          </a>
           with pushState/popState, container-scoped rendering (used by the
           embedded mini-site), and a 404-redirect fallback for direct URL entry
           and refresh on a static host with no server-side routing.

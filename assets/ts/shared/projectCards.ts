@@ -1,6 +1,6 @@
 import { initMockHeader } from './header.js';
-import { addBtnListener } from './nav.js';
 import { fetchFragment } from './misc.js';
+import { initHref } from '../router.js';
 
 import type { ViewKey } from '../types.js';
 
@@ -34,6 +34,10 @@ export function populateProjectCards(page = "Home", containerSelector?: string) 
       })
       .then((html) => {
         card.innerHTML = html;
+        const link = card.querySelector('a');
+        if (link) {
+          initHref({link, containerSelector});
+        }
       })
       .then(() => {
         if (project.callback) {
@@ -41,14 +45,5 @@ export function populateProjectCards(page = "Home", containerSelector?: string) 
         }
       })
       .catch((err) => console.error(err));
-      addBtnListener({selector: projectId, view, containerSelector});
-  })
-}
-
-export function addHomeTableBtns(containerSelector?: string) {
-    projects.forEach(project => {
-    const view = project.view;
-    const tableId = `#${project.id}Table`;
-    addBtnListener({selector: tableId, view, containerSelector});
   })
 }

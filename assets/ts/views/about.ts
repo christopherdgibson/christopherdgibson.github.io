@@ -1,9 +1,7 @@
-import { addBtnListener } from '../shared/nav.js';
+import { initHrefs } from '../baseCallbacks.js';
 
 export default [
-    (containerSelector?: string) => addBtnListener({selector: "#btnExperienceAbout", view: "experience", containerSelector}),
-    (containerSelector?: string) => addBtnListener({selector: "#btnResearchAbout", view: "research", containerSelector}),
-    (containerSelector?: string) => addBtnListener({selector: "#btnTeachingAbout", view: "teaching", containerSelector}),
+    (containerSelector?: string) => initHrefs({containerSelector}),
     () => contactPulse()
 ];
 

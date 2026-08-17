@@ -1,9 +1,15 @@
 import { fetchSvgIcon, scrollToAnchor } from './shared/misc.js';
 import { initCardOverlay } from './shared/overlays.js';
-import { loadView } from './router.js';
+import { initHref, loadView } from './router.js';
 import { getCleanElement, getCleanElements, getContainer } from './utils.js';
 
 import type { ViewKey } from './types.js';
+
+interface InitHrefsProps {
+  viewSelector?: string;
+  bodyElement?: HTMLElement;
+  containerSelector: string;
+}
 
 export function getBaseCallbacks(containerSelector?: string, contentOnly?: boolean) {
   return [
@@ -55,6 +61,13 @@ function addPulses(elements: NodeListOf<HTMLButtonElement>, delay: number, stagg
   });
 }
 
+export function initHrefs({viewSelector, bodyElement=document.querySelector('#body-placeholder'), containerSelector}: InitHrefsProps) {
+  const links: NodeListOf<HTMLAnchorElement> = bodyElement.querySelectorAll(`${viewSelector ?? ''} a`);
+  links.forEach(link => {
+    initHref({link, bodyElement, containerSelector});
+  })
+}
+
 export function initSvgIcons(iconSelector: string = ".svg-icon") {
   const icons: NodeListOf<HTMLElement> = document.querySelectorAll(iconSelector);
   if (!icons.length) return;
@@ -67,8 +80,8 @@ export function initSvgIcons(iconSelector: string = ".svg-icon") {
 function initFooterButtons(containerSelector?: string) {
   const bodyElement: HTMLElement | null = document.querySelector("#body-placeholder");
   const viewNav: HTMLElement | null = document.querySelector(".view-nav");
-  let backLink: HTMLElement | null = getCleanElement('#footer-back-btn');
-  let nextLink: HTMLElement | null = getCleanElement('#footer-next-btn');
+  let backLink: HTMLAnchorElement | null = getCleanElement('#footer-back-btn');
+  let nextLink: HTMLAnchorElement | null = getCleanElement('#footer-next-btn');
 
   if (!viewNav) {
     backLink?.setAttribute('style', 'display: none');
@@ -100,10 +113,7 @@ function initFooterButtons(containerSelector?: string) {
     } else if (viewNav.dataset.nextView) {
       nextLink.classList.toggle('hide-desktop-text', viewNav.dataset.nextView === 'home');
       nextLink.setAttribute('href', viewNav.dataset.nextView);
-      nextLink.addEventListener("click", function (event) {
-        event.preventDefault();
-        loadView({view: viewNav.dataset.nextView as ViewKey, bodyElement, containerSelector});
-      });
+      initHref({link: nextLink, href: viewNav.dataset.nextView, bodyElement, containerSelector});
     }
   } else if (nextLink) {
     nextLink.classList.toggle('hide-footer-link', true);

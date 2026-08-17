@@ -32,7 +32,7 @@ export function initNavMenu({navSelector, navHtml, bodyElement = document.queryS
       const navItems = navMenu.querySelectorAll('a');
       initHeaderSweep();
       navItems.forEach(link => {
-        initHref({link, bodyElement, containerSelector, checkView: false}) // lead loadView throw
+        initHref({link, bodyElement, containerSelector, checkView: false}) // let loadView throw
       })
     })
     .then(() => {

@@ -337,7 +337,7 @@
 @keyframes moveUpThenDown {
   0%   { top: 0; }
   50%  { top: -45px; }
-  100% { top: -38px; }
+  100% { top: -40px; }
 }
 
 @keyframes shakeWhileMovingUp {

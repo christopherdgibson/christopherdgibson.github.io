@@ -1,9 +1,10 @@
+import { initHrefs } from '../baseCallbacks.js';
 import { initCurtainPreview } from '../components/curtain-preview.js';
 import { initMobilePreview } from '../components/mobile-preview.js';
 import { initCarousel } from '../shared/carousel.js';
 import { initHeaderLink, initMockHeader } from '../shared/header.js';
 import { fetchFragment, fetchIndexSvgIcons, initScrollToTop } from '../shared/misc.js';
-import { addBtnListener, initNavMenu } from '../shared/nav.js';
+import { initNavMenu } from '../shared/nav.js';
 import { closeOverlays, initCardOverlay } from '../shared/overlays.js';
 import { loadView } from '../router.js';
 import { removeClasses } from '../utils.js';
@@ -17,14 +18,10 @@ export default [
       activeClass: "activeCarousel",
       callback: (containerSelector?: string) => {
         initCarousel();
-        addBtnListener({selector: "#btnHomeCarousel", view: "home", containerSelector});
-        addBtnListener({selector: "#btnAboutCarousel", view: "about", containerSelector});
-        addBtnListener({selector: "#btnWorkCarousel", view: "work", containerSelector});
-        addBtnListener({selector: "#btnThoughtshCarousel", view: "articles/building-a-router", containerSelector});
+        initHrefs({containerSelector})
       }
     }),
     (containerSelector?: string) => initMockHeader({containerSelector, mockHeaderSelector: '.curtain-demo-menu.menu-base', activeTab: "About"}),
-    (containerSelector?: string) => addBtnListener({selector: "#btnBuildingARouter", view: "articles/building-a-router", containerSelector}),
     (containerSelector?: string) => initMobilePreview({containerSelector}),
     () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),

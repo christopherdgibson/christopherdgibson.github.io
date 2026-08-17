@@ -18,7 +18,7 @@ interface LoadViewProps {
 interface InitHrefProps {
   link: HTMLAnchorElement;
   href?: string;
-  bodyElement: HTMLElement;
+  bodyElement?: HTMLElement;
   containerSelector: string;
   checkView?: boolean;
 }
@@ -65,7 +65,7 @@ export async function loadView({
 
     if (contentOnly === false && updateHistory){
       const base = import.meta.env.BASE_URL;
-      history.pushState({ view: view, containerSelector: containerSelector },
+      history.pushState({ view, containerSelector },
         "", `${base}${view}`);
     }
 
@@ -133,7 +133,7 @@ export function initRouter() {
     if (redirect) {
       sessionStorage.removeItem("redirect");
       const view = normalizeViewPath(redirect, base);
-      history.replaceState({ view: view, containerSelector: undefined }, "", `${base}${view}`);
+      history.replaceState({ view, containerSelector: undefined }, "", `${base}${view}`);
       loadView({view: view as ViewKey, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false});
       return; // Exit early after handling the redirect
     }

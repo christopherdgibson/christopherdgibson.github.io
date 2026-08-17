@@ -463,6 +463,9 @@ body:has(.hero-about):not(:has(.mini-site)) {
     margin-top: 0;
     opacity: 0;
     animation: fadeUp 0.6s ease 0.65s forwards;
+    a {
+      text-decoration: none;
+    }
   }
 
   .tech-list, .tech-row, .tech-key {
@@ -2134,12 +2137,13 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   background-image: var(--background-image-radial-blue);
 }
 
-
 .inline-link {
   cursor: pointer;
   color: var(--blue-accent);
-  &:hover {
+  text-decoration: none;
+  &:hover, span:hover {
     text-shadow: 0 0 20px var(--teaching-accent-color);
+    text-decoration: underline;
   }
 }
 

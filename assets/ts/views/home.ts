@@ -1,7 +1,7 @@
+import { initHrefs } from '../baseCallbacks.js';
 import { initCarousel } from '../shared/carousel.js';
 import { initContactIcons } from '../shared/contactIcons.js';
-import { addBtnListener } from '../shared/nav.js';
-import { populateProjectCards, addHomeTableBtns } from '../shared/projectCards.js';
+import { populateProjectCards } from '../shared/projectCards.js';
 import { initPreviewSection } from '../shared/previewSection.js';
 
 export default [
@@ -11,8 +11,5 @@ export default [
   (containerSelector?: string) => initPreviewSection('work', containerSelector),
   () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
   (containerSelector?: string) => populateProjectCards("Home", containerSelector),
-  (containerSelector?: string) => addHomeTableBtns(containerSelector),
-  (containerSelector?: string) => addBtnListener({selector: ".hero-home-header-grid .headshot", view: "about", containerSelector}),
-  (containerSelector?: string) => addBtnListener({selector: "#btnWorkHome", view: "work", containerSelector}),
-  (containerSelector?: string) => addBtnListener({selector: "#btnExperienceHome", view: "experience", containerSelector})
+  (containerSelector?: string) => initHrefs({viewSelector: '.home-container', containerSelector})
 ];
