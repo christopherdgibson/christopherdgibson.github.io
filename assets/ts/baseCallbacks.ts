@@ -91,16 +91,14 @@ function initFooterButtons(containerSelector?: string) {
   }
 
   if (nextLink && viewNav.dataset.nextText) {
-      nextLink.removeAttribute('class');
+    nextLink.removeAttribute('class');
     const nextTextEl = nextLink.querySelector('.footer-text');
     nextTextEl.innerHTML = viewNav.dataset.nextText;
     if (viewNav.dataset.nextLink) {
+      const isView = initHref({link: nextLink, href: viewNav.dataset.nextLink, bodyElement, containerSelector});
+      const hideDesktopText = !isView || viewNav.dataset.nextLink === 'home';
       nextLink.setAttribute('href', viewNav.dataset.nextLink);
-      nextLink.classList.toggle('hide-desktop-text', true);
-    } else if (viewNav.dataset.nextView) {
-      nextLink.classList.toggle('hide-desktop-text', viewNav.dataset.nextView === 'home');
-      nextLink.setAttribute('href', viewNav.dataset.nextView);
-      initHref({link: nextLink, href: viewNav.dataset.nextView, bodyElement, containerSelector});
+      nextLink.classList.toggle('hide-desktop-text', hideDesktopText);
     }
   } else if (nextLink) {
     nextLink.classList.toggle('hide-footer-link', true);

@@ -170,10 +170,13 @@ export function initHrefs({viewSelector, bodyElement=document.querySelector('#bo
   })
 }
 
-export function initHref({link, href = link.getAttribute('href'), bodyElement, containerSelector, checkView = true}: InitHrefProps) {
-  if (checkView === true && !isViewKey(href)) return;
+export function initHref({link, href = link.getAttribute('href'), bodyElement, containerSelector, checkView = true}: InitHrefProps): boolean {
+  if (checkView === true && !isViewKey(href)) {
+    return false;
+  }
   link.addEventListener("click", function (event) {
     event.preventDefault();
     loadView({view: href as ViewKey, bodyElement, containerSelector});
   });
+  return true;
 }
