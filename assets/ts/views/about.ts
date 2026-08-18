@@ -1,9 +1,8 @@
-import { initHrefs } from '../router.js';
+import type { ViewCallback } from '../types.js';
 
 export default [
-    (containerSelector?: string) => initHrefs({containerSelector}),
     () => contactPulse()
-];
+] satisfies ViewCallback[];
 
 function contactPulse() {
   const contactTag = document.querySelector("[data-target=contactCta]");

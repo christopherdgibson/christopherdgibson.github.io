@@ -1,32 +1,33 @@
 import { initCurtainPreview } from '../components/curtain-preview.js';
 import { initMobilePreview } from '../components/mobile-preview.js';
 import { initCarousel } from '../shared/carousel.js';
-import { initHeaderLink, initMockHeader } from '../shared/header.js';
+import { initHeaderLink, initMockHeaderAsync } from '../shared/header.js';
 import { fetchFragment, fetchIndexSvgIcons, initScrollToTop } from '../shared/misc.js';
 import { initNavMenu } from '../shared/nav.js';
 import { closeOverlays, initCardOverlay } from '../shared/overlays.js';
-import { initHrefs, loadView } from '../router.js';
+import { loadView } from '../router.js';
 import { removeClasses } from '../utils.js';
 
+import type { CallbackProps, ViewCallback } from '../types.js';
+
 export default [
-    (containerSelector?: string) => initMockHeader({
+    ({containerSelector}: CallbackProps) => initMockHeaderAsync({
       containerSelector,
       sweepTextSelector: "#carouselWrapper .mockup-site-name span",
       sweepEventSelector: "#carouselWrapper",
       activeTab: "Home",
       activeClass: "activeCarousel",
-      callback: (containerSelector?: string) => {
+      callback: () => {
         initCarousel();
-        initHrefs({containerSelector})
       }
     }),
-    (containerSelector?: string) => initMockHeader({containerSelector, mockHeaderSelector: '.curtain-demo-menu.menu-base', activeTab: "About"}),
-    (containerSelector?: string) => initMobilePreview({containerSelector}),
+    ({containerSelector}: CallbackProps) => initMockHeaderAsync({containerSelector, mockHeaderSelector: '.curtain-demo-menu.menu-base', activeTab: "About"}),
+    ({containerSelector}: CallbackProps) => initMobilePreview({containerSelector}),
     () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),
     () => initMiniSiteOverlay(),
     () => initCurtainPreview()
-];
+] satisfies ViewCallback[];
 
 function initMiniSiteOverlay() {
   let overlay = document.querySelector(".mini-site-overlay"); // do not need to initiate clean since closing refreshes index.html

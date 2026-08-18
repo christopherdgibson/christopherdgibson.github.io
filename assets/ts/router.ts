@@ -1,5 +1,6 @@
-import { getBaseCallbacks } from './baseCallbacks.js';
+import { getBaseCallbacks, initSvgIcons } from './baseCallbacks.js';
 import { viewCallbacks } from './viewCallbacks.js';
+import { asyncCallbacks } from './asyncCallbacks.js';
 import { fetchFragment, scrollToTop } from './shared/misc.js';
 import { ensureNavMenu } from './shared/nav.js';
 import { isViewKey } from './types.js';
@@ -21,12 +22,6 @@ interface InitHrefProps {
   bodyElement?: HTMLElement;
   containerSelector: string;
   checkView?: boolean;
-}
-
-interface InitHrefsProps {
-  viewSelector?: string;
-  bodyElement?: HTMLElement;
-  containerSelector: string;
 }
 
 /* ────────── SPA swapping logic ────────── */
@@ -77,15 +72,16 @@ export async function loadView({
 
     const baseCallbacks = getBaseCallbacks(containerSelector, contentOnly);
     const viewSpecific = viewCallbacks[view as ViewCallbackKey] ?? [];
-    const callbacks = [...baseCallbacks, ...viewSpecific];
+    const callbacks = [...baseCallbacks, ...viewSpecific, ...asyncCallbacks];
     if (callbacks.length === 0) return;
-    callbacks.forEach(cb => {
+
+    for (const cb of callbacks) {
       try {
-        cb(containerSelector);
+        await cb({bodyElement, containerSelector});
       } catch (err) {
         console.error('Callback failed:', err);
       }
-    });
+    }
 
     const images = bodyElement.querySelectorAll("img");
     const imagePromises = Array.from(images)
@@ -161,13 +157,6 @@ export function initRouter() {
       loadView({view: 'home', bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false}); // default view
     }
   });
-}
-
-export function initHrefs({viewSelector, bodyElement=document.querySelector('#body-placeholder'), containerSelector}: InitHrefsProps) {
-  const links: NodeListOf<HTMLAnchorElement> = bodyElement.querySelectorAll(`${viewSelector ?? ''} a`);
-  links.forEach(link => {
-    initHref({link, bodyElement, containerSelector});
-  })
 }
 
 export function initHref({link, href = link.getAttribute('href'), bodyElement, containerSelector, checkView = true}: InitHrefProps): boolean {

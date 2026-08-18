@@ -15,19 +15,26 @@ export interface ProjectType {
   callback?: () => void
 }
 
+export interface CallbackProps {
+  bodyElement?: HTMLElement;
+  containerSelector?: string;
+}
+
+export type ViewCallback = (params: CallbackProps) => void | Promise<void>;
+
 export type ViewCallbackKey = keyof typeof viewCallbacks;
 
 export type ViewCallbackProps = {
- home: ((containerSelector?: string) => void)[];
- about: ((containerSelector?: string) => void)[];
- work: ((containerSelector?: string) => void)[];
- articles: ((containerSelector?: string) => void)[];
- "report-download-hub": (() => void)[];
- "admin-doc-repo": (() => void)[];
- "react-native-tzcomp": (() => void)[];
- "wordpress-plugins": (() => void)[];
- "personal-site-page": ((containerSelector?: string) => void)[];
- "articles/building-a-router": ((containerSelector?: string) => void)[];
+ home: ViewCallback[];
+ about: ViewCallback[];
+ work: ViewCallback[];
+ articles: ViewCallback[];
+ "report-download-hub": ViewCallback[];
+ "admin-doc-repo": ViewCallback[];
+ "react-native-tzcomp": ViewCallback[];
+ "wordpress-plugins": ViewCallback[];
+ "personal-site-page": ViewCallback[];
+ "articles/building-a-router": ViewCallback[];
 }
 
 export function isViewKey(value: string): value is ViewKey {

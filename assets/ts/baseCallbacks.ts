@@ -3,12 +3,11 @@ import { initCardOverlay } from './shared/overlays.js';
 import { initHref, loadView } from './router.js';
 import { getCleanElement, getCleanElements, getContainer } from './utils.js';
 
-import type { ViewKey } from './types.js';
+import type { ViewCallback, ViewKey } from './types.js';
 
 export function getBaseCallbacks(containerSelector?: string, contentOnly?: boolean) {
   return [
     () => initAnchorButtons(containerSelector),
-    () => initSvgIcons(),
     ...(contentOnly === false ? [
       () => initFooterButtons(containerSelector),
       () => initCleanOverlays([".card-overlay", ".screenshot-overlay"].join(",")),
@@ -16,7 +15,7 @@ export function getBaseCallbacks(containerSelector?: string, contentOnly?: boole
     ] : []),
     () => initFeatureCards(),
     () => initScreenshots(),
-  ];
+  ] satisfies ViewCallback[];
 }
 
 let pulseIteration = 0;

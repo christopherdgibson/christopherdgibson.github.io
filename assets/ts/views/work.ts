@@ -1,9 +1,9 @@
 import { sweepSpanBilateral } from '../shared/header.js';
-import { populateProjectCards } from '../shared/projectCards.js';
-import { initHrefs } from '../router.js';
+import { populateProjectCardsAsync } from '../shared/projectCards.js';
+
+import type { CallbackProps, ViewCallback } from '../types.js';
 
 export default [
-    () => sweepSpanBilateral(".name-char"),
-    (containerSelector?: string) => populateProjectCards({cardSelector: '.project-grid a', page: "Work", containerSelector}),
-    (containerSelector?: string) => initHrefs({containerSelector})
-];
+  () => sweepSpanBilateral(".name-char"),
+  ({containerSelector}: CallbackProps) => populateProjectCardsAsync({ cardSelector: '.project-grid a', page: "Work", containerSelector }),
+] satisfies ViewCallback[];

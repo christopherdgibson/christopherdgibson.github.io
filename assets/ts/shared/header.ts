@@ -21,37 +21,35 @@ export function initHeaderLink() {
   });
 }
 
-export function initMockHeader({containerSelector, mockHeaderSelector = '.mockup-site-header', sweepTextSelector, sweepEventSelector, activeTab, activeClass = 'active', callback}: MockHeaderProps) {
+export async function initMockHeaderAsync({containerSelector, mockHeaderSelector = '.mockup-site-header', sweepTextSelector, sweepEventSelector, activeTab, activeClass = 'active', callback}: MockHeaderProps) {
   const container = getContainer(containerSelector);
   const headerParent = container !== window ? container as HTMLElement : document;
   const mockHeader = headerParent.querySelector(mockHeaderSelector);
 
   if (mockHeader === null) return;
-  fetchFragment(`components/mockup-header.html`, (response) => {
+  await fetchFragment(`components/mockup-header.html`, (response) => {
     if (!response.ok) throw new Error('Mockup header not found');
     return true;
   })
   .then((html) => {
     mockHeader.innerHTML = html;
-  })
-  .then(() => {
+
     const mockupNavItems = mockHeader.querySelectorAll('.mockup-nav-item');
     mockupNavItems.forEach(item => {
       item.classList.toggle(activeClass, item.innerHTML.includes(activeTab));
     })
-  })
-  .then(() => {
+
     if (callback) {
       callback();
     }
-  })
-  .then(() => {
+
     if (sweepTextSelector && sweepEventSelector) {
       initHoverSweep(sweepTextSelector, sweepEventSelector);
     }
   })
   .catch((err) => console.error(err));
 }
+
 export function initHeaderSweep(textSelector: string = "#headerLink span", eventSelector: string = "#checkNav", event: any = "change") {
   splitStringIntoSpans(textSelector);
 
@@ -76,8 +74,6 @@ export function initHeaderSweep(textSelector: string = "#headerLink span", event
             dropdown.checked = false;
           }
         })
-        
-        
     }
   });
 }

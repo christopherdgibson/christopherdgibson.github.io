@@ -1,5 +1,7 @@
-import { initMockHeader } from '../../shared/header.js';
+import { initMockHeaderAsync } from '../../shared/header.js';
+
+import type { CallbackProps, ViewCallback } from '../../types.js';
 
 export default [
-    (containerSelector?: string) => initMockHeader({containerSelector, sweepTextSelector: ".diagram-block .mockup-site-name span", sweepEventSelector: ".diagram-block", activeTab: "Thoughts"})
-];
+    ({containerSelector}: CallbackProps) => initMockHeaderAsync({containerSelector, sweepTextSelector: ".diagram-block .mockup-site-name span", sweepEventSelector: ".diagram-block", activeTab: "Thoughts"})
+] satisfies ViewCallback[];

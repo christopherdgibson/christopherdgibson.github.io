@@ -50,7 +50,8 @@ export function removeClasses(classNames: string[]) {
 }
 
 export function toPageTitleCase(input: string) {
-  return toPascalCase(input).replace(/-/g, " ");
+  var result = toPascalCase(input).replace(/-/g, " ");
+  return result.replace(/\//g, " - ");
 }
 
 export function toPascalCase(input: string) {
