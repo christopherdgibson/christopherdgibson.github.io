@@ -114,7 +114,6 @@ export function initDemoLaunch(overlaySelector: string, itemId: string, btnId: s
   const overlay: HTMLElement | null = document.querySelector(overlaySelector);
   const btn = document.getElementById(btnId);
   const modal = document.getElementById(itemId);
-  const demoUrl = 'https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/christopherdgibson/christopherdgibson.github.io/main/assets/demos/blueprint-wp-plugins.json';
 
   if (!overlay || !btn || !modal) {
     return;
@@ -132,7 +131,9 @@ export function initDemoLaunch(overlaySelector: string, itemId: string, btnId: s
     let count = 5;
     const countdownEl = modal.querySelector('.demo-redirect .download-option-platform');
     const launchNowEl = modal.querySelector('.download-option .download-option-platform');
+    const demoLink = modal.querySelector('.demo-redirect a');
     const closeEl = modal.querySelector('.page-tag-close-container');
+    const demoUrl = demoLink?.getAttribute('href');
 
     if (countdownEl) {
       countdownEl.textContent = `Launching in ${count}s...`;
