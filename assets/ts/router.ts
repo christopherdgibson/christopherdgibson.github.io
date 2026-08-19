@@ -1,6 +1,6 @@
-import { getBaseCallbacks, initSvgIcons } from './baseCallbacks.js';
+import { getBaseCallbacks } from './baseCallbacks.js';
 import { viewCallbacks } from './viewCallbacks.js';
-import { asyncCallbacks } from './asyncCallbacks.js';
+import { getAsyncCallbacks } from './asyncCallbacks.js';
 import { fetchFragment, scrollToTop } from './shared/misc.js';
 import { ensureNavMenu } from './shared/nav.js';
 import { isViewKey } from './types.js';
@@ -72,6 +72,7 @@ export async function loadView({
 
     const baseCallbacks = getBaseCallbacks(containerSelector, contentOnly);
     const viewSpecific = viewCallbacks[view as ViewCallbackKey] ?? [];
+    const asyncCallbacks = getAsyncCallbacks({bodyElement, containerSelector, contentOnly});
     const callbacks = [...baseCallbacks, ...viewSpecific, ...asyncCallbacks];
     if (callbacks.length === 0) return;
 

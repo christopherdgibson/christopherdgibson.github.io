@@ -9,13 +9,20 @@ interface InitHrefsProps {
   viewSelector?: string;
 }
 
-export const asyncCallbacks = [
-    ({bodyElement = document.querySelector('#body-placeholder'), containerSelector}: CallbackProps) => initHrefs({bodyElement, containerSelector}),
-    ({bodyElement}: CallbackProps) => initSvgIcons({bodyElement})
-] satisfies ViewCallback[];
+interface AsyncCallbackProps extends CallbackProps {
+    contentOnly?: boolean;
+}
+
+export function getAsyncCallbacks({bodyElement, containerSelector, contentOnly}: AsyncCallbackProps) {
+  return [
+    ...(contentOnly === false ? [
+        () => initHrefs({bodyElement, containerSelector}), // override for contentOnly to avoid document-wide event stacking
+    ] : []),
+    () => initSvgIcons({bodyElement})
+  ] satisfies ViewCallback[];
+}
 
 function initHrefs({viewSelector, bodyElement=document.querySelector('#body-placeholder'), containerSelector}: InitHrefsProps) {
-    console.log('containerSelector: ', containerSelector);
     const links: NodeListOf<HTMLAnchorElement> = bodyElement.querySelectorAll(`${viewSelector ?? ''} a`);
     links.forEach(link => {
         initHref({link, bodyElement, containerSelector});

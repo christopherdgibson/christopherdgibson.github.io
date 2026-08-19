@@ -2,10 +2,10 @@ import { getContainer, toPascalCase } from '../utils.js';
 import { scrollToAnchor, scrollToTop  } from './misc.js';
 import { loadView } from '../router.js';
 
-import type { PreviewViewKey } from '../types.js';
+import type { PreviewViewKey, ViewKey } from '../types.js';
 
-let previewExpanded: number;
-export function initPreviewSection(section: PreviewViewKey, containerSelector?: string) {
+let previewsExpanded: number;
+export async function initPreviewSection(section: PreviewViewKey, containerSelector?: string) {
   const Section = toPascalCase(section);
   const btn: HTMLAnchorElement | null = document.querySelector(`#btn${Section}Home`);
   const hoverBridge: HTMLElement | null = document.querySelector('.hover-bridge');
@@ -16,7 +16,7 @@ export function initPreviewSection(section: PreviewViewKey, containerSelector?: 
   const defaultOrder: Record<PreviewViewKey, string >  = {work: '1', experience: '2'}
 
   let closeTimer: number;
-  previewExpanded = 0;
+  previewsExpanded = 0;
 
   function open() {
     clearTimeout(closeTimer);
@@ -39,7 +39,18 @@ export function initPreviewSection(section: PreviewViewKey, containerSelector?: 
   });
   btn?.addEventListener("mouseenter", (event) => {
     event.preventDefault();
-    loadView({view: section, bodyElement: peekPanel, containerSelector: `#peek${Section}Home`, contentOnly: true});
+    const previewSectionSelector = `#peek${Section}Home`;
+    loadView({view: section, bodyElement: peekPanel, containerSelector: previewSectionSelector, contentOnly: true})
+    .then(() => {
+      const links = peekPanel.querySelectorAll('a');
+      links.forEach((link) => {
+        link.addEventListener("click", function (event) {
+          event.preventDefault();
+          const href = link.getAttribute('href');
+          loadView({view: href as ViewKey, bodyElement: undefined, containerSelector});
+        });
+      });
+    });
   }, { once: true });
   btn?.addEventListener('mouseleave', () => {
     scheduleClose();
@@ -65,7 +76,7 @@ export function initPreviewSection(section: PreviewViewKey, containerSelector?: 
     const isExpanded = peekPanel.classList.contains('expanded-preview');
     peekBtn.setAttribute('aria-expanded', isExpanded.toString());
     if (!isExpanded) {
-      previewExpanded --;
+      previewsExpanded --;
       scrollToTop(peekPanel); // reset to top when closed
       return;
     }
@@ -74,11 +85,11 @@ export function initPreviewSection(section: PreviewViewKey, containerSelector?: 
     const pageTagParent = container !== window ? container as HTMLElement : document;
     let heroActions: HTMLElement | null = pageTagParent.querySelector('.hero-actions');
 
-    if (previewExpanded === 0) { // scroll to hover buttons
+    if (previewsExpanded === 0) { // scroll to hover buttons
       scrollToAnchor({target: heroActions, container, includeHeader: true});
     } else {
       scrollToAnchor({target: peekWrapper, container, includeHeader: true}); // scroll to preview when multiple open
     }
-    previewExpanded ++;
+    previewsExpanded ++;
   });
 }

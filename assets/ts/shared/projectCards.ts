@@ -23,7 +23,7 @@ export async function populateProjectCardsAsync({cardSelector, page = "Home", co
     card.innerHTML = html;
     if (href === 'personal-site-page') {
       const hoverId = `#btnPersonalSite${page}`;
-      initMockHeaderAsync({containerSelector, sweepTextSelector:`${hoverId} .mockup-site-name span`, sweepEventSelector: hoverId, activeTab: page})
+      await initMockHeaderAsync({containerSelector, sweepTextSelector:`${hoverId} .mockup-site-name span`, sweepEventSelector: hoverId, activeTab: page})
     }
   }));
 }
