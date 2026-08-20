@@ -26,7 +26,7 @@ export async function populateProjectCardsAsync({cardSelector, page = "Home", co
         }
       });
 
-      if (loadSignal.aborted) return;
+      if (html === null) return;
       
       card.innerHTML = html;
       if (href === 'personal-site-page') {

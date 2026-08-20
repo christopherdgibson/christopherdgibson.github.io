@@ -39,6 +39,7 @@ export async function fetchFragment({path, signal, validate = (response) => resp
     if (!validate(response)) {
       return null;
     }
+
     const text = await response.text();
     if (base === "/") return text;
     return text.replace(/(["'(])\/(demos|downloads|images|pdfs|svgs|views)\//g, `$1${base}$2/`);

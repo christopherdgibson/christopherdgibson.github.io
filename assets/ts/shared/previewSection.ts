@@ -4,8 +4,14 @@ import { loadView } from '../router.js';
 
 import type { PreviewViewKey, ViewKey } from '../types.js';
 
+interface PreviewSectionProps {
+  section: PreviewViewKey;
+  containerSelector?: string;
+  loadSignal?: AbortSignal;
+}
+
 let previewsExpanded: number;
-export async function initPreviewSection(section: PreviewViewKey, containerSelector?: string) {
+export async function initPreviewSection({section, containerSelector, loadSignal}: PreviewSectionProps) {
   const Section = toPascalCase(section);
   const btn: HTMLAnchorElement | null = document.querySelector(`#btn${Section}Home`);
   const hoverBridge: HTMLElement | null = document.querySelector('.hover-bridge');
@@ -42,6 +48,8 @@ export async function initPreviewSection(section: PreviewViewKey, containerSelec
     const previewSectionSelector = `#peek${Section}Home`;
     loadView({view: section, bodyElement: peekPanel, containerSelector: previewSectionSelector, contentOnly: true})
     .then(() => {
+      if (loadSignal.aborted) return;
+
       const links = peekPanel.querySelectorAll('a');
       links.forEach((link) => {
         link.addEventListener("click", function (event) {

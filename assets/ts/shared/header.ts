@@ -37,7 +37,7 @@ export async function initMockHeaderAsync({containerSelector, mockHeaderSelector
     }
   })
   .then((html) => {
-    if (loadSignal.aborted) return;
+    if (html === null) return;
     
     mockHeader.innerHTML = html;
 

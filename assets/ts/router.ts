@@ -63,7 +63,7 @@ export async function loadView({
       }
     });
 
-    if (loadSignal.aborted) return;
+    if (html === null) return;
 
     bodyElement.innerHTML = html;
 
@@ -96,7 +96,6 @@ export async function loadView({
 
     for (const cb of callbacks) {
       if (loadSignal.aborted) return;
-      
       try {
         await cb({bodyElement, containerSelector, loadSignal});
       } catch (err) {
@@ -110,18 +109,18 @@ export async function loadView({
       .map(
         (img) =>
           new Promise((resolve) => {
-            if (loadSignal.aborted) return;
             img.onload = resolve;
             img.onerror = resolve;
           }),
       );
     await Promise.all(imagePromises);
 
+    if (loadSignal.aborted) return;
+
     if (contentOnly === false) {
       const container = getContainer(containerSelector);
       scrollToTop(container);
     }
-
   } catch (error) {
     // Fallback to home view or show error message
     console.error("Failed to load view:", error);
