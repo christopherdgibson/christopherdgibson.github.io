@@ -11,17 +11,18 @@ import { removeClasses } from '../utils.js';
 import type { CallbackProps, ViewCallback } from '../types.js';
 
 export default [
-    ({containerSelector}: CallbackProps) => initMockHeaderAsync({
+    ({containerSelector, isLoadCurrent}: CallbackProps) => initMockHeaderAsync({
       containerSelector,
       sweepTextSelector: "#carouselWrapper .mockup-site-name span",
       sweepEventSelector: "#carouselWrapper",
       activeTab: "Home",
       activeClass: "activeCarousel",
+      isLoadCurrent,
       callback: () => {
         initCarousel();
       }
     }),
-    ({containerSelector}: CallbackProps) => initMockHeaderAsync({containerSelector, mockHeaderSelector: '.curtain-demo-menu.menu-base', activeTab: "About"}),
+    ({containerSelector, isLoadCurrent}: CallbackProps) => initMockHeaderAsync({containerSelector, mockHeaderSelector: '.curtain-demo-menu.menu-base', activeTab: "About", isLoadCurrent}),
     ({containerSelector}: CallbackProps) => initMobilePreview({containerSelector}),
     () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),

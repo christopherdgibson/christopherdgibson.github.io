@@ -3,13 +3,14 @@ import { loadView } from '../router.js';
 import { getContainer } from '../utils.js';
 
 interface MockHeaderProps {
-  containerSelector?: string,
+  containerSelector?: string;
   mockHeaderSelector?: string;
-  sweepTextSelector?: string,
-  sweepEventSelector?: string,
-  activeTab: string,
-  activeClass?: string,
-  callback?: () => void,
+  sweepTextSelector?: string;
+  sweepEventSelector?: string;
+  activeTab: string;
+  activeClass?: string;
+  isLoadCurrent: () => boolean;
+  callback?: () => void;
 }
 
 export function initHeaderLink() {
@@ -21,7 +22,7 @@ export function initHeaderLink() {
   });
 }
 
-export async function initMockHeaderAsync({containerSelector, mockHeaderSelector = '.mockup-site-header', sweepTextSelector, sweepEventSelector, activeTab, activeClass = 'active', callback}: MockHeaderProps) {
+export async function initMockHeaderAsync({containerSelector, mockHeaderSelector = '.mockup-site-header', sweepTextSelector, sweepEventSelector, activeTab, activeClass = 'active', callback, isLoadCurrent}: MockHeaderProps) {
   const container = getContainer(containerSelector);
   const headerParent = container !== window ? container as HTMLElement : document;
   const mockHeader = headerParent.querySelector(mockHeaderSelector);
@@ -32,6 +33,7 @@ export async function initMockHeaderAsync({containerSelector, mockHeaderSelector
     return true;
   })
   .then((html) => {
+    if (!isLoadCurrent()) return;
     mockHeader.innerHTML = html;
 
     const mockupNavItems = mockHeader.querySelectorAll('.mockup-nav-item');

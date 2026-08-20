@@ -5,5 +5,5 @@ import type { CallbackProps, ViewCallback } from '../types.js';
 
 export default [
   () => sweepSpanBilateral(".name-char"),
-  ({containerSelector}: CallbackProps) => populateProjectCardsAsync({ cardSelector: '.project-grid a', page: "Work", containerSelector }),
+  ({containerSelector, isLoadCurrent}: CallbackProps) => populateProjectCardsAsync({ cardSelector: '.project-grid a', page: "Work", containerSelector, isLoadCurrent }),
 ] satisfies ViewCallback[];

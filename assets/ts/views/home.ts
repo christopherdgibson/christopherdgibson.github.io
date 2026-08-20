@@ -11,5 +11,5 @@ export default [
   ({containerSelector}: CallbackProps) => initPreviewSection('experience', containerSelector),
   ({containerSelector}: CallbackProps) => initPreviewSection('work', containerSelector),
   () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
-  ({containerSelector}: CallbackProps) => populateProjectCardsAsync({cardSelector: '.carousel-card', page: "Home", containerSelector})
+  ({containerSelector, isLoadCurrent}: CallbackProps) => populateProjectCardsAsync({cardSelector: '.carousel-card', page: "Home", containerSelector, isLoadCurrent})
 ] satisfies ViewCallback[];

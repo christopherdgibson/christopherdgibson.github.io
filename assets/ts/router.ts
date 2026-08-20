@@ -26,6 +26,8 @@ interface InitHrefProps {
 
 /* ────────── SPA swapping logic ────────── */
 
+let currentLoadId = 0;
+
 export async function loadView({
   view,
   bodyElement = document.querySelector("#body-placeholder"), // body element to replace with default
@@ -33,6 +35,9 @@ export async function loadView({
   contentOnly = false, // true if view is only to display content and is not a page navigation (e.g., skips history, footer buttons, and scrollToTop)
   updateHistory = true // false when called from popstate or initial load
 }: LoadViewProps) {
+  const loadId = ++currentLoadId;
+  const isLoadCurrent = () => loadId === currentLoadId;
+
   if (bodyElement === null) {  // todo: check and throw error if not found? (e.g., if (!body) { throw new Error("Body element not found");})
     console.log("Body element not found!");
     return;
@@ -48,8 +53,11 @@ export async function loadView({
       return true;
     });
 
-    let title = document.querySelector("#title-placeholder");
+    if (!isLoadCurrent()) return;
+
     bodyElement.innerHTML = html;
+
+    let title = document.querySelector("#title-placeholder");
     if (title !== null) {
       if (view === "home") {
         title.innerHTML = "Christopher Gibson - Home"
@@ -77,8 +85,10 @@ export async function loadView({
     if (callbacks.length === 0) return;
 
     for (const cb of callbacks) {
+      if (!isLoadCurrent()) return;
+      
       try {
-        await cb({bodyElement, containerSelector});
+        await cb({bodyElement, containerSelector, isLoadCurrent});
       } catch (err) {
         console.error('Callback failed:', err);
       }
@@ -90,6 +100,7 @@ export async function loadView({
       .map(
         (img) =>
           new Promise((resolve) => {
+            if (!isLoadCurrent()) return;
             img.onload = resolve;
             img.onerror = resolve;
           }),
