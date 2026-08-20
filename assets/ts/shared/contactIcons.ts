@@ -5,22 +5,24 @@ interface PopulateContactProps {
   triggerSelector?: string;
   envelopeSelector: string;
   pageTagSelector?: string;
-  isLoadCurrent: () => boolean;
+  loadSignal: AbortSignal;
 }
 
-export async function populateContactAsync({triggerSelector = "contact-trigger", envelopeSelector, pageTagSelector, isLoadCurrent}: PopulateContactProps) {
+export async function populateContactAsync({triggerSelector = "contact-trigger", envelopeSelector, pageTagSelector, loadSignal}: PopulateContactProps) {
   const target: HTMLElement | null = document.querySelector(triggerSelector);
 
   if (target === null) return;
   await fetchFragment({
     path: `components/contact-envelope.html`,
+    signal: loadSignal,
     validate: (response) => {
       if (!response.ok) throw new Error(`View not found: contact-envelope.html`);
       return true;
     }
   })
   .then((html) => {
-    if (!isLoadCurrent()) return;
+    if (loadSignal.aborted) return;
+    
     target.innerHTML = html;
     initSvgIcons('.spill-icon');
     initContactIcons(triggerSelector, envelopeSelector, pageTagSelector);

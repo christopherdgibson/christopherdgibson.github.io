@@ -26,7 +26,7 @@ interface InitHrefProps {
 
 /* ────────── SPA swapping logic ────────── */
 
-let currentLoadId = 0;
+let currentController: AbortController | null = null;
 
 export async function loadView({
   view,
@@ -34,15 +34,21 @@ export async function loadView({
   containerSelector, // string selector for container reference, defaults to window
   contentOnly = false, // true if view is only to display content and is not a page navigation (e.g., skips history, footer buttons, and scrollToTop)
   updateHistory = true // false when called from popstate or initial load
-}: LoadViewProps) {
-  const loadId = ++currentLoadId;
-  const isLoadCurrent = () => loadId === currentLoadId;
+}: LoadViewProps)
+{
+  // Re-use controller and do not abort for contentOnly load
+  if (!contentOnly || currentController === null) {
+    currentController?.abort();
+    currentController = new AbortController();
+  }
+
+  const loadSignal = currentController.signal;
 
   if (bodyElement === null) {  // todo: check and throw error if not found? (e.g., if (!body) { throw new Error("Body element not found");})
     console.log("Body element not found!");
     return;
   }
-  if (view !== "home" && !contentOnly) { // load once after home page
+  if (view !== "home" && !contentOnly) { // load navbar once after home page
       ensureNavMenu({navSelector: '#nav-placeholder', navHtml: 'nav', bodyElement, containerSelector});
   }  
   try{
@@ -50,13 +56,14 @@ export async function loadView({
 
     const html = await fetchFragment({
       path: `views/${view}.html`,
+      signal: loadSignal,
       validate: (response) => {
         if (!response.ok) throw new Error(`View not found: ${view}`);
         return true;
       }
     });
 
-    if (!isLoadCurrent()) return;
+    if (loadSignal.aborted) return;
 
     bodyElement.innerHTML = html;
 
@@ -88,10 +95,10 @@ export async function loadView({
     if (callbacks.length === 0) return;
 
     for (const cb of callbacks) {
-      if (!isLoadCurrent()) return;
+      if (loadSignal.aborted) return;
       
       try {
-        await cb({bodyElement, containerSelector, isLoadCurrent});
+        await cb({bodyElement, containerSelector, loadSignal});
       } catch (err) {
         console.error('Callback failed:', err);
       }
@@ -103,7 +110,7 @@ export async function loadView({
       .map(
         (img) =>
           new Promise((resolve) => {
-            if (!isLoadCurrent()) return;
+            if (loadSignal.aborted) return;
             img.onload = resolve;
             img.onerror = resolve;
           }),

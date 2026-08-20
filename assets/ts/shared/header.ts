@@ -9,7 +9,7 @@ interface MockHeaderProps {
   sweepEventSelector?: string;
   activeTab: string;
   activeClass?: string;
-  isLoadCurrent: () => boolean;
+  loadSignal: AbortSignal;
   callback?: () => void;
 }
 
@@ -22,7 +22,7 @@ export function initHeaderLink() {
   });
 }
 
-export async function initMockHeaderAsync({containerSelector, mockHeaderSelector = '.mockup-site-header', sweepTextSelector, sweepEventSelector, activeTab, activeClass = 'active', callback, isLoadCurrent}: MockHeaderProps) {
+export async function initMockHeaderAsync({containerSelector, mockHeaderSelector = '.mockup-site-header', sweepTextSelector, sweepEventSelector, activeTab, activeClass = 'active', callback, loadSignal}: MockHeaderProps) {
   const container = getContainer(containerSelector);
   const headerParent = container !== window ? container as HTMLElement : document;
   const mockHeader = headerParent.querySelector(mockHeaderSelector);
@@ -30,13 +30,15 @@ export async function initMockHeaderAsync({containerSelector, mockHeaderSelector
   if (mockHeader === null) return;
   await fetchFragment({
     path: 'components/mockup-header.html',
+    signal: loadSignal,
     validate: (response) => {
       if (!response.ok) throw new Error('Mockup header not found');
       return true;
     }
   })
   .then((html) => {
-    if (!isLoadCurrent()) return;
+    if (loadSignal.aborted) return;
+    
     mockHeader.innerHTML = html;
 
     const mockupNavItems = mockHeader.querySelectorAll('.mockup-nav-item');

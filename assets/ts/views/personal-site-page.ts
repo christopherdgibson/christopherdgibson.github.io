@@ -11,18 +11,18 @@ import { removeClasses } from '../utils.js';
 import type { CallbackProps, ViewCallback } from '../types.js';
 
 export default [
-    ({containerSelector, isLoadCurrent}: CallbackProps) => initMockHeaderAsync({
+    ({containerSelector, loadSignal}: CallbackProps) => initMockHeaderAsync({
       containerSelector,
       sweepTextSelector: "#carouselWrapper .mockup-site-name span",
       sweepEventSelector: "#carouselWrapper",
       activeTab: "Home",
       activeClass: "activeCarousel",
-      isLoadCurrent,
+      loadSignal,
       callback: () => {
         initCarousel();
       }
     }),
-    ({containerSelector, isLoadCurrent}: CallbackProps) => initMockHeaderAsync({containerSelector, mockHeaderSelector: '.curtain-demo-menu.menu-base', activeTab: "About", isLoadCurrent}),
+    ({containerSelector, loadSignal}: CallbackProps) => initMockHeaderAsync({containerSelector, mockHeaderSelector: '.curtain-demo-menu.menu-base', activeTab: "About", loadSignal}),
     ({containerSelector}: CallbackProps) => initMobilePreview({containerSelector}),
     () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),
@@ -119,7 +119,6 @@ function initMiniSiteOverlay() {
 function initHamburgerAnimation() {
   const hamburger: HTMLElement | null = document.querySelector(".hamburger-btn");
   const hamburgerClick: HTMLElement | null = document.querySelector('.hamburger-click');
-
   
   if (!hamburger || !hamburgerClick) return;
   const components = ["bottombun", "filling", "topbun", "condiments", "a-toothpick-or-something"];

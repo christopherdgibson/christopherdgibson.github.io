@@ -7,6 +7,7 @@ interface ScrollToAnchorProps {
 
 interface FetchFragmentProps {
   path: string;
+  signal?: AbortSignal;
   validate?: (response: Response) => boolean;
 }
 
@@ -31,16 +32,20 @@ export function fetchIndexSvgIcons() {
   fetchSvgIcon(linkedInIcon, "linkedin");
 }
 
-export async function fetchFragment({path, validate = (response) => response.ok}: FetchFragmentProps): Promise<string | null> {
-  const base = import.meta.env.BASE_URL;
-  const response = await fetch(`${base}${path}`);
-  if (!validate(response)) {
-    return null;
+export async function fetchFragment({path, signal, validate = (response) => response.ok}: FetchFragmentProps): Promise<string | null> {
+  try {
+    const base = import.meta.env.BASE_URL;
+    const response = await fetch(`${base}${path}`, {signal});
+    if (!validate(response)) {
+      return null;
+    }
+    const text = await response.text();
+    if (base === "/") return text;
+    return text.replace(/(["'(])\/(demos|downloads|images|pdfs|svgs|views)\//g, `$1${base}$2/`);
+  } catch (error) {
+      if (error.name === 'AbortError') return null;
+      throw error;
   }
-  const text = await response.text();
-  if (base === "/") return text;
-  const resolvedHtml = text.replace(/(["'(])\/(demos|downloads|images|pdfs|svgs|views)\//g, `$1${base}$2/`);
-  return resolvedHtml;
 }
 
 export function scrollToTop(container: Element | (Window & typeof globalThis) = window, behavior: ScrollBehavior = "smooth") {

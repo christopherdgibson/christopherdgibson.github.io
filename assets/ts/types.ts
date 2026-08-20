@@ -18,7 +18,7 @@ export interface ProjectType {
 export interface CallbackProps {
   bodyElement?: HTMLElement;
   containerSelector?: string;
-  isLoadCurrent?: () => boolean;
+  loadSignal?: AbortSignal;
 }
 
 export type ViewCallback = (params: CallbackProps) => void | Promise<void>;
