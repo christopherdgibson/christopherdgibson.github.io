@@ -3,9 +3,9 @@ import { fetchFragment } from './misc.js';
 
 interface ProjectCardProps {
   cardSelector: string;
-   page?: string;
-   containerSelector?: string;
-   isLoadCurrent: () => boolean;
+  page?: string;
+  containerSelector?: string;
+  isLoadCurrent: () => boolean;
 }
 
 export async function populateProjectCardsAsync({cardSelector, page = "Home", containerSelector, isLoadCurrent}: ProjectCardProps) {
@@ -17,9 +17,12 @@ export async function populateProjectCardsAsync({cardSelector, page = "Home", co
     try {
       if (card === null) return;
       const href = card.getAttribute('href');
-      const html = await fetchFragment(`views/work-cards/${href}-card.html`, (response) => {
-        if (!response.ok) throw new Error(`View not found: ${href}`);
-        return true;
+      const html = await fetchFragment({
+        path: `views/work-cards/${href}-card.html`,
+        validate: (response) => {
+          if (!response.ok) throw new Error(`View not found: ${href}`);
+          return true;
+        }
       });
 
       if (!isLoadCurrent()) return;

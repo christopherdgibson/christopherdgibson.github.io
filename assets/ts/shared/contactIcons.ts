@@ -1,23 +1,31 @@
 import { initSvgIcons } from '../baseCallbacks.js';
 import { fetchFragment  } from './misc.js';
 
-export function populateContact(triggerSelector = "contact-trigger", envelopeSelector: string, pageTagSelector?: string) {
+interface PopulateContactProps {
+  triggerSelector?: string;
+  envelopeSelector: string;
+  pageTagSelector?: string;
+  isLoadCurrent: () => boolean;
+}
 
+export async function populateContactAsync({triggerSelector = "contact-trigger", envelopeSelector, pageTagSelector, isLoadCurrent}: PopulateContactProps) {
   const target: HTMLElement | null = document.querySelector(triggerSelector);
 
   if (target === null) return;
-  fetchFragment(`components/contact-envelope.html`, (response) => {
+  await fetchFragment({
+    path: `components/contact-envelope.html`,
+    validate: (response) => {
       if (!response.ok) throw new Error(`View not found: contact-envelope.html`);
       return true;
-    })
-    .then((html) => {
-      target.innerHTML = html;
-    })
-    .then(() => initSvgIcons('.spill-icon'))
-    .then(() => {
-      initContactIcons(triggerSelector, envelopeSelector, pageTagSelector);
-    })
-    .catch((err) => console.error(err));
+    }
+  })
+  .then((html) => {
+    if (!isLoadCurrent()) return;
+    target.innerHTML = html;
+    initSvgIcons('.spill-icon');
+    initContactIcons(triggerSelector, envelopeSelector, pageTagSelector);
+  })
+  .catch((err) => console.error(err));
 }
 
 export function initContactIcons(triggerSelector: string, envelopeSelector: string, pageTagSelector?: string) {

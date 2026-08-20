@@ -48,9 +48,12 @@ export async function loadView({
   try{
     if (!isViewKey(view)) throw new Error(`Invalid view name: ${view}`);
 
-    const html = await fetchFragment(`views/${view}.html`, (response) => {
-      if (!response.ok) throw new Error(`View not found: ${view}`);
-      return true;
+    const html = await fetchFragment({
+      path: `views/${view}.html`,
+      validate: (response) => {
+        if (!response.ok) throw new Error(`View not found: ${view}`);
+        return true;
+      }
     });
 
     if (!isLoadCurrent()) return;

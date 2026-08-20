@@ -5,17 +5,25 @@ interface ScrollToAnchorProps {
   behavior?: ScrollBehavior;
 }
 
+interface FetchFragmentProps {
+  path: string;
+  validate?: (response: Response) => boolean;
+}
+
 export function fetchSvgIcon(iconEl: HTMLElement | null, iconName: string) {
   if (!iconEl) return;
-  fetchFragment(`svgs/${iconName}.svg`, (response) => {
-    const contentType = response.headers.get("content-type");
-    return !!contentType && contentType.includes("svg");
+  fetchFragment({
+    path: `svgs/${iconName}.svg`,
+    validate: (response) => {
+      const contentType = response.headers.get("content-type");
+      return !!contentType && contentType.includes("svg");
+    }
   })
-    .then((svg) => {
-      if (!svg) return;
-      iconEl.innerHTML = svg;
-    })
-    .catch((error) => console.error("SVG load failed:", error));
+  .then((svg) => {
+    if (!svg) return;
+    iconEl.innerHTML = svg;
+  })
+  .catch((error) => console.error("SVG load failed:", error));
 }
 
 export function fetchIndexSvgIcons() {
@@ -23,10 +31,7 @@ export function fetchIndexSvgIcons() {
   fetchSvgIcon(linkedInIcon, "linkedin");
 }
 
-export async function fetchFragment(
-  path: string,
-  validate: (response: Response) => boolean = (response) => response.ok
-): Promise<string | null> {
+export async function fetchFragment({path, validate = (response) => response.ok}: FetchFragmentProps): Promise<string | null> {
   const base = import.meta.env.BASE_URL;
   const response = await fetch(`${base}${path}`);
   if (!validate(response)) {

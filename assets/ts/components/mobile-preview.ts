@@ -63,9 +63,11 @@ function openPreview ({modal, overlay, containerSelector, previewSelector = '#mo
 
   if (preview.dataset.iframeOpen === "true") return;
 
-  fetchFragment(`components/mobile-preview.html`, (response) => {
-    if (!response.ok) throw new Error('Mobile preview not found');
-    return true;
+  fetchFragment({path: `components/mobile-preview.html`,
+    validate: (response) => {
+      if (!response.ok) throw new Error('Mobile preview not found');
+      return true;
+    }
   })
   .then((html) => {
     preview.innerHTML = html;

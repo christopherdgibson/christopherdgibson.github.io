@@ -28,9 +28,12 @@ export async function initMockHeaderAsync({containerSelector, mockHeaderSelector
   const mockHeader = headerParent.querySelector(mockHeaderSelector);
 
   if (mockHeader === null) return;
-  await fetchFragment(`components/mockup-header.html`, (response) => {
-    if (!response.ok) throw new Error('Mockup header not found');
-    return true;
+  await fetchFragment({
+    path: 'components/mockup-header.html',
+    validate: (response) => {
+      if (!response.ok) throw new Error('Mockup header not found');
+      return true;
+    }
   })
   .then((html) => {
     if (!isLoadCurrent()) return;

@@ -68,48 +68,51 @@ function initMiniSiteOverlay() {
     miniSite.classList.add("expanded-mini-site");
     overlay.classList.add("active-mini-site");
 
-    fetchFragment('index.html', (response) => {
-      if (!response.ok) throw new Error(`View not found: index`);
-      return true;
+    fetchFragment({
+      path: 'index.html',
+      validate: (response) => {
+        if (!response.ok) throw new Error(`View not found: index`);
+        return true;
+      }
     })
-      .then(data => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(data, 'text/html');
-        miniSite.innerHTML = doc.body.innerHTML;
-      })
-      .then(() => {
-        let bodyMini: HTMLElement | null = document.querySelector('#body-placeholder');
-        // if (bodyMini && !document.querySelector('#nav-placeholder')) {
-        //   window.location.href = "index.html";
-        //   loadView('personal-site-page.html');
-        //   return;
-        // }
-        fetchIndexSvgIcons();
-        initNavMenu({navSelector: '#nav-placeholder', navHtml: 'nav', bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'});
-        loadView({view: "personal-site-page", bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'});
-      })
-      .then(() => {
-        initScrollToTop(miniSite);
-        initHeaderLink();
+    .then(data => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(data, 'text/html');
+      miniSite.innerHTML = doc.body.innerHTML;
+    })
+    .then(() => {
+      let bodyMini: HTMLElement | null = document.querySelector('#body-placeholder');
+      // if (bodyMini && !document.querySelector('#nav-placeholder')) {
+      //   window.location.href = "index.html";
+      //   loadView('personal-site-page.html');
+      //   return;
+      // }
+      fetchIndexSvgIcons();
+      initNavMenu({navSelector: '#nav-placeholder', navHtml: 'nav', bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'});
+      loadView({view: "personal-site-page", bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'});
+    })
+    .then(() => {
+      initScrollToTop(miniSite);
+      initHeaderLink();
 
-        const header: HTMLElement | null = document.querySelector('#header');
-        const btn: HTMLElement | null = document.querySelector('#btnMiniSiteCard');
+      const header: HTMLElement | null = document.querySelector('#header');
+      const btn: HTMLElement | null = document.querySelector('#btnMiniSiteCard');
 
-        if (header && btn) {
-          const resizeObserver = new ResizeObserver((entries) => {
-            for (const entry of entries) {
-              const target = entry.target as HTMLElement;
-              btn.style.top = `calc(${target.offsetHeight}px + 8px)`;
-            }
-          });
-          resizeObserver.observe(header);
-        }
-
-        overlay.addEventListener("click", function () {
-          sessionStorage.setItem("redirect", "personal-site-page");
-          window.location.href = "/";
+      if (header && btn) {
+        const resizeObserver = new ResizeObserver((entries) => {
+          for (const entry of entries) {
+            const target = entry.target as HTMLElement;
+            btn.style.top = `calc(${target.offsetHeight}px + 8px)`;
+          }
         });
+        resizeObserver.observe(header);
+      }
+
+      overlay.addEventListener("click", function () {
+        sessionStorage.setItem("redirect", "personal-site-page");
+        window.location.href = "/";
       });
+    });
   });
 }
 
