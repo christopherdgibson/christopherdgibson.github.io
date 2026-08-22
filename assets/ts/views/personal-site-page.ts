@@ -23,7 +23,7 @@ export default [
       }
     }),
     ({containerSelector, loadSignal}: CallbackProps) => initMockHeaderAsync({containerSelector, mockHeaderSelector: '.curtain-demo-menu.menu-base', activeTab: "About", loadSignal}),
-    ({containerSelector}: CallbackProps) => initMobilePreview({containerSelector}),
+    ({containerSelector, loadSignal}: CallbackProps) => initMobilePreview({containerSelector, loadSignal}),
     () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),
     () => initMiniSiteOverlay(),

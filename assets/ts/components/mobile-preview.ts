@@ -4,6 +4,7 @@ import { getContainer, removeClasses, toPascalCase } from '../utils.js';
 
 type MobilePreviewProps = {
   containerSelector?: string;
+  loadSignal: AbortSignal;
   overlaySelector?: string;
   itemId?: string;
   btnId?: string;
@@ -13,10 +14,11 @@ type OpenPreviewProps = {
   modal: HTMLElement;
   overlay: HTMLElement;
   containerSelector?: string;
+  loadSignal: AbortSignal;
   previewSelector?: string
 }
 
-export function initMobilePreview({containerSelector, overlaySelector = ".mobile-preview-overlay", itemId = "mobilePreviewCard", btnId}: MobilePreviewProps) {
+export function initMobilePreview({containerSelector, loadSignal, overlaySelector = ".mobile-preview-overlay", itemId = "mobilePreviewCard", btnId}: MobilePreviewProps) {
   btnId = btnId ?? `btn${toPascalCase(itemId)}`;
   const overlay: HTMLElement | null = document.querySelector(overlaySelector);
   const btn: HTMLElement | null = document.getElementById(btnId);
@@ -29,8 +31,7 @@ export function initMobilePreview({containerSelector, overlaySelector = ".mobile
   btn.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
-    openPreview({modal, overlay, containerSelector});
-
+    openPreview({modal, overlay, containerSelector, loadSignal});
   });
 
   overlay.addEventListener('click', function() {
@@ -39,10 +40,10 @@ export function initMobilePreview({containerSelector, overlaySelector = ".mobile
   });
 }
 
-function openPreview ({modal, overlay, containerSelector, previewSelector = '#mobilePreviewCard'} : OpenPreviewProps) {
+async function openPreview ({modal, overlay, previewSelector = '#mobilePreviewCard', containerSelector, loadSignal} : OpenPreviewProps) {
   const container = getContainer(containerSelector);
-  const headerParent = container !== window ? container as HTMLElement : document;
-  const preview: HTMLElement | null = headerParent.querySelector(previewSelector);
+  const parentContainer = container !== window ? container as HTMLElement : document;
+  const preview: HTMLElement | null = parentContainer.querySelector(previewSelector);
 
   if (preview === null) return;
 
@@ -63,18 +64,21 @@ function openPreview ({modal, overlay, containerSelector, previewSelector = '#mo
 
   if (preview.dataset.iframeOpen === "true") return;
 
-  fetchFragment({path: `components/mobile-preview.html`,
-    validate: (response) => {
-      if (!response.ok) throw new Error('Mobile preview not found');
-      return true;
-    }
-  })
-  .then((html) => {
+  try {
+    const html = await fetchFragment({path: `components/mobile-preview.html`,
+      signal: loadSignal,
+      validate: (response) => {
+        if (!response.ok) throw new Error('Mobile preview not found');
+        return true;
+      }
+    })
+    
+    if (html === null) return;
+
     preview.innerHTML = html;
     preview.dataset.iframeOpen = "true";
-  })
-  .then(() =>{
     initCloseModalBtn(modal, overlay);
-  })
-  .catch((err) => console.error(err));
+  } catch(error) {
+    console.error(error)
+  };
 }
