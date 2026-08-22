@@ -11,6 +11,7 @@ interface PreviewSectionProps {
 }
 
 let previewsExpanded: number;
+
 export async function initPreviewSection({section, containerSelector, loadSignal}: PreviewSectionProps) {
   const Section = toPascalCase(section);
   const btn: HTMLAnchorElement | null = document.querySelector(`#btn${Section}Home`);
@@ -21,8 +22,11 @@ export async function initPreviewSection({section, containerSelector, loadSignal
 
   const defaultOrder: Record<PreviewViewKey, string >  = {work: '1', experience: '2'}
 
-  let closeTimer: number;
+  let isPreviewLoaded = false;
   previewsExpanded = 0;
+  let closeTimer: number;
+
+  if (peekWrapper === null || peekPanel === null) return;
 
   function open() {
     clearTimeout(closeTimer);
@@ -37,29 +41,17 @@ export async function initPreviewSection({section, containerSelector, loadSignal
     }, 200); // grace period to avoid flickering
   }
 
-  if (peekWrapper === null || peekPanel === null) return;
+  btn?.addEventListener("mouseenter", (event) => {
+    event.preventDefault();
+    ensurePreviewLoaded();
+  }, { once: true });
+
   btn?.addEventListener('mouseenter', () => {
     if (peekPanel?.classList.contains('expanded-preview')) return;
     peekWrapper.style.order = '0';
     open();
   });
-  btn?.addEventListener("mouseenter", (event) => {
-    event.preventDefault();
-    const previewSectionSelector = `#peek${Section}Home`;
-    loadView({view: section, bodyElement: peekPanel, containerSelector: previewSectionSelector, contentOnly: true})
-    .then(() => {
-      if (loadSignal.aborted) return;
 
-      const links = peekPanel.querySelectorAll('a');
-      links.forEach((link) => {
-        link.addEventListener("click", function (event) {
-          event.preventDefault();
-          const href = link.getAttribute('href');
-          loadView({view: href as ViewKey, bodyElement: undefined, containerSelector});
-        });
-      });
-    });
-  }, { once: true });
   btn?.addEventListener('mouseleave', () => {
     scheduleClose();
   });
@@ -79,6 +71,34 @@ export async function initPreviewSection({section, containerSelector, loadSignal
 
   peekBtn?.addEventListener("click", (event) => {
     event.preventDefault();
+
+    ensurePreviewLoaded(isPreviewLoaded).then(() => {
+      expandSectionPreview();
+    })
+  });
+
+  async function ensurePreviewLoaded(isLoaded: boolean = false) {
+    if (isLoaded === true) return;
+
+    const previewSectionSelector = `#peek${Section}Home`;
+    await loadView({view: section, bodyElement: peekPanel, containerSelector: previewSectionSelector, contentOnly: true})
+    .then(() => {
+      if (loadSignal.aborted) return;
+      isPreviewLoaded = true;
+
+      // Assign links to replace view, not preview window
+      const links = peekPanel.querySelectorAll('a');
+      links.forEach((link) => {
+        link.addEventListener("click", function (event) {
+          event.preventDefault();
+          const href = link.getAttribute('href');
+          loadView({view: href as ViewKey, bodyElement: undefined, containerSelector});
+        });
+      });
+    });
+  }
+
+  function expandSectionPreview() {
     peekWrapper.style.order = defaultOrder[section];
     peekPanel.classList.toggle('expanded-preview');
     const isExpanded = peekPanel.classList.contains('expanded-preview');
@@ -99,5 +119,5 @@ export async function initPreviewSection({section, containerSelector, loadSignal
       scrollToAnchor({target: peekWrapper, container, includeHeader: true}); // scroll to preview when multiple open
     }
     previewsExpanded ++;
-  });
+  }
 }
