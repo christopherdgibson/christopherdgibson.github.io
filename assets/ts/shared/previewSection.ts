@@ -14,59 +14,100 @@ let previewsExpanded: number;
 
 export async function initPreviewSection({section, containerSelector, loadSignal}: PreviewSectionProps) {
   const Section = toPascalCase(section);
-  const btn: HTMLAnchorElement | null = document.querySelector(`#btn${Section}Home`);
+  const sectionBtn: HTMLAnchorElement | null = document.querySelector(`#btn${Section}Home`);
   const hoverBridge: HTMLElement | null = document.querySelector('.hover-bridge');
   const peekWrapper: HTMLElement | null = document.querySelector(`.peek-wrapper.${section}`);
   const peekBtn: HTMLAnchorElement | null = document.querySelector(`#peekBtn${Section}`);
   const peekPanel: HTMLElement | null = document.querySelector(`#peek${Section}Home`);
+  const peekMobile: HTMLElement | null = document.querySelector(`.btn-preview-${section}`);
 
-  const defaultOrder: Record<PreviewViewKey, string >  = {work: '1', experience: '2'}
+  const defaultOrder: Record<PreviewViewKey, string>  = {work: '1', experience: '2'};
+
+  const hoverDelay = 200; // grace period to avoid hover flickering
 
   let isPreviewLoaded = false;
-  previewsExpanded = 0;
   let closeTimer: number;
+  let ariaTimer: number;
+  previewsExpanded = 0;
 
   if (peekWrapper === null || peekPanel === null) return;
 
-  function open() {
+  function open(element: HTMLElement = peekWrapper) {
     clearTimeout(closeTimer);
-    peekWrapper?.classList.add('expanded-preview');
+    element?.classList.add('expanded-preview');
   }
 
-  function scheduleClose() {
+  function scheduleClose(previewEls: HTMLElement[]) {
     if (peekPanel?.classList.contains('expanded-preview')) return;
     clearTimeout(closeTimer);
     closeTimer = setTimeout(() => {
-      peekWrapper?.classList.remove('expanded-preview');
-    }, 200); // grace period to avoid flickering
+      previewEls.forEach((previewEl) => {
+        previewEl?.classList.remove('expanded-preview');
+      });
+    }, hoverDelay);
   }
 
-  btn?.addEventListener("mouseenter", (event) => {
+  function scheduleAria(previewEl: HTMLElement, ariaHovered: boolean) {
+    clearTimeout(ariaTimer);
+    ariaTimer = setTimeout(() => {
+      previewEl.setAttribute('aria-hovered', ariaHovered.toString());
+    }, hoverDelay);
+  }
+
+  sectionBtn?.addEventListener('mouseenter', (event) => {
     event.preventDefault();
     ensurePreviewLoaded();
   }, { once: true });
 
-  btn?.addEventListener('mouseenter', () => {
+  sectionBtn?.addEventListener('mouseenter', () => {
     if (peekPanel?.classList.contains('expanded-preview')) return;
     peekWrapper.style.order = '0';
-    open();
+    if (window.innerWidth > 550) {
+      open(peekWrapper);
+    } else {
+      open(peekMobile);
+    }
+  });
+  
+  sectionBtn?.addEventListener('mouseleave', () => {
+    if (window.innerWidth > 550) {
+      scheduleClose([peekWrapper]);
+    } else {
+      scheduleClose([peekMobile, peekWrapper]); // peekWrapper necessary in case timer resets
+    }
   });
 
-  btn?.addEventListener('mouseleave', () => {
-    scheduleClose();
+  peekMobile.addEventListener('mouseenter', () => {
+    if (peekMobile?.classList.contains('expanded-preview') || peekMobile.getAttribute('aria-hovered') === 'true') {
+      scheduleAria(peekMobile, true);
+      open(peekWrapper);
+    }
+  });
+  peekMobile.addEventListener('mouseleave', () => {
+    scheduleClose([peekWrapper, peekMobile]); // peekMobile necessary in case timer resets
+    scheduleAria(peekMobile, false);
   });
 
   [peekWrapper, hoverBridge].forEach((el) => {
     el?.addEventListener('mouseenter', () => {
       if (peekWrapper.classList.contains('expanded-preview')) {
-        open();
+        open(peekWrapper);
+        open(peekMobile);
       }
     });
      el?.addEventListener('mouseleave', () => {
       if (peekWrapper.classList.contains('expanded-preview')) {
-        scheduleClose();
+        scheduleClose([peekWrapper, peekMobile]);
       }
     });
+  });
+
+  peekMobile.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    ensurePreviewLoaded(isPreviewLoaded).then(() => {
+      expandSectionPreview();
+    })
   });
 
   peekBtn?.addEventListener("click", (event) => {
