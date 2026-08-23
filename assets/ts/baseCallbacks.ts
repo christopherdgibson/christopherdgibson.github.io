@@ -1,4 +1,4 @@
-import { fetchSvgIcon, scrollToAnchor } from './shared/misc.js';
+import { scrollToAnchor } from './shared/misc.js';
 import { initCardOverlay } from './shared/overlays.js';
 import { initHref, loadView } from './router.js';
 import { getCleanElement, getCleanElements, getContainer } from './utils.js';
@@ -51,15 +51,6 @@ function addPulses(elements: NodeListOf<HTMLButtonElement>, delay: number, stagg
       el.classList.add('pulse-once');
       setTimeout(() => el.classList.remove('pulse-once'), 300);
     }, addTime);
-  });
-}
-
-export function initSvgIcons(iconSelector: string = ".svg-icon") {
-  const icons: NodeListOf<HTMLElement> = document.querySelectorAll(iconSelector);
-  if (!icons.length) return;
-  icons.forEach((icon) => {
-    if (!icon.dataset.target) return;
-    fetchSvgIcon(icon, `${icon.dataset.target}`);
   });
 }
 

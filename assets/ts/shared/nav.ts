@@ -26,7 +26,8 @@ interface NavClickProps extends BtnClickProps {
 export function initNavMenu({navSelector, navHtml, bodyElement = document.querySelector("#body-placeholder"), containerSelector}: NavMenuProps) {
   const navMenu = document.querySelector(navSelector);
   if (navMenu === null) return;
-  fetchFragment({path: `${navHtml}.html`})
+  const neverAbortSignal = () => new AbortController().signal; // always fully load navbar
+  fetchFragment({path: `${navHtml}.html`, signal: neverAbortSignal()})
   .then((data) => {
     navMenu.innerHTML = data;
     const navItems = navMenu.querySelectorAll('a');

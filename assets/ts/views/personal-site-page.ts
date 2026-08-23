@@ -26,11 +26,11 @@ export default [
     ({containerSelector, loadSignal}: CallbackProps) => initMobilePreview({containerSelector, loadSignal}),
     () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),
-    () => initMiniSiteOverlay(),
+    ({loadSignal}: CallbackProps) => initMiniSiteOverlay(loadSignal),
     () => initCurtainPreview()
 ] satisfies ViewCallback[];
 
-function initMiniSiteOverlay() {
+function initMiniSiteOverlay(loadSignal: AbortSignal) {
   let overlay = document.querySelector(".mini-site-overlay"); // do not need to initiate clean since closing refreshes index.html
   let btnLiveMiniSite: HTMLElement | null = document.querySelector("#btnMiniSite");
   let miniSite: HTMLElement | null = document.querySelector(".mini-site");
@@ -70,24 +70,26 @@ function initMiniSiteOverlay() {
 
     fetchFragment({
       path: 'index.html',
+      signal: loadSignal,
       validate: (response) => {
         if (!response.ok) throw new Error(`View not found: index`);
         return true;
       }
     })
     .then(data => {
+      if (data === null) return;
+
       const parser = new DOMParser();
       const doc = parser.parseFromString(data, 'text/html');
       miniSite.innerHTML = doc.body.innerHTML;
-    })
-    .then(() => {
-      let bodyMini: HTMLElement | null = document.querySelector('#body-placeholder');
       // if (bodyMini && !document.querySelector('#nav-placeholder')) {
       //   window.location.href = "index.html";
       //   loadView('personal-site-page.html');
       //   return;
       // }
       fetchIndexSvgIcons();
+    }).then(() => {
+      let bodyMini: HTMLElement | null = document.querySelector('#body-placeholder');
       initNavMenu({navSelector: '#nav-placeholder', navHtml: 'nav', bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'});
       loadView({view: "personal-site-page", bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'});
     })

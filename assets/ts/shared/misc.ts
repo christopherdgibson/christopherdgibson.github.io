@@ -7,14 +7,21 @@ interface ScrollToAnchorProps {
 
 interface FetchFragmentProps {
   path: string;
-  signal?: AbortSignal;
+  signal: AbortSignal;
   validate?: (response: Response) => boolean;
 }
 
-export function fetchSvgIcon(iconEl: HTMLElement | null, iconName: string) {
+interface FetchSvgIconProps {
+  iconEl?: HTMLElement;
+  iconName: string;
+  signal: AbortSignal;
+}
+
+export async function fetchSvgIcon({iconEl, iconName, signal}: FetchSvgIconProps) {
   if (!iconEl) return;
-  fetchFragment({
+  await fetchFragment({
     path: `svgs/${iconName}.svg`,
+    signal,
     validate: (response) => {
       const contentType = response.headers.get("content-type");
       return !!contentType && contentType.includes("svg");
@@ -24,12 +31,16 @@ export function fetchSvgIcon(iconEl: HTMLElement | null, iconName: string) {
     if (!svg) return;
     iconEl.innerHTML = svg;
   })
-  .catch((error) => console.error("SVG load failed:", error));
+  .catch((error) => {
+    if (error.name === 'AbortError') return;
+    console.error("SVG load failed:", error)
+  });
 }
 
-export function fetchIndexSvgIcons() {
+export async function fetchIndexSvgIcons() {
+  const neverAbortSignal = () => new AbortController().signal;
   const linkedInIcon: HTMLElement | null = document.querySelector("#footerIcon");
-  fetchSvgIcon(linkedInIcon, "linkedin");
+  await fetchSvgIcon({iconEl: linkedInIcon, iconName: "linkedin", signal: neverAbortSignal()});
 }
 
 export async function fetchFragment({path, signal, validate = (response) => response.ok}: FetchFragmentProps): Promise<string | null> {

@@ -1,4 +1,4 @@
-import { initSvgIcons } from '../baseCallbacks.js';
+import { initSvgIcons } from '../asyncCallbacks.js';
 import { fetchFragment  } from './misc.js';
 
 interface PopulateContactProps {
@@ -24,7 +24,7 @@ export async function populateContactAsync({triggerSelector = "contact-trigger",
     if (loadSignal.aborted) return;
     
     target.innerHTML = html;
-    initSvgIcons('.spill-icon');
+    initSvgIcons({bodyElement: undefined, iconSelector: '.spill-icon', signal: loadSignal});
     initContactIcons(triggerSelector, envelopeSelector, pageTagSelector);
   })
   .catch((err) => console.error(err));

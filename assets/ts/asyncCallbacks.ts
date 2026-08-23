@@ -9,16 +9,22 @@ interface InitHrefsProps {
   viewSelector?: string;
 }
 
+interface InitSvgProps {
+  bodyElement: HTMLElement;
+  iconSelector?: string;
+  signal: AbortSignal;
+}
+
 interface AsyncCallbackProps extends CallbackProps {
     contentOnly?: boolean;
 }
 
-export function getAsyncCallbacks({bodyElement, containerSelector, contentOnly}: AsyncCallbackProps) {
+export function getAsyncCallbacks({bodyElement, containerSelector, loadSignal, contentOnly}: AsyncCallbackProps) {
   return [
     ...(contentOnly === false ? [
         () => initHrefs({bodyElement, containerSelector}), // override for contentOnly to avoid document-wide event stacking
     ] : []),
-    () => initSvgIcons({bodyElement})
+    () => initSvgIcons({bodyElement, signal: loadSignal})
   ] satisfies ViewCallback[];
 }
 
@@ -29,13 +35,13 @@ function initHrefs({viewSelector, bodyElement=document.querySelector('#body-plac
     })
 }
 
-export function initSvgIcons({bodyElement, iconSelector = ".svg-icon"}: {bodyElement?: HTMLElement, iconSelector?: string}) {
+export async function initSvgIcons({bodyElement, iconSelector = ".svg-icon", signal}: InitSvgProps) {
     const parentNode = bodyElement ? bodyElement : document;
     const icons: NodeListOf<HTMLElement> = parentNode.querySelectorAll(iconSelector);
     if (!icons.length) return;
-    
-    icons.forEach((icon) => {
+
+    await Promise.all(Array.from(icons).map(async (icon) => {
         if (!icon.dataset.target) return;
-        fetchSvgIcon(icon, `${icon.dataset.target}`);
-    });
+        fetchSvgIcon({iconEl: icon, iconName: `${icon.dataset.target}`, signal});
+    }));
 }

@@ -90,7 +90,7 @@ export async function loadView({
 
     const baseCallbacks = getBaseCallbacks(containerSelector, contentOnly);
     const viewSpecific = viewCallbacks[view as ViewCallbackKey] ?? [];
-    const asyncCallbacks = getAsyncCallbacks({bodyElement, containerSelector, contentOnly});
+    const asyncCallbacks = getAsyncCallbacks({bodyElement, containerSelector, loadSignal, contentOnly});
     const callbacks = [...baseCallbacks, ...viewSpecific, ...asyncCallbacks];
     if (callbacks.length === 0) return;
 
