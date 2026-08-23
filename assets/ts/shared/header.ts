@@ -1,4 +1,4 @@
-import { fetchFragment } from './misc.js';
+import { fetchFragment } from './asyncFetch.js';
 import { loadView } from '../router.js';
 import { getContainer } from '../utils.js';
 

@@ -1,4 +1,4 @@
-import { fetchFragment } from '../shared/misc.js';
+import { fetchFragment } from '../shared/asyncFetch.js';
 import { initCloseModalBtn, closeOverlays } from '../shared/overlays.js';
 import { getContainer, removeClasses, toPascalCase } from '../utils.js';
 
