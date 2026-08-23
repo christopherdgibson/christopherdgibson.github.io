@@ -1,4 +1,4 @@
-import { fetchSvgIcon } from './shared/misc.js';
+import { fetchSvgIcon } from './shared/asyncFetch.js';
 import { initHref } from './router.js';
 
 import type { CallbackProps, ViewCallback } from './types.js';

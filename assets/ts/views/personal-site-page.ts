@@ -1,8 +1,9 @@
+import { fetchFragment, fetchIndexSvgIcons } from '../shared/asyncFetch.js';
 import { initCurtainPreview } from '../components/curtain-preview.js';
 import { initMobilePreview } from '../components/mobile-preview.js';
 import { initCarousel } from '../shared/carousel.js';
 import { initHeaderLink, initMockHeaderAsync } from '../shared/header.js';
-import { fetchFragment, fetchIndexSvgIcons, initScrollToTop } from '../shared/misc.js';
+import { initScrollToTop } from '../shared/misc.js';
 import { initNavMenu } from '../shared/nav.js';
 import { closeOverlays, initCardOverlay } from '../shared/overlays.js';
 import { loadView } from '../router.js';

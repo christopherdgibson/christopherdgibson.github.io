@@ -1,5 +1,5 @@
+import { fetchFragment } from './asyncFetch.js';
 import { initHeaderSweep } from './header.js';
-import { fetchFragment } from './misc.js';
 import { initHref, loadView } from '../router.js';
 
 import type { ViewKey } from '../types.js';

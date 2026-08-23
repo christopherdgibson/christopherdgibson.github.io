@@ -1,5 +1,5 @@
 import { initSvgIcons } from '../asyncCallbacks.js';
-import { fetchFragment  } from './misc.js';
+import { fetchFragment } from './asyncFetch.js';
 
 interface PopulateContactProps {
   triggerSelector?: string;

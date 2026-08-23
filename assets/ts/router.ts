@@ -1,7 +1,8 @@
 import { getBaseCallbacks } from './baseCallbacks.js';
 import { viewCallbacks } from './viewCallbacks.js';
 import { getAsyncCallbacks } from './asyncCallbacks.js';
-import { fetchFragment, scrollToTop } from './shared/misc.js';
+import { fetchFragment } from './shared/asyncFetch.js';
+import { scrollToTop } from './shared/misc.js';
 import { ensureNavMenu } from './shared/nav.js';
 import { isViewKey } from './types.js';
 import { getContainer, normalizeViewPath, toPageTitleCase } from './utils.js';

@@ -1,5 +1,5 @@
+import { fetchFragment } from './asyncFetch.js';
 import { initMockHeaderAsync } from './header.js';
-import { fetchFragment } from './misc.js';
 
 interface ProjectCardProps {
   cardSelector: string;

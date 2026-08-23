@@ -1,5 +1,6 @@
+import { fetchIndexSvgIcons } from './shared/asyncFetch.js';
 import { initHeaderLink } from './shared/header.js';
-import { fetchIndexSvgIcons, initScrollToTop } from './shared/misc.js';
+import { initScrollToTop } from './shared/misc.js';
 import { initRouter } from './router.js';
 
 // Global variables in index.html for single query and reuse
