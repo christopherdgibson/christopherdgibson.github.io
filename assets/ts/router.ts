@@ -175,34 +175,32 @@ export function initRouter(): Promise<void> {
 
   // Handle refresh - check URL on page load
   return new Promise<void>((resolve) => {
-  const handleInitialLoad = () => {
-    const base = import.meta.env.BASE_URL;
-    let initialLoad: Promise<unknown>;
+    const handleInitialLoad = () => {
+      const base = import.meta.env.BASE_URL;
+      let initialLoad: Promise<unknown>;
 
-    // Check for 404 redirect first
-    const redirect = sessionStorage.getItem("redirect");
-    if (redirect) {
-      sessionStorage.removeItem("redirect");
-      const view = normalizeViewPath(redirect, base);
-      history.replaceState({ view, containerSelector: undefined }, "", `${base}${view}`);
-      initialLoad = loadView({view: view as ViewKey, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false});
-    } else {
+      // Check for 404 redirect first
+      const redirect = sessionStorage.getItem("redirect");
+      if (redirect) {
+        sessionStorage.removeItem("redirect");
+        const view = normalizeViewPath(redirect, base);
+        history.replaceState({ view, containerSelector: undefined }, "", `${base}${view}`);
+        initialLoad = loadView({view: view as ViewKey, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false});
+      } else {
+        // Otherwise handle normal refresh/direct navigation
+        const path = normalizeViewPath(window.location.pathname, base);
+        if (path && path !== "index.html") {
+          history.replaceState({ view: path }, "", `${base}${path}`);
+          initialLoad = loadView({view: path as ViewKey, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false}); // loadView validates cast internally
+        } else {
+          history.replaceState({ view: 'home' }, "", `${base}home`);
+          initialLoad = loadView({view: 'home', bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false}); // default view
+        }
+      }
 
-    // Otherwise handle normal refresh/direct navigation
-    const path = normalizeViewPath(window.location.pathname, base);
-
-    if (path && path !== "index.html") {
-      history.replaceState({ view: path }, "", `${base}${path}`);
-      initialLoad = loadView({view: path as ViewKey, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false}); // loadView validates cast internally
-    } else {
-      history.replaceState({ view: 'home' }, "", `${base}home`);
-      initialLoad = loadView({view: 'home', bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false}); // default view
-    }
-  }
-
-    // Resolve either way if load fails
-    initialLoad.then(() => resolve(), () => resolve());
-  };
+      // Resolve even if load fails
+      initialLoad.then(() => resolve(), () => resolve());
+    };
 
     if (document.readyState === "loading") {
       window.addEventListener("DOMContentLoaded", handleInitialLoad, { once: true });
