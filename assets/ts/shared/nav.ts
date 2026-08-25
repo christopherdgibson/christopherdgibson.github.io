@@ -42,9 +42,6 @@ export function initNavMenu({navSelector, navHtml, bodyElement = document.queryS
     if (header !== null) {
       header.removeAttribute('style');
     }
-    if (body !== null) {
-      body.removeAttribute('style');
-    }
   });
 }
 

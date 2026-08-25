@@ -1,6 +1,7 @@
 import { fetchIndexSvgIcons } from './shared/asyncFetch.js';
 import { initHeaderLink } from './shared/header.js';
 import { initScrollToTop } from './shared/misc.js';
+import { hideStartupOverlay } from './shared/overlays.js';
 import { initRouter } from './router.js';
 
 // Global variables in index.html for single query and reuse
@@ -8,10 +9,23 @@ import { initRouter } from './router.js';
 
 /* ────────── Initialise on start-up ────────── */
 
-fetchIndexSvgIcons();
+async function bootstrap() {
+    await Promise.all([
+        fetchIndexSvgIcons(),
+        initScrollToTop(),
+        initHeaderLink(),
+        initRouter()
+    ]);
 
-/* ─── Index-page listeners ─── */
+    hideStartupOverlay(true);
+}
 
-initScrollToTop();
-initHeaderLink();
-initRouter();
+bootstrap();
+
+/* ────────── Remove overlay failsafe ────────── */
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        hideStartupOverlay(true);
+    }, 3000);
+});

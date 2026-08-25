@@ -1,6 +1,20 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <style>
+      #startupOverlay {
+        position: fixed;
+        inset: 0;
+        background: #0d1f2d;
+        z-index: 100;
+        opacity: 1;
+      }
+      #startupOverlay.hidden {
+        transition: opacity 0.15s ease-out;
+        opacity: 0;
+        pointer-events: none;
+      }
+    </style>
     <base href="/" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,11 +22,12 @@
     <link rel="stylesheet" href="/assets/styles/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico"/>
   </head>
 
-  <body style="background-color: #0d1f2d;">
-    <header id="header" class="header" style="display: none;">
+  <div id="startupOverlay"></div>
+  <body>
+    <header id="header" class="header" style="display: none">
       <h1>
         <a id="headerLink" class="header-link" href="#"
           ><span class="header-name">Christopher Gibson</span></a

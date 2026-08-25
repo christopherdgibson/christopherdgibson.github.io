@@ -1,5 +1,13 @@
 import { toPascalCase, removeClasses } from '../utils.js';
 
+export function hideStartupOverlay(hide: boolean, overlay: HTMLElement = document.getElementById('startupOverlay')) {
+  overlay?.addEventListener('transitionend', () => {
+      overlay?.remove();
+  });
+
+  overlay?.classList.toggle('hidden', hide);
+}
+
 export function initCardOverlay(overlaySelector: string, itemId: string, btnId?: string) {
   btnId = btnId ?? `btn${toPascalCase(itemId)}`;
   const overlay: HTMLElement | null = document.querySelector(overlaySelector);

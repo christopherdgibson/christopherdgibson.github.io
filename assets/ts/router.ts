@@ -147,12 +147,12 @@ export async function loadView({
 
 /* ─── Navigation handling with History API and graceful fallback ─── */
 
-export function initRouter() {
+export function initRouter(): Promise<void> {
   // Override native browser restoration
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
   }
-  
+
   // Listen for back/forward button
   window.addEventListener("popstate", (event) => {
     if (event.state && event.state.view) {
@@ -174,8 +174,10 @@ export function initRouter() {
   });
 
   // Handle refresh - check URL on page load
-  window.addEventListener("DOMContentLoaded", () => {
+  return new Promise<void>((resolve) => {
+  const handleInitialLoad = () => {
     const base = import.meta.env.BASE_URL;
+    let initialLoad: Promise<unknown>;
 
     // Check for 404 redirect first
     const redirect = sessionStorage.getItem("redirect");
@@ -183,19 +185,30 @@ export function initRouter() {
       sessionStorage.removeItem("redirect");
       const view = normalizeViewPath(redirect, base);
       history.replaceState({ view, containerSelector: undefined }, "", `${base}${view}`);
-      loadView({view: view as ViewKey, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false});
-      return; // Exit early after handling the redirect
-    }
+      initialLoad = loadView({view: view as ViewKey, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false});
+    } else {
 
     // Otherwise handle normal refresh/direct navigation
     const path = normalizeViewPath(window.location.pathname, base);
 
     if (path && path !== "index.html") {
       history.replaceState({ view: path }, "", `${base}${path}`);
-      loadView({view: path as ViewKey, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false}); // loadView validates cast internally
+      initialLoad = loadView({view: path as ViewKey, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false}); // loadView validates cast internally
     } else {
       history.replaceState({ view: 'home' }, "", `${base}home`);
-      loadView({view: 'home', bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false}); // default view
+      initialLoad = loadView({view: 'home', bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false}); // default view
+    }
+  }
+
+    // Resolve either way if load fails
+    initialLoad.then(() => resolve(), () => resolve());
+  };
+
+    if (document.readyState === "loading") {
+      window.addEventListener("DOMContentLoaded", handleInitialLoad, { once: true });
+    } else {
+      // Handle directly in case DOMContentLoaded already fired
+      handleInitialLoad();
     }
   });
 }
