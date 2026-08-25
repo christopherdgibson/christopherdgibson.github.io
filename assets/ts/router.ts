@@ -165,12 +165,6 @@ export function initRouter() {
     // Otherwise handle normal refresh/direct navigation
     const path = normalizeViewPath(window.location.pathname, base);
 
-    if (path === 'wp-agenda-block') {
-      history.replaceState({ view: 'wordpress-plugins' }, "", location.href);
-      loadView({view: 'wordpress-plugins', bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false});
-      return;
-    }
-
     if (path && path !== "index.html") {
       history.replaceState({ view: path }, "", `${base}${path}`);
       loadView({view: path as ViewKey, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false}); // loadView validates cast internally
