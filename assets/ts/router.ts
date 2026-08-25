@@ -65,7 +65,18 @@ export async function loadView({
     });
 
     if (html === null) return;
+    
+    if (updateHistory && !contentOnly) {
+      const container = getContainer(containerSelector);
+      const scrollY = container === window ? window.scrollY : (container as HTMLElement).scrollTop;
 
+      history.replaceState(
+        { ...history.state, scroll: scrollY },
+        "",
+        location.href
+      );
+    }
+    
     bodyElement.innerHTML = html;
 
     let title = document.querySelector("#title-placeholder");
@@ -137,11 +148,25 @@ export async function loadView({
 /* ─── Navigation handling with History API and graceful fallback ─── */
 
 export function initRouter() {
+  // Override native browser restoration
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  
   // Listen for back/forward button
   window.addEventListener("popstate", (event) => {
     if (event.state && event.state.view) {
-      const { view, containerSelector } = event.state;
-      loadView({view, bodyElement: undefined, containerSelector, contentOnly: false, updateHistory: false});
+      const { view, containerSelector, scroll } = event.state;
+      loadView({view, bodyElement: undefined, containerSelector, contentOnly: false, updateHistory: false})
+      .then(() => {
+        const container = getContainer(containerSelector);
+        const target = scroll ?? 0;
+        if (container === window) {
+          window.scrollTo(0, target);
+        } else {
+          container.scrollTo(0, target);
+        }
+      });
     } else {
       // Load default/home view
       loadView({view: "home", bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false});
