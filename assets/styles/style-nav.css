@@ -44,10 +44,6 @@ nav {
       text-decoration: none;
     }
 
-    li:hover {
-      cursor: pointer;
-    }
-
     /* Desktop dropdown - hide by default */
     ul li ul {
       opacity: 0;
@@ -85,10 +81,7 @@ nav {
     ul.nav-menu-top > li {
       > a, > label {
         transition: all var(--navbar-transition);
-      }
-
-      &:hover {
-        > a, > label {
+        &:hover {
           color: var(--navbar-accent-color);
         }
       }
@@ -113,9 +106,13 @@ nav {
 
     /* Show desktop dropdown on hover */
     @media (min-width: 768px) {
-      ul.nav-menu-top li ul li:hover:not(.dropdown-header-mobile) a .page-title {
+      ul.nav-menu-top li ul li a:hover .page-title {
         padding-left: 10px;
         border-left: var(--navbar-border);
+        color: var(--navbar-accent-color);
+      }
+
+      li.has-dropdown:has(ul:hover) a.desktop-link {
         color: var(--navbar-accent-color);
       }
     }
@@ -340,8 +337,8 @@ nav ul li.menu-icon-item {
     }
 
     /* Mobile items only on first layer */
-    &.nav-menu-top > li:hover {
-      > a, > label {
+    &.nav-menu-top > li {
+      > a:hover, > label:hover {
         padding-left: 10px;
         border-left: var(--navbar-border);
       }
@@ -382,19 +379,20 @@ nav ul li.menu-icon-item {
 
       /* Hover effects only on desktop */
       @media (hover: hover) and (pointer: fine) {
-        &:hover:not(.dropdown-header-mobile):not(.dropdown-back) {
-          > a .page-title,
-          > label {
+        :not(.dropdown-header-mobile):not(.dropdown-back) {
+
+          > a:hover .page-title,
+          > label:hover {
             padding-left: 10px;
             border-left: var(--navbar-border);
             color: var(--navbar-accent-color);
-            
+
             > span.stack-label {
               color: white;
             }
           }
         }
-        &:hover.dropdown-header-mobile a {
+        &.dropdown-header-mobile a:hover {
           animation: notification-bump 0.45s ease-out;
           color: var(--navbar-accent-color);
         }
