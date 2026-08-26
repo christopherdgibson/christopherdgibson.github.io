@@ -42,7 +42,6 @@ nav {
     li a, li label {
       color: white;
       text-decoration: none;
-      transition: all var(--navbar-transition); /* Handles all a transitions */
     }
 
     li:hover {
@@ -82,9 +81,28 @@ nav {
       text-align: left;
     }
 
+    /* Desktop and mobile items on first layer */
+    ul.nav-menu-top > li {
+      > a, > label {
+        transition: all var(--navbar-transition);
+      }
+
+      &:hover {
+        > a, > label {
+          color: var(--navbar-accent-color);
+        }
+      }
+    }
+
+    /* Handles all sub-menu title transitions */
+    li a .page-title {
+      display: block;
+      transition: all var(--navbar-transition);
+    }
+
     /* Border transition for all */
     ul li {
-      a, label {
+      a, a .page-title, label {
         border-left: 0px solid transparent;
       }
     }
@@ -93,16 +111,9 @@ nav {
       opacity: 1;
     }
 
-    /* Desktop and mobile items on first layer */
-    ul.nav-menu-top > li:hover {
-      > a, > label {
-        color: var(--navbar-accent-color);
-      }
-    }
-
     /* Show desktop dropdown on hover */
     @media (min-width: 768px) {
-      ul.nav-menu-top li ul li:hover:not(.dropdown-header-mobile) a {
+      ul.nav-menu-top li ul li:hover:not(.dropdown-header-mobile) a .page-title {
         padding-left: 10px;
         border-left: var(--navbar-border);
         color: var(--navbar-accent-color);
@@ -342,7 +353,8 @@ nav ul li.menu-icon-item {
       font-family: "DM Serif Display", serif;
       border-bottom: none !important;
       padding: 10px 0 !important;
-      a {
+      
+      a .page-title {
         font-size: 2rem;
         font-weight: 500;
         width: min-content;
@@ -371,11 +383,15 @@ nav ul li.menu-icon-item {
       /* Hover effects only on desktop */
       @media (hover: hover) and (pointer: fine) {
         &:hover:not(.dropdown-header-mobile):not(.dropdown-back) {
-          > a,
+          > a .page-title,
           > label {
             padding-left: 10px;
             border-left: var(--navbar-border);
             color: var(--navbar-accent-color);
+            
+            > span.stack-label {
+              color: white;
+            }
           }
         }
         &:hover.dropdown-header-mobile a {
