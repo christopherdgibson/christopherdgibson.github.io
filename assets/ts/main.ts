@@ -28,4 +28,4 @@ window.addEventListener('load', () => {
     setTimeout(() => {
         hideStartupOverlay(true);
     }, 3000);
-});
+}, {once: true});

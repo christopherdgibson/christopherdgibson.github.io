@@ -6,6 +6,10 @@ export function hideStartupOverlay(hide: boolean, overlay: HTMLElement = documen
   });
 
   overlay?.classList.toggle('hidden', hide);
+
+  setTimeout(() => {
+      overlay?.remove();
+  }, 5000);
 }
 
 export function initCardOverlay(overlaySelector: string, itemId: string, btnId?: string) {
