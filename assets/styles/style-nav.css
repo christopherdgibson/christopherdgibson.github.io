@@ -100,12 +100,29 @@ nav {
       }
     }
 
-    ul li ul li:hover .stack-label {
+    ul li ul li a:hover .stack-label {
       opacity: 1;
     }
 
     /* Show desktop dropdown on hover */
     @media (min-width: 768px) {
+      ul.nav-menu-top li.has-dropdown {
+        line-height: 0;
+        padding: 15px 10px;
+        
+        > a {
+          padding: 15px 0;
+        }
+      
+        ul {
+          margin-top: 15px;
+        }
+      }
+      
+      ul.nav-menu-top li:hover > ul {
+        line-height: 1.95;
+      }
+
       ul.nav-menu-top li ul li a:hover .page-title {
         padding-left: 10px;
         border-left: var(--navbar-border);
