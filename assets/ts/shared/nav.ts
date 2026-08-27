@@ -1,8 +1,6 @@
 import { fetchFragment } from './asyncFetch.js';
 import { initHeaderSweep } from './header.js';
-import { initHref, loadView } from '../router.js';
-
-import type { ViewKey } from '../types.js';
+import { initHref } from '../router.js';
 
 type NavMenuProps = {
   navSelector: string;
@@ -11,38 +9,28 @@ type NavMenuProps = {
   containerSelector?: string;
 }
 
-interface BtnClickProps {
-  selector: string;
-  view: ViewKey;
-  containerSelector?: string;
-}
-
-interface NavClickProps extends BtnClickProps {
-  bodyElement: Element | null;
-}
-
 /* ────────── Load navbar and menu events ────────── */
 
-export function initNavMenu({navSelector, navHtml, bodyElement = document.querySelector("#body-placeholder"), containerSelector}: NavMenuProps) {
+export async function initNavMenu({navSelector, navHtml, bodyElement = document.querySelector("#body-placeholder"), containerSelector}: NavMenuProps) {
   const navMenu = document.querySelector(navSelector);
   if (navMenu === null) return;
+
   const neverAbortSignal = () => new AbortController().signal; // always fully load navbar
-  fetchFragment({path: `${navHtml}.html`, signal: neverAbortSignal()})
-  .then((data) => {
-    navMenu.innerHTML = data;
-    const navItems = navMenu.querySelectorAll('a');
-    initHeaderSweep();
-    navItems.forEach(link => {
-      initHref({link, bodyElement, containerSelector, checkView: false}) // let loadView throw
-    })
-  })
-  .then(() => {
-    const body: HTMLElement | null = document.querySelector("body");
-    const header: HTMLElement | null = document.querySelector("#header");
-    if (header !== null) {
-      header.removeAttribute('style');
-    }
+  const data = await fetchFragment({path: `${navHtml}.html`, signal: neverAbortSignal()});
+  
+  if (data === null) return;
+
+  navMenu.innerHTML = data;
+  const navItems = navMenu.querySelectorAll('a');
+  initHeaderSweep();
+  navItems.forEach(link => {
+    initHref({link, bodyElement, containerSelector, checkView: false}); // let loadView throw
   });
+
+  const header: HTMLElement | null = document.querySelector("#header");
+  if (header !== null) {
+    header.removeAttribute('style');
+  }
 }
 
 export function ensureNavMenu({navSelector = '#nav-placeholder', navHtml = 'nav', bodyElement, containerSelector}: NavMenuProps) {
@@ -50,13 +38,4 @@ export function ensureNavMenu({navSelector = '#nav-placeholder', navHtml = 'nav'
   if (navPlaceholder && navPlaceholder.childElementCount === 0) {
     initNavMenu({navSelector: '#nav-placeholder', navHtml, bodyElement, containerSelector});
   }
-}
-
-export function addBtnListener({selector, view, containerSelector}: BtnClickProps) {
-  const el = document.querySelector(selector);
-  if (!el) return;
-  el.addEventListener("click", function (event) {
-    event.preventDefault();
-    loadView({view, bodyElement: undefined, containerSelector});
-  });
 }

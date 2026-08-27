@@ -5,6 +5,7 @@ import { initNavMenu } from '../shared/nav.js';
 import { closeOverlays, hideStartupOverlay, initCardOverlay } from '../shared/overlays.js';
 import { loadView } from '../router.js';
 import { removeClasses } from '../utils.js';
+import { ViewKey } from '../types.js';
 
 export async function initMiniSiteOverlay(loadSignal: AbortSignal) {
     let overlay = document.querySelector(".mini-site-overlay"); // do not need to initiate clean since closing refreshes index.html
@@ -28,9 +29,14 @@ export async function initMiniSiteOverlay(loadSignal: AbortSignal) {
         return;
     }
 
-    btnLiveMiniSite.addEventListener("click", function (e) {
+    btnLiveMiniSite.addEventListener("click", async function (e) {
         e.preventDefault();
         e.stopPropagation();
+
+        // Prevent double-clicks from continuing
+        if (document.querySelector(".mini-site.expanded-mini-site")) {
+            return;
+        };
 
         closeOverlays([".card-overlay", ".screenshot-overlay"].join(",")); // in case other overlays are open
         removeClasses(['expanded', 'view-nav']); // in case other cards are expanded
@@ -39,40 +45,41 @@ export async function initMiniSiteOverlay(loadSignal: AbortSignal) {
                 el.removeAttribute('id');
             }
         });
+
         const headerOuter = document.querySelector("header");
         if (headerOuter) {
             headerOuter.style.display = "none";
         }
+        
         miniSite.classList.add("expanded-mini-site");
         overlay.classList.add("active-mini-site");
 
-        fetchFragment({
-            path: 'index.html',
-            signal: loadSignal,
-            validate: (response) => {
-                if (!response.ok) throw new Error(`View not found: index`);
-                return true;
-            }
-        })
-        .then(data => {
+        try {
+            const data = await fetchFragment({
+                path: 'index.html',
+                signal: loadSignal,
+                validate: (response) => {
+                    if (!response.ok) throw new Error(`View not found: index`);
+                    return true;
+                }
+            });
+
             if (data === null) return;
 
             const parser = new DOMParser();
             const doc = parser.parseFromString(data, 'text/html');
+            if (!doc.querySelector('#nav-placeholder')) {
+                throw new Error("Fetched index.html missing expected structure (#nav-placeholder)");
+            }
+
             miniSite.innerHTML = doc.body.innerHTML;
-            // if (bodyMini && !document.querySelector('#nav-placeholder')) {
-            //   window.location.href = "index.html";
-            //   loadView('personal-site-page.html');
-            //   return;
-            // }
-            fetchIndexSvgIcons();
-        })
-        .then(() => {
-            let bodyMini: HTMLElement | null = document.querySelector('#body-placeholder');
-            initNavMenu({navSelector: '#nav-placeholder', navHtml: 'nav', bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'});
-            loadView({view: "personal-site-page", bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'});
-        })
-        .then(() => {
+            const bodyMini: HTMLElement | null = document.querySelector('#body-placeholder');
+            await Promise.all([
+                fetchIndexSvgIcons(),
+                initNavMenu({navSelector: '#nav-placeholder', navHtml: 'nav', bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'}),
+                loadView({view: "personal-site-page", bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'}),
+            ]);
+
             initScrollToTop(miniSite);
             initHeaderLink();
 
@@ -90,14 +97,19 @@ export async function initMiniSiteOverlay(loadSignal: AbortSignal) {
                 resizeObserver.observe(header);
             }
 
-            overlay.addEventListener("click", function () {
-                sessionStorage.setItem("redirect", "personal-site-page");
-                window.location.href = "/";
-            });
-        })
-        .then(() => {
-            const startupOverlay = document.getElementById('startupOverlay');
-            hideStartupOverlay(true, startupOverlay);
-        });
+            overlay.addEventListener("click", () =>
+                restorePage('personal-site-page')
+            );
+        } catch (error) {
+            console.error("Failed to load mini-site:", error);
+            restorePage('personal-site-page');
+        } finally {
+            hideStartupOverlay(true);
+        }
     });
+}
+
+function restorePage(view: ViewKey) {
+    sessionStorage.setItem("redirect", view);
+    window.location.href = "/";
 }

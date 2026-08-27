@@ -15,6 +15,7 @@ interface LoadViewProps {
   containerSelector?: string;
   contentOnly?: boolean;
   updateHistory?: boolean;
+  triggerAbort?: boolean;
 }
 
 interface InitHrefProps {
@@ -34,11 +35,12 @@ export async function loadView({
   bodyElement = document.querySelector("#body-placeholder"), // body element to replace with default
   containerSelector, // string selector for container reference, defaults to window
   contentOnly = false, // true if view is only to display content and is not a page navigation (e.g., skips history, footer buttons, and scrollToTop)
-  updateHistory = true // false when called from popstate or initial load
+  updateHistory = true, // false when called from popstate or initial load
+  triggerAbort = !contentOnly // aborts pending fetches if true
 }: LoadViewProps)
 {
   // Re-use controller and do not abort for contentOnly load
-  if (!contentOnly || currentController === null) {
+  if (triggerAbort || currentController === null) {
     currentController?.abort();
     currentController = new AbortController();
   }
