@@ -17,6 +17,22 @@ nav {
       display: none;
     }
 
+    .navlink-char {
+      display: inline-block;
+      transition: color ease;
+      transition-duration: 0.3s;
+    }
+
+    a {
+      .navlink-char.swept {
+        color: color-mix(white, 80% var(--navbar-accent-color));
+      }
+
+      &:hover:not(.active-section) .navlink-char.swept {
+        color: var(--navbar-accent-color);
+      }
+    }
+
     .nav-menu-top > li:not(:nth-child(2)) {
       border-left: var(--navbar-border);
     }
@@ -80,7 +96,10 @@ nav {
     /* Desktop and mobile items on first layer */
     ul.nav-menu-top > li {
       > a, > label {
-        transition: all var(--navbar-transition);
+        &:not(.desktop-link) { /* Avoid competing navlink-char transitions */
+          transition: all var(--navbar-transition);
+        }
+
         &:hover {
           color: var(--navbar-accent-color);
         }
@@ -109,7 +128,7 @@ nav {
       ul.nav-menu-top li.has-dropdown {
         line-height: 0;
         padding: 15px 10px;
-        
+
         > a {
           padding: 15px 0;
         }

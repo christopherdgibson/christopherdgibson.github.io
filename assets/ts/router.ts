@@ -4,7 +4,7 @@ import { getAsyncCallbacks } from './asyncCallbacks.js';
 import { fetchFragment } from './shared/asyncFetch.js';
 import { scrollToTop } from './shared/misc.js';
 import { ensureNavMenu } from './shared/nav.js';
-import { isViewKey } from './types.js';
+import { isViewKey, getNavbarSection } from './types.js';
 import { getContainer, normalizeViewPath, toPageTitleCase } from './utils.js';
 
 import type { ViewCallbackKey, ViewKey } from './types.js';
@@ -24,6 +24,12 @@ interface InitHrefProps {
   bodyElement?: HTMLElement;
   containerSelector: string;
   checkView?: boolean;
+}
+
+interface SweepSpanLeftProps {
+  nameChars: NodeListOf<HTMLElement>;
+  charCount?: number;
+  className?: string;
 }
 
 /* ────────── SPA swapping logic ────────── */
@@ -52,7 +58,7 @@ export async function loadView({
     return;
   }
   if (view !== "home" && !contentOnly) { // load navbar once after home page
-      ensureNavMenu({navSelector: '#nav-placeholder', navHtml: 'nav', bodyElement, containerSelector});
+      await ensureNavMenu({navSelector: '#nav-placeholder', navHtml: 'nav', bodyElement, containerSelector});
   }  
   try{
     if (!isViewKey(view)) throw new Error(`Invalid view name: ${view}`);
@@ -134,6 +140,7 @@ export async function loadView({
     if (contentOnly === false) {
       const container = getContainer(containerSelector);
       scrollToTop(container);
+      setNavHighlight(view, '#nav-placeholder .has-dropdown a.desktop-link');
     }
   } catch (error) {
     // Fallback to home view or show error message
@@ -145,6 +152,55 @@ export async function loadView({
     //   showFatalError(); // todo: show a "page not found" message?
     // }
   }
+}
+
+async function setNavHighlight(view: ViewKey, navlinkSelector: string) {
+  const navLinks = document.querySelectorAll(navlinkSelector);
+  const section = getNavbarSection(view);
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === section) {
+      link.classList.add('active-section');
+    } else {
+      link.classList.remove('active-section');
+    }
+  });
+
+  const rightChars: NodeListOf<HTMLElement> = document.querySelectorAll(`${navlinkSelector}:not(.active-section) .navlink-char.swept`);
+  navlinkSweepRight(rightChars);
+
+  const activeSection: HTMLElement | null =  document.querySelector(`${navlinkSelector}.active-section`);
+  if (activeSection === null) return;
+
+  const leftChars: NodeListOf<HTMLElement> = activeSection.querySelectorAll('.navlink-char');
+  const transitionDuration = 300;
+  navlinkSweepLeft({nameChars: leftChars}).then(() => {
+    // Clear class to enable hover behaviour
+    setTimeout(() => {
+      activeSection.addEventListener('mouseenter', () => {
+        activeSection.classList.remove('active-section');
+      }, {once: true});
+    }, transitionDuration);
+  });
+}
+
+async function navlinkSweepLeft({nameChars, charCount = nameChars.length, className = 'swept'}: SweepSpanLeftProps) {
+  await Promise.all(Array.from(nameChars).map((char, i) => {
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        char.classList.add(className);
+        resolve();
+      }, (charCount - 1 - i) * 40);
+    });
+  }));
+}
+
+function navlinkSweepRight(nameChars: NodeListOf<HTMLElement>, className: string = 'swept') {
+  nameChars.forEach((char, i) => {
+    setTimeout(() => {
+      char.classList.remove(className);
+    }, i * 40);
+  });
 }
 
 /* ─── Navigation handling with History API and graceful fallback ─── */

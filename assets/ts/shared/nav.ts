@@ -1,5 +1,5 @@
 import { fetchFragment } from './asyncFetch.js';
-import { initHeaderSweep } from './header.js';
+import { initHeaderSweep, splitStringIntoSpans } from './header.js';
 import { initHref } from '../router.js';
 
 type NavMenuProps = {
@@ -17,7 +17,7 @@ export async function initNavMenu({navSelector, navHtml, bodyElement = document.
 
   const neverAbortSignal = () => new AbortController().signal; // always fully load navbar
   const data = await fetchFragment({path: `${navHtml}.html`, signal: neverAbortSignal()});
-  
+
   if (data === null) return;
 
   navMenu.innerHTML = data;
@@ -31,11 +31,15 @@ export async function initNavMenu({navSelector, navHtml, bodyElement = document.
   if (header !== null) {
     header.removeAttribute('style');
   }
+  const desktopLinks: NodeListOf<HTMLElement> = navMenu.querySelectorAll('.has-dropdown');
+  desktopLinks.forEach(link => {
+    splitStringIntoSpans({elSelector: 'a', spanClassName: 'navlink-char', parentEl: link});
+  })
 }
 
-export function ensureNavMenu({navSelector = '#nav-placeholder', navHtml = 'nav', bodyElement, containerSelector}: NavMenuProps) {
+export async function ensureNavMenu({navSelector = '#nav-placeholder', navHtml = 'nav', bodyElement, containerSelector}: NavMenuProps) {
   const navPlaceholder = document.querySelector(navSelector);
   if (navPlaceholder && navPlaceholder.childElementCount === 0) {
-    initNavMenu({navSelector: '#nav-placeholder', navHtml, bodyElement, containerSelector});
+    await initNavMenu({navSelector: '#nav-placeholder', navHtml, bodyElement, containerSelector});
   }
 }

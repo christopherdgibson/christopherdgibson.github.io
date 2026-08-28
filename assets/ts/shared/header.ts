@@ -13,6 +13,13 @@ interface MockHeaderProps {
   callback?: () => void;
 }
 
+interface StringToSpansProps {
+  elSelector: string;
+  spanClassName?: string;
+  outerSpanStyle?: string;
+  parentEl?: HTMLElement | Document;  
+}
+
 export function initHeaderLink() {
   const headerLink = document.querySelector("#headerLink");
   if (!headerLink) return;
@@ -58,7 +65,7 @@ export async function initMockHeaderAsync({containerSelector, mockHeaderSelector
 }
 
 export function initHeaderSweep(textSelector: string = "#headerLink span", eventSelector: string = "#checkNav", event: any = "change") {
-  splitStringIntoSpans(textSelector);
+  splitStringIntoSpans({elSelector: textSelector});
 
   const eventEl: HTMLInputElement | null = document.querySelector(eventSelector);
   if (eventEl === null) return;
@@ -86,7 +93,7 @@ export function initHeaderSweep(textSelector: string = "#headerLink span", event
 }
 
 export function initHoverSweep(textSelector: string, eventSelector: string) {
-  splitStringIntoSpans(textSelector);
+  splitStringIntoSpans({elSelector: textSelector});
   const nameChars: NodeListOf<HTMLElement> = document.querySelectorAll(textSelector + ".name-char");
   const charCount = nameChars.length;
   let hoverTime;
@@ -115,8 +122,8 @@ export function sweepSpanBilateral(charSelector: string, charCount?: number) {
   }, (charCount + 4) * 40);
 }
 
-export function splitStringIntoSpans(elSelector: string) {
-  const nameEl = document.querySelector(elSelector);
+export function splitStringIntoSpans({elSelector, spanClassName = 'name-char', outerSpanStyle = 'white-space: nowrap', parentEl = document}: StringToSpansProps) {
+  const nameEl = parentEl.querySelector(elSelector);
   if (!nameEl) return;
   const words = nameEl.textContent.split(" ");
   let charIndex = 0;
@@ -125,27 +132,27 @@ export function splitStringIntoSpans(elSelector: string) {
       const wordHtml = word
         .split("")
         .map((char) => {
-          const span = `<span class="name-char" data-index="${charIndex}">${char}</span>`;
+          const span = `<span class=${spanClassName} data-index="${charIndex}">${char}</span>`;
           charIndex++;
           return span;
         })
         .join("");
-      return `<span style="white-space: nowrap">${wordHtml}</span>`;
+      return `<span style="${outerSpanStyle}">${wordHtml}</span>`;
     })
     .join(" ");
 }
 
-function sweepSpanLeft(nameChars: NodeListOf<HTMLElement>, charCount: number) {
+export function sweepSpanLeft(nameChars: NodeListOf<HTMLElement>, charCount?: number, className: string = 'swept') {
   charCount = charCount ?? nameChars.length;
   nameChars.forEach((char, i) => {
     char.style.transitionDelay = `${(charCount - 1 - i) * 40}ms`;
-    char.classList.add("swept");
+    char.classList.add(className);
   });
 }
 
-function sweepSpanRight(nameChars: NodeListOf<HTMLElement>) {
+export function sweepSpanRight(nameChars: NodeListOf<HTMLElement>, className: string = 'swept') {
   nameChars.forEach((char, i) => {
     char.style.transitionDelay = `${i * 40}ms`;
-    char.classList.remove("swept");
+    char.classList.remove(className);
   });
 }
