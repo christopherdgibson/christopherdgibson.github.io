@@ -28,6 +28,11 @@ nav {
       color: var(--navbar-active-view-color);
     }
 
+    /* Prevent re-load of current page but allow hover styles */
+    a.active-view:active {
+      pointer-events: none;
+    }
+
     a, label {
       .navlink-char.swept {
         color: var(--navbar-active-view-color);
