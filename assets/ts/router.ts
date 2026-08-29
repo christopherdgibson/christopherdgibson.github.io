@@ -140,7 +140,7 @@ export async function loadView({
     if (contentOnly === false) {
       const container = getContainer(containerSelector);
       scrollToTop(container);
-      setNavHighlight(view, '#nav-placeholder .has-dropdown a.desktop-link');
+      setNavHighlight(view, '#nav-placeholder .has-dropdown');
     }
   } catch (error) {
     // Fallback to home view or show error message
@@ -155,9 +155,10 @@ export async function loadView({
 }
 
 async function setNavHighlight(view: ViewKey, navlinkSelector: string) {
-  const navLinks = document.querySelectorAll(navlinkSelector);
+  const sectionLinks = document.querySelectorAll(`${navlinkSelector}  a.desktop-link`);
+  const viewLinks = document.querySelectorAll(`${navlinkSelector} a`);
   const section = getNavbarSection(view);
-  navLinks.forEach(link => {
+  sectionLinks.forEach(link => {
     const href = link.getAttribute('href');
     if (href === section) {
       link.classList.add('active-section');
@@ -165,11 +166,19 @@ async function setNavHighlight(view: ViewKey, navlinkSelector: string) {
       link.classList.remove('active-section');
     }
   });
+  viewLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === view) {
+      link.classList.add('active-view');
+    } else {
+      link.classList.remove('active-view');
+    }
+  });
 
-  const rightChars: NodeListOf<HTMLElement> = document.querySelectorAll(`${navlinkSelector}:not(.active-section) .navlink-char.swept`);
+  const rightChars: NodeListOf<HTMLElement> = document.querySelectorAll(`${navlinkSelector} a.desktop-link:not(.active-section) .navlink-char.swept`);
   navlinkSweepRight(rightChars);
 
-  const activeSection: HTMLElement | null =  document.querySelector(`${navlinkSelector}.active-section`);
+  const activeSection: HTMLElement | null =  document.querySelector(`${navlinkSelector} a.desktop-link.active-section`);
   if (activeSection === null) return;
 
   const leftChars: NodeListOf<HTMLElement> = activeSection.querySelectorAll('.navlink-char');

@@ -4,6 +4,7 @@ nav {
   --navbar-transition: var(--navbar-transition-time) ease;
   --navbar-accent-color: #3ca0e7;
   --navbar-border: 2px solid var(--navbar-accent-color);
+  --navbar-active-view-color: color-mix(white, 80% var(--navbar-accent-color));
 
   &.navigation-menu {
     margin: 0 auto;
@@ -23,9 +24,13 @@ nav {
       transition-duration: 0.3s;
     }
 
-    a {
+    a.active-section ~ label {
+        color: var(--navbar-active-view-color);
+      }
+
+    a, label {
       .navlink-char.swept {
-        color: color-mix(white, 80% var(--navbar-accent-color));
+        color: var(--navbar-active-view-color);
       }
 
       &:hover:not(.active-section) .navlink-char.swept {
@@ -76,6 +81,10 @@ nav {
       transition: opacity var(--navbar-transition-time), visibility 0s var(--navbar-transition-time); /* Delayed hide for transition */
       li.dropdown-back {
         display: none;
+      }
+      
+      a.active-view span:not(.stack-label) {
+        color: var(--navbar-active-view-color);
       }
     }
 
