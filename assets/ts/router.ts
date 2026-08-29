@@ -140,7 +140,7 @@ export async function loadView({
     if (contentOnly === false) {
       const container = getContainer(containerSelector);
       scrollToTop(container);
-      setNavHighlight(view, '#nav-placeholder .has-dropdown');
+      setNavHighlights(view, '#nav-placeholder .has-dropdown');
     }
   } catch (error) {
     // Fallback to home view or show error message
@@ -154,16 +154,21 @@ export async function loadView({
   }
 }
 
-async function setNavHighlight(view: ViewKey, navlinkSelector: string) {
-  const sectionLinks = document.querySelectorAll(`${navlinkSelector}  a.desktop-link`);
-  const viewLinks = document.querySelectorAll(`${navlinkSelector} a`);
-  const section = getNavbarSection(view);
-  sectionLinks.forEach(link => {
+async function setNavHighlights(view: ViewKey, navSectionSelector: string) {
+  const sectionLinks = document.querySelectorAll(`${navSectionSelector}`);
+  const viewLinks = document.querySelectorAll(`${navSectionSelector} a`);
+  const sectionView = getNavbarSection(view);
+  sectionLinks.forEach(section => {
+    const link: HTMLElement | null = section.querySelector('a.desktop-link');
+    if (!link) return;
+    
     const href = link.getAttribute('href');
-    if (href === section) {
-      link.classList.add('active-section');
+    if (href === sectionView) {
+      section.classList.add('active-section');
+      const activeLink = section.querySelector('a.desktop-link');
+      activeLink?.classList.add('active-transition'); // Block hover behaviour
     } else {
-      link.classList.remove('active-section');
+      section.classList.remove('active-section');
     }
   });
   viewLinks.forEach(link => {
@@ -175,19 +180,19 @@ async function setNavHighlight(view: ViewKey, navlinkSelector: string) {
     }
   });
 
-  const rightChars: NodeListOf<HTMLElement> = document.querySelectorAll(`${navlinkSelector} a.desktop-link:not(.active-section) .navlink-char.swept`);
+  const rightChars: NodeListOf<HTMLElement> = document.querySelectorAll(`${navSectionSelector}:not(.active-section) a.desktop-link .navlink-char.swept`);
   navlinkSweepRight(rightChars);
 
-  const activeSection: HTMLElement | null =  document.querySelector(`${navlinkSelector} a.desktop-link.active-section`);
+  const activeSection: HTMLElement | null =  document.querySelector(`${navSectionSelector}.active-section a.desktop-link`);
   if (activeSection === null) return;
 
   const leftChars: NodeListOf<HTMLElement> = activeSection.querySelectorAll('.navlink-char');
   const transitionDuration = 300;
   navlinkSweepLeft({nameChars: leftChars}).then(() => {
-    // Clear class to enable hover behaviour
+    // Clear blocking class to enable hover behaviour after transition
     setTimeout(() => {
       activeSection.addEventListener('mouseenter', () => {
-        activeSection.classList.remove('active-section');
+        activeSection.classList.remove('active-transition');
       }, {once: true});
     }, transitionDuration);
   });

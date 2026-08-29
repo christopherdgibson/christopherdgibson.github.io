@@ -24,16 +24,16 @@ nav {
       transition-duration: 0.3s;
     }
 
-    a.active-section ~ label {
-        color: var(--navbar-active-view-color);
-      }
+    li.active-section .dropdown-label {
+      color: var(--navbar-active-view-color);
+    }
 
     a, label {
       .navlink-char.swept {
         color: var(--navbar-active-view-color);
       }
 
-      &:hover:not(.active-section) .navlink-char.swept {
+      &:hover:not(.active-transition) .navlink-char.swept {
         color: var(--navbar-accent-color);
       }
     }
@@ -83,8 +83,14 @@ nav {
         display: none;
       }
       
-      a.active-view span:not(.stack-label) {
-        color: var(--navbar-active-view-color);
+      a.active-view {
+        span:not(.stack-label) {
+          color: var(--navbar-active-view-color);
+        }
+
+        span.stack-label {
+          opacity: 1;
+        }
       }
     }
 
