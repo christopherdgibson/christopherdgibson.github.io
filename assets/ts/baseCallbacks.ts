@@ -55,10 +55,9 @@ function addPulses(elements: NodeListOf<HTMLButtonElement>, delay: number, stagg
 }
 
 function initFooterButtons(containerSelector?: string) {
-  const bodyElement: HTMLElement | null = document.querySelector("#body-placeholder");
   const viewNav: HTMLElement | null = document.querySelector(".view-nav");
-  let backLink: HTMLAnchorElement | null = getCleanElement('#footer-back-btn');
-  let nextLink: HTMLAnchorElement | null = getCleanElement('#footer-next-btn');
+  let backLink: HTMLAnchorElement | null = getCleanElement('#footer-back-link');
+  let nextLink: HTMLAnchorElement | null = getCleanElement('#footer-next-link');
 
   if (!viewNav) {
     backLink?.setAttribute('style', 'display: none');
@@ -70,12 +69,11 @@ function initFooterButtons(containerSelector?: string) {
     backLink.removeAttribute('class');
     const backTextEl = backLink.querySelector('.footer-text');
     backTextEl.innerHTML = viewNav.dataset.backText;
-    backLink.classList.toggle('hide-desktop-text', viewNav.dataset.backView === 'home')
-    backLink.setAttribute('href', viewNav.dataset.backView);
-    backLink.addEventListener("click", function (event) {
-      event.preventDefault();
-      loadView({view: viewNav.dataset.backView as ViewKey, bodyElement, containerSelector});
-    });
+    backLink.classList.toggle('hide-desktop-text', viewNav.dataset.backHref === 'home')
+    if (viewNav.dataset.backHref) {
+      backLink.setAttribute('href', viewNav.dataset.backHref);
+      initHref({link: backLink, href: viewNav.dataset.backHref, containerSelector});
+    }
   } else if (backLink) {
     backLink.classList.toggle('hide-footer-link', true);
   }
@@ -84,10 +82,10 @@ function initFooterButtons(containerSelector?: string) {
     nextLink.removeAttribute('class');
     const nextTextEl = nextLink.querySelector('.footer-text');
     nextTextEl.innerHTML = viewNav.dataset.nextText;
-    if (viewNav.dataset.nextLink) {
-      const isView = initHref({link: nextLink, href: viewNav.dataset.nextLink, bodyElement, containerSelector});
-      const hideDesktopText = !isView || viewNav.dataset.nextLink === 'home';
-      nextLink.setAttribute('href', viewNav.dataset.nextLink);
+    if (viewNav.dataset.nextHref) {
+      const isView = initHref({link: nextLink, href: viewNav.dataset.nextHref, containerSelector});
+      const hideDesktopText = !isView || viewNav.dataset.nextHref === 'home';
+      nextLink.setAttribute('href', viewNav.dataset.nextHref);
       nextLink.classList.toggle('hide-desktop-text', hideDesktopText);
     }
   } else if (nextLink) {
