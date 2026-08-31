@@ -35,15 +35,17 @@ export async function initMockHeaderAsync({containerSelector, mockHeaderSelector
   const mockHeader = headerParent.querySelector(mockHeaderSelector);
 
   if (mockHeader === null) return;
-  await fetchFragment({
-    path: 'components/mockup-header.html',
-    signal: loadSignal,
-    validate: (response) => {
-      if (!response.ok) throw new Error('Mockup header not found');
-      return true;
-    }
-  })
-  .then((html) => {
+
+  try {
+    const html = await fetchFragment({
+      path: 'components/mockup-header.html',
+      signal: loadSignal,
+      validate: (response) => {
+        if (!response.ok) throw new Error('Mockup header not found');
+        return true;
+      }
+    })
+
     if (html === null) return;
     
     mockHeader.innerHTML = html;
@@ -60,8 +62,9 @@ export async function initMockHeaderAsync({containerSelector, mockHeaderSelector
     if (sweepTextSelector && sweepEventSelector) {
       initHoverSweep(sweepTextSelector, sweepEventSelector);
     }
-  })
-  .catch((err) => console.error(err));
+  } catch(error) {
+    console.error(error);
+  }
 }
 
 export function initHeaderSweep(textSelector: string = "#headerLink span", eventSelector: string = "#checkNav", event: any = "change") {

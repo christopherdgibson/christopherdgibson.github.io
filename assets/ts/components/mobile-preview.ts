@@ -22,12 +22,12 @@ export function initMobilePreview({containerSelector, loadSignal, overlaySelecto
   btnId = btnId ?? `btn${toPascalCase(itemId)}`;
   const overlay: HTMLElement | null = document.querySelector(overlaySelector);
   const btn: HTMLElement | null = document.getElementById(btnId);
+  const modal = document.getElementById(itemId);
 
-  if (!overlay || !btn) {
+  if (!btn || !modal || !overlay ) { // Require overlay here since no close btn
     return;
   }
 
-  const modal = document.getElementById(itemId);
   btn.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -35,7 +35,7 @@ export function initMobilePreview({containerSelector, loadSignal, overlaySelecto
   });
 
   overlay.addEventListener('click', function() {
-    modal?.classList.remove('expanded');
+    modal.classList.remove('expanded');
     overlay.classList.remove('active');
   });
 }
@@ -49,17 +49,20 @@ async function openPreview ({modal, overlay, previewSelector = '#mobilePreviewCa
 
   if (window.self !== window.top) {
     const limitModal: HTMLElement | null = document.querySelector('#miniSiteLimitCard');
-    const limitOverlay: HTMLElement | null = document.querySelector('#screenshotOverlay');
-    limitModal?.classList.add("expanded");
-    limitOverlay?.classList.add("active");
+    if (limitModal) {
+      const limitOverlay: HTMLElement | null = document.querySelector('#screenshotOverlay');
+      limitModal.classList.add("expanded");
+      limitOverlay?.classList.add("active");
 
-    initCloseModalBtn(limitModal, limitOverlay);
+      initCloseModalBtn(limitModal, limitOverlay);
+    }
+
     return;
   }
 
   closeOverlays([".card-overlay", ".screenshot-overlay"].join(",")); // in case other overlays are open;
   removeClasses(['expanded']); // in case other cards are expanded
-  modal?.classList.add("expanded");
+  modal.classList.add("expanded");
   overlay.classList.add("active");
 
   if (preview.dataset.iframeOpen === "true") return;

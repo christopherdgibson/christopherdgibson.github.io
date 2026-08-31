@@ -1,6 +1,6 @@
 import { scrollToAnchor } from './shared/misc.js';
 import { initCardOverlay } from './shared/overlays.js';
-import { initHref, loadView } from './router.js';
+import { initHref } from './router.js';
 import { getCleanElement, getCleanElements, getContainer } from './utils.js';
 
 import type { ViewCallback, ViewKey } from './types.js';
@@ -68,7 +68,9 @@ function initFooterButtons(containerSelector?: string) {
   if (backLink && viewNav.dataset.backText) {
     backLink.removeAttribute('class');
     const backTextEl = backLink.querySelector('.footer-text');
-    backTextEl.innerHTML = viewNav.dataset.backText;
+    if (backTextEl !== null) {
+      backTextEl.innerHTML = viewNav.dataset.backText;
+    }
     backLink.classList.toggle('hide-desktop-text', viewNav.dataset.backHref === 'home')
     if (viewNav.dataset.backHref) {
       backLink.setAttribute('href', viewNav.dataset.backHref);
@@ -81,7 +83,9 @@ function initFooterButtons(containerSelector?: string) {
   if (nextLink && viewNav.dataset.nextText) {
     nextLink.removeAttribute('class');
     const nextTextEl = nextLink.querySelector('.footer-text');
-    nextTextEl.innerHTML = viewNav.dataset.nextText;
+    if (nextTextEl !== null) {
+      nextTextEl.innerHTML = viewNav.dataset.nextText;
+    }
     if (viewNav.dataset.nextHref) {
       const isView = initHref({link: nextLink, href: viewNav.dataset.nextHref, containerSelector});
       const hideDesktopText = !isView || viewNav.dataset.nextHref === 'home';

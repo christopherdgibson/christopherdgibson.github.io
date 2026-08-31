@@ -29,12 +29,13 @@ export async function populateProjectCardsAsync({cardSelector, page = "Home", co
       if (html === null) return;
       
       card.innerHTML = html;
+      
       if (href === 'personal-site-page') {
         const hoverId = `#btnPersonalSite${page}`;
         await initMockHeaderAsync({containerSelector, sweepTextSelector:`${hoverId} .mockup-site-name span`, sweepEventSelector: hoverId, activeTab: page, loadSignal})
       }
-    } catch (err) {
-      console.error(`Failed to load card:`, err);
+    } catch (error) {
+      console.error(`Failed to load card:`, error);
     }
   }));
 }

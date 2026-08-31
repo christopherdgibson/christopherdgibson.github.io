@@ -19,7 +19,7 @@ export async function fetchFragment({path, signal, validate = (response) => resp
         const text = await response.text();
         if (base === "/") return text;
         return text.replace(/(["'(])\/(demos|downloads|images|pdfs|svgs|views)\//g, `$1${base}$2/`);
-    } catch (error) {
+    } catch (error: any) {
         if (error.name === 'AbortError') return null;
         throw error;
     }
@@ -48,5 +48,7 @@ export async function fetchSvgIcon({iconEl, iconName, signal}: FetchSvgIconProps
 export async function fetchIndexSvgIcons() {
     const neverAbortSignal = () => new AbortController().signal;
     const linkedInIcon: HTMLElement | null = document.querySelector("#footerIcon");
+    if (!linkedInIcon) return;
+    
     await fetchSvgIcon({iconEl: linkedInIcon, iconName: "linkedin", signal: neverAbortSignal()});
 }

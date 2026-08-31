@@ -20,9 +20,9 @@ interface LoadViewProps {
 
 interface InitHrefProps {
   link: HTMLAnchorElement;
-  href?: string;
+  href?: string | null;
   bodyElement?: HTMLElement;
-  containerSelector: string;
+  containerSelector?: string;
   checkView?: boolean;
 }
 
@@ -118,8 +118,8 @@ export async function loadView({
       if (loadSignal.aborted) return;
       try {
         await cb({bodyElement, containerSelector, loadSignal});
-      } catch (err) {
-        console.error('Callback failed:', err);
+      } catch (error) {
+        console.error('Callback failed:', error);
       }
     }
 

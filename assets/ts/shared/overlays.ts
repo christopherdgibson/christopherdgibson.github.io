@@ -1,6 +1,6 @@
 import { toPascalCase, removeClasses } from '../utils.js';
 
-export function hideStartupOverlay(hide: boolean, overlay: HTMLElement = document.getElementById('startupOverlay')) {
+export function hideStartupOverlay(hide: boolean, overlay: HTMLElement | null = document.getElementById('startupOverlay')) {
   overlay?.addEventListener('transitionend', () => {
       overlay?.remove();
   });
@@ -12,23 +12,24 @@ export function hideStartupOverlay(hide: boolean, overlay: HTMLElement = documen
   }, 5000);
 }
 
-export function initCardOverlay(overlaySelector: string, itemId: string, btnId?: string) {
-  btnId = btnId ?? `btn${toPascalCase(itemId)}`;
-  const overlay: HTMLElement | null = document.querySelector(overlaySelector);
+export function initCardOverlay(overlaySelector: string, modalId: string, btnId?: string) {
+  btnId = btnId ?? `btn${toPascalCase(modalId)}`;
   const btn: HTMLElement | null = document.getElementById(btnId);
+  const modal: HTMLElement | null = document.getElementById(modalId);
 
-  if (!overlay || !btn) {
+  if (!btn || !modal) {
     return;
   }
 
-  const modal = document.getElementById(itemId);
+  const overlay: HTMLElement | null = document.querySelector(overlaySelector);
+
   btn.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
     closeOverlays([".card-overlay", ".screenshot-overlay"].join(",")); // in case other overlays are open;
     removeClasses(['expanded']); // in case other cards are expanded
-    modal?.classList.add("expanded");
-    overlay.classList.add("active");
+    modal.classList.add("expanded");
+    overlay?.classList.add("active");
   });
 
   initCloseModalBtn(modal, overlay);
@@ -41,15 +42,15 @@ export function closeOverlays(overlaySelectors: string) {
   });
 }
 
-export function initCloseModalBtn(modal: HTMLElement | null, overlay: HTMLElement, closeSelector: string = '.page-tag-close') {
+export function initCloseModalBtn(modal: HTMLElement, overlay: HTMLElement | null, closeSelector: string = '.page-tag-close') {
   const closeBtn = modal?.querySelector(closeSelector);
   if (!closeBtn) {
     return;
   }
 
   closeBtn.addEventListener('click', function() {
-    modal?.classList.remove('expanded');
-    overlay.classList.remove('active');
+    modal.classList.remove('expanded');
+    overlay?.classList.remove('active');
   });
 }
 
@@ -121,11 +122,11 @@ export function showToast(message: string, duration: number = 3000) {
 
 // Wordpress demo countdown
 
-export function initDemoLaunch(overlaySelector: string, itemId: string, btnId: string) {
-  btnId = btnId ?? `btn${toPascalCase(itemId)}`;
+export function initDemoLaunch(overlaySelector: string, modalId: string, btnId: string) {
+  btnId = btnId ?? `btn${toPascalCase(modalId)}`;
   const overlay: HTMLElement | null = document.querySelector(overlaySelector);
   const btn = document.getElementById(btnId);
-  const modal = document.getElementById(itemId);
+  const modal = document.getElementById(modalId);
 
   if (!overlay || !btn || !modal) {
     return;
@@ -146,6 +147,8 @@ export function initDemoLaunch(overlaySelector: string, itemId: string, btnId: s
     const demoLink = modal.querySelector('.demo-redirect a');
     const closeEl = modal.querySelector('.page-tag-close-container');
     const demoUrl = demoLink?.getAttribute('href');
+
+    if (!demoUrl) return;
 
     if (countdownEl) {
       countdownEl.textContent = `Launching in ${count}s...`;

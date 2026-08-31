@@ -10,36 +10,42 @@ interface PopulateContactProps {
 
 export async function populateContactAsync({triggerSelector = "contact-trigger", envelopeSelector, pageTagSelector, loadSignal}: PopulateContactProps) {
   const target: HTMLElement | null = document.querySelector(triggerSelector);
-
   if (target === null) return;
-  await fetchFragment({
-    path: `components/contact-envelope.html`,
-    signal: loadSignal,
-    validate: (response) => {
-      if (!response.ok) throw new Error(`View not found: contact-envelope.html`);
-      return true;
-    }
-  })
-  .then((html) => {
+
+  try {
+    const html = await fetchFragment({
+      path: `components/contact-envelope.html`,
+      signal: loadSignal,
+      validate: (response) => {
+        if (!response.ok) throw new Error(`View not found: contact-envelope.html`);
+        return true;
+      }
+    })
+
+    if (html === null) return;
+
+    target.innerHTML = html;
+
+    await initSvgIcons({bodyElement: undefined, iconSelector: '.spill-icon', signal: loadSignal});
+    
     if (loadSignal.aborted) return;
     
-    target.innerHTML = html;
-    initSvgIcons({bodyElement: undefined, iconSelector: '.spill-icon', signal: loadSignal});
     initContactIcons(triggerSelector, envelopeSelector, pageTagSelector);
-  })
-  .catch((err) => console.error(err));
+  } catch(error) {
+    console.error(error);
+  }
 }
 
 export function initContactIcons(triggerSelector: string, envelopeSelector: string, pageTagSelector?: string) {
   const contactTrigger: HTMLElement | null = document.querySelector(triggerSelector);
   const envelope: HTMLElement | null = document.querySelector(envelopeSelector);
-  const pageTag: HTMLElement | null = document.querySelector(pageTagSelector);
+  const pageTag: HTMLElement | null = pageTagSelector ? document.querySelector(pageTagSelector) : null;
   if (envelope === null || contactTrigger === null) return;
   let stopIdleShake = shakeContactEnvelope(envelope, contactTrigger);
   let inputLocked = false;
 
   function scheduleExpanded(expanded: boolean) {
-    if (expanded && envelope.classList.contains('shake')) {
+    if (expanded && envelope?.classList.contains('shake')) {
         envelope.addEventListener('animationend', () => {
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {

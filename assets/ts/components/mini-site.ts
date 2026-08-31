@@ -74,6 +74,9 @@ export async function initMiniSiteOverlay(loadSignal: AbortSignal) {
 
             miniSite.innerHTML = doc.body.innerHTML;
             const bodyMini: HTMLElement | null = document.querySelector('#body-placeholder');
+            if (!bodyMini) { // Check after writing for error specificity
+                throw new Error("Fetched index.html missing expected structure (#body-placeholder)");
+            }
             await Promise.all([
                 fetchIndexSvgIcons(),
                 initNavMenu({navSelector: '#nav-placeholder', navHtml: 'nav', bodyElement: bodyMini, containerSelector: '.mini-site.expanded-mini-site'}),

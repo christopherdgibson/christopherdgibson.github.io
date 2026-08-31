@@ -7,7 +7,7 @@ import type { PreviewViewKey, ViewKey } from '../types.js';
 interface PreviewSectionProps {
   section: PreviewViewKey;
   containerSelector?: string;
-  loadSignal?: AbortSignal;
+  loadSignal: AbortSignal;
 }
 
 let previewsExpanded: number;
@@ -32,12 +32,12 @@ export async function initPreviewSection({section, containerSelector, loadSignal
 
   if (peekWrapper === null || peekPanel === null) return;
 
-  function open(element: HTMLElement = peekWrapper) {
+  function open(element: HTMLElement | null = peekWrapper) {
     clearTimeout(closeTimer);
     element?.classList.add('expanded-preview');
   }
 
-  function scheduleClose(previewEls: HTMLElement[]) {
+  function scheduleClose(previewEls: (HTMLElement | null)[]) {
     if (peekPanel?.classList.contains('expanded-preview')) return;
     clearTimeout(closeTimer);
     closeTimer = setTimeout(() => {
@@ -77,13 +77,13 @@ export async function initPreviewSection({section, containerSelector, loadSignal
     }
   });
 
-  peekMobile.addEventListener('mouseenter', () => {
+  peekMobile?.addEventListener('mouseenter', () => {
     if (peekMobile?.classList.contains('expanded-preview') || peekMobile.getAttribute('aria-hovered') === 'true') {
       scheduleAria(peekMobile, true);
       open(peekWrapper);
     }
   });
-  peekMobile.addEventListener('mouseleave', () => {
+  peekMobile?.addEventListener('mouseleave', () => {
     scheduleClose([peekWrapper, peekMobile]); // peekMobile necessary in case timer resets
     scheduleAria(peekMobile, false);
   });
@@ -102,7 +102,7 @@ export async function initPreviewSection({section, containerSelector, loadSignal
     });
   });
 
-  peekMobile.addEventListener("click", (event) => {
+  peekMobile?.addEventListener("click", (event) => {
     event.preventDefault();
 
     ensurePreviewLoaded(isPreviewLoaded).then(() => {
@@ -119,7 +119,7 @@ export async function initPreviewSection({section, containerSelector, loadSignal
   });
 
   async function ensurePreviewLoaded(isLoaded: boolean = false) {
-    if (isLoaded === true) return;
+    if (isLoaded === true || !peekPanel) return;
 
     const previewSectionSelector = `#peek${Section}Home`;
     await loadView({view: section, bodyElement: peekPanel, containerSelector: previewSectionSelector, contentOnly: true})
@@ -140,14 +140,18 @@ export async function initPreviewSection({section, containerSelector, loadSignal
   }
 
   function expandSectionPreview() {
-    peekWrapper.style.order = defaultOrder[section];
-    peekPanel.classList.toggle('expanded-preview');
-    const isExpanded = peekPanel.classList.contains('expanded-preview');
-    peekBtn.setAttribute('aria-expanded', isExpanded.toString());
-    if (!isExpanded) {
-      previewsExpanded --;
-      scrollToTop(peekPanel); // reset to top when closed
-      return;
+    if (peekWrapper) {
+      peekWrapper.style.order = defaultOrder[section];
+    }
+    if (peekPanel) {
+      peekPanel.classList.toggle('expanded-preview');
+      const isExpanded = peekPanel.classList.contains('expanded-preview');
+      peekBtn?.setAttribute('aria-expanded', isExpanded.toString());
+      if (!isExpanded) {
+        previewsExpanded --;
+        scrollToTop(peekPanel); // reset to top when closed
+        return;
+      }
     }
 
     const container = getContainer(containerSelector);

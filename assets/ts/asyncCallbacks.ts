@@ -4,19 +4,19 @@ import { initHref } from './router.js';
 import type { CallbackProps, ViewCallback } from './types.js';
 
 interface InitHrefsProps {
-  containerSelector: string;
-  bodyElement?: HTMLElement;
+  containerSelector?: string;
+  bodyElement?: HTMLElement | null;
   viewSelector?: string;
 }
 
 interface InitSvgProps {
-  bodyElement: HTMLElement;
+  bodyElement?: HTMLElement;
   iconSelector?: string;
   signal: AbortSignal;
 }
 
 interface AsyncCallbackProps extends CallbackProps {
-    contentOnly?: boolean;
+  contentOnly?: boolean;
 }
 
 export function getAsyncCallbacks({bodyElement, containerSelector, loadSignal, contentOnly}: AsyncCallbackProps) {
@@ -29,19 +29,21 @@ export function getAsyncCallbacks({bodyElement, containerSelector, loadSignal, c
 }
 
 function initHrefs({viewSelector, bodyElement=document.querySelector('#body-placeholder'), containerSelector}: InitHrefsProps) {
-    const links: NodeListOf<HTMLAnchorElement> = bodyElement.querySelectorAll(`${viewSelector ?? ''} a`);
-    links.forEach(link => {
-        initHref({link, bodyElement, containerSelector});
-    })
+  if (bodyElement === null) return; // Return early instead of console errors from loadView
+
+  const links: NodeListOf<HTMLAnchorElement> = bodyElement.querySelectorAll(`${viewSelector ?? ''} a`);
+  links.forEach(link => {
+      initHref({link, bodyElement, containerSelector});
+  })
 }
 
 export async function initSvgIcons({bodyElement, iconSelector = ".svg-icon", signal}: InitSvgProps) {
-    const parentNode = bodyElement ? bodyElement : document;
-    const icons: NodeListOf<HTMLElement> = parentNode.querySelectorAll(iconSelector);
-    if (!icons.length) return;
+  const parentNode = bodyElement ? bodyElement : document;
+  const icons: NodeListOf<HTMLElement> = parentNode.querySelectorAll(iconSelector);
+  if (!icons.length) return;
 
-    await Promise.all(Array.from(icons).map(async (icon) => {
-        if (!icon.dataset.target) return;
-        fetchSvgIcon({iconEl: icon, iconName: `${icon.dataset.target}`, signal});
-    }));
+  await Promise.all(Array.from(icons).map(async (icon) => {
+      if (!icon.dataset.target) return;
+      fetchSvgIcon({iconEl: icon, iconName: `${icon.dataset.target}`, signal});
+  }));
 }

@@ -5,13 +5,13 @@ import { initHref } from '../router.js';
 type NavMenuProps = {
   navSelector: string;
   navHtml: string;
-  bodyElement?: HTMLElement | null;
+  bodyElement?: HTMLElement;
   containerSelector?: string;
 }
 
 /* ────────── Load navbar and menu events ────────── */
 
-export async function initNavMenu({navSelector, navHtml, bodyElement = document.querySelector("#body-placeholder"), containerSelector}: NavMenuProps) {
+export async function initNavMenu({navSelector, navHtml, bodyElement, containerSelector}: NavMenuProps) {
   const navMenu = document.querySelector(navSelector);
   if (navMenu === null) return;
 
@@ -24,7 +24,7 @@ export async function initNavMenu({navSelector, navHtml, bodyElement = document.
   const navItems = navMenu.querySelectorAll('a');
   initHeaderSweep();
   navItems.forEach(link => {
-    initHref({link, bodyElement, containerSelector, checkView: false}); // let loadView throw
+    initHref({link, bodyElement: bodyElement, containerSelector, checkView: false}); // let loadView throw
   });
 
   const header: HTMLElement | null = document.querySelector("#header");

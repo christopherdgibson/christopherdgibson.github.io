@@ -1,5 +1,5 @@
 interface ScrollToAnchorProps {
-  target: HTMLElement;
+  target: HTMLElement | null;
   container?: Element | (Window & typeof globalThis);
   includeHeader?: boolean;
   behavior?: ScrollBehavior;
