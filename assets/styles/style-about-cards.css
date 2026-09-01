@@ -1,12 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Cardo:400i|Rubik:400,700&display=swap');
 
-:root {
+.about-card-container {
   --about-transition-duration: 900ms;
   --about-transition: cubic-bezier(0.19, 1, 0.22, 1);
   --font-serif: 'Cardo', serif;
-}
-
-.about-card-container {
   display: flex;
   flex-direction: row;
   gap: 1rem;

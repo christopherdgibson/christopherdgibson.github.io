@@ -8,6 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap');
 
 :root {
+  /* Colours */
   --blue-accent-rgb:        60, 160, 231;
   --teaching-accent-rgb:    123, 184, 232;
   --navy-rgb:               13, 31, 45;
@@ -40,22 +41,32 @@
   --amber:                  #C98A3A;
   --code-bg:                #EFEDE7;
 
-  /* Navbar */
-  --navbar-transition-time: 0.3s;
-  --navbar-curtain-delay: 0.2s;
-  --navbar-transition: var(--navbar-transition-time) ease;
-  --navbar-accent-color: #3ca0e7;
-  --navbar-border: 2px solid var(--navbar-accent-color);
-
-  --header-height-mobile: 70px;
-  --header-nav-offset: 5px;
-  --mini-site-top: 3rem;
-  --mini-site-bottom: 3rem;
-  --transition-time: 0.5s;
+  /* Shared parameters */
+  --transition-time-3: 0.3s;
+  --transition-time-5: 0.5s;
+  --transition-time-fadeUp: 0.6s;
   --radius: 6px;
-  --radius-hamburger: 4px;
   --radius-modal: 16px;
   --max: 900px;
+
+  /* Header */
+  --header-height-mobile: 70px;
+  --header-nav-offset: 5px;
+
+  /* Component-specific */
+  --mini-site-top: 3rem;
+  --mini-site-bottom: 3rem;
+  --experience-description-width: 500px;
+  --mobile-screenshot-width: 400px;
+  --hero-desc-max-width: 580px;
+  --hero-projects-active-opacity: 0.2;
+  --hero-projects-hover-opacity: 0.3;
+  --max-height-contact-svg: 50px;
+  --contact-grid-svg-height: 25px;
+  --contact-envelope-expandedY: 70px;
+  --radius-hamburger: 4px;
+
+  /* Z-axis order */
   --z-base: 1;
   --z-overlap: 2;
   --z-header: 10;
@@ -66,14 +77,8 @@
   --z-overlay: 21;
   --z-pop-out: 25;
   --z-hamburger: 30;
-  --experience-description-width: 500px;
-  --mobile-screenshot-width: 400px;
-  --hero-desc-max-width: 580px;
-  --hero-projects-active-opacity: 0.2;
-  --hero-projects-hover-opacity: 0.3;
-  --max-height-contact-svg: 50px;
-  --contact-grid-svg-height: 25px;
-  --contact-envelope-expandedY: 70px;
+
+  /* Backgrounds */
   --background-image-radial-blue:
     radial-gradient(ellipse 60% 80% at 70% 50%, rgba(var(--blue-accent-rgb), 0.15) 0%, transparent 70%),
     radial-gradient(ellipse 40% 60% at 20% 80%,rgba(var(--blue-accent-rgb), 0.08) 0%, transparent 60%);
@@ -85,46 +90,19 @@
     radial-gradient( ellipse 40% 60% at 90% 20%, rgba(var(--navy-rgb), 0.05) 20%, transparent 90% ),
     radial-gradient( ellipse 40% 60% at 10% 90%, rgba(var(--navy-rgb), 0.05) 40%, transparent 90% );
   --background-image-research:
-    radial-gradient(
-      ellipse 55% 70% at 80% 30%,
-      rgba(var(--blue-accent-rgb), 0.18) 0%,
-      transparent 65%
-    ),
-    radial-gradient(
-      ellipse 30% 50% at 10% 90%,
-      rgba(var(--blue-accent-rgb), 0.07) 0%,
-      transparent 55%
-    );
+    radial-gradient(ellipse 55% 70% at 80% 30%, rgba(var(--blue-accent-rgb), 0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 30% 50% at 10% 90%, rgba(var(--blue-accent-rgb), 0.07) 0%, transparent 55%);
   --background-image-teaching:
-    radial-gradient(
-      ellipse 65% 80% at 60% 20%,
-      rgba(90, 160, 220, 0.14) 0%,
-      transparent 65%
-    ),
-    radial-gradient(
-      ellipse 50% 60% at 30% 100%,
-      rgba(120, 180, 230, 0.08) 0%,
-      transparent 55%
-    );
-  --background-image-experience: radial-gradient(
-    ellipse 40% 60% at 90% 50%,
-    rgba(var(--blue-accent-rgb), 0.1) 0%,
-    transparent 60%
-  );
+    radial-gradient(ellipse 65% 80% at 60% 20%, rgba(90, 160, 220, 0.14) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 60% at 30% 100%, rgba(120, 180, 230, 0.08) 0%, transparent 55%);
+  --background-image-experience:
+    radial-gradient(ellipse 40% 60% at 90% 50%, rgba(var(--blue-accent-rgb), 0.1) 0%, transparent 60%);
   --background-image-projects:
     radial-gradient(ellipse 60% 50% at 70% 30%, rgba(var(--blue-accent-rgb),0.15) 0%, transparent 70%),
     radial-gradient(ellipse 40% 60% at 20% 80%, rgba(var(--blue-accent-rgb),0.08) 0%, transparent 60%);
   --background-image-nyc-dashboard:
-      radial-gradient(
-        ellipse 60% 50% at 70% 30%,
-        rgba(var(--blue-accent-rgb), 0.15) 0%,
-        transparent 70%
-    ),
-    radial-gradient(
-      ellipse 40% 60% at 20% 80%,
-      rgba(var(--blue-accent-rgb), 0.08) 0%,
-      transparent 60%
-    );
+    radial-gradient(ellipse 60% 50% at 70% 30%, rgba(var(--blue-accent-rgb), 0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(var(--blue-accent-rgb), 0.08) 0%, transparent 60%);
   --background-image-download-hub:
     radial-gradient(ellipse 55% 70% at 75% 25%, rgba(var(--blue-accent-rgb),0.14) 0%, transparent 65%),
     radial-gradient(ellipse 40% 50% at 15% 85%, rgba(240,180,41,0.07) 0%, transparent 55%),
@@ -132,47 +110,18 @@
   --background-image-wp:
     radial-gradient(ellipse 50% 70% at 80% 20%, rgba(56, 88, 233, 0.12) 0%, transparent 65%),
     radial-gradient(ellipse 40% 50% at 15% 85%, rgba(var(--blue-accent-rgb), 0.1) 0%, transparent 55%),
-    radial-gradient(
-      ellipse 30% 40% at 50% 55%,
-      rgba(56, 88, 233, 0.05) 0%,
-      transparent 50%
-    );
+    radial-gradient(ellipse 30% 40% at 50% 55%, rgba(56, 88, 233, 0.05) 0%, transparent 50%);
   --background-image-adr:
-    radial-gradient(
-      ellipse 50% 90% at 90% 20%,
-      rgba(56, 88, 233, 0.12) 0%,
-      transparent 65%
-    ),
-    radial-gradient(
-      ellipse 40% 50% at 15% 45%,
-      rgba(var(--blue-accent-rgb), 0.12) 0%,
-      transparent 55%
-    ),
-    radial-gradient(
-        ellipse 30% 40% at 50% 15%,
-        rgba(56, 88, 233, 0.15) 0%,
-        transparent 50%
-      );
+    radial-gradient(ellipse 50% 90% at 90% 20%, rgba(56, 88, 233, 0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 15% 45%, rgba(var(--blue-accent-rgb), 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 30% 40% at 50% 15%, rgba(56, 88, 233, 0.15) 0%, transparent 50%);
   --background-image-tz:
-    radial-gradient(
-      ellipse 60% 90% at 80% 60%,
-      rgba(56, 88, 233, 0.16) 0%,
-      transparent 65%
-    ),
-    radial-gradient(
-      ellipse 50% 70% at 25% 25%,
-      rgba(var(--blue-accent-rgb), 0.15) 0%,
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse 30% 40% at 50% 55%,
-      rgba(56, 88, 233, 0.05) 0%,
-      transparent 50%
-    );
+    radial-gradient(ellipse 60% 90% at 80% 60%, rgba(56, 88, 233, 0.16) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 70% at 25% 25%, rgba(var(--blue-accent-rgb), 0.15) 0%, transparent 55%),
+    radial-gradient(ellipse 30% 40% at 50% 55%, rgba(56, 88, 233, 0.05) 0%, transparent 50%);
   --background-image-about:
     radial-gradient(ellipse 60% 80% at 80% 70%, rgba(var(--blue-accent-rgb), 0.15) 0%, transparent 70%),
     radial-gradient(ellipse 40% 60% at 10% 10%,rgba(var(--blue-accent-rgb), 0.08) 10%, transparent 90%);
-
 }
 
 @font-face {
@@ -205,7 +154,6 @@ body {
   font-family: "Avenir Light", "DM Sans", sans-serif;
   margin: 0;
   font-size: 16px;
-  /* line-height: 1.95em; */
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -219,7 +167,7 @@ body:has(.home-container) {
   header {
     max-height: 0;
     overflow: hidden;
-    animation: collapseHeader var(--transition-time) ease forwards;
+    animation: collapseHeader var(--transition-time-5) ease forwards;
   }
 }
 
@@ -250,7 +198,7 @@ a {
   border-bottom: 1px solid rgba(var(--blue-accent-rgb), 0.25);
   max-height: 140px;
   overflow: visible;
-  animation: expandHeader var(--transition-time) ease forwards;
+  animation: expandHeader var(--transition-time-5) ease forwards;
 
   .header-link {
     text-decoration: none;
@@ -270,7 +218,7 @@ a {
     font-weight: 300;
     color: white;
     padding: 16px 0 8px;
-    transition: color 0.3s ease;
+    transition: color var(--transition-time-3) ease;
   }
 }
 
@@ -326,11 +274,11 @@ a {
   display: block;
   width: 100%;
   height: auto;
-  transition: 0.3s ease;
+  transition: var(--transition-time-3) ease;
   backface-visibility: hidden;
 }
 .top-image-text {
-  transition: 0.5s ease;
+  transition: var(--transition-time-5) ease;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -359,7 +307,7 @@ a {
   max-width: 70%; /* Caps at 70% of container */
   height: auto;
   opacity: 1;
-  transition: 0.3s ease;
+  transition: var(--transition-time-3) ease;
 }
 
 .side-image-text {
@@ -373,8 +321,8 @@ a {
 .name-char {
   display: inline-block;
   transition:
-    color 0.3s ease,
-    transform 0.3s ease;
+    color var(--transition-time-3) ease,
+    transform var(--transition-time-3) ease;
 }
 
 .name-char.swept {
@@ -464,13 +412,13 @@ a {
   }
 
   .accent-line {
-    animation: fadeUp 0.6s ease 0.55s forwards;
+    animation: fadeUp var(--transition-time-fadeUp) ease 0.55s forwards;
   }
 
   .tech-list {
     margin-top: 0;
     opacity: 0;
-    animation: fadeUp 0.6s ease 0.65s forwards;
+    animation: fadeUp var(--transition-time-fadeUp) ease 0.65s forwards;
     a {
       text-decoration: none;
     }
@@ -550,7 +498,7 @@ a {
       grid-column: 1;
       text-wrap: balance;
       opacity: 0;
-      animation: fadeUp 0.6s ease 0.3s forwards;
+      animation: fadeUp var(--transition-time-fadeUp) ease 0.3s forwards;
       .accent-line {
         opacity: 1;
         animation: none
@@ -558,7 +506,7 @@ a {
     }
 
     .page-tag {
-      animation: fadeUp 0.6s ease 0.3s both;
+      animation: fadeUp var(--transition-time-fadeUp) ease 0.3s both;
     }
 
     .contact-trigger {
@@ -576,7 +524,7 @@ a {
       grid-row: 2;
       grid-column: 1;
       margin: auto;
-      animation: fadeUp 0.6s ease 0.35s forwards;
+      animation: fadeUp var(--transition-time-fadeUp) ease 0.35s forwards;
     }
 
     .headshot-container {
@@ -593,7 +541,7 @@ a {
       cursor: pointer;
       opacity: 0;
       padding: 1px;
-      animation: fadeUp 0.6s ease 0.55s forwards;
+      animation: fadeUp var(--transition-time-fadeUp) ease 0.55s forwards;
       &:hover {
         padding: 0;
         border: solid 1px rgba(var(--blue-accent-rgb), 0.3);
@@ -607,7 +555,7 @@ a {
       grid-template-columns: 1fr 1fr;
       margin: 20px 0 0 0;
       row-gap: 0;
-      animation: fadeUp 0.6s ease 0.4s forwards;
+      animation: fadeUp var(--transition-time-fadeUp) ease 0.4s forwards;
       .btn-primary {
         grid-row: 1;
         grid-column: 1;
@@ -642,10 +590,10 @@ a {
     column-gap: 40px;
     row-gap: 32px;
     .hero-eyebrow {
-      animation: fadeUp 0.6s ease 0.45s forwards;
+      animation: fadeUp var(--transition-time-fadeUp) ease 0.45s forwards;
     }
     .badges {
-      animation: fadeUp 0.6s ease 0.5s forwards;
+      animation: fadeUp var(--transition-time-fadeUp) ease 0.5s forwards;
     }
   }
 
@@ -689,12 +637,12 @@ a {
     text-align: left;
     justify-self: left;
     .hero-eyebrow {
-      animation: fadeUp 0.6s ease 0.55s forwards;
+      animation: fadeUp var(--transition-time-fadeUp) ease 0.55s forwards;
     }
     .section-title{
       color: white;
       opacity: 0;
-      animation: fadeUp 0.6s ease 0.65s forwards;
+      animation: fadeUp var(--transition-time-fadeUp) ease 0.65s forwards;
     }
     .accent-line {
       margin:0 0 20px;
@@ -722,7 +670,7 @@ a {
     min-width: 250px;
     position: relative;
     opacity: 0;
-    animation: fadeUp 0.6s ease 0.6s forwards;
+    animation: fadeUp var(--transition-time-fadeUp) ease 0.6s forwards;
     
     .carousel-track {
       height: 100%;
@@ -742,7 +690,7 @@ a {
     }
 
     .hero-screenshot-card {
-      animation: fadeUp 0.5s ease 0.4s forwards;
+      animation: fadeUp var(--transition-time-5) ease 0.4s forwards;
     }
   }
 }
@@ -757,7 +705,7 @@ a {
   perspective: 200px;
   opacity: 0;
   animation: fadeUpContact 0.6s ease 0.35s forwards;
-  transition: transform 0.3s ease 0.3s;
+  transition: transform var(--transition-time-3) ease 0.3s;
 }
 
 .contact-trigger-label {
@@ -765,12 +713,12 @@ a {
   color: var(--text-muted, #8a8f98);
   text-align: center;
   margin-top: 6px;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-time-3) ease;
 }
 
 .contact-trigger.expanded-contact {
   transform: translateY(-10px);
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-time-3) ease;
 }
 
 .envelope {
@@ -780,21 +728,21 @@ a {
   stroke-width: 3;
   fill: none;
   z-index: 2;
-  transition: opacity 0.3s ease, transform 1.3s ease;
+  transition: opacity var(--transition-time-3) ease, transform 1.3s ease;
   stroke: var(--grey-mid);
   &.shake {
-    animation: shake 0.5s ease-out forwards;
+    animation: shake var(--transition-time-5) ease-out forwards;
   }
 }
 
 .envelope-flap {
   transform-origin: 30px 8px;
-  transition: transform 0.5s ease-in-out 1.5s; /* used when closing */
+  transition: transform var(--transition-time-5) ease-in-out 1.5s; /* used when closing */
 }
 
 .contact-trigger.expanded-contact .envelope-flap {
   transform: rotateX(180deg);
-  transition: transform 0.5s ease-in-out 0s; /* used when opening */
+  transition: transform var(--transition-time-5) ease-in-out 0s; /* used when opening */
 }
 
 .envelope-body {
@@ -805,7 +753,7 @@ a {
 .envelope-flap-left,
 .envelope-flap-right {
   stroke-linecap: round;
-  transition: transform 0.5s ease-in 1s; /* used when closing*/
+  transition: transform var(--transition-time-5) ease-in 1s; /* used when closing*/
 }
 
 .envelope-flap-left {
@@ -818,12 +766,12 @@ a {
 
 .contact-trigger.expanded-contact .envelope-flap-left {
   transform: rotateY(180deg);
-  transition: transform 0.5s ease-out 0.5s; /* used when opening */
+  transition: transform var(--transition-time-5) ease-out 0.5s; /* used when opening */
 }
 
 .contact-trigger.expanded-contact .envelope-flap-right {
   transform: rotateY(-180deg);
-  transition: transform 0.5s ease-out 0.5s; /* used when opening */
+  transition: transform var(--transition-time-5) ease-out 0.5s; /* used when opening */
 }
 
 .contact-trigger.expanded-contact .envelope {
@@ -842,14 +790,14 @@ a {
   font-size: 1.4rem;
   opacity: 0;
   transform: translateX(calc(75px - (var(--i) * 50px))) translateY(var(--contact-envelope-expandedY)) scale(0.4);
-  transition: transform 0.6s ease-in, opacity 0.3s ease-in;
+  transition: transform 0.6s ease-in, opacity var(--transition-time-3) ease-in;
   transition-delay: calc((3 - var(--i)) * 100ms);
 }
 
 .contact-trigger.expanded-contact .spill-icon {
   opacity: 1;
   transform: translateX(0) translateY(0) scale(1);
-  transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-out;
+  transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity var(--transition-time-3) ease-out;
   transition-delay: calc(750ms + var(--i) * 150ms);
 }
 
@@ -857,14 +805,14 @@ a {
   &.btn-contact-cv, &.btn-contact-github {
     opacity: 1;
     transform: translateX(0) translateY(-10px) scale(1);
-    transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-out;
+    transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity var(--transition-time-3) ease-out;
     transition-delay: calc(750ms + var(--i) * 150ms);
   }
 }
 
 .email-flap {
   transform-origin: 12px 2px;
-  transition: transform 0.3s ease-out;
+  transition: transform var(--transition-time-3) ease-out;
 }
 
 .btn-contact-email, .btn-contact-github, .btn-contact-linkedin {
@@ -900,7 +848,7 @@ a {
 }
 
 .btn-contact-github:hover svg {
-  animation: tail-flick 0.5s ease-in-out;
+  animation: tail-flick var(--transition-time-5) ease-in-out;
   transform-origin: bottom center; /* wiggle pivots from the base, like a tail */
 }
 
@@ -960,7 +908,7 @@ a {
 }
 
 .peek-chevron {
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-time-3) ease;
 }
 
 .peek-btn[aria-expanded="true"] .peek-chevron {
@@ -1003,7 +951,7 @@ a {
       .hero-home-eyebrow {
         grid-row: 3;
         grid-column: 1/3;
-        animation: fadeUp 0.6s ease 0.35s forwards;
+        animation: fadeUp var(--transition-time-fadeUp) ease 0.35s forwards;
         .hero-eyebrow, .accent-line {
           opacity: 1;
           animation: none;
@@ -1018,7 +966,7 @@ a {
         grid-row: 2;
         grid-column: 1/3;
         margin: auto;
-        animation: fadeUp 0.6s ease 0.3s forwards;
+        animation: fadeUp var(--transition-time-fadeUp) ease 0.3s forwards;
       }
 
       .contact-trigger {
@@ -1061,10 +1009,10 @@ a {
           pointer-events: none;
           display: block;
           opacity: 0;
-          transition: opacity 0.3s ease;
+          transition: opacity var(--transition-time-3) ease;
 
           svg {
-            transition: fill 0.3s ease;
+            transition: fill var(--transition-time-3) ease;
           }
 
           &.expanded-preview {
@@ -1145,7 +1093,7 @@ a {
   position: relative;
   z-index: var(--z-overlap);
   opacity: 0;
-  animation: fadeUp 0.6s ease 0.35s forwards;
+  animation: fadeUp var(--transition-time-fadeUp) ease 0.35s forwards;
   margin-right: calc(-1 * var(--about-overlap) * var(--about-size) / 100);
   /* margin-bottom: calc(var(--about-overlap) * var(--about-size) / 100); */
   p {
@@ -1162,7 +1110,7 @@ a {
   z-index: var(--z-base);
   order: 2;
   opacity: 0;
-  animation: fadeUp 0.6s ease 0.5s forwards;
+  animation: fadeUp var(--transition-time-fadeUp) ease 0.5s forwards;
 }
 
 .contact-cta {
@@ -1882,7 +1830,7 @@ footer {
   color: var(--blue-accent);
   margin-bottom: 18px;
   opacity: 0;
-  animation: fadeUp 0.6s ease 0.1s forwards;
+  animation: fadeUp var(--transition-time-fadeUp) ease 0.1s forwards;
 }
 
 .hero-title {
@@ -1893,7 +1841,7 @@ footer {
   max-width: 700px;
   margin-bottom: 24px;
   opacity: 0;
-  animation: fadeUp 0.6s ease 0.25s forwards;
+  animation: fadeUp var(--transition-time-fadeUp) ease 0.25s forwards;
 }
 
 .hero-title span {
@@ -1906,7 +1854,7 @@ footer {
   max-width: var(--hero-desc-max-width);
   margin-bottom: 36px;
   opacity: 0;
-  animation: fadeUp 0.6s ease 0.4s forwards;
+  animation: fadeUp var(--transition-time-fadeUp) ease 0.4s forwards;
 }
 
 .hero-actions {
@@ -1914,7 +1862,7 @@ footer {
   gap: 12px;
   margin-bottom: 52px;
   opacity: 0;
-  animation: fadeUp 0.6s ease 0.55s forwards;
+  animation: fadeUp var(--transition-time-fadeUp) ease 0.55s forwards;
 }
 
 .hero-screenshot {
@@ -1989,7 +1937,7 @@ footer {
     align-items: center;
     max-height: unset;
     max-width: 1200px;
-    animation: expandFromCard 0.3s ease forwards;
+    animation: expandFromCard var(--transition-time-3) ease forwards;
     .chevron {
       background: var(--navy);
     }
@@ -2036,7 +1984,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   border-radius: 2px;
   margin-bottom: 4px;
   opacity: 0;
-  animation: fadeUp 0.5s ease 0.15s forwards;
+  animation: fadeUp var(--transition-time-5) ease 0.15s forwards;
 }
 
 /* Research — geometric rule */
@@ -2115,7 +2063,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   padding: 3px 10px;
   margin-bottom: 16px;
   opacity: 0;
-  animation: fadeUp 0.5s ease 0.5s forwards;
+  animation: fadeUp var(--transition-time-5) ease 0.5s forwards;
 
   .page-tag-btn {
     --anchor-btn-animation-timeout: 0.3s;
@@ -2267,7 +2215,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   gap: 8px;
   margin-bottom: 52px;
   opacity: 0;
-  animation: fadeUp 0.6s ease 0.65s forwards;
+  animation: fadeUp var(--transition-time-fadeUp) ease 0.65s forwards;
 }
 
 .badge {
@@ -2819,7 +2767,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
 .carousel-track {
   display: flex;
   width: 100%;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--transition-time-5) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Individual page cards */
@@ -3082,7 +3030,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   padding: 10px 24px;
   border-radius: 100px;
   opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity var(--transition-time-3) ease, transform var(--transition-time-3) ease;
   pointer-events: none;
   z-index: 2000;
 }
@@ -3428,18 +3376,4 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   0% { background: rgba(var(--blue-accent-rgb), 0); }
   50% { background: rgba(var(--blue-accent-rgb), 0.5); }
   100% { background: rgba(var(--blue-accent-rgb), var(--hero-projects-active-opacity)); }
-}
-
-@keyframes slideFadeOut {
-  0% {
-    opacity: 1;
-    transform: translateX(0);
-    scale:1;
-  }
-  95% { scale:1; }
-  100% {
-    opacity: 0;
-    transform: translateX(-200%);
-    scale:0;
-  }
 }
