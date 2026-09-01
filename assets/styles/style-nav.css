@@ -1,11 +1,12 @@
-nav {
-  --navbar-transition-time: 0.3s;
+:root {  --navbar-transition-time: 0.3s;
   --navbar-curtain-delay: 0.2s;
   --navbar-transition: var(--navbar-transition-time) ease;
   --navbar-accent-color: #3ca0e7;
   --navbar-border: 2px solid var(--navbar-accent-color);
   --navbar-active-view-color: color-mix(white, 80% var(--navbar-accent-color));
+}
 
+nav {
   &.navigation-menu {
     margin: 0 auto;
     display: block;

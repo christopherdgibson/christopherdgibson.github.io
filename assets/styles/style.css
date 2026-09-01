@@ -3239,6 +3239,7 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
     align-items: center;
     .btn {
       width: 100%;
+      line-height: 1.95
     }
   }
   .tech-row {

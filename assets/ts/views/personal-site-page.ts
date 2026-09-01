@@ -18,7 +18,7 @@ export default [
         initCarousel();
       }
     }),
-    ({containerSelector, loadSignal}: CallbackProps) => initMockHeaderAsync({containerSelector, mockHeaderSelector: '.curtain-demo-menu.menu-base', activeTab: "About", loadSignal}),
+    ({containerSelector, loadSignal}: CallbackProps) => initMockHeaderAsync({containerSelector, mockHeaderSelector: '.curtain-demo-menu.menu-base', activeTab: "Work", loadSignal}),
     ({containerSelector, loadSignal}: CallbackProps) => initMobilePreview({containerSelector, loadSignal}),
     () => initCardOverlay("#screenshotOverlay", "hamburgerCard"),
     () => initHamburgerAnimation(),

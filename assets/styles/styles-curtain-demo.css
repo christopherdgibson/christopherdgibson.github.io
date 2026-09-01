@@ -81,10 +81,9 @@
     color: white;
     border-right: none;
     position: relative;
-    margin: 0;
-    width: 20%;
+    margin: auto;
+    min-width: min(250px, 90%);
     font-size: 20px;
-    min-width: 200px;
     padding: 20px 0;
     border-bottom: var(--navbar-border);
     background-color: transparent;
@@ -94,16 +93,22 @@
       border-bottom: none;
     }
 
+    &.demo-navbar-active {
+      color: var(--navbar-active-view-color);
+    }
+
     span {
-      display: block;
-      width: 100%;
+      display: inline-block;
+      min-width: 250px;
     }
 
     &.curtain-preview-dropdown-header {
       border-bottom: none;
       padding: 10px 0;
+      text-align: center;
       span {
         width: min-content;
+        min-width: 0;
         font-size: 2rem;
         font-weight: 500;
         font-family: "DM Serif Display", serif;
