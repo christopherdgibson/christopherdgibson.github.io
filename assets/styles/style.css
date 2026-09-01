@@ -51,6 +51,7 @@
   --header-nav-offset: 5px;
   --mini-site-top: 3rem;
   --mini-site-bottom: 3rem;
+  --transition-time: 0.5s;
   --radius: 6px;
   --radius-hamburger: 4px;
   --radius-modal: 16px;
@@ -216,7 +217,9 @@ body {
 
 body:has(.home-container) {
   header {
-    display: none;
+    max-height: 0;
+    overflow: hidden;
+    animation: collapseHeader var(--transition-time) ease forwards;
   }
 }
 
@@ -229,7 +232,6 @@ body:has(.home-container):not(:has(.mini-site)) {
 
 body:has(.hero-about):not(:has(.mini-site)) {
   background: var(--background-image-about), var(--navy);
-  /* var(--background-radial-blue); */
   .hero, footer {
     background: none;
   }
@@ -239,7 +241,6 @@ a {
   text-decoration: none;
 }
 
-/* Style the header */
 .header {
   position: sticky;
   top: 0;
@@ -247,14 +248,17 @@ a {
   background: var(--background-radial-blue);
   padding: 0;
   border-bottom: 1px solid rgba(var(--blue-accent-rgb), 0.25);
+  max-height: 140px;
+  overflow: visible;
+  animation: expandHeader var(--transition-time) ease forwards;
 
-.header-link {
-  text-decoration: none;
-  color: var(--white);
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
-}
+  .header-link {
+    text-decoration: none;
+    color: var(--white);
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+  }
 
   h1 {
     font-family:"DM Serif Display", serif;
@@ -3319,6 +3323,19 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
 }
 
 /* Hero animations */
+
+@keyframes expandHeader {
+  0% { max-height: 0; overflow: hidden; }
+  99% { max-height: 140px; overflow: hidden; }
+  100% { max-height: 140px; overflow: visible; }
+}
+
+@keyframes collapseHeader {
+  0% { max-height: 140px; overflow: visible; }
+  1% { max-height: 140px; overflow: hidden; }
+  100% { max-height: 0; overflow: hidden; }
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;

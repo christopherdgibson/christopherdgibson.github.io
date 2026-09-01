@@ -27,10 +27,6 @@ export async function initNavMenu({navSelector, navHtml, bodyElement, containerS
     initHref({link, bodyElement: bodyElement, containerSelector, checkView: false}); // let loadView throw
   });
 
-  const header: HTMLElement | null = document.querySelector("#header");
-  if (header !== null) {
-    header.removeAttribute('style');
-  }
   const desktopLinks: NodeListOf<HTMLElement> = navMenu.querySelectorAll('.has-dropdown');
   desktopLinks.forEach(link => {
     splitStringIntoSpans({elSelector: 'a', spanClassName: 'navlink-char', parentEl: link});
