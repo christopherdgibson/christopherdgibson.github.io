@@ -255,6 +255,15 @@ export function initRouter(): Promise<void> {
       const redirect = sessionStorage.getItem("redirect");
       if (redirect) {
         sessionStorage.removeItem("redirect");
+
+        // Handle legacy resource paths
+        const oldAssetPrefixes = ['pdfs', 'images', 'svgs', 'downloads'];
+        const matchedPrefix = oldAssetPrefixes.find(folder => redirect.includes(`/assets/${folder}/`));
+        if (matchedPrefix) {
+          window.location.replace(redirect.replace(`/assets/${matchedPrefix}/`, `/${matchedPrefix}/`));
+          return;
+        }
+
         const view = normalizeViewPath(redirect, base);
         history.replaceState({ view, containerSelector: undefined }, "", `${base}${view}`);
         initialLoad = loadView({view: view as ViewKey, bodyElement: undefined, containerSelector: undefined, contentOnly: false, updateHistory: false});
