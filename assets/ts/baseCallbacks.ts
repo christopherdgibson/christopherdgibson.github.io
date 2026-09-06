@@ -60,8 +60,8 @@ function initFooterButtons(containerSelector?: string) {
   let nextLink: HTMLAnchorElement | null = getCleanElement('#footer-next-link');
 
   if (!viewNav) {
-    backLink?.setAttribute('style', 'display: none');
-    nextLink?.setAttribute('style', 'display: none');
+    backLink?.classList.toggle('hide-footer-link', true);
+    nextLink?.classList.toggle('hide-footer-link', true);
     return;
   }
 

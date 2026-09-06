@@ -10,6 +10,6 @@ export default [
   () => initContactIcons('#contactTrigger', '#contactEnvelope', '#contactPageTag'),
   ({containerSelector, loadSignal}: CallbackProps) => initPreviewSection({section: 'experience', containerSelector, loadSignal}),
   ({containerSelector, loadSignal}: CallbackProps) => initPreviewSection({section: 'work', containerSelector, loadSignal}),
-  () => initCarousel('.tech-row', '.hero-home-tech-stack .badge'),
+  ({loadSignal}: CallbackProps) => initCarousel(loadSignal, '.tech-row', '.hero-home-tech-stack .badge'),
   ({containerSelector, loadSignal}: CallbackProps) => populateProjectCardsAsync({cardSelector: '.carousel-card', page: "Home", containerSelector, loadSignal})
 ] satisfies ViewCallback[];

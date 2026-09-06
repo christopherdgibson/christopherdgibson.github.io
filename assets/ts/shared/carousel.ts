@@ -1,6 +1,6 @@
 import { getCleanElement } from '../utils.js';
 
-export function initCarousel(rowSelector?: string, badgeSelector?: string) {
+export function initCarousel(loadSignal: AbortSignal, rowSelector?: string, badgeSelector?: string) {
   const track = getCleanElement("#carouselTrack");
   if (!track) return;
   const dots: NodeListOf<HTMLAnchorElement> = document.querySelectorAll("#carouselWrapper .carousel-dot"); // clean dot elements as well with getCleanElements()?
@@ -89,6 +89,8 @@ export function initCarousel(rowSelector?: string, badgeSelector?: string) {
   }
   track.addEventListener("mouseenter", stopAutoplay);
   track.addEventListener("mouseleave", startInterval);
+
+  loadSignal.addEventListener('abort', stopAutoplay, {once: true});
 
   // Start carousel
   startInterval();

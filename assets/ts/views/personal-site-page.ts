@@ -15,7 +15,7 @@ export default [
       activeClass: "activeCarousel",
       loadSignal,
       callback: () => {
-        initCarousel();
+        initCarousel(loadSignal);
       }
     }),
     ({containerSelector, loadSignal}: CallbackProps) => initMockHeaderAsync({containerSelector, mockHeaderSelector: '.curtain-demo-menu.menu-base', activeTab: "Work", loadSignal}),
