@@ -1,0 +1,196 @@
+<div
+  class="view-nav"
+  hidden
+  data-back-text="Work"
+  data-back-href="work"
+  data-next-text="Articles"
+  data-next-href="articles"
+></div>
+
+<!-- HERO -->
+<section class="hero hero-project hero-wireframe">
+  <p class="hero-eyebrow">Portfolio · TypeScript / Sobel Edges</p>
+  <h1 class="hero-title"><span>&lt;Wireframe</span> <span>Renderer/&gt;</span></h1>
+  <p class="hero-desc">
+    An interface that renders images in a wireframe effect with adjustable
+    colouring, edge sensitivity, line glow, and colour inversion. Choose from a
+    carousel of stock images or upload a custom image, adjust effects, and save
+    as a png file, all without frameworks or file storage.
+  </p>
+  <div class="badges">
+    <span class="badge">TypeScript</span>
+    <span class="badge">HTML Canvas Elements</span>
+    <span class="badge">Sobel Edges</span>
+    <span class="badge">CSS Animations</span>
+    <!-- <span class="badge">html2pdf</span>
+    <span class="badge">GitHub Pages</span> -->
+  </div>
+</section>
+
+<main class="wireframe-effect">
+  <section class="carousel-flex-wrapper">
+    <div class="carousel-flex">
+      <ul class="carousel-flex-list">
+        <li class="carousel-flex-item" tabindex="0">
+          <div class="carousel-flex-box">
+            <div class="carousel-flex-image">
+              <img
+                src="https://picsum.photos/id/660/1200/1200"
+                alt="sparkler"
+              />
+            </div>
+          </div>
+        </li>
+        <li class="carousel-flex-item" tabindex="0">
+          <div class="carousel-flex-box">
+            <div class="carousel-flex-image">
+              <img src="https://picsum.photos/id/669/1200/1200" alt="hat" />
+            </div>
+          </div>
+        </li>
+        <li class="carousel-flex-item" tabindex="0">
+          <div class="carousel-flex-box">
+            <div class="carousel-flex-image">
+              <img src="https://picsum.photos/id/823/1200/1200" alt="camera" />
+            </div>
+            <!-- <div class="carousel-flex-contents">
+          <h2 class="user__name">Christine Boucher</h2>
+          <h3 class="user__title">Photographer</h3>
+        </div> -->
+          </div>
+        </li>
+        <li class="carousel-flex-item" tabindex="0">
+          <div class="carousel-flex-box">
+            <div class="carousel-flex-image">
+              <img src="https://picsum.photos/id/64/1200/1200" alt="flowers" />
+            </div>
+          </div>
+        </li>
+        <li class="carousel-flex-item" tabindex="0" data-active="data-active">
+          <div class="carousel-flex-box">
+            <div class="carousel-flex-image">
+              <img src="https://picsum.photos/id/836/1200/1200" alt="guitar" />
+            </div>
+          </div>
+        </li>
+        <li class="carousel-flex-item" tabindex="0">
+          <div class="carousel-flex-box">
+            <div class="carousel-flex-image">
+              <img
+                src="https://picsum.photos/id/1027/1200/1200"
+                alt="pensive"
+              />
+            </div>
+          </div>
+        </li>
+        <li class="carousel-flex-item" tabindex="0">
+          <div class="carousel-flex-box">
+            <div class="carousel-flex-image">
+              <img
+                src="https://picsum.photos/id/646/1200/1200"
+                alt="sunlight"
+              />
+            </div>
+          </div>
+        </li>
+        <li class="carousel-flex-item" tabindex="0">
+          <div class="carousel-flex-box">
+            <div class="carousel-flex-image">
+              <img src="https://picsum.photos/id/40/4106/2806" alt="cat" />
+            </div>
+          </div>
+        </li>
+        <li class="carousel-flex-item" tabindex="0">
+          <div class="carousel-flex-box">
+            <div class="carousel-flex-image">
+              <img src="https://picsum.photos/id/57/2448/3264" alt="street" />
+            </div>
+          </div>
+        </li>
+        <li class="carousel-flex-item" tabindex="0">
+          <div class="carousel-flex-box">
+            <div class="carousel-flex-image">
+              <img
+                src="https://picsum.photos/id/58/1280/853"
+                alt="lighthouse"
+              />
+            </div>
+          </div>
+        </li>
+        <li class="carousel-flex-item" tabindex="0">
+          <div class="carousel-flex-box">
+            <div class="carousel-flex-image">
+              <img src="https://picsum.photos/id/78/1584/2376" alt="doorway" />
+            </div>
+          </div>
+        </li>
+        <li class="carousel-flex-item" tabindex="0">
+          <div class="carousel-flex-box">
+            <div class="carousel-flex-image">
+              <img src="https://picsum.photos/id/76/4912/3264" alt="bicycle" />
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="carousel-flex-nav">
+        <button class="btn-resume file-btn">
+          <span class="btn-pause">❚❚ <span class="desktop-text">Pause</span></span>
+          <span class="btn-resume">▶ <span class="desktop-text">Resume</span></span>
+        </button>
+        <button class="btn-prev file-btn">
+          <span>❮ <span class="desktop-text">Prev</span></span>
+        </button>
+        <button class="btn-next file-btn">
+          <span><span class="desktop-text">Next</span> ❯ </span>
+        </button>
+      </div>
+    </div>
+  </section>
+  <div class="wireframe-layout">
+    <div class="wireframe-canvas-wrap">
+      <canvas id="canvas" width="600" height="750"></canvas>
+    </div>
+
+    <div class="wireframe-controls">
+      <div class="wireframe-source">
+        <div class="wireframe-section-label">Source</div>
+        <label class="file-btn" for="fileInput">Upload your own photo</label>
+        <input type="file" id="fileInput" accept="image/*" />
+        <button class="action-btn" id="resetBtn">Use default demo photo</button>
+        <div class="wireframe-flex-column">
+          <div class="wireframe-section-label">Status</div>
+          <div class="wireframe-status" id="status">Loading demo image…</div>
+        </div>
+      </div>
+
+      <div class="wireframe-inputs">
+        <div class="wireframe-section-label">Effect</div>
+        <div class="wireframe-sliders">
+          <label
+            >Edge sensitivity
+            <input type="range" id="threshold" min="10" max="200" value="60" />
+          </label>
+          <label
+            >Line glow
+            <input type="range" id="glow" min="0" max="20" value="6" />
+          </label>
+        </div>
+        <label
+          >Line color
+          <input type="color" id="lineColor" value="#39ff88" />
+        </label>
+        <div class="wireframe-toggle-row">
+          <label>
+            <input type="checkbox" id="invert" /> Invert (dark lines)
+          </label>
+        </div>
+      </div>
+
+      <div class="wireframe-download wireframe-flex-column">
+        <div class="wireframe-section-label">Download PNG</div>
+        <button class="action-btn" id="downloadBtn">Download</button>
+      </div>
+      
+    </div>
+  </div>
+</main>

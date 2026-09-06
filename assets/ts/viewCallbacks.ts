@@ -7,6 +7,7 @@ import reportDownloadHub from './views/report-download-hub.js';
 import adminDocRepo from './views/admin-doc-repo.js';
 import TZComp from './views/react-native-tzcomp.js';
 import wordPress from './views/wordpress-plugins.js';
+import wireframeEffect from './views/wireframe-effect.js';
 import personalSite from './views/personal-site-page.js';
 // Articles sub-menu
 import buildingARouter from './views/articles/building-a-router.js';
@@ -23,5 +24,6 @@ export const viewCallbacks: ViewCallbackProps = {
     "react-native-tzcomp": TZComp,
     "wordpress-plugins": wordPress,
     "personal-site-page": personalSite,
-    "articles/building-a-router": buildingARouter
+    "articles/building-a-router": buildingARouter,
+    "wireframe-effect": wireframeEffect
 };
