@@ -2764,6 +2764,14 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   }
 }
 
+.mini-site:has(.wireframe-effect) {
+  background: var(--background-image-wireframe), var(--navy);
+
+  footer {
+    background: none;
+  }
+}
+
 .carousel-wrapper.expanded {
     position: fixed;
     top: 40%;

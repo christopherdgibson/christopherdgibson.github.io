@@ -59,6 +59,7 @@
     .carousel-flex-item[data-active] {
         flex-basis: var(--width);
         flex-grow: 0;
+        cursor: pointer;
     }
 
     @media screen and (max-width: 800px) {
