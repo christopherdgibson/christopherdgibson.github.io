@@ -42,6 +42,7 @@ class WireframeEffect {
   loadImage = (src: string | HTMLImageElement) => {
     if (!this.statusEl) return;
     this.statusEl.textContent = "Loading image…";
+    this.statusEl.setAttribute('data-ready', '');
     const img = typeof src === "string" ? new Image() : src;
 
     if (typeof src === "string") {
@@ -53,8 +54,9 @@ class WireframeEffect {
     }
 
     img.onerror = () => {
-      if (this.statusEl)
+      if (this.statusEl) {
         this.statusEl.textContent = "Could not load that image.";
+        this.statusEl.setAttribute('data-ready', 'false');}
     };
 
     if (img.complete && img.naturalWidth > 0) {
@@ -62,12 +64,16 @@ class WireframeEffect {
       this.prepareImageData(img);
       this.render();
       this.statusEl.textContent = "Ready.";
+      this.statusEl.setAttribute('data-ready', 'true');
     } else {
       img.onload = () => {
         this.sourceImg = img;
         this.prepareImageData(img);
         this.render();
-        if (this.statusEl) this.statusEl.textContent = "Ready.";
+        if (this.statusEl) {
+          this.statusEl.textContent = "Ready.";
+          this.statusEl.setAttribute('data-ready', 'true');
+        }
       };
     }
 
