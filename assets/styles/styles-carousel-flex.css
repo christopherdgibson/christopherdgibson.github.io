@@ -1,9 +1,11 @@
-:root {
-    --height: calc(80vh - 50px);
-    --width: 450px;
-}
-
 .carousel-flex-wrapper {
+    --carousel-accent-rgb: 67, 255, 0;
+    --carousel-flex-item-height: calc(80vh - 50px);
+    --carousel-flex-item-width: 450px;
+    --carousel-accent-color: rgba(118, 221, 136, 0.5);
+    --carousel-lower-gradient: linear-gradient(160deg, rgba(2, 0, 36, 0) 40%, var(--carousel-accent-color) 70%, rgba(0, 255, 246, 0.6) 100%);
+    --carousel-pause-gradient: linear-gradient(160deg, rgba(2, 0, 36, 0) 10%, var(--carousel-accent-color) 60%, var(--wireframe-accent) 150%);
+
     .carousel-flex {
         display: grid;
         row-gap: 1em;
@@ -28,7 +30,7 @@
         margin: 0 10px;
         padding: 0;
         flex: 1 1 10%;
-        height: var(--height);
+        height: var(--carousel-flex-item-height);
         max-height: 300px;
         overflow: hidden;
         background: rgba(255,255,255,0.2);
@@ -47,17 +49,17 @@
 
     .carousel-flex-image,
     .carousel-flex-contents {
-        width: var(--width);
+        width: var(--carousel-flex-item-width);
         height: auto;
     }
 
     .carousel-flex-item:hover {
-        flex-basis: calc( var(--width) / 2 );
+        flex-basis: calc( var(--carousel-flex-item-width) / 2 );
         transition: all 0.3s ease;
     }
 
     .carousel-flex-item[data-active] {
-        flex-basis: var(--width);
+        flex-basis: var(--carousel-flex-item-width);
         flex-grow: 0;
         cursor: pointer;
     }
@@ -159,7 +161,7 @@
     .carousel-flex-item img {
         display: block;
         position: absolute;
-        width: var(--width);
+        width: var(--carousel-flex-item-width);
         height: 100%;
         left: 50%;
         top: 50%;
@@ -178,8 +180,7 @@
         height: 100%;
         z-index: 1;
         opacity: 1;
-        background: linear-gradient(160deg, rgba(2,0,36,0) 40%, rgba(118,221,136,.5) 70%, rgba(0,255,246,.6) 100%);
-        /* background: linear-gradient(160deg, rgba(2,0,36,0) 40%, rgba(118,221,136,.5) 70%, rgba(var(--wireframe-accent-rgb), 0.99) 100%); */
+        background: var(--carousel-lower-gradient);
         transition: all .66s cubic-bezier(.55,.24,.18,1);
     }
 
@@ -244,7 +245,7 @@
 
     @media screen and (max-width: 800px) {
         .carousel-flex-item img {
-            width: calc(var(--width) * .5);
+            width: calc(var(--carousel-flex-item-width) * .5);
         }
         .carousel-flex-contents {
             transform: translateX(-100%) rotate(90deg);
@@ -285,7 +286,6 @@
     .carousel-flex-nav {
         padding: 1em 2em;
         justify-self: end;
-        /* grid-row: 1; */
         display: flex;
         justify-content: space-between;
         gap: 1em;
@@ -301,6 +301,10 @@
         &.pause-carousel {
             span.btn-resume {display: inline-block;}
             span.btn-pause {display: none;}
+            background: var(--carousel-pause-gradient);
+            border-color: white;
+            color: white;
+            font-weight: 900;
         }
     }
 

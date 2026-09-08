@@ -6,36 +6,32 @@ export function initCarouselFlex(loadSignal: AbortSignal) {
     let autoplay: number;
     let pauser;
 
-    const getActiveIndex = () => {
-        const active = document.querySelector("[data-active]");
-        if (active){
-        return getSlideIndex(active);
-        }
-    }
+    const getSlides: () => Element[] = () => [...document.querySelectorAll(".carousel-flex-item")];
 
-    const getSlideIndex = (slide: Element) => {
-        return [...document.querySelectorAll(".carousel-flex-item")].indexOf( slide );
-    }
+    const getActiveIndex = (slides: Element[]) => slides.findIndex(el => el.hasAttribute('data-active'));
+
+    const getSlideIndex = (slide: Element) => getSlides().indexOf( slide );
 
     const prevSlide = () => {
-        const index = getActiveIndex();
-        const slides = document.querySelectorAll(".carousel-flex-item");
-        const last = slides[slides.length-1];
+        const slides = getSlides();
+        const index = getActiveIndex(slides);
+        const last = slides[slides.length - 1];
         last.remove();
         list?.prepend(last);
-        if (index) activateSlide( document.querySelectorAll(".carousel-flex-item")[index] as HTMLElement );
-    }
+        if (index !== undefined) activateSlide(getSlides()[index] as HTMLElement);
+    };
+    
     const nextSlide = () => {
-        const index = getActiveIndex();
-        const slides = document.querySelectorAll(".carousel-flex-item");
+        const slides = getSlides();
+        const index = getActiveIndex(slides);
         const first = slides[0];
         first.remove();
         list?.append(first);
-        if (index) activateSlide( document.querySelectorAll(".carousel-flex-item")[index] as HTMLElement );
+        if (index !== undefined) activateSlide(getSlides()[index] as HTMLElement);
     }
 
     const chooseSlide = (e: any) => {
-            const max = (window.matchMedia("screen and ( max-width: 600px)").matches) ? 5 : 8;
+        const max = (window.matchMedia("screen and ( max-width: 600px)").matches) ? 5 : 8;
         const slide = e.target.closest( ".carousel-flex-item" );
         const index = getSlideIndex( slide );
         if ( index < 3 || index > max ) return;
@@ -46,7 +42,7 @@ export function initCarouselFlex(loadSignal: AbortSignal) {
 
     const activateSlide = (slide: HTMLElement) => {
         if (!slide) return;
-        const slides = document.querySelectorAll(".carousel-flex-item");
+        const slides = getSlides();
         slides.forEach(el => el.removeAttribute('data-active'));
         slide.setAttribute( 'data-active', 'true' );
     }
@@ -102,7 +98,6 @@ export function initCarouselFlex(loadSignal: AbortSignal) {
         } else {
             pauseAuto();
         }
-
     }
 
     startAuto();
