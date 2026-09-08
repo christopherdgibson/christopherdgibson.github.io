@@ -1,38 +1,39 @@
 export function initCarouselFlex(loadSignal: AbortSignal) {
-    const prev = document.querySelector(".btn-prev");
-    const next = document.querySelector(".btn-next");
-    const resume = document.querySelector(".btn-resume");
-    const list = document.querySelector(".carousel-flex-list");
+    const carousel: HTMLElement | null = document.querySelector(".carousel-flex");
+    const list: HTMLElement | null = document.querySelector(".carousel-flex-list");
+    const prev: HTMLElement | null = document.querySelector(".btn-prev");
+    const next: HTMLElement | null = document.querySelector(".btn-next");
+    const resume: HTMLElement | null = document.querySelector(".btn-resume");
+
     let autoplay: number;
-    let pauser;
 
-    const getSlides: () => Element[] = () => [...document.querySelectorAll(".carousel-flex-item")];
+    let slides = [...document.querySelectorAll<HTMLElement>(".carousel-flex-item")];
 
-    const getActiveIndex = (slides: Element[]) => slides.findIndex(el => el.hasAttribute('data-active'));
+    const getSlideIndex = (slide: HTMLElement) => slides.indexOf(slide);
 
-    const getSlideIndex = (slide: Element) => getSlides().indexOf( slide );
+    const getActiveIndex = () => {
+        const i = slides.findIndex(el => el.hasAttribute('data-active'));
+        return i === -1 ? undefined : i;
+    };
 
     const prevSlide = () => {
-        const slides = getSlides();
-        const index = getActiveIndex(slides);
-        const last = slides[slides.length - 1];
-        last.remove();
+        const index = getActiveIndex();
+        const last = slides.pop()!;
         list?.prepend(last);
-        if (index !== undefined) activateSlide(getSlides()[index] as HTMLElement);
+        slides.unshift(last);
+        if (index !== undefined) activateSlide(slides[index]);
     };
-    
-    const nextSlide = () => {
-        const slides = getSlides();
-        const index = getActiveIndex(slides);
-        const first = slides[0];
-        first.remove();
-        list?.append(first);
-        if (index !== undefined) activateSlide(getSlides()[index] as HTMLElement);
-    }
 
-    const chooseSlide = (e: any) => {
+    const nextSlide = () => {
+        const index = getActiveIndex();
+        const first = slides.shift()!;
+        list?.append(first);
+        slides.push(first);
+        if (index !== undefined) activateSlide(slides[index]);
+    };
+
+    const chooseSlide = (slide: HTMLElement) => {
         const max = (window.matchMedia("screen and ( max-width: 600px)").matches) ? 5 : 8;
-        const slide = e.target.closest( ".carousel-flex-item" );
         const index = getSlideIndex( slide );
         if ( index < 3 || index > max ) return;
         if ( index === max ) nextSlide();
@@ -42,10 +43,9 @@ export function initCarouselFlex(loadSignal: AbortSignal) {
 
     const activateSlide = (slide: HTMLElement) => {
         if (!slide) return;
-        const slides = getSlides();
         slides.forEach(el => el.removeAttribute('data-active'));
-        slide.setAttribute( 'data-active', 'true' );
-    }
+        slide.setAttribute('data-active', 'true');
+    };
 
     const autoSlide = () => {
         nextSlide();
@@ -53,34 +53,44 @@ export function initCarouselFlex(loadSignal: AbortSignal) {
 
     const pauseAuto = () => {
         clearInterval( autoplay );
-        clearTimeout( pauser );
         resume?.classList.toggle('pause-carousel', true);
     }
 
-    const handleNextClick = (e: any) => {
+    const handleNextClick = () => {
         pauseAuto();
         nextSlide();
     }
 
-    const handlePrevClick = (e: any) => {
+    const handlePrevClick = () => {
         pauseAuto();
         prevSlide();
     }
 
     const handleSlideClick = (e: any) => {
         pauseAuto();
-        chooseSlide(e);
+        const slide = e.target.closest( ".carousel-flex-item" );
+        chooseSlide(slide);
     }
 
+    const isButtonTarget = (target: EventTarget | null) => target instanceof Element && target.closest("button") !== null;
+
     const handleSlideKey = (e: any) => {
-        switch(e.keyCode) {
-            case 37:
-            case 65:
-                handlePrevClick(e);
+        console.log("e.key: ", e.key);
+        switch(e.key) {
+            case 'a':
+            case 'ArrowLeft':
+                if (!isButtonTarget(e.target)) handlePrevClick();
                 break;
-            case 39:
-            case 68:
-                handleNextClick(e);
+            case 'd':
+            case 'ArrowRight':
+                if (!isButtonTarget(e.target)) handleNextClick();
+                break;
+            case 'Enter':
+                if (!isButtonTarget(e.target)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    togglePause();
+                }
                 break;
         }
     }
@@ -107,7 +117,7 @@ export function initCarouselFlex(loadSignal: AbortSignal) {
     next?.addEventListener( "click", handleNextClick );
     list?.addEventListener( "click", handleSlideClick );
     // list?.addEventListener( "focusin", handleSlideClick );
-    list?.addEventListener( "keyup", handleSlideKey );
+    carousel?.addEventListener( "keyup", handleSlideKey );
 
     loadSignal.addEventListener('abort', pauseAuto, {once: true});
 }
