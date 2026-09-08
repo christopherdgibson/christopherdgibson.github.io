@@ -75,7 +75,6 @@ export function initCarouselFlex(loadSignal: AbortSignal) {
     const isButtonTarget = (target: EventTarget | null) => target instanceof Element && target.closest("button") !== null;
 
     const handleSlideKey = (e: any) => {
-        console.log("e.key: ", e.key);
         switch(e.key) {
             case 'a':
             case 'ArrowLeft':
