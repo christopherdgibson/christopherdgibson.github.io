@@ -1,9 +1,10 @@
 export function initCarouselFlex(loadSignal: AbortSignal) {
     const carousel: HTMLElement | null = document.querySelector(".carousel-flex");
     const list: HTMLElement | null = document.querySelector(".carousel-flex-list");
-    const prev: HTMLElement | null = document.querySelector(".btn-prev");
-    const next: HTMLElement | null = document.querySelector(".btn-next");
-    const resume: HTMLElement | null = document.querySelector(".btn-resume");
+    const prevBtn: HTMLElement | null = document.querySelector(".btn-prev");
+    const nextBtn: HTMLElement | null = document.querySelector(".btn-next");
+    const resumeBtn: HTMLElement | null = document.querySelector(".btn-resume");
+    const carouselBtns: (HTMLElement | null)[] = [resumeBtn, prevBtn, nextBtn];
 
     let autoplay: number;
 
@@ -53,7 +54,7 @@ export function initCarouselFlex(loadSignal: AbortSignal) {
 
     const pauseAuto = () => {
         clearInterval( autoplay );
-        resume?.classList.toggle('pause-carousel', true);
+        resumeBtn?.classList.toggle('pause-carousel', true);
     }
 
     const handleNextClick = () => {
@@ -72,36 +73,46 @@ export function initCarouselFlex(loadSignal: AbortSignal) {
         chooseSlide(slide);
     }
 
-    const isButtonTarget = (target: EventTarget | null) => target instanceof Element && target.closest("button") !== null;
-
     const handleSlideKey = (e: any) => {
         switch(e.key) {
             case 'a':
             case 'ArrowLeft':
-                if (!isButtonTarget(e.target)) handlePrevClick();
+                handlePrevClick();
                 break;
             case 'd':
             case 'ArrowRight':
-                if (!isButtonTarget(e.target)) handleNextClick();
+                handleNextClick();
+                break;
+            case 's':
+                togglePause();
                 break;
             case 'Enter':
-                if (!isButtonTarget(e.target)) {
-                    e.preventDefault();
-                    e.stopPropagation();
+                const active = document.activeElement;
+                if (!(active instanceof HTMLElement) || !carouselBtns.includes(active)) {
                     togglePause();
                 }
                 break;
+            case "Escape":
+                e.preventDefault();
+                e.target.blur();
+                if (!carousel) return;
+
+                carousel.classList.add('focus-no-outline'); // remove focus-visible outline
+                carousel.focus();
+                carousel.addEventListener('blur', () => {
+                    carousel.classList.remove('focus-no-outline');
+                }, { once: true });
         }
     }
 
     const startAuto = () => {
-        resume?.classList.toggle('pause-carousel', false);
+        resumeBtn?.classList.toggle('pause-carousel', false);
         autoplay = setInterval( autoSlide, 3000 );
     }
 
     const togglePause = () => {
-        if (!resume) return;
-        if (resume.classList.contains('pause-carousel')) {
+        if (!resumeBtn) return;
+        if (resumeBtn.classList.contains('pause-carousel')) {
             nextSlide();
             startAuto();
         } else {
@@ -111,12 +122,20 @@ export function initCarouselFlex(loadSignal: AbortSignal) {
 
     startAuto();
 
-    resume?.addEventListener( "click", togglePause );
-    prev?.addEventListener( "click", handlePrevClick );
-    next?.addEventListener( "click", handleNextClick );
+    carouselBtns.forEach(btn => {
+        btn?.addEventListener("click", (e) => {
+            if (e.detail !== 0) { // keep focus for e.detail === 0 (keyboard events)
+                carousel?.focus();
+            }
+        });
+    })
+
+    resumeBtn?.addEventListener( "click", togglePause);
+    prevBtn?.addEventListener( "click", handlePrevClick );
+    nextBtn?.addEventListener( "click", handleNextClick );
     list?.addEventListener( "click", handleSlideClick );
     // list?.addEventListener( "focusin", handleSlideClick );
-    carousel?.addEventListener( "keyup", handleSlideKey );
+    carousel?.addEventListener( "keydown", handleSlideKey );
 
     loadSignal.addEventListener('abort', pauseAuto, {once: true});
 }

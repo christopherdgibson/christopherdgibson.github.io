@@ -64,6 +64,10 @@
         cursor: pointer;
     }
 
+    .focus-no-outline:focus-visible {
+        outline: none;
+    }
+
     @media screen and (max-width: 800px) {
         .carousel-flex-item {
             flex-basis: 15%;
