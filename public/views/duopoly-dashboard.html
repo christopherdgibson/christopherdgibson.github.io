@@ -1,0 +1,260 @@
+<div
+  class="view-nav"
+  hidden
+  data-back-text="Work"
+  data-back-href="work"
+  data-next-text="View Live"
+  data-next-href="https://christopherdgibson.github.io/duopoly-pricing-dashboard"
+></div>
+
+<!-- HERO -->
+<section class="hero hero-project hero-adr">
+  <p class="hero-eyebrow">Portfolio · React / TypeScript / Python (Pyodide)</p>
+  <h1 class="hero-title">Duopoly Pricing Engine</h1>
+  <p class="hero-desc">
+    An interactive Monte Carlo simulation engine modeling algorithmic collusion
+    and Bertrand-Nash price competition in differentiated duopoly markets.
+    Powered by WebAssembly (Pyodide) to run Python reinforcement learning
+    algorithms directly in the browser, featuring real-time state
+    synchronization, dynamic action spaces, and closed-form economic benchmarks.
+  </p>
+  <div class="hero-actions">
+    <a
+      target="_blank"
+      href="https://christopherdgibson.github.io/duopoly-pricing-dashboard/"
+      class="btn btn-primary"
+      >View Live Dashboard →</a
+    >
+    <a
+      href="https://github.com/christopherdgibson/duopoly-pricing-dashboard"
+      target="_blank"
+      class="btn btn-ghost"
+      >GitHub Repository</a
+    >
+  </div>
+  <div class="badges">
+    <span class="badge">React</span>
+    <span class="badge">TypeScript</span>
+    <span class="badge">Python</span>
+    <span class="badge">Pyodide / WASM</span>
+    <span class="badge">Reinforcement Learning</span>
+    <span class="badge">NumPy</span>
+    <span class="badge">Economics</span>
+  </div>
+
+  <div
+    class="screenshot-wrapper"
+    data-images='["/images/duo-dashboard-screenshot1.png"]'
+    data-current="0"
+  >
+    <button class="chevron chevron-left">&#8249;</button>
+    <img
+      class="hero-screenshot"
+      src="/images/duo-dashboard-screenshot1.png"
+      alt="Precinct screenshot"
+    />
+    <button class="chevron chevron-right">&#8250;</button>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<main class="content">
+  <!-- Overview -->
+  <section class="section">
+    <p class="section-label">Overview</p>
+    <h2 class="section-title">
+      Simulating algorithmic collusion in real-time browser WebAssembly
+    </h2>
+    <div class="divider"></div>
+    <p class="section-body">
+      The Duopoly Pricing Engine explores how autonomous Q-learning agents
+      interact in repeated Bertrand competition with differentiated goods. Built
+      to run entirely client-side, the engine compiles a full Python economic
+      simulation environment and reinforcement learning agents into WebAssembly
+      via Pyodide. Users can manipulate market structural parameters including
+      cost asymmetries, product differentiation, demand intercept, and learning
+      hyperparameters in order to observe price trajectories, convergence speed,
+      and tacit collusion in real time.
+    </p>
+    <div class="pull-quote">
+      <p>
+        Near-native Python reinforcement learning running entirely in the
+        browser. Tightly integrated with React to provide instant economic
+        benchmark updates and trajectory analysis without server round-trips.
+      </p>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section">
+    <p class="section-label">How it works</p>
+    <h2 class="section-title">
+      Bridging React state and Python WASM through explicit dict boundaries
+    </h2>
+    <div class="divider"></div>
+    <p class="section-body">
+      The application separates frontend state management from backend
+      algorithmic execution. React controls send structured configuration
+      payloads containing market parameters and simulation run criteria across
+      the Pyodide WebAssembly bridge. Python converts incoming JS objects into
+      native dictionary structures, unpacking them into frozen dataclasses. The
+      core simulation generates a dynamic action space spanning from cost floor
+      to monopoly price, runs memory-1 Q-learning updates over thousands of
+      episodes, tracks optimal action streaks for convergence detection, and
+      returns structured time-series trajectories back to TypeScript for UI
+      rendering.
+    </p>
+  </section>
+
+  <!-- Features -->
+  <section class="section">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">What's under the hood</h2>
+    <div class="divider"></div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Pyodide WebAssembly Engine</div>
+        <div class="feature-body">
+          Executes native CPython bytecode and NumPy array operations in the
+          browser at high speed, executing millions of simulation steps without
+          requiring dedicated server infrastructure or remote API workers.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <div class="feature-title">Closed-Form Economic Benchmarks</div>
+        <div class="feature-body">
+          Real-time analytical derivation of asymmetric Bertrand-Nash
+          equilibrium prices and monopoly price ceilings for differentiated
+          products, serving as explicit baselines against Q-learning
+          convergence.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">Dynamic Action Spaces</div>
+        <div class="feature-body">
+          Action vectors are automatically generated via NumPy linspace between
+          minimum marginal cost and joint monopoly price bounds, preventing
+          edge-case clipping and scaling state-action dimensions dynamically.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎛</div>
+        <div class="feature-title">Asymmetric Cost Modeling</div>
+        <div class="feature-body">
+          Supports both symmetric markets and independent firm marginal cost
+          structures with synchronized React UI controls, conditional disabled
+          states, and automatic cost-matching on toggle reset.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-title">Convergence Tracking & Streaks</div>
+        <div class="feature-body">
+          Tracks policy stability by monitoring optimal action streaks across
+          consecutive episodes, enabling early stopping triggers when agents
+          settle into stationary pricing equilibrium.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Trajectory & Metrics Analysis</div>
+        <div class="feature-body">
+          Aggregates windowed episode averages for price trajectories, joint
+          profit margins, exploration decay curves, and final-stage convergence
+          distributions for comparative plotting.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical decisions -->
+  <section class="section">
+    <p class="section-label">Technical decisions</p>
+    <h2 class="section-title">Why these choices</h2>
+    <div class="divider"></div>
+    <div class="tech-list">
+      <div class="tech-row">
+        <div class="tech-key">
+          Executive light theme for regulatory standards
+        </div>
+        <div class="tech-val">
+          Adopted a publication-grade light theme utilizing deep slate structure
+          and high-contrast sapphire accents. This aligns with courtroom and
+          regulatory hearing standards (e.g., European Commission DG COMP and UK
+          Competition Appeal Tribunal proceedings), ensuring high legibility
+          under ambient lighting and clean PDF exhibit exports.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">
+          Single dictionary bridge payload over positional arguments
+        </div>
+        <div class="tech-val">
+          Replaced positional JS-to-Python function parameters with a single
+          nested JavaScript payload object <code>({ market, run })</code>.
+          Unpacking via Python <code>**kwargs</code> eliminates ordering
+          mismatch bugs and simplifies parameter expansions.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Explicit Pyodide .to_py() conversion</div>
+        <div class="tech-val">
+          Converted incoming JS proxies using <code>.to_py()</code> at the
+          Python entry boundary before argument unpacking. This resolves CPython
+          <code>JsProxy</code>
+          subscripting limitations and enables standard dictionary indexing and
+          kwarg constructor unpacking.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Factory methods & frozen dataclasses</div>
+        <div class="tech-val">
+          Encapsulated market and run parameter parsing inside immutable
+          <code>@dataclass(frozen=True)</code> structures with
+          <code>from_dict</code> and <code>from_params</code>
+          factory methods. This isolates engine defaults and type coercion from
+          execution loops.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">
+          Fast sub-millisecond WASM benchmark derivation
+        </div>
+        <div class="tech-val">
+          Exposed a lightweight <code>get_summary_prices</code> Python hook
+          alongside the main simulation engine. Sub-millisecond execution allows
+          React <code>useEffect</code> hooks to re-calculate analytical Bertrand
+          and Monopoly benchmarks instantly upon slider drag without triggering
+          full Monte Carlo runs.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Proper Pyodide memory cleanup via .destroy()</div>
+        <div class="tech-val">
+          Implemented strict <code>try...finally</code> resource management on
+          all Pyodide proxy references (<code>pyProxy.destroy()</code>) in
+          TypeScript. This prevents WebAssembly linear memory leaks during rapid
+          slider interactions and parameter sweeps.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Vectorized NumPy linspace action grids</div>
+        <div class="tech-val">
+          Constructed continuous price spaces using
+          <code>np.linspace(p_min, p_max, n_prices)</code> in
+          <code>MarketSimulation.from_params</code>. Dynamically scaling
+          discrete action matrices based on cost bounds ensures mathematical
+          rigor across arbitrary cost setups.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
