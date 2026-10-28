@@ -8,7 +8,7 @@ const VIEW_KEYS_ABOUT = [
 ] as const;
 
 const VIEW_KEYS_WORK = [
-  'duopoly-dashboard', 'nyc-dashboard', 'report-download-hub', 'admin-doc-repo' , 'react-native-tzcomp', 'wordpress-plugins', 'wireframe-effect', 'personal-site-page'
+  'demand-dashboard', 'duopoly-dashboard', 'nyc-dashboard', 'report-download-hub', 'admin-doc-repo' , 'react-native-tzcomp', 'wordpress-plugins', 'wireframe-effect', 'personal-site-page'
 ] as const;
 
 const VIEW_KEYS_THOUGHTS = [

@@ -1,0 +1,261 @@
+<div
+  class="view-nav"
+  hidden
+  data-back-text="Work"
+  data-back-href="work"
+  data-next-text="View Live"
+  data-next-href="https://christopherdgibson.github.io/demand-forecasting-dashboard/"
+></div>
+
+<!-- HERO -->
+<section class="hero hero-project hero-adr">
+  <p class="hero-eyebrow">Portfolio · React / TypeScript / Python (Pyodide)</p>
+  <h1 class="hero-title">Browser-Based Demand Forecasting Engine</h1>
+  <p class="hero-desc">
+    An interactive time-series forecasting app that runs Python (Pandas and
+    Statsmodels) entirely in the browser through WebAssembly. Upload a CSV,
+    map its columns, and compare ETS, SARIMAX and Theta forecasts with
+    adjustable confidence intervals, with no server involved.
+  </p>
+  <div class="hero-actions">
+    <a
+      target="_blank"
+      rel="noopener"
+      href="https://christopherdgibson.github.io/demand-forecasting-dashboard/"
+      class="btn btn-primary"
+      >View Live Dashboard →</a
+    >
+    <a
+      href="https://github.com/christopherdgibson/demand-forecasting-dashboard"
+      target="_blank"
+      rel="noopener"
+      class="btn btn-ghost"
+      >GitHub Repository</a
+    >
+  </div>
+  <div class="badges">
+    <span class="badge">React</span>
+    <span class="badge">TypeScript</span>
+    <span class="badge">Python</span>
+    <span class="badge">Pyodide / WASM</span>
+    <span class="badge">Pandas</span>
+    <span class="badge">Statsmodels</span>
+    <span class="badge">Time-Series</span>
+    <span class="badge">Recharts</span>
+    <span class="badge">Accessible UI</span>
+  </div>
+
+  <div
+    class="screenshot-wrapper"
+    data-images='["/images/demand-dashboard-screenshot1.png", "/images/demand-dashboard-screenshot2.png", "/images/demand-dashboard-screenshot3.png", "/images/demand-dashboard-screenshot4.png", "/images/demand-dashboard-screenshot5.png"]'
+    data-current="0"
+  >
+    <button class="chevron chevron-left" aria-label="Previous screenshot">&#8249;</button>
+    <img
+      class="hero-screenshot"
+      src="/images/demand-dashboard-screenshot1.png"
+      alt="Forecast chart showing historical, predicted and confidence-interval series beside the model controls"
+    />
+    <button class="chevron chevron-right" aria-label="Next screenshot">&#8250;</button>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<main class="content">
+  <!-- Overview -->
+  <section class="section">
+    <p class="section-label">Overview</p>
+    <h2 class="section-title">
+      Running econometric time-series pipelines entirely client-side
+    </h2>
+    <div class="divider"></div>
+    <p class="section-body">
+      The Demand Forecasting Engine removes the need for server infrastructure
+      by compiling CPython, Pandas and Statsmodels to WebAssembly via Pyodide.
+      Users can explore built-in economic benchmarks (such as FRED US retail
+      sales) or upload their own CSV. Through the interface they map arbitrary
+      column names, choose a periodicity, and compare several models complete
+      with uncertainty bounds, in a layout that adapts to light, dark and
+      custom brand colours.
+    </p>
+    <div class="pull-quote">
+      <p>
+        Statistical modeling that runs entirely in the browser, so uploaded
+        data never leaves the user's machine.
+      </p>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section">
+    <p class="section-label">How it works</p>
+    <h2 class="section-title">
+      Unified ingestion, periodic resampling, and statsmodels inference
+    </h2>
+    <div class="divider"></div>
+    <p class="section-body">
+      A single Python pipeline prepares the data. Uploaded or built-in files
+      are parsed for dates, sorted chronologically and mapped to a standard
+      schema. Depending on the chosen frequency (Monthly, Quarterly, Weekly or
+      Daily), the engine resamples and fills gaps
+      (<code>resample().sum().ffill().fillna(0)</code>) while keeping the
+      DatetimeIndex that Statsmodels requires. The cleaned series is fitted
+      with ETS, SARIMAX and Theta using the matching seasonal period, and
+      trajectories and prediction intervals are returned to TypeScript as a
+      typed result for charting. Failures take the same route: Python raises,
+      and a single bridge turns the exception into a readable message.
+    </p>
+  </section>
+
+  <!-- Features -->
+  <section class="section">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">What's under the hood</h2>
+    <div class="divider"></div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Pyodide WebAssembly Runtime</div>
+        <div class="feature-body">
+          Executes CPython, Pandas data manipulation and Statsmodels fitting
+          in browser memory, with no remote API workers.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📁</div>
+        <div class="feature-title">Custom CSV Upload &amp; Header Mapper</div>
+        <div class="feature-body">
+          Upload any CSV and choose the date and target demand columns
+          through an interactive React header selector.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <div class="feature-title">Multi-Periodicity Support</div>
+        <div class="feature-body">
+          Handles Monthly, Quarterly, Weekly and Daily data, with date
+          offsets and seasonal lags adjusted automatically.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <div class="feature-title">Multi-Model Forecasting Engine</div>
+        <div class="feature-body">
+          Compares Exponential Smoothing (ETS), Seasonal ARIMA (SARIMAX) and
+          Theta forecasts with a configurable confidence level (<i>α</i>).
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎛</div>
+        <div class="feature-title">Flexible Horizon Controls</div>
+        <div class="feature-body">
+          Separate controls for the historic display horizon (which doesn't
+          change what the models are fitted on) and the prediction horizon.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🚨</div>
+        <div class="feature-title">Typed Python-to-JS Error Bridge</div>
+        <div class="feature-body">
+          Python validation and convergence errors are caught at one boundary
+          function and returned as a typed result. The UI shows a concise
+          message, with the full traceback behind a "Show details" toggle.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <div class="feature-title">Adaptive Theming</div>
+        <div class="feature-body">
+          Light, dark or system-following themes, brand colour presets and
+          custom hue sliders. Preferences persist between visits, and charts,
+          tooltips and controls all follow the active palette.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">♿</div>
+        <div class="feature-title">Accessible Controls</div>
+        <div class="feature-body">
+          Real radio inputs for theme and colour choices, <code>aria-expanded</code>
+          on disclosures, Escape-to-close with focus handling on the error
+          dialog, and reduced-motion support.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical decisions -->
+  <section class="section">
+    <p class="section-label">Technical decisions</p>
+    <h2 class="section-title">Why these choices</h2>
+    <div class="divider"></div>
+    <div class="tech-list">
+      <div class="tech-row">
+        <div class="tech-key">
+          DatetimeIndex preservation vs string serialization
+        </div>
+        <div class="tech-val">
+          Kept the Pandas DatetimeIndex through data preparation and model
+          fitting so Statsmodels can interpret time intervals correctly, and
+          converted dates to strings only at the final JSON boundary for
+          React.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Dynamic seasonal period mapping</div>
+        <div class="tech-val">
+          Frequency is routed to a seasonal period automatically (Monthly →
+          12, Quarterly → 4, Weekly → 52, Daily → 7) to avoid matrix
+          dimension and convergence failures across different datasets.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Aggregation via resample().sum()</div>
+        <div class="tech-val">
+          Used <code>.resample(freq).sum()</code> instead of rigid reindexing
+          so transaction-level uploads roll up into the correct periodic bins,
+          with gaps filled by forward-fill and zero-padding.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Exceptions in Python, typed results in TypeScript</div>
+        <div class="tech-val">
+          Python code stays free of success flags and simply raises
+          (<code>raise ValueError(...)</code>). One TypeScript bridge catches
+          the resulting <code>PythonError</code>, extracts the exception type
+          and final message line, and returns a
+          <code>{ success: false, type, message, trace }</code> result, so
+          callers are forced to handle failure. The full traceback is kept for
+          debugging rather than shown to every user. Typing the catch variable
+          as <code>unknown</code> instead of <code>any</code> turns an
+          earlier bug (a raw <code>Error</code> passed where a string was
+          expected) into a compile-time error.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Quarterly date offset calculation</div>
+        <div class="tech-val">
+          Multiplied forecast steps by 3 (<code>months = 3 * steps</code>) for
+          quarterly data so prediction end dates move forward by the right
+          number of quarters rather than months.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Hue-driven design tokens (OKLCH) instead of hex colours</div>
+        <div class="tech-val">
+          The palette is derived from two hue values with lightness fixed per
+          theme, so contrast stays consistent however the colours are changed.
+          A minimum hue separation keeps chart series distinguishable, and a
+          small inline script applies the saved theme before first paint to
+          avoid a flash of the wrong colours.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
