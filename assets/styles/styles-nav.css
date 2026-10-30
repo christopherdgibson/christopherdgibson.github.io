@@ -232,6 +232,11 @@ nav ul li.menu-icon-item {
     margin-right: 20px;
   }
 
+  body:has(.home-container) .navigation-menu ul li.menu-icon-item {
+    max-height: 0;
+    overflow: hidden;
+  }
+
   .mini-site.expanded-mini-site .navigation-menu ul {
     top: calc(
       var(--header-height-mobile) + var(--header-nav-offset) +
@@ -283,13 +288,14 @@ nav ul li.menu-icon-item {
         right: 100%;
         top: calc(-1 * var(--header-height-mobile));
         height: var(--header-height-mobile);
+        max-height: 140px; /* Match hard-coded header value */
         width: auto;
         padding: 0 !important;
         border: none !important;
         display: flex;
         align-items: center;
         background: transparent;
-        transition: background var(--navbar-transition);
+        transition: background var(--navbar-transition), max-height 0.5s ease;
       }
 
       > li {
