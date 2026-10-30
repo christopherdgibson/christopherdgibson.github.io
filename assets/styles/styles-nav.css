@@ -15,6 +15,11 @@ nav {
     font-size: 16px;
     color: white;
 
+    /* Pass through desktop layout styles */
+    .dropdown-wrapper {
+      display: contents; 
+    }
+
     .checkbox, .dropdown-toggle {
       display: none;
     }
@@ -105,7 +110,7 @@ nav {
     }
 
     /* Desktop sub-menu */
-    ul.nav-menu-top li:hover > ul {
+    ul.nav-menu-top li:hover > .dropdown-wrapper > ul  {
       visibility: visible;
       opacity: 1;
       cursor: default;
@@ -163,7 +168,7 @@ nav {
         }
       }
       
-      ul.nav-menu-top li:hover > ul {
+      ul.nav-menu-top li:hover > .dropdown-wrapper > ul  {
         line-height: 1.95;
       }
 
@@ -321,22 +326,43 @@ nav ul li.menu-icon-item {
 
       /* Mobile dropdown styles */
       li.has-dropdown {
-        ul.dropdown {
+        .dropdown-wrapper {
+          display: block;
           position: fixed;
+          top: calc(var(--header-height-mobile) + var(--header-nav-offset));
           left: -100%;
           width: 100%;
-          padding: 50px 0;
-          overflow-y: scroll;
+          height: calc(100dvh - (var(--header-height-mobile) + var(--header-nav-offset)));
+          overflow-y: auto;
+          overscroll-behavior: contain;
           background: var(--background-radial-blue);
           visibility: hidden;
           opacity: 0;
+          transition: all calc(var(--navbar-transition-time) + var(--navbar-curtain-delay));
+          z-index: var(--z-navbar-submenu);
+        }
+
+        /* Reset everything inherited from the generic `.navigation-menu ul`
+          and the desktop `ul li ul` rules */
+        ul.dropdown {
+          position: relative;      /* containing block for the absolute back button */
+          top: auto;
+          right: auto;
+          left: auto;
+          width: 100%;
+          height: auto;
+          min-height: 100%;        /* keeps short lists centred */
+          box-sizing: border-box;
+          padding: 50px 0;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          transition: all calc(var(--navbar-transition-time) + var(--navbar-curtain-delay)); /* Slower close time */
+          background: transparent;
           box-shadow: none;
-          z-index: var(--z-navbar-submenu);
+          opacity: 1;
+          visibility: inherit;     /* follow the wrapper */
+          transition: none;
 
           li {
             border-bottom: var(--navbar-border);
@@ -358,6 +384,7 @@ nav ul li.menu-icon-item {
             border-bottom: none;
             padding: 0;
             width: auto;
+            min-width: 0;
 
             .back-btn {
               font-size: 18px;
@@ -370,7 +397,7 @@ nav ul li.menu-icon-item {
       }
 
       /* Show dropdown when checkbox is checked */
-      li.has-dropdown .dropdown-toggle:checked ~ ul.dropdown {
+      li.has-dropdown .dropdown-toggle:checked ~ .dropdown-wrapper {
         left: 0;
         visibility: visible;
         opacity: 1;
