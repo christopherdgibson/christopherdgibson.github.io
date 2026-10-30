@@ -1,4 +1,20 @@
 import { getCleanElement } from '../utils.js';
+import { VIEW_KEYS_WORK, type CreateHTMLProps } from '../types';
+
+export function createCarouselDots({selector = '#carouselWrapper #carouselDots', className = 'carousel-dot', containerSelector}: CreateHTMLProps) {
+  const dotsSelector = `${containerSelector ?? ''} ${selector ?? ''}`;
+  if (dotsSelector.trim() === '') return;
+
+  const carouselDots = document.querySelector(dotsSelector);
+  if (carouselDots === null) return;
+
+  for (let i = 1; i < VIEW_KEYS_WORK.length; i++) { // Keep index 0 activeCarousel hard-coded html item
+    const dotDiv = document.createElement('div');
+    dotDiv.className = className;
+    dotDiv.dataset.index = i.toString();
+    carouselDots.appendChild(dotDiv)
+  }
+}
 
 export function initCarousel(loadSignal: AbortSignal, rowSelector?: string, badgeSelector?: string) {
   const track = getCleanElement("#carouselTrack");
@@ -28,13 +44,15 @@ export function initCarousel(loadSignal: AbortSignal, rowSelector?: string, badg
     navItems.forEach((item, i) => item.classList.toggle("activeCarousel", i === index));
     dots.forEach((d, i) => d.classList.toggle("activeCarousel", i === index));
     rows?.forEach((r, i) => r.classList.toggle("activeCarousel", i === index));
+    const activeRow = rows?.item(index);
     badges?.forEach((b, i) => {
-      if (b.dataset.index) {
-        b.classList.toggle("activeCarousel", +b.dataset.index.includes(index.toString()) > 0)
-      }});
-      if (track) {
-        track.style.transform = `translateX(-${index * 100}%)`;
+      if (activeRow?.dataset.stack && b.dataset.stack) {
+        b.classList.toggle("activeCarousel", activeRow?.dataset.stack.includes(b.dataset.stack.toString()))
       }
+    });
+    if (track) {
+      track.style.transform = `translateX(-${index * 100}%)`;
+    }
   }
 
   function goTo(index: number) {

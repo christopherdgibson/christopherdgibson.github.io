@@ -129,30 +129,30 @@
         <p class="hero-eyebrow">Tech stack</p>
         <div class="accent-line"></div>
         <div class="badges">
-          <span class="badge" data-index="[2, 3]">C#</span>
-          <span class="badge" data-index="[2]"
+          <span class="badge" data-stack="cSharp">C#</span>
+          <span class="badge" data-stack="blazor"
             >Blazor WebAssembly</span
           >
-          <span class="badge" data-index="[3]">Avalonia</span>
-          <span class="badge activeCarousel" data-index="[0, 1, 4, 5, 6]">React</span>
-          <span class="badge" data-index="[5]">React Native</span>
-          <span class="badge" data-index="[0, 1, 2, 5, 8]">GitHub Actions</span>
-          <span class="badge" data-index="[7, 8]">Node.js</span>
-          <span class="badge" data-index="[4, 6]">Apache</span>
-          <span class="badge" data-index="[4, 6]">MySQL</span>
-          <span class="badge activeCarousel" data-index="[0, 1]">Python</span>
-          <span class="badge" data-index="[4, 6]">PHP</span>
-          <span class="badge activeCarousel" data-index="[0, 1, 7, 8]">Vite</span>
-          <span class="badge activeCarousel" data-index="[0, 1, 2, 4, 5, 6, 7, 8]"
+          <span class="badge" data-stack="avalonia">Avalonia</span>
+          <span class="badge activeCarousel" data-stack="react">React</span>
+          <span class="badge" data-stack="reactNative">React Native</span>
+          <span class="badge activeCarousel" data-stack="githubActions">GitHub Actions</span>
+          <span class="badge" data-stack="node">Node.js</span>
+          <span class="badge" data-stack="apache">Apache</span>
+          <span class="badge" data-stack="sql">MySQL</span>
+          <span class="badge activeCarousel" data-stack="python">Python</span>
+          <span class="badge" data-stack="php">PHP</span>
+          <span class="badge activeCarousel" data-stack="vite">Vite</span>
+          <span class="badge activeCarousel" data-stack="ts"
             >JavaScript / Typescript</span
           >
-          <span class="badge activeCarousel" data-index="[0, 1, 2, 4, 5, 6, 7, 8]"
+          <span class="badge activeCarousel" data-stack="html"
             >HTML</span
           >
-          <span class="badge activeCarousel" data-index="[0, 1, 2, 4, 5, 6, 7, 8]"
+          <span class="badge activeCarousel" data-stack="css"
             >CSS</span
           >
-          <span class="badge" data-index="[3]">XAML</span>
+          <span class="badge" data-stack="xaml">XAML</span>
         </div>
       </div>
       <div class="hero-section-title">
@@ -162,42 +162,7 @@
       </div>
       <div class="hero-home-portfolio-projects">
         <div class="tech-list">
-          <a href="demand-dashboard" class="tech-row activeCarousel" data-index="0">
-            <div class="tech-key">Demand Dashboard</div>
-            <div class="tech-val">Python · React · Typescript</div>
-          </a>
-          <a href="duopoly-dashboard" class="tech-row" data-index="1">
-            <div class="tech-key">Duopoly Dashboard</div>
-            <div class="tech-val">Python · React · Typescript</div>
-          </a>
-          <a href="nyc-dashboard" class="tech-row" data-index="2">
-            <div class="tech-key">NYC Dashboard</div>
-            <div class="tech-val">C# · Blazor WebAssembly · Open API</div>
-          </a>
-          <a href="report-download-hub" class="tech-row" data-index="3">
-            <div class="tech-key">Report Download Hub</div>
-            <div class="tech-val">C# · Avalonia · Selenium</div>
-          </a>
-          <a href="admin-doc-repo" class="tech-row" data-index="4">
-            <div class="tech-key">Admin Doc Repo</div>
-            <div class="tech-val">React · PHP · REST API</div>
-          </a>
-          <a href="react-native-tzcomp" class="tech-row" data-index="5">
-            <div class="tech-key">Timezone Comparison</div>
-            <div class="tech-val">React Native · Typescript · Expo</div>
-          </a>
-          <a href="wordpress-plugins" class="tech-row" data-index="6">
-            <div class="tech-key">WordPress Plugins</div>
-            <div class="tech-val">React · Typescript · WordPress</div>
-          </a>
-          <a href="wireframe-effect" class="tech-row" data-index="7">
-            <div class="tech-key">Wireframe Effect</div>
-            <div class="tech-val">Typescript · Sobel Edges</div>
-          </a>
-          <a href="personal-site-page" class="tech-row" data-index="8">
-            <div class="tech-key">This Site</div>
-            <div class="tech-val">Vanilla JS · CSS · HTML</div>
-          </a>
+          <!-- JS Populated by ts/views/home/createProjectsTable -->
         </div>
       </div>
 
@@ -205,32 +170,7 @@
       <div id="carouselWrapper" class="carousel-wrapper-home">
         <div class="carousel-track-outer">
           <div class="carousel-track" id="carouselTrack">
-            <!-- Demand Dashboard -->
-            <a href="demand-dashboard" class="carousel-card"></a>
-
-            <!-- Duopoly Dashboard -->
-            <a href="duopoly-dashboard" class="carousel-card"></a>
-
-            <!-- NYC Dashboard -->
-            <a href="nyc-dashboard" class="carousel-card"></a>
-
-            <!-- Report Download Hub -->
-            <a href="report-download-hub" class="carousel-card" ></a>
-
-            <!-- Admin Doc Repo -->
-            <a href="admin-doc-repo" class="carousel-card"></a>
-
-            <!-- Timezone Comparison -->
-            <a href="react-native-tzcomp" class="carousel-card"></a>
-
-            <!-- Wordpress Plugins -->
-            <a href="wordpress-plugins" class="carousel-card"></a>
-
-            <!-- Wireframe Effect -->
-            <a href="wireframe-effect" class="carousel-card"></a>
-
-            <!-- This Site -->
-            <a id="btnPersonalSiteHome" href="personal-site-page" class="carousel-card"></a>
+            <!-- JS Populated by ts/shared/projectCards/createProjectCards -->
           </div>
         </div>
 
@@ -239,14 +179,7 @@
           <button class="carousel-btn" id="carouselPrev">&#8249;</button>
           <div class="carousel-dots" id="carouselDots">
             <div class="carousel-dot activeCarousel" data-index="0"></div>
-            <div class="carousel-dot" data-index="1"></div>
-            <div class="carousel-dot" data-index="2"></div>
-            <div class="carousel-dot" data-index="3"></div>
-            <div class="carousel-dot" data-index="4"></div>
-            <div class="carousel-dot" data-index="5"></div>
-            <div class="carousel-dot" data-index="6"></div>
-            <div class="carousel-dot" data-index="7"></div>
-            <div class="carousel-dot" data-index="8"></div>
+            <!-- JS Populated by ts/shared/carousel/createCarouselDots -->
           </div>
           <button class="carousel-btn" id="carouselNext">&#8250;</button>
         </div>

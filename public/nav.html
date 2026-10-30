@@ -11,11 +11,11 @@
     <li><a href="home">Home</a></li>
     <li class="has-dropdown">
       <a href="about" class="desktop-link">About &dtrif;</a>
-      <input type="checkbox" class="dropdown-toggle" id="aboutDropdown" />
-      <label for="aboutDropdown" class="dropdown-label">About &dtrif;</label>
+      <input type="checkbox" class="dropdown-toggle" id="aboutCheckbox" />
+      <label for="aboutCheckbox" class="dropdown-label">About &dtrif;</label>
       <ul class="dropdown">
         <li class="dropdown-back">
-          <label for="aboutDropdown" class="back-btn">&larr; Back</label>
+          <label for="aboutCheckbox" class="back-btn">&larr; Back</label>
         </li>
         <li class="dropdown-header-mobile">
           <a href="about">
@@ -42,82 +42,29 @@
         </li>
       </ul>
     </li>
-    <li class="has-dropdown">
+    <li id="workDropdown" class="has-dropdown">
       <a href="work" class="desktop-link">Work &dtrif;</a>
-      <input type="checkbox" class="dropdown-toggle" id="workDropdown" />
-      <label for="workDropdown" class="dropdown-label">Work &dtrif;</label>
+      <input type="checkbox" class="dropdown-toggle" id="workCheckbox" />
+      <label for="workCheckbox" class="dropdown-label">Work &dtrif;</label>
       <ul class="dropdown">
         <li class="dropdown-back">
-          <label for="workDropdown" class="back-btn">&larr; Back</label>
+          <label for="workCheckbox" class="back-btn">&larr; Back</label>
         </li>
         <li class="dropdown-header-mobile">
           <a href="work">
             <span class="page-title">Work</span>
           </a>
         </li>
-        <li>
-          <a href="demand-dashboard">
-            <span class="page-title">Demand Forecasting Engine</span>
-            <span class="stack-label">&#9656; Python · React · Typescript</span>
-          </a>
-        </li>
-        <li>
-          <a href="duopoly-dashboard">
-            <span class="page-title">Duopoly Pricing Engine</span>
-            <span class="stack-label">&#9656; Python · React · Typescript</span>
-          </a>
-        </li>
-        <li>
-          <a href="nyc-dashboard">
-            <span class="page-title">NYC 311 Dashboard</span>
-            <span class="stack-label">&#9656; C# · Blazor WebAssembly</span>
-          </a>
-        </li>
-        <li>
-          <a href="report-download-hub">
-            <span class="page-title">Report Download Hub</span>
-            <span class="stack-label">&#9656; Avalonia · C# · Selenium</span>
-          </a>
-        </li>
-        <li>
-          <a href="admin-doc-repo">
-            <span class="page-title">Admin Doc Repo</span>
-            <span class="stack-label">&#9656; React · PHP · Typescript</span>
-          </a>
-        </li>
-        <li>
-          <a href="react-native-tzcomp">
-            <span class="page-title">Timezone Comparison</span>
-            <span class="stack-label">&#9656; React Native · Expo · Android</span>
-          </a>
-        </li>
-        <li>
-          <a href="wordpress-plugins">
-            <span class="page-title">WordPress Plugins</span>
-            <span class="stack-label">&#9656; WordPress · React · Typescript</span>
-          </a>
-        </li>
-        <li>
-          <a href="wireframe-effect">
-            <span class="page-title">Wireframe effect</span>
-            <span class="stack-label">&#9656; HTML Canvas Elements · Sobel Edges</span>
-          </a>
-        </li>
-        <li>
-          <a href="personal-site-page">
-            <span class="page-title">Personal Site</span>
-            <span class="stack-label">&#9656; Vanilla JS · CSS · HTML</span>
-          </a>
-        </li>
+        <!-- JS Populated by ts/shared/nav/createProjectNavItems -->
       </ul>
     </li>
     <li class="has-dropdown">
       <a href="articles" class="desktop-link" >Thoughts &dtrif;</a>
-      <input type="checkbox" class="dropdown-toggle" id="articlesDropdown" />
-      <label for="articlesDropdown" class="dropdown-label">Thoughts &dtrif;</label>
+      <input type="checkbox" class="dropdown-toggle" id="articlesCheckbox" />
+      <label for="articlesCheckbox" class="dropdown-label">Thoughts &dtrif;</label>
       <ul class="dropdown">
         <li class="dropdown-back">
-          <label for="articlesDropdown" class="back-btn">&larr; Back</label>
+          <label for="articlesCheckbox" class="back-btn">&larr; Back</label>
         </li>
         <li class="dropdown-header-mobile">
           <a href="articles">

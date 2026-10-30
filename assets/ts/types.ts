@@ -1,14 +1,20 @@
 import { viewCallbacks } from './viewCallbacks.js';
 
-export type SectionKey = 'about' | 'work' | 'articles';
-export type PreviewViewKey = 'experience' | 'work';
-
 const VIEW_KEYS_ABOUT = [
   'experience', 'research', 'teaching',
 ] as const;
 
-const VIEW_KEYS_WORK = [
-  'demand-dashboard', 'duopoly-dashboard', 'nyc-dashboard', 'report-download-hub', 'admin-doc-repo' , 'react-native-tzcomp', 'wordpress-plugins', 'wireframe-effect', 'personal-site-page'
+// Project order single source of truth
+export const VIEW_KEYS_WORK = [
+  "demand-dashboard",
+  "nyc-dashboard",
+  "react-native-tzcomp",
+  "report-download-hub",
+  "admin-doc-repo",
+  "duopoly-dashboard",
+  "wordpress-plugins",
+  "wireframe-effect",
+  "personal-site-page"
 ] as const;
 
 const VIEW_KEYS_THOUGHTS = [
@@ -17,6 +23,9 @@ const VIEW_KEYS_THOUGHTS = [
 
 export const VIEW_KEYS = ['home', 'about', ...VIEW_KEYS_ABOUT, 'work', ...VIEW_KEYS_WORK, 'articles', ...VIEW_KEYS_THOUGHTS] as const;
 
+export type SectionKey = 'about' | 'work' | 'articles';
+export type PreviewViewKey = 'experience' | 'work';
+export type ProjectKey = typeof VIEW_KEYS_WORK[number];
 export type ViewKey = typeof VIEW_KEYS[number];
 
 const SECTION_VIEW_KEYS: Record<SectionKey, readonly ViewKey[]> = {
@@ -47,6 +56,12 @@ export type ViewCallbackProps = {
  'personal-site-page': ViewCallback[];
  'articles/building-a-router': ViewCallback[];
  'wireframe-effect': ViewCallback[];
+}
+
+export interface CreateHTMLProps {
+  selector?: string;
+  className?: string;
+  containerSelector?: string
 }
 
 export function isViewKey(value: string | null): value is ViewKey {

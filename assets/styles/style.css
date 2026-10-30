@@ -1639,6 +1639,7 @@ footer {
     line-height: 1;
     a {
       text-decoration: none;
+      line-height: 1;
     }
 
     a.hide-footer-link {
@@ -2177,7 +2178,6 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   text-decoration: none;
   &:hover, span:hover {
     text-shadow: 0 0 20px var(--teaching-accent-color);
-    text-decoration: underline;
   }
 }
 
@@ -3217,6 +3217,10 @@ body:has(.mini-site-overlay.active-mini-site):has(.screenshot-overlay.active) {
   border-radius: var(--radius);
   padding: 8px 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .tooltip a {
