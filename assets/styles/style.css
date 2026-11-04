@@ -1948,6 +1948,7 @@ footer {
     z-index: var(--z-pop-out);
     width: 95vw;
     align-items: center;
+    justify-content: center;
     max-height: unset;
     max-width: 1200px;
     animation: expandFromCard var(--transition-time-3) ease forwards;
@@ -1959,8 +1960,9 @@ footer {
 .screenshot-wrapper.expanded img {
     width: 100%;
     height: auto;
+    max-width: 95vw;
+    max-height: 90vh;
     display: block;
-    max-width: unset;
     border-radius: 10px;
 }
 
