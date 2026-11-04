@@ -45,17 +45,17 @@ export type ViewCallback = (params: CallbackProps) => void | Promise<void>;
 export type ViewCallbackKey = keyof typeof viewCallbacks;
 
 export type ViewCallbackProps = {
- home: ViewCallback[];
- about: ViewCallback[];
- work: ViewCallback[];
- articles: ViewCallback[];
- 'report-download-hub': ViewCallback[];
- 'admin-doc-repo': ViewCallback[];
- 'react-native-tzcomp': ViewCallback[];
- 'wordpress-plugins': ViewCallback[];
- 'personal-site-page': ViewCallback[];
- 'articles/building-a-router': ViewCallback[];
- 'wireframe-effect': ViewCallback[];
+  home: ViewCallback[];
+  about: ViewCallback[];
+  work: ViewCallback[];
+  articles: ViewCallback[];
+  'report-download-hub': ViewCallback[];
+  'admin-doc-repo': ViewCallback[];
+  'react-native-tzcomp': ViewCallback[];
+  'wordpress-plugins': ViewCallback[];
+  'personal-site-page': ViewCallback[];
+  'articles/building-a-router': ViewCallback[];
+  'wireframe-effect': ViewCallback[];
 }
 
 export interface CreateHTMLProps {

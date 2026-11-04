@@ -15,7 +15,7 @@
     An interactive time-series forecasting app that runs Python (Pandas and
     Statsmodels) entirely in the browser through WebAssembly. Upload a CSV,
     map its columns, and compare ETS, SARIMAX and Theta forecasts with
-    adjustable confidence intervals, with no server involved.
+    confidence intervals and fit metrics, with no server involved.
   </p>
   <div class="hero-actions">
     <a
@@ -75,8 +75,8 @@
       Users can explore built-in economic benchmarks (such as FRED US retail
       sales) or upload their own CSV. Through the interface they map arbitrary
       column names, choose a periodicity, and compare several models complete
-      with uncertainty bounds, in a layout that adapts to light, dark and
-      custom brand colours.
+      with uncertainty bounds and fit metrics, in a layout that adapts to
+      light, dark, and custom brand colours.
     </p>
     <div class="pull-quote">
       <p>
@@ -96,14 +96,16 @@
     <p class="section-body">
       A single Python pipeline prepares the data. Uploaded or built-in files
       are parsed for dates, sorted chronologically and mapped to a standard
-      schema. Depending on the chosen frequency (Monthly, Quarterly, Weekly or
-      Daily), the engine resamples and fills gaps
-      (<code>resample().sum().ffill().fillna(0)</code>) while keeping the
-      DatetimeIndex that Statsmodels requires. The cleaned series is fitted
-      with ETS, SARIMAX and Theta using the matching seasonal period, and
-      trajectories and prediction intervals are returned to TypeScript as a
-      typed result for charting. Failures take the same route: Python raises,
-      and a single bridge turns the exception into a readable message.
+      schema. Depending on the chosen frequency (Annual, Quarterly, Monthly,
+      Weekly or Daily), the engine resamples the series
+      (<code>resample(freq).sum()</code>) while keeping the DatetimeIndex that
+      Statsmodels requires. Each model (ETS, SARIMAX and Theta) is then fitted
+      independently with the matching seasonal period, so one that can't be
+      fitted to a dataset is reported as unavailable while the others still
+      produce forecasts. Trajectories, prediction intervals and fit metrics
+      return to TypeScript as a typed result for charting. Failures take the
+      same route: Python raises, and a single bridge turns the exception into
+      a readable message.
     </p>
   </section>
 
@@ -118,25 +120,7 @@
         <div class="feature-title">Pyodide WebAssembly Runtime</div>
         <div class="feature-body">
           Executes CPython, Pandas data manipulation and Statsmodels fitting
-          in browser memory, with no remote API workers.
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon">📁</div>
-        <div class="feature-title">Custom CSV Upload &amp; Header Mapper</div>
-        <div class="feature-body">
-          Upload any CSV and choose the date and target demand columns
-          through an interactive React header selector.
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon">🔄</div>
-        <div class="feature-title">Multi-Periodicity Support</div>
-        <div class="feature-body">
-          Handles Monthly, Quarterly, Weekly and Daily data, with date
-          offsets and seasonal lags adjusted automatically.
+          in browser memory, with no backend or server-side API.
         </div>
       </div>
 
@@ -146,6 +130,49 @@
         <div class="feature-body">
           Compares Exponential Smoothing (ETS), Seasonal ARIMA (SARIMAX) and
           Theta forecasts with a configurable confidence level (<i>α</i>).
+          Each model has its own colour and line pattern in the overlay.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📁</div>
+        <div class="feature-title">Custom CSV Upload &amp; Header Mapper</div>
+        <div class="feature-body">
+          Upload any CSV and choose the date and target demand columns through
+          an interactive React header selector. Detects comma, semicolon or
+          tab delimiters, strips Excel's byte-order mark, rejects empty files
+          with a clear message, and warns when the date and demand columns
+          are the same.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <div class="feature-title">Multi-Periodicity Support</div>
+        <div class="feature-body">
+          Handles Annual, Quarterly, Monthly, Weekly and Daily data, with date
+          offsets and seasonal periods adjusted automatically. Annual data
+          uses non-seasonal models.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🧮</div>
+        <div class="feature-title">Model Comparison Metrics</div>
+        <div class="feature-body">
+          Reports AIC, BIC, MAPE and RMSE for each fitted model so they can be
+          compared side by side. These are in-sample measures, and Theta
+          reports RMSE only.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🛟</div>
+        <div class="feature-title">Resilient Model Fitting</div>
+        <div class="feature-body">
+          Each model is fitted independently. If one can't be fitted to a
+          dataset it is marked unavailable and the others still display. A
+          run fails with a clear message only when none of them can be fitted.
         </div>
       </div>
 
@@ -155,6 +182,8 @@
         <div class="feature-body">
           Separate controls for the historic display horizon (which doesn't
           change what the models are fitted on) and the prediction horizon.
+          Changing the prediction horizon updates the forecast without
+          refitting.
         </div>
       </div>
 
@@ -173,18 +202,21 @@
         <div class="feature-title">Adaptive Theming</div>
         <div class="feature-body">
           Light, dark or system-following themes, brand colour presets and
-          custom hue sliders. Preferences persist between visits, and charts,
-          tooltips and controls all follow the active palette.
+          custom hue sliders with a minimum hue separation. Chart series
+          colours come from the same tokens, and preferences persist between
+          visits.
         </div>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">♿</div>
-        <div class="feature-title">Accessible Controls</div>
+        <div class="feature-title">Accessible Charts and Controls</div>
         <div class="feature-body">
-          Real radio inputs for theme and colour choices, <code>aria-expanded</code>
-          on disclosures, Escape-to-close with focus handling on the error
-          dialog, and reduced-motion support.
+          Series differ by line pattern as well as colour, and the legend
+          draws the same patterns. Theme and colour choices use real radio
+          inputs, disclosures use <code>aria-expanded</code>, the error dialog
+          closes with Escape and manages focus, and animation respects
+          reduced-motion settings.
         </div>
       </div>
     </div>
@@ -210,17 +242,26 @@
       <div class="tech-row">
         <div class="tech-key">Dynamic seasonal period mapping</div>
         <div class="tech-val">
-          Frequency is routed to a seasonal period automatically (Monthly →
-          12, Quarterly → 4, Weekly → 52, Daily → 7) to avoid matrix
-          dimension and convergence failures across different datasets.
+          Frequency is routed to a seasonal period automatically (Annual → 1,
+          with non-seasonal models, Quarterly → 4, Monthly → 12, Weekly → 52,
+          Daily → 7) to avoid matrix dimension and convergence failures
+          across different datasets.
         </div>
       </div>
       <div class="tech-row">
         <div class="tech-key">Aggregation via resample().sum()</div>
         <div class="tech-val">
           Used <code>.resample(freq).sum()</code> instead of rigid reindexing
-          so transaction-level uploads roll up into the correct periodic bins,
-          with gaps filled by forward-fill and zero-padding.
+          so transaction-level uploads roll up into the correct periodic bins.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Per-frequency forecast date offsets</div>
+        <div class="tech-val">
+          Forecast end dates are computed per frequency (for example
+          <code>months = 3 * steps</code> for quarterly data and
+          <code>years = steps</code> for annual) so predictions move forward
+          by the right number of periods rather than a fixed number of months.
         </div>
       </div>
       <div class="tech-row">
@@ -239,11 +280,23 @@
         </div>
       </div>
       <div class="tech-row">
-        <div class="tech-key">Quarterly date offset calculation</div>
+        <div class="tech-key">Draft inputs vs. fitted inputs</div>
         <div class="tech-val">
-          Multiplied forecast steps by 3 (<code>months = 3 * steps</code>) for
-          quarterly data so prediction end dates move forward by the right
-          number of quarters rather than months.
+          Edits to the dataset go into a draft state and are applied only by
+          <em>Run Forecast</em>, which copies them into the "fitted" state
+          once a run succeeds. Whether the results are out of date is derived
+          by comparing the two rather than tracked with a flag, so a failed
+          run can never mark stale results as current.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Derived display state</div>
+        <div class="tech-val">
+          All fitted model results are stored allowing chart data, metrics, and the
+          visible model to be derived from the display choices. Swwitching model 
+          or history length needs no Python call and can't
+          drift out of sync. Results are committed together after both the fit
+          and the forecast succeed.
         </div>
       </div>
       <div class="tech-row">
