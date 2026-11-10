@@ -4,7 +4,7 @@
   data-back-text="Work"
   data-back-href="work"
   data-next-text="View Live"
-  data-next-href="https://christopherdgibson.github.io/demand-forecasting-dashboard/"
+  data-next-href="https://christopherdgibson.github.io/demand-forecasting-engine/"
 ></div>
 
 <!-- HERO -->
@@ -21,12 +21,12 @@
     <a
       target="_blank"
       rel="noopener"
-      href="https://christopherdgibson.github.io/demand-forecasting-dashboard/"
+      href="https://christopherdgibson.github.io/demand-forecasting-engine/"
       class="btn btn-primary"
-      >View Live Dashboard →</a
+      >View Live Engine →</a
     >
     <a
-      href="https://github.com/christopherdgibson/demand-forecasting-dashboard"
+      href="https://github.com/christopherdgibson/demand-forecasting-engine"
       target="_blank"
       rel="noopener"
       class="btn btn-ghost"
@@ -98,8 +98,10 @@
       are parsed for dates, sorted chronologically and mapped to a standard
       schema. Depending on the chosen frequency (Annual, Quarterly, Monthly,
       Weekly or Daily), the engine resamples the series
-      (<code>resample(freq).sum()</code>) while keeping the DatetimeIndex that
-      Statsmodels requires. Each model (ETS, SARIMAX and Theta) is then fitted
+      (<code>resample(freq).sum()</code>, so periods with no data count as zero
+      demand) while keeping the DatetimeIndex that Statsmodels requires, and
+      notes an incomplete first or last period rather than letting it silently
+      skew the forecast. Each model (ETS, SARIMAX and Theta) is then fitted
       independently with the matching seasonal period, so one that can't be
       fitted to a dataset is reported as unavailable while the others still
       produce forecasts. Trajectories, prediction intervals and fit metrics
@@ -152,7 +154,8 @@
         <div class="feature-body">
           Handles Annual, Quarterly, Monthly, Weekly and Daily data, with date
           offsets and seasonal periods adjusted automatically. Annual data
-          uses non-seasonal models.
+          uses non-seasonal models, and an incomplete first or last period is
+          flagged with a note.
         </div>
       </div>
 
@@ -160,9 +163,11 @@
         <div class="feature-icon">🧮</div>
         <div class="feature-title">Model Comparison Metrics</div>
         <div class="feature-body">
-          Reports AIC, BIC, MAPE and RMSE for each fitted model so they can be
-          compared side by side. These are in-sample measures, and Theta
-          reports RMSE only.
+          Compares AIC, BIC, MAPE and RMSE for every fitted model in one
+          table, with the best error values marked and a built-in glossary.
+          Errors are in-sample and one-step-ahead, scored after each model's
+          initialisation periods by default, with a toggle to include them.
+          Theta reports RMSE only.
         </div>
       </div>
 
@@ -214,9 +219,10 @@
         <div class="feature-body">
           Series differ by line pattern as well as colour, and the legend
           draws the same patterns. Theme and colour choices use real radio
-          inputs, disclosures use <code>aria-expanded</code>, the error dialog
-          closes with Escape and manages focus, and animation respects
-          reduced-motion settings.
+          inputs, disclosures use <code>aria-expanded</code>, the metrics table
+          has a caption and row and column headers, the error dialog closes
+          with Escape and manages focus, and animation respects reduced-motion
+          settings.
         </div>
       </div>
     </div>
@@ -253,6 +259,8 @@
         <div class="tech-val">
           Used <code>.resample(freq).sum()</code> instead of rigid reindexing
           so transaction-level uploads roll up into the correct periodic bins.
+          Periods with no rows become zero, which is the right meaning for
+          demand, whereas carrying values forward would invent sales.
         </div>
       </div>
       <div class="tech-row">
@@ -292,9 +300,9 @@
       <div class="tech-row">
         <div class="tech-key">Derived display state</div>
         <div class="tech-val">
-          All fitted model results are stored allowing chart data, metrics, and the
-          visible model to be derived from the display choices. Swwitching model 
-          or history length needs no Python call and can't
+          Only the model results are stored. The chart data, metrics and
+          visible model are computed from them plus the display choices, so
+          switching model or history length needs no Python call and can't
           drift out of sync. Results are committed together after both the fit
           and the forecast succeed.
         </div>
@@ -307,6 +315,26 @@
           A minimum hue separation keeps chart series distinguishable, and a
           small inline script applies the saved theme before first paint to
           avoid a flash of the wrong colours.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Scoring every model on a common window</div>
+        <div class="tech-val">
+          SARIMAX differences the series, so its first fitted values are not
+          real predictions and its residuals there are close to the size of
+          the data. Including them inflated its RMSE by about a fifth on the
+          default series. All models are now scored after the same number of
+          initialisation periods, and the UI states how many were skipped,
+          with an option to include them.
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-key">Data notes kept apart from model failures</div>
+        <div class="tech-val">
+          Model failures are keyed by model, so dataset-level caveats such as
+          an incomplete first or last period travel in a separate list of
+          notes, each with a stable code. They show as an informational
+          callout and never mark a model as unavailable.
         </div>
       </div>
     </div>
