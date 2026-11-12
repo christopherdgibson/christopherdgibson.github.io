@@ -17,9 +17,9 @@ interface ProjectRow {
 }
 
 export const PROJECT_CARD_DETAILS: Record<ProjectKey, ProjectRow> = {
-  "demand-dashboard": {
+  "demand-forecasting": {
     dataStack: "[css, githubActions, html, python, react, ts, vite]",
-    title: "Demand Dashboard",
+    title: "Demand Forecasting",
     techStack: "Python · React · Typescript"
   },
   "duopoly-dashboard": {

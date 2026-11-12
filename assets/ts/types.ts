@@ -6,7 +6,7 @@ const VIEW_KEYS_ABOUT = [
 
 // Project order single source of truth
 export const VIEW_KEYS_WORK = [
-  "demand-dashboard",
+  "demand-forecasting",
   "nyc-dashboard",
   "react-native-tzcomp",
   "report-download-hub",

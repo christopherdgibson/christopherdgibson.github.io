@@ -6,5 +6,5 @@
     "moduleResolution": "bundler",
     "types": ["vite/client"]
   },
-  "include": ["assets/js/**/*.ts", "assets/ts/**/*.ts"]
+  "include": ["assets/js/**/*.ts", "assets/ts/**/*.ts", "assets/components/wireframe-effect/wireframe-effect.ts"]
 }
