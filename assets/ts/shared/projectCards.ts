@@ -22,9 +22,9 @@ export const PROJECT_CARD_DETAILS: Record<ProjectKey, ProjectRow> = {
     title: "Demand Forecasting",
     techStack: "Python · React · Typescript"
   },
-  "duopoly-dashboard": {
+  "duopoly-pricing": {
     dataStack: "[css, githubActions, html, python, react, ts, vite]",
-    title: "Duopoly Dashboard",
+    title: "Duopoly Pricing",
     techStack: "Python · React · Typescript"
   },
   "nyc-dashboard": {

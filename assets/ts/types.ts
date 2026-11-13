@@ -11,7 +11,7 @@ export const VIEW_KEYS_WORK = [
   "react-native-tzcomp",
   "report-download-hub",
   "admin-doc-repo",
-  "duopoly-dashboard",
+  "duopoly-pricing",
   "wordpress-plugins",
   "wireframe-effect",
   "personal-site-page"
